@@ -27,34 +27,32 @@ import ir.ha.goodfeeling.ui.theme.Purple80
 
 
 @Composable
-fun IntroScreen(md: Modifier = Modifier) {
+fun IntroScreen(modifier: Modifier = Modifier) {
 
     GoodFeelingTheme {
 
-        Surface(
-            md.fillMaxSize()
-        ) {
+        Surface(modifier = modifier.fillMaxSize()) {
 
             Box(
-                modifier = md
+                modifier = modifier
                     .padding(16.dp)
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
 
-                Column(md.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
+                Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
 
                     Image(
                         painterResource(id = R.drawable.intro),
                         contentDescription = "this is description",
-                        modifier = md
+                        modifier = modifier
                             .size(300.dp)
                             .align(Alignment.CenterHorizontally)
                     )
 
                     Text(
                         text = stringResource(R.string.intro_title),
-                        modifier = md
+                        modifier = modifier
                             .align(Alignment.CenterHorizontally)
                             .fillMaxWidth(),
                         textAlign = TextAlign.Center,
@@ -63,7 +61,7 @@ fun IntroScreen(md: Modifier = Modifier) {
 
                     Text(
                         text = stringResource(R.string.intro_des),
-                        modifier = md
+                        modifier = modifier
                             .align(Alignment.CenterHorizontally)
                             .fillMaxWidth(),
                         textAlign = TextAlign.Center
@@ -74,7 +72,7 @@ fun IntroScreen(md: Modifier = Modifier) {
 
 
                 Button(
-                    modifier = md
+                    modifier = modifier
                         .align(Alignment.BottomCenter)
                         .height(58.dp),
                     onClick = {
@@ -85,7 +83,7 @@ fun IntroScreen(md: Modifier = Modifier) {
                     ),
                 ) {
                     Text(
-                        modifier = md.fillMaxWidth(),
+                        modifier = modifier.fillMaxWidth(),
                         text = stringResource(R.string.go_start),
                         textAlign = TextAlign.Center,
                     )
