@@ -6,29 +6,39 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.sp
 import ir.ha.goodfeeling.R
 
 // Set of Material typography styles to start with
 
-val CustomFontFamily = FontFamily(
-    Font(R.font.my_font, FontWeight.Normal)
+
+val vazirFont = FontFamily(
+    Font(R.font.yekan, FontWeight.Normal),
 )
 
-val Typography = Typography(
+
+val CustomTypography = Typography(
     bodyLarge = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 18.sp,
-        color = Color.DarkGray
+        fontFamily = vazirFont,
+        fontSize = 16.sp,
+        textDirection = TextDirection.Rtl,
+        textAlign = TextAlign.Right
     ),
     titleLarge = TextStyle(
-        fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
-        color = Color.Black
+        fontFamily = vazirFont,
+        fontSize = 20.sp,
+        textDirection = TextDirection.Rtl,
+        textAlign = TextAlign.Right
     ),
-    labelSmall = TextStyle(
-        fontWeight = FontWeight.Light,
-        fontSize = 12.sp,
-        color = Color.Gray
+    labelLarge = TextStyle(
+        fontFamily = vazirFont,
+        fontSize = 14.sp,
+        textDirection = TextDirection.Rtl,
+        textAlign = TextAlign.Right
     )
+
+
+
 )

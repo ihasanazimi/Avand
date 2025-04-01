@@ -2,10 +2,25 @@ package ir.ha.goodfeeling.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// 🎨 رنگ‌های لایت مود
+val LightPrimary = Color(0xFF478AC7)       // رنگ اصلی
+val LightOnPrimary = Color(0xFFFFFFFF)      // رنگ متن روی رنگ اصلی
+val LightBackground = Color(0xFFFFFFFF)     // رنگ پس‌زمینه
+val LightOnBackground = Color(0xFF000000)   // رنگ متن روی پس‌زمینه
+val LightSurface = Color(0xFFF5F5F5)        // رنگ سطوح (مثلاً کارت‌ها)
+val LightOnSurface = Color(0xFF000000)      // رنگ متن روی سطوح
+
+// 🌙 رنگ‌های دارک مود
+val DarkPrimary = Color(0xFF478AC7)
+val DarkOnPrimary = Color(0xFF000000)
+val DarkBackground = Color(0xFF121212)
+val DarkOnBackground = Color(0xFFFFFFFF)
+val DarkSurface = Color(0xFF1E1E1E)
+val DarkOnSurface = Color(0xFFFFFFFF)
+
+
+val TransparentlyGray = Color(0x0D000000)
+val TransparentlyBlue = Color(0x45478AC7)
+val Gray = Color(0x45C7C7C7)
+val DarkerGray = Color(0x451F1F1F)
