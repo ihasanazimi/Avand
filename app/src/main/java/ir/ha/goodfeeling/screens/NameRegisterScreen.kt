@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -43,17 +44,34 @@ fun NameRegisterScreen(modifier: Modifier = Modifier) {
 
     GoodFeelingTheme {
 
-        Surface(modifier = modifier.fillMaxSize()) {
+        val scrollState = rememberScrollState()
+        val textFieldValue = remember { mutableStateOf("") }
+        val context = LocalContext.current
+        val focusManager = LocalFocusManager.current
 
-            val scrollState = rememberScrollState()
-            val textFieldValue = remember { mutableStateOf("") }
-            val context = LocalContext.current
-            val focusManager = LocalFocusManager.current
+        Scaffold(bottomBar = {
+            Button(
+                modifier = modifier
+                    .padding(16.dp)
+                    .height(58.dp),
+                onClick = {
+                    Toast.makeText(context, textFieldValue.value, Toast.LENGTH_SHORT).show()
+                },
+                enabled = textFieldValue.value.isNotEmpty()
+            ) {
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    text = "ادامه بده",
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }) { innerPadding ->
 
             Box(
                 modifier = modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
 
                 Column(
@@ -61,7 +79,9 @@ fun NameRegisterScreen(modifier: Modifier = Modifier) {
                         .fillMaxWidth()
                         .verticalScroll(scrollState) // ✅ اضافه کردن اسکرول عمودی
                         .imePadding() // ✅ جلوگیری از هم‌پوشانی کیبورد
-                        .padding(bottom = WindowInsets.ime.asPaddingValues().calculateBottomPadding()) , // ✅ تنظیم فاصله با کیبورد
+                        .padding(
+                            bottom = WindowInsets.ime.asPaddingValues().calculateBottomPadding()
+                        ), // ✅ تنظیم فاصله با کیبورد
                     verticalArrangement = Arrangement.Center
                 ) {
 
@@ -102,7 +122,7 @@ fun NameRegisterScreen(modifier: Modifier = Modifier) {
                         value = textFieldValue.value,
                         onValueChange = { characters ->
                             textFieldValue.value = characters
-                            if (textFieldValue.value.isEmpty()){
+                            if (textFieldValue.value.isEmpty()) {
                                 focusManager.clearFocus()
                             }
                         },
@@ -123,28 +143,11 @@ fun NameRegisterScreen(modifier: Modifier = Modifier) {
                     )
                 }
 
-                Button(
-                    modifier = modifier
-                        .align(Alignment.BottomCenter)
-                        .height(58.dp),
-                    onClick = {
-                        Toast.makeText(context, textFieldValue.value, Toast.LENGTH_SHORT).show()
-                    },
-                    enabled = textFieldValue.value.isNotEmpty()
-                ) {
-                    Text(
-                        modifier = modifier.fillMaxWidth(),
-                        text = "ادامه بده",
-                        textAlign = TextAlign.Center,
-                    )
-                }
-
             }
         }
 
     }
 }
-
 
 
 @Preview(showBackground = true)

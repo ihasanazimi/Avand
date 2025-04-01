@@ -41,11 +41,10 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         bottomBar = {
             BottomAppBar {
                 IconButton(onClick = { /* انجام کاری */ }) {
-                    Icon(Icons.Default.Home, contentDescription = "خانه")
+                    Icon(Icons.Default.Home, contentDescription = "خانه",modifier = modifier.weight(1f))
                 }
-                Spacer(modifier = Modifier.weight(1f))
                 IconButton(onClick = { /* انجام کاری */ }) {
-                    Icon(Icons.Default.Person, contentDescription = "پروفایل")
+                    Icon(Icons.Default.Person, contentDescription = "پروفایل",modifier = modifier.weight(1f))
                 }
             }
         },
