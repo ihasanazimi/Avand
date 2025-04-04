@@ -2,7 +2,6 @@
 
 package ir.ha.goodfeeling.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,13 +36,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.R
+import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 
 
 @Composable
-fun SchedulingScreen(modifier: Modifier = Modifier) {
+fun SchedulingScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController
+) {
 
     GoodFeelingTheme {
 
@@ -52,11 +57,11 @@ fun SchedulingScreen(modifier: Modifier = Modifier) {
             val scrollState = rememberScrollState()
             val context = LocalContext.current
             val focusManager = LocalFocusManager.current
-            val bedTime = remember { mutableStateOf("") }
-            val wakeUpTime = remember { mutableStateOf("") }
 
-            var showDialog by remember { mutableStateOf(false) }
-            var selectedTime by remember { mutableStateOf("ساعت انتخابی: 07:07") }
+            var showTimePicker by remember { mutableStateOf(false) }
+            var timePickerFlag by remember { mutableStateOf<TimePickerFlag>(TimePickerFlag.BedTime) }
+            val bedTimeData = remember { mutableStateOf("") }
+            val wakeUpTimeData = remember { mutableStateOf("") }
 
             Box(
                 modifier = modifier
@@ -104,30 +109,31 @@ fun SchedulingScreen(modifier: Modifier = Modifier) {
 
                     Column {
 
+
                         OutlinedButton(
                             modifier = modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 4.dp),
                             onClick = {
-
+                                timePickerFlag = TimePickerFlag.BedTime
+                                showTimePicker = true
                             },
                             shape = RoundedCornerShape(8.dp)
                         ) {
-                            Text(text = " معمولا کی بیدار میشی؟ ${bedTime.value} ")
+                            Text(text = "    معمولا کی میخوابی؟ ${bedTimeData.value}")
                         }
 
-
-
                         OutlinedButton(
                             modifier = modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 4.dp),
                             onClick = {
-
+                                timePickerFlag = TimePickerFlag.WakeUpTime
+                                showTimePicker = true
                             },
                             shape = RoundedCornerShape(8.dp)
                         ) {
-                            Text(text = " معمولا کی میخوابی؟ ${wakeUpTime.value}")
+                            Text(text = "    معمولا کی بیدار میشی؟ ${wakeUpTimeData.value} ")
                         }
 
 
@@ -142,7 +148,9 @@ fun SchedulingScreen(modifier: Modifier = Modifier) {
                         .align(Alignment.BottomCenter)
                         .height(58.dp),
                     onClick = {
-                        showDialog = true
+                        navController.navigate(Screens.Host.route + "_" + "Graph"){
+                            popUpTo(Screens.Scheduling.route) { inclusive = true }
+                        }
                     },
                     enabled = true
                 ) {
@@ -157,11 +165,15 @@ fun SchedulingScreen(modifier: Modifier = Modifier) {
                 ShowTimePickerDialog(
                     modifier = modifier,
                     dialogTitle = "زمان انتخابی شما",
-                    showDialog = showDialog,
-                    onDismiss = { showDialog = false },
-                    onTimeSelected = { hour, minute ->
-                        selectedTime = "ساعت انتخابی: %02d:%02d".format(hour, minute)
-                        Toast.makeText(context,selectedTime, Toast.LENGTH_LONG).show()
+                    timerPickerFlag = timePickerFlag,
+                    showDialog = showTimePicker,
+                    onDismiss = { showTimePicker = false },
+                    onTimeSelected = { hour, minute , fullyTimeData , flag ->
+                        when(flag){
+                            TimePickerFlag.BedTime -> bedTimeData.value = fullyTimeData.value
+                            TimePickerFlag.WakeUpTime -> wakeUpTimeData.value = fullyTimeData.value
+                        }
+                        showTimePicker = false
                     }
                 )
 
@@ -175,7 +187,8 @@ fun SchedulingScreen(modifier: Modifier = Modifier) {
 @Composable
 fun SchedulingScreenPreview() {
     GoodFeelingTheme {
-        SchedulingScreen(Modifier)
+        val navController = rememberNavController()
+        SchedulingScreen(navController = navController)
     }
 }
 

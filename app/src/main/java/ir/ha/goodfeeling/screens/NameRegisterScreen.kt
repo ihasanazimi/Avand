@@ -1,6 +1,5 @@
 package ir.ha.goodfeeling.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +17,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -33,14 +31,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.R
+import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 
 @Composable
-fun NameRegisterScreen(modifier: Modifier = Modifier) {
+fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavController) {
 
     GoodFeelingTheme {
 
@@ -55,7 +56,7 @@ fun NameRegisterScreen(modifier: Modifier = Modifier) {
                     .padding(16.dp)
                     .height(58.dp),
                 onClick = {
-                    Toast.makeText(context, textFieldValue.value, Toast.LENGTH_SHORT).show()
+                    navController.navigate(Screens.Scheduling.route)
                 },
                 enabled = textFieldValue.value.isNotEmpty()
             ) {
@@ -71,7 +72,6 @@ fun NameRegisterScreen(modifier: Modifier = Modifier) {
                 modifier = modifier
                     .padding(innerPadding)
                     .fillMaxSize(),
-                contentAlignment = Alignment.Center
             ) {
 
                 Column(
@@ -154,7 +154,8 @@ fun NameRegisterScreen(modifier: Modifier = Modifier) {
 @Composable
 fun NameRegisterScreenPreview() {
     GoodFeelingTheme {
-        NameRegisterScreen(Modifier)
+        val nav = rememberNavController()
+        NameRegisterScreen(modifier = Modifier, navController = nav)
     }
 }
 

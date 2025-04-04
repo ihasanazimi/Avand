@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,13 +22,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.R
+import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 
 
 @Composable
-fun IntroScreen(modifier: Modifier = Modifier) {
+fun IntroScreen(modifier: Modifier = Modifier, navController: NavController) {
 
     GoodFeelingTheme {
 
@@ -42,7 +43,7 @@ fun IntroScreen(modifier: Modifier = Modifier) {
                         .padding(16.dp)
                         .height(58.dp),
                     onClick = {
-                        // todo
+                        navController.navigate(Screens.NameRegister.route)
                     },
                     enabled = true
                 ) {
@@ -61,7 +62,6 @@ fun IntroScreen(modifier: Modifier = Modifier) {
                     modifier = modifier
                         .padding(16.dp)
                         .fillMaxSize(),
-                    contentAlignment = Alignment.Center
                 ) {
 
                     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
@@ -77,7 +77,7 @@ fun IntroScreen(modifier: Modifier = Modifier) {
                         Text(
                             text = stringResource(R.string.intro_title),
                             modifier = modifier
-                                .padding(bottom = 8.dp)
+                                .padding(bottom = 8.dp, top = 42.dp)
                                 .align(Alignment.CenterHorizontally)
                                 .fillMaxWidth(),
                             textAlign = TextAlign.Center,
@@ -110,7 +110,8 @@ fun IntroScreen(modifier: Modifier = Modifier) {
 @Composable
 fun IntroScreenPreview() {
     GoodFeelingTheme {
-        IntroScreen(Modifier)
+        val navController = rememberNavController()
+        IntroScreen(navController = navController)
     }
 }
 
