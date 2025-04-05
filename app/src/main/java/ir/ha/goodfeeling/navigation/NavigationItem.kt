@@ -69,9 +69,7 @@ fun BottomNavigationBar(navController: NavController) {
                 label = {
                     Text(
                         item.title,
-                        color = if (index == selectedNavigationIndex.intValue)
-                            Color.Black
-                        else Color.Gray
+                        color = if (index == selectedNavigationIndex.intValue) Color.Black else Color.Gray
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
