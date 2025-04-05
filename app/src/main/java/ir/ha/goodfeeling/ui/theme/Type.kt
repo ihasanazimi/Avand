@@ -22,19 +22,19 @@ val vazirFont = FontFamily(
 val CustomTypography = Typography(
     bodyLarge = TextStyle(
         fontFamily = vazirFont,
-        fontSize = 16.sp,
+        fontSize = 18.sp,
         textDirection = TextDirection.Rtl,
         textAlign = TextAlign.Right
     ),
     titleLarge = TextStyle(
         fontFamily = vazirFont,
-        fontSize = 20.sp,
+        fontSize = 24.sp,
         textDirection = TextDirection.Rtl,
         textAlign = TextAlign.Right
     ),
     labelLarge = TextStyle(
         fontFamily = vazirFont,
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         textDirection = TextDirection.Rtl,
         textAlign = TextAlign.Right
     )

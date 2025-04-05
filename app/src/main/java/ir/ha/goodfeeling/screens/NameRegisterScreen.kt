@@ -78,11 +78,11 @@ fun NameRegisterScreen(navController: NavHostController) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .verticalScroll(scrollState) // ✅ اضافه کردن اسکرول عمودی
-                        .imePadding() // ✅ جلوگیری از هم‌پوشانی کیبورد
+                        .verticalScroll(scrollState)
+                        .imePadding()
                         .padding(
                             bottom = WindowInsets.ime.asPaddingValues().calculateBottomPadding()
-                        ), // ✅ تنظیم فاصله با کیبورد
+                        ),
                     verticalArrangement = Arrangement.Center
                 ) {
 
