@@ -25,13 +25,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun GoodFillingApplication(navHostController: NavHostController) {
-    AppNavigator(
-        navController = navHostController,
-        isIntroFinished = false
-    )
+    AppNavigator(navController = navHostController)
 }
+
+
+
 
 @Preview(showBackground = true)
 @Composable

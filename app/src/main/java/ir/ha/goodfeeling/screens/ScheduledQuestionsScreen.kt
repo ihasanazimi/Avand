@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.navigation.Screens
@@ -46,13 +47,12 @@ import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 
 @Composable
 fun SchedulingScreen(
-    modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavHostController
 ) {
 
     GoodFeelingTheme {
 
-        Surface(modifier = modifier.fillMaxSize()) {
+        Surface(modifier = Modifier.fillMaxSize()) {
 
             val scrollState = rememberScrollState()
             val context = LocalContext.current
@@ -64,13 +64,13 @@ fun SchedulingScreen(
             val wakeUpTimeData = remember { mutableStateOf("") }
 
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
             ) {
 
                 Column(
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .verticalScroll(scrollState)
                         .imePadding()
@@ -81,7 +81,7 @@ fun SchedulingScreen(
                     Image(
                         painterResource(id = R.drawable.intro),
                         contentDescription = "this is description",
-                        modifier = modifier
+                        modifier = Modifier
                             .padding(top = 32.dp)
                             .size(350.dp)
                             .align(Alignment.CenterHorizontally),
@@ -89,7 +89,7 @@ fun SchedulingScreen(
 
                     Text(
                         text = "زمان های استراحتت چطوره؟",
-                        modifier = modifier
+                        modifier = Modifier
                             .padding(bottom = 8.dp)
                             .align(Alignment.CenterHorizontally)
                             .fillMaxWidth(),
@@ -99,7 +99,7 @@ fun SchedulingScreen(
 
                     Text(
                         text = "میخوام طبق برنامه ریزی خوابت کنارت باشم.",
-                        modifier = modifier
+                        modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .fillMaxWidth()
                             .padding(bottom = 16.dp),
@@ -111,7 +111,7 @@ fun SchedulingScreen(
 
 
                         OutlinedButton(
-                            modifier = modifier
+                            modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 4.dp),
                             onClick = {
@@ -124,7 +124,7 @@ fun SchedulingScreen(
                         }
 
                         OutlinedButton(
-                            modifier = modifier
+                            modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 4.dp),
                             onClick = {
@@ -144,18 +144,18 @@ fun SchedulingScreen(
                 }
 
                 Button(
-                    modifier = modifier
+                    modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .height(58.dp),
                     onClick = {
-                        navController.navigate(Screens.Host.route + "_" + "Graph"){
+                        navController.navigate(Screens.Host.route){
                             popUpTo(Screens.Scheduling.route) { inclusive = true }
                         }
                     },
                     enabled = true
                 ) {
                     Text(
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         text = "بزن بریم",
                         textAlign = TextAlign.Center,
                     )
@@ -163,7 +163,7 @@ fun SchedulingScreen(
 
 
                 ShowTimePickerDialog(
-                    modifier = modifier,
+                    modifier = Modifier,
                     dialogTitle = "زمان انتخابی شما",
                     timerPickerFlag = timePickerFlag,
                     showDialog = showTimePicker,

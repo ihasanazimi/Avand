@@ -126,14 +126,14 @@ fun ShowTimePickerDialog(
 
 @Preview(showBackground = false)
 @Composable
-fun ShowTimePickerDialogPreview(modifier: Modifier = Modifier) {
+fun ShowTimePickerDialogPreview() {
     GoodFeelingTheme {
         var showDialog by remember { mutableStateOf(true) }
         var selectedTime = remember { mutableStateOf("") }
         val timerPickerFlag  = TimePickerFlag.BedTime
 
         ShowTimePickerDialog(
-            modifier = modifier,
+            modifier = Modifier,
             dialogTitle = "زمان انتخابی شما",
             timerPickerFlag = timerPickerFlag,
             showDialog = showDialog,

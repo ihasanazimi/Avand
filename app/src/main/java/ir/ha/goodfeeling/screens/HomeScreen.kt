@@ -33,7 +33,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview(modifier: Modifier = Modifier) {
+fun HomeScreenPreview() {
     GoodFeelingTheme {
         val navController = rememberNavController()
         HomeScreen(Modifier,navController)

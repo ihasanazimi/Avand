@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.navigation.Screens
@@ -41,7 +42,7 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 
 @Composable
-fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun NameRegisterScreen(navController: NavHostController) {
 
     GoodFeelingTheme {
 
@@ -52,7 +53,7 @@ fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavControll
 
         Scaffold(bottomBar = {
             Button(
-                modifier = modifier
+                modifier = Modifier
                     .padding(16.dp)
                     .height(58.dp),
                 onClick = {
@@ -61,7 +62,7 @@ fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavControll
                 enabled = textFieldValue.value.isNotEmpty()
             ) {
                 Text(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     text = "ادامه بده",
                     textAlign = TextAlign.Center,
                 )
@@ -69,13 +70,13 @@ fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavControll
         }) { innerPadding ->
 
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize(),
             ) {
 
                 Column(
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .verticalScroll(scrollState) // ✅ اضافه کردن اسکرول عمودی
                         .imePadding() // ✅ جلوگیری از هم‌پوشانی کیبورد
@@ -88,7 +89,7 @@ fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavControll
                     Image(
                         painterResource(id = R.drawable.intro),
                         contentDescription = "this is description",
-                        modifier = modifier
+                        modifier = Modifier
                             .padding(top = 32.dp)
                             .size(350.dp)
                             .align(Alignment.CenterHorizontally),
@@ -96,7 +97,7 @@ fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavControll
 
                     Text(
                         text = "چی صدات کنیم؟",
-                        modifier = modifier
+                        modifier = Modifier
                             .padding(bottom = 8.dp)
                             .align(Alignment.CenterHorizontally)
                             .fillMaxWidth(),
@@ -106,7 +107,7 @@ fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavControll
 
                     Text(
                         text = "دوستیمون از اینجا شروع میشه",
-                        modifier = modifier
+                        modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .fillMaxWidth()
                             .padding(bottom = 16.dp),
@@ -115,7 +116,7 @@ fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavControll
                     )
 
                     TextField(
-                        modifier = modifier
+                        modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .align(Alignment.Start)
                             .fillMaxWidth(),
@@ -130,7 +131,7 @@ fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavControll
                         singleLine = true,
                         label = {
                             Text(
-                                modifier = modifier.fillMaxWidth(),
+                                modifier = Modifier.fillMaxWidth(),
                                 text = "نام",
                                 textAlign = TextAlign.Right,
                                 style = CustomTypography.bodyLarge
@@ -155,7 +156,7 @@ fun NameRegisterScreen(modifier: Modifier = Modifier, navController: NavControll
 fun NameRegisterScreenPreview() {
     GoodFeelingTheme {
         val nav = rememberNavController()
-        NameRegisterScreen(modifier = Modifier, navController = nav)
+        NameRegisterScreen(navController = nav)
     }
 }
 

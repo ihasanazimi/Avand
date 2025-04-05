@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.navigation.Screens
@@ -31,15 +32,15 @@ import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 
 
 @Composable
-fun IntroScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun IntroScreen(navController: NavHostController) {
 
     GoodFeelingTheme {
 
         Scaffold(
-            modifier = modifier ,
+            modifier = Modifier ,
             bottomBar = {
                 Button(
-                    modifier = modifier
+                    modifier = Modifier
                         .padding(16.dp)
                         .height(58.dp),
                     onClick = {
@@ -48,7 +49,7 @@ fun IntroScreen(modifier: Modifier = Modifier, navController: NavController) {
                     enabled = true
                 ) {
                     Text(
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         text = stringResource(R.string.go_start),
                         textAlign = TextAlign.Center,
                     )
@@ -56,27 +57,27 @@ fun IntroScreen(modifier: Modifier = Modifier, navController: NavController) {
             }
         ) { innerPadding ->
 
-            Column(modifier = modifier.fillMaxSize().padding(innerPadding)) {
+            Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
 
                 Box(
-                    modifier = modifier
+                    modifier = Modifier
                         .padding(16.dp)
                         .fillMaxSize(),
                 ) {
 
-                    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
+                    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
 
                         Image(
                             painterResource(id = R.drawable.intro),
                             contentDescription = "this is description",
-                            modifier = modifier
+                            modifier = Modifier
                                 .size(350.dp)
                                 .align(Alignment.CenterHorizontally),
                         )
 
                         Text(
                             text = stringResource(R.string.intro_title),
-                            modifier = modifier
+                            modifier = Modifier
                                 .padding(bottom = 8.dp, top = 42.dp)
                                 .align(Alignment.CenterHorizontally)
                                 .fillMaxWidth(),
@@ -87,7 +88,7 @@ fun IntroScreen(modifier: Modifier = Modifier, navController: NavController) {
 
                         Text(
                             text = stringResource(R.string.intro_des),
-                            modifier = modifier
+                            modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
                                 .fillMaxWidth(),
                             textAlign = TextAlign.Center,

@@ -86,7 +86,7 @@ fun BottomNavigationBar(navController: NavController) {
 
 @Preview(showBackground = true)
 @Composable
-fun BottomNavigationBarPreview(modifier: Modifier = Modifier) {
+fun BottomNavigationBarPreview() {
     GoodFeelingTheme {
         val navController = rememberNavController()
         BottomNavigationBar(navController = navController)
