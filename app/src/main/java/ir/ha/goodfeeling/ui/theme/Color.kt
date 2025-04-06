@@ -21,6 +21,8 @@ val DarkOnSurface = Color(0xFFFFFFFF)
 
 
 val TransparentlyGray = Color(0x0D000000)
+val TransparentlyBlack = Color(0x80000000)
+val RedColor = Color(0xFFA6352C)
 val TransparentlyBlue = Color(0x45478AC7)
 val Gray = Color(0x45C7C7C7)
 val DarkerGray = Color(0x451F1F1F)

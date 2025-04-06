@@ -20,15 +20,15 @@ val vazirFont = FontFamily(
 
 
 val CustomTypography = Typography(
-    bodyLarge = TextStyle(
+    titleLarge = TextStyle(
         fontFamily = vazirFont,
-        fontSize = 18.sp,
+        fontSize = 26.sp,
         textDirection = TextDirection.Rtl,
         textAlign = TextAlign.Right
     ),
-    titleLarge = TextStyle(
+    bodyLarge = TextStyle(
         fontFamily = vazirFont,
-        fontSize = 24.sp,
+        fontSize = 18.sp,
         textDirection = TextDirection.Rtl,
         textAlign = TextAlign.Right
     ),
