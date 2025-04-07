@@ -134,7 +134,7 @@ val goldPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEnt
     CurrencyPriceEntity(
         currencyName = "سکه امامی",
         currencyFlagId = R.drawable.golden_coin,
-        currencyPrice = "103,250",
+        currencyPrice = "98,103,250",
         currencyChangePercent = "1.8" + " % ",
         currencyChangePercentColor = RedColor,
         currencyUnitType = " تومان "
