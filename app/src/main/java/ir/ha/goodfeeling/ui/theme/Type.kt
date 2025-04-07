@@ -24,25 +24,25 @@ val CustomTypography = Typography(
         fontFamily = vazirFont,
         fontSize = 24.sp,
         textDirection = TextDirection.Rtl,
-        textAlign = TextAlign.Right
+        textAlign = TextAlign.Justify
     ),
     bodyLarge = TextStyle(
         fontFamily = vazirFont,
         fontSize = 18.sp,
         textDirection = TextDirection.Rtl,
-        textAlign = TextAlign.Right
+        textAlign = TextAlign.Justify
     ),
     labelLarge = TextStyle(
         fontFamily = vazirFont,
         fontSize = 16.sp,
         textDirection = TextDirection.Rtl,
-        textAlign = TextAlign.Right
+        textAlign = TextAlign.Justify
     ),
     labelSmall = TextStyle(
         fontFamily = vazirFont,
         fontSize = 14.sp,
         textDirection = TextDirection.Rtl,
-        textAlign = TextAlign.Right
+        textAlign = TextAlign.Justify
     ),
 
 )

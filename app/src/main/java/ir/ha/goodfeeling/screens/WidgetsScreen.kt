@@ -32,6 +32,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.ui.theme.CustomTypography
@@ -136,13 +138,14 @@ fun Widgets() {
                         )
 
                         Text(
-                            text = "آخ که توی این هوا بستنی میچسبه ✌ ",
+                            text = "آخ که توی این هوا بستنی خیلی زیاد میچسبه ✌ ",
                             Modifier
                                 .fillMaxSize()
                                 .weight(0.4f)
                                 .padding(vertical = 8.dp),
                             textAlign = TextAlign.Right,
-                            style = CustomTypography.labelLarge,
+                            lineHeight = TextUnit(24f , TextUnitType.Sp),
+                            style = CustomTypography.labelSmall,
                             maxLines = 2
                         )
 
