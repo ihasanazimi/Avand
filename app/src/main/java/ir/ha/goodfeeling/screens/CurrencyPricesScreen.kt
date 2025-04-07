@@ -191,6 +191,7 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
             Text(
                 text = currencyPriceEntity.currencyPrice + " " + currencyPriceEntity.currencyUnitType,
                 textAlign = TextAlign.Center,
+                maxLines = 1,
                 style = CustomTypography.labelLarge,
                 modifier = modifier
                     .padding(4.dp)
@@ -208,6 +209,7 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
                 text = currencyPriceEntity.currencyChangePercent,
                 modifier = modifier.align(Alignment.CenterStart),
                 color = currencyPriceEntity.currencyChangePercentColor,
+                maxLines = 1,
                 style = CustomTypography.labelSmall,
                 textAlign = TextAlign.Center
             )
@@ -218,6 +220,7 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
             Text(
                 text = currencyPriceEntity.currencyName,
                 style = CustomTypography.labelLarge,
+                maxLines = 1,
                 modifier = modifier
                     .padding(4.dp)
             )

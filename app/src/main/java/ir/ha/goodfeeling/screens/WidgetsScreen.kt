@@ -315,7 +315,7 @@ fun Widgets() {
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 items(occasionsOfTheDayList) { item ->
-                                    OccasionItemView(occasionsOfTheDay = item, modifier = Modifier)
+                                    OccasionItemView(occasionsOfTheDay = item)
                                 }
                             }
 

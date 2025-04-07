@@ -46,9 +46,9 @@ val occasionsOfTheDayList: ArrayList<OccasionsOfTheDay> = arrayListOf<OccasionsO
 )
 
 @Composable
-fun OccasionItemView(occasionsOfTheDay: OccasionsOfTheDay, modifier: Modifier = Modifier) {
+fun OccasionItemView(occasionsOfTheDay: OccasionsOfTheDay) {
     Row(
-        modifier = modifier
+        modifier = Modifier
             .background(Color.Transparent)
             .fillMaxWidth()
             .padding(vertical = 2.dp),
@@ -56,7 +56,7 @@ fun OccasionItemView(occasionsOfTheDay: OccasionsOfTheDay, modifier: Modifier = 
     ) {
         Text(
             text = occasionsOfTheDay.occasionText,
-            modifier = modifier
+            modifier = Modifier
                 .weight(0.8f)
                 .fillMaxWidth(),
             fontSize = 12.sp,
@@ -65,7 +65,7 @@ fun OccasionItemView(occasionsOfTheDay: OccasionsOfTheDay, modifier: Modifier = 
         Icon(
             imageVector = Icons.Default.Star,
             contentDescription = "location",
-            modifier = modifier
+            modifier = Modifier
                 .padding(horizontal = 4.dp)
                 .size(16.dp)
                 .weight(0.2f)
