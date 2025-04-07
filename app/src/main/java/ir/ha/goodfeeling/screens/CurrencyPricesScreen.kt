@@ -227,7 +227,7 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
                 painter = painterResource(id = currencyPriceEntity.currencyFlagId),
                 contentDescription = currencyPriceEntity.currencyName,
                 modifier = modifier
-                    .size(24.dp)
+                    .size(28.dp)
                     .padding(4.dp)
             )
         }
