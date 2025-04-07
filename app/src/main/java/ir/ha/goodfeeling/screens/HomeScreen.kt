@@ -30,9 +30,9 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize().padding(horizontal = 8.dp)) {
         Widgets()
-        CurrencyPricesScreen(modifier)
+        CurrencyPricesScreen()
     }
 }
 

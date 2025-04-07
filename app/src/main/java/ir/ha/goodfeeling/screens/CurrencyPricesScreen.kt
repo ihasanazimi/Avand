@@ -30,29 +30,45 @@ import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
+import ir.ha.goodfeeling.ui.theme.GreenColor
 import ir.ha.goodfeeling.ui.theme.RedColor
 import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 
 @Composable
 fun CurrencyPricesScreen(modifier: Modifier = Modifier) {
-    Card(modifier = modifier.padding(horizontal = 16.dp),
+    Card(modifier = Modifier.padding(vertical = 8.dp),
         colors = CardColors(
             containerColor = TransparentlyGray,
             contentColor = Color.Black,
             disabledContainerColor = Color.Gray,
             disabledContentColor = Color.Gray
         )) {
-        Column(modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
+        Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
 
             LazyColumn {
                 items(bitPriceList) { item ->
-                    CurrencyPriceItemView(currencyPriceEntity = item, modifier = modifier)
+                    CurrencyPriceItemView(currencyPriceEntity = item, modifier = Modifier)
                 }
             }
 
             Spacer(
-                modifier
+                Modifier
+                    .padding(horizontal = 4.dp, vertical = 8.dp)
+                    .background(TransparentlyGray.copy(alpha = 0.1f), shape = RoundedCornerShape(8.dp))
+                    .fillMaxWidth()
+                    .height(1.dp)
+            )
+
+            LazyColumn {
+                items(goldPriceList) { item ->
+                    CurrencyPriceItemView(currencyPriceEntity = item, modifier = Modifier)
+                }
+            }
+
+
+            Spacer(
+                Modifier
                     .padding(horizontal = 4.dp, vertical = 8.dp)
                     .background(TransparentlyGray.copy(alpha = 0.1f), shape = RoundedCornerShape(8.dp))
                     .fillMaxWidth()
@@ -61,7 +77,7 @@ fun CurrencyPricesScreen(modifier: Modifier = Modifier) {
 
             LazyColumn {
                 items(currencyPriceList) { item ->
-                    CurrencyPriceItemView(currencyPriceEntity = item, modifier = modifier)
+                    CurrencyPriceItemView(currencyPriceEntity = item, modifier = Modifier)
                 }
             }
 
@@ -78,41 +94,13 @@ data class CurrencyPriceEntity(
     val currencyChangePercentColor: Color,
     val currencyUnitType: String = " تومان "
 )
-
-val currencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
-    CurrencyPriceEntity(
-        currencyName = "دلار",
-        currencyFlagId = R.drawable.us,
-        currencyPrice = "103,250",
-        currencyChangePercent = "3.1" + " % ",
-        currencyChangePercentColor = RedColor,
-        currencyUnitType = "تومان"
-    ),
-    CurrencyPriceEntity(
-        currencyName = "یورو",
-        currencyFlagId = R.drawable.euro,
-        currencyPrice = "103,250",
-        currencyChangePercent = "1.8" + " % ",
-        currencyChangePercentColor = RedColor,
-        currencyUnitType = "تومان"
-    ),
-    CurrencyPriceEntity(
-        currencyName = "پوند",
-        currencyFlagId = R.drawable.england,
-        currencyPrice = "103,250",
-        currencyChangePercent = "2.5" + " % ",
-        currencyChangePercentColor = RedColor,
-        currencyUnitType = "تومان"
-    )
-)
-
 val bitPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
     CurrencyPriceEntity(
         currencyName = "بیت کوین",
         currencyFlagId = R.drawable.bitcoin,
         currencyPrice = "103,250",
         currencyChangePercent = "3.1" + " % ",
-        currencyChangePercentColor = RedColor,
+        currencyChangePercentColor = GreenColor,
         currencyUnitType = " $ "
     ),
     CurrencyPriceEntity(
@@ -132,6 +120,55 @@ val bitPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEnti
         currencyUnitType = "تومان"
     )
 )
+
+
+val goldPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
+    CurrencyPriceEntity(
+        currencyName = "طلا 18 عیار",
+        currencyFlagId = R.drawable.gold,
+        currencyPrice = "8,100,370",
+        currencyChangePercent = "5.1" + " % ",
+        currencyChangePercentColor = GreenColor,
+        currencyUnitType = " تومان "
+    ),
+    CurrencyPriceEntity(
+        currencyName = "سکه امامی",
+        currencyFlagId = R.drawable.golden_coin,
+        currencyPrice = "103,250",
+        currencyChangePercent = "1.8" + " % ",
+        currencyChangePercentColor = RedColor,
+        currencyUnitType = " تومان "
+    )
+)
+
+val currencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
+    CurrencyPriceEntity(
+        currencyName = "دلار",
+        currencyFlagId = R.drawable.us,
+        currencyPrice = "103,250",
+        currencyChangePercent = "3.1" + " % ",
+        currencyChangePercentColor = RedColor,
+        currencyUnitType = "تومان"
+    ),
+    CurrencyPriceEntity(
+        currencyName = "یورو",
+        currencyFlagId = R.drawable.euro,
+        currencyPrice = "103,250",
+        currencyChangePercent = "1.8" + " % ",
+        currencyChangePercentColor = GreenColor,
+        currencyUnitType = "تومان"
+    ),
+    CurrencyPriceEntity(
+        currencyName = "پوند",
+        currencyFlagId = R.drawable.england,
+        currencyPrice = "103,250",
+        currencyChangePercent = "2.5" + " % ",
+        currencyChangePercentColor = RedColor,
+        currencyUnitType = "تومان"
+    )
+)
+
+
 
 
 @Composable

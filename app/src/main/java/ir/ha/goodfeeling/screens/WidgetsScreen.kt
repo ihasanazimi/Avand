@@ -38,11 +38,12 @@ import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.LightPrimary
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
+import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 @Composable
-fun Widgets(modifier : Modifier = Modifier){
+fun Widgets() {
     Card(
-        modifier = modifier.padding(8.dp),
+        modifier = Modifier.padding(vertical = 8.dp),
         colors = CardColors(
             containerColor = Color.White,
             contentColor = Color.Black,
@@ -52,15 +53,15 @@ fun Widgets(modifier : Modifier = Modifier){
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
         Row(
-            modifier
+            Modifier
                 .height(260.dp)
                 .background(Color.Transparent)
         ) {
 
             /**  big rectangle -> Whether */
             Card(
-                modifier = modifier
-                    .padding(4.dp)
+                modifier = Modifier
+                    .padding(end = 4.dp)
                     .weight(1f)
                     .fillMaxHeight(),
                 colors = CardColors(
@@ -73,7 +74,7 @@ fun Widgets(modifier : Modifier = Modifier){
             ) {
                 Box {
                     Column(
-                        modifier = modifier
+                        modifier = Modifier
                             .fillMaxHeight()
                             .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -84,7 +85,7 @@ fun Widgets(modifier : Modifier = Modifier){
                             Text(
                                 text = "℃" + "32",
                                 style = CustomTypography.titleLarge,
-                                modifier = modifier
+                                modifier = Modifier
                                     .fillMaxWidth()
                                     .align(Alignment.CenterStart)
                                     .padding(horizontal = 4.dp),
@@ -94,7 +95,7 @@ fun Widgets(modifier : Modifier = Modifier){
                             Icon(
                                 imageVector = Icons.Default.Refresh,
                                 contentDescription = "refresh weather",
-                                modifier = modifier
+                                modifier = Modifier
                                     .align(Alignment.CenterEnd)
                                     .clickable {
                                         // todo
@@ -105,20 +106,20 @@ fun Widgets(modifier : Modifier = Modifier){
                         }
 
                         Row(
-                            modifier = modifier.padding(top = 4.dp),
+                            modifier = Modifier.padding(top = 4.dp),
                             horizontalArrangement = Arrangement.SpaceEvenly,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
                                 imageVector = Icons.Default.LocationOn,
                                 contentDescription = "location",
-                                modifier = modifier.size(20.dp),
+                                modifier = Modifier.size(20.dp),
                                 tint = Color.White
                             )
                             Text(
                                 text = "Tehran",
                                 style = CustomTypography.bodyLarge,
-                                modifier = modifier.fillMaxWidth(),
+                                modifier = Modifier.fillMaxWidth(),
                                 maxLines = 1,
                                 textAlign = TextAlign.End,
                             )
@@ -127,7 +128,7 @@ fun Widgets(modifier : Modifier = Modifier){
                         Image(
                             painter = painterResource(id = R.drawable.cloudy2),
                             contentDescription = null,
-                            modifier = modifier
+                            modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(0.7f)
                                 .alpha(0.9f)
@@ -136,7 +137,7 @@ fun Widgets(modifier : Modifier = Modifier){
 
                         Text(
                             text = "آخ که توی این هوا بستنی میچسبه ✌ ",
-                            modifier
+                            Modifier
                                 .fillMaxSize()
                                 .weight(0.4f)
                                 .padding(vertical = 8.dp),
@@ -147,16 +148,25 @@ fun Widgets(modifier : Modifier = Modifier){
 
                     }
 
-                    Box(
-                        modifier
+                    Column(
+                        Modifier
                             .fillMaxSize()
                             .background(TransparentlyBlack),
-                        contentAlignment = Alignment.Center
+                        verticalArrangement = Arrangement.Center,
                     ) {
                         Image(
                             contentDescription = "loading image",
                             painter = painterResource(R.drawable.loading),
-                            modifier = modifier,
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                        )
+
+                        Text(
+                            text = "کمی صبر کنید..",
+                            textAlign = TextAlign.Center,
+                            style = CustomTypography.labelLarge,
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(vertical = 8.dp)
                         )
                     }
                 }
@@ -165,15 +175,15 @@ fun Widgets(modifier : Modifier = Modifier){
 
             /** small rectangles */
             Column(
-                modifier
+                Modifier
                     .weight(1f)
                     .fillMaxHeight()
             ) {
 
                 /** Time and Date */
                 Card(
-                    modifier = modifier
-                        .padding(4.dp)
+                    modifier = Modifier
+                        .padding(start = 4.dp, bottom = 4.dp)
                         .weight(1f)
                         .fillMaxWidth(), colors = CardColors(
                         containerColor = LightPrimary,
@@ -184,12 +194,12 @@ fun Widgets(modifier : Modifier = Modifier){
                     shape = RoundedCornerShape(20.dp)
                 ) {
                     Column(
-                        modifier = modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center
                     ) {
 
                         Box(
-                            modifier = modifier
+                            modifier = Modifier
                                 .weight(0.4f)
                                 .fillMaxWidth()
                                 .background(TransparentlyBlack),
@@ -197,17 +207,17 @@ fun Widgets(modifier : Modifier = Modifier){
                         ) {
                             Text(
                                 "14:05",
-                                modifier = modifier,
+                                modifier = Modifier,
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,
                                 style = CustomTypography.titleLarge
                             )
                         }
 
-                        Column(modifier = modifier.weight(0.6f)) {
+                        Column(modifier = Modifier.weight(0.6f)) {
                             Text(
                                 "یکشنبه 17 فروردین",
-                                modifier = modifier
+                                modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 8.dp),
                                 textAlign = TextAlign.Center,
@@ -218,7 +228,7 @@ fun Widgets(modifier : Modifier = Modifier){
 
                             Text(
                                 "6 آوریل 2025",
-                                modifier = modifier.fillMaxWidth(),
+                                modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,
                                 style = CustomTypography.labelLarge
@@ -229,11 +239,10 @@ fun Widgets(modifier : Modifier = Modifier){
                 }
 
 
-
                 /** Occasions */
                 Card(
-                    modifier = modifier
-                        .padding(4.dp)
+                    modifier = Modifier
+                        .padding(start = 4.dp, top = 4.dp)
                         .weight(1f)
                         .fillMaxWidth(), colors = CardColors(
                         containerColor = TransparentlyBlack,
@@ -244,12 +253,12 @@ fun Widgets(modifier : Modifier = Modifier){
                     shape = RoundedCornerShape(20.dp)
                 ) {
                     Column(
-                        modifier = modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center
                     ) {
 
                         Box(
-                            modifier = modifier
+                            modifier = Modifier
                                 .weight(0.4f)
                                 .fillMaxWidth()
                                 .background(TransparentlyBlack),
@@ -257,22 +266,59 @@ fun Widgets(modifier : Modifier = Modifier){
                         ) {
                             Text(
                                 "مناسبت های امروز :",
-                                modifier = modifier.padding(horizontal = 16.dp),
+                                modifier = Modifier.padding(horizontal = 16.dp),
                                 textAlign = TextAlign.Start,
                                 maxLines = 1,
                                 style = CustomTypography.labelLarge
                             )
                         }
 
-                        LazyColumn(
-                            modifier = modifier
-                                .weight(0.7f)
-                                .padding(horizontal = 8.dp),
-                            verticalArrangement = Arrangement.Center
+                        Box(
+                            modifier = Modifier.weight(0.7f),
+                            contentAlignment = Alignment.Center
                         ) {
-                            items(occasionsOfTheDayList) { item ->
-                                OccasionItemView(occasionsOfTheDay = item, modifier = modifier)
+
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .background(TransparentlyGray)
+                                    .fillMaxSize()
+                                    .alpha(1f)
+                            ) {
+                                Row(
+                                    modifier = Modifier.align(Alignment.Center),
+                                    verticalAlignment = Alignment.CenterVertically
+
+                                ) {
+
+                                    Text(
+                                        text = "خبری نیست..",
+                                        color = TransparentlyBlack,
+                                        modifier = Modifier.padding(horizontal = 8.dp)
+                                    )
+
+                                    Icon(
+                                        painter = painterResource(R.drawable.nothing),
+                                        contentDescription = "nothing",
+                                        modifier = Modifier
+                                            .size(18.dp),
+                                        tint = TransparentlyBlack
+                                    )
+
+                                }
                             }
+
+                            LazyColumn(
+                                modifier = Modifier
+                                    .alpha(0f)
+                                    .background(TransparentlyGray),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                items(occasionsOfTheDayList) { item ->
+                                    OccasionItemView(occasionsOfTheDay = item, modifier = Modifier)
+                                }
+                            }
+
                         }
 
                     }
@@ -283,10 +329,9 @@ fun Widgets(modifier : Modifier = Modifier){
 }
 
 
-
 @Preview(showBackground = true)
 @Composable
-fun WidgetScreenPreview(){
+fun WidgetScreenPreview() {
     GoodFeelingTheme {
         Widgets()
     }
