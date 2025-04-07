@@ -37,13 +37,15 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 @Composable
 fun CurrencyPricesScreen(modifier: Modifier = Modifier) {
-    Card(modifier = Modifier.padding(vertical = 8.dp),
+    Card(
+        modifier = Modifier.padding(vertical = 8.dp),
         colors = CardColors(
             containerColor = TransparentlyGray,
             contentColor = Color.Black,
             disabledContainerColor = Color.Gray,
             disabledContentColor = Color.Gray
-        )) {
+        )
+    ) {
         Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
 
             LazyColumn {
@@ -55,7 +57,10 @@ fun CurrencyPricesScreen(modifier: Modifier = Modifier) {
             Spacer(
                 Modifier
                     .padding(horizontal = 4.dp, vertical = 8.dp)
-                    .background(TransparentlyGray.copy(alpha = 0.1f), shape = RoundedCornerShape(8.dp))
+                    .background(
+                        TransparentlyGray.copy(alpha = 0.1f),
+                        shape = RoundedCornerShape(8.dp)
+                    )
                     .fillMaxWidth()
                     .height(1.dp)
             )
@@ -70,7 +75,10 @@ fun CurrencyPricesScreen(modifier: Modifier = Modifier) {
             Spacer(
                 Modifier
                     .padding(horizontal = 4.dp, vertical = 8.dp)
-                    .background(TransparentlyGray.copy(alpha = 0.1f), shape = RoundedCornerShape(8.dp))
+                    .background(
+                        TransparentlyGray.copy(alpha = 0.1f),
+                        shape = RoundedCornerShape(8.dp)
+                    )
                     .fillMaxWidth()
                     .height(1.dp)
             )
@@ -94,6 +102,7 @@ data class CurrencyPriceEntity(
     val currencyChangePercentColor: Color,
     val currencyUnitType: String = " تومان "
 )
+
 val bitPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
     CurrencyPriceEntity(
         currencyName = "بیت کوین",
@@ -169,8 +178,6 @@ val currencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPric
 )
 
 
-
-
 @Composable
 fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Modifier = Modifier) {
     Row(
@@ -180,10 +187,11 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
         horizontalArrangement = Arrangement.Absolute.SpaceBetween
     ) {
 
-        Box(contentAlignment = Alignment.CenterStart , modifier = modifier.weight(1.4f)){
+        Box(contentAlignment = Alignment.CenterStart, modifier = modifier.weight(1.4f)) {
             Text(
                 text = currencyPriceEntity.currencyPrice + " " + currencyPriceEntity.currencyUnitType,
                 textAlign = TextAlign.Center,
+                style = CustomTypography.labelLarge,
                 modifier = modifier
                     .padding(4.dp)
             )
@@ -193,20 +201,23 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
             modifier = modifier
                 .fillMaxHeight()
                 .align(Alignment.CenterVertically)
-                .weight(0.6f)
+                .weight(0.3f),
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 text = currencyPriceEntity.currencyChangePercent,
                 modifier = modifier.align(Alignment.CenterStart),
                 color = currencyPriceEntity.currencyChangePercentColor,
-                style = CustomTypography.labelLarge,
+                style = CustomTypography.labelSmall,
                 textAlign = TextAlign.Center
             )
         }
 
         Row(modifier = modifier.weight(1f), horizontalArrangement = Arrangement.End) {
+
             Text(
                 text = currencyPriceEntity.currencyName,
+                style = CustomTypography.labelLarge,
                 modifier = modifier
                     .padding(4.dp)
             )
