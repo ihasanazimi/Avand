@@ -38,7 +38,7 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 @Composable
 fun CurrencyPricesScreen(modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier.padding(vertical = 8.dp),
+        modifier = modifier.padding(vertical = 8.dp),
         colors = CardColors(
             containerColor = TransparentlyGray,
             contentColor = Color.Black,

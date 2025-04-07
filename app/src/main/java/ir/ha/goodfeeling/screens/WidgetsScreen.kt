@@ -43,9 +43,9 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
 import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 @Composable
-fun Widgets() {
+fun Widgets(modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier.padding(vertical = 8.dp),
+        modifier = modifier.padding(vertical = 8.dp),
         colors = CardColors(
             containerColor = Color.White,
             contentColor = Color.Black,
