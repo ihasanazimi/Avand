@@ -1,7 +1,9 @@
 package ir.ha.goodfeeling.screens
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,19 +16,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
-import androidx.compose.material3.CardElevation
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.model.content.CircleShape
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
@@ -37,58 +45,70 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 @Composable
 fun CurrencyPricesScreen(modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier.padding(vertical = 8.dp),
-        colors = CardColors(
-            containerColor = TransparentlyGray,
-            contentColor = Color.Black,
-            disabledContainerColor = Color.Gray,
-            disabledContentColor = Color.Gray
-        )
-    ) {
-        Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
+    Column {
 
-            LazyColumn {
-                items(bitPriceList) { item ->
-                    CurrencyPriceItemView(currencyPriceEntity = item, modifier = Modifier)
-                }
+        Row(
+            Modifier
+                .align(Alignment.End)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+        ) {
+
+
+            Row {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "refresh weather",
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .clip(CircleShape)
+                        .background(TransparentlyGray)
+                        .size(28.dp)
+                        .padding(2.dp)
+                        .clickable {
+                            // todo
+                        },
+                    tint = Color.Black
+                )
+                Icon(
+                    imageVector = Icons.Default.Share,
+                    contentDescription = "refresh weather",
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .background(TransparentlyGray)
+                        .size(28.dp)
+                        .padding(5.dp)
+                        .clickable {
+                            // todo
+                        },
+                    tint = Color.Black
+                )
             }
 
-            Spacer(
-                Modifier
-                    .padding(horizontal = 4.dp, vertical = 8.dp)
-                    .background(
-                        TransparentlyGray.copy(alpha = 0.1f),
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .fillMaxWidth()
-                    .height(1.dp)
+            Text(
+                text = "لیست قیمت ها :",
+                style = CustomTypography.bodyLarge,
+                modifier = Modifier.weight(1f)
             )
 
-            LazyColumn {
-                items(goldPriceList) { item ->
-                    CurrencyPriceItemView(currencyPriceEntity = item, modifier = Modifier)
-                }
-            }
+        }
 
 
-            Spacer(
-                Modifier
-                    .padding(horizontal = 4.dp, vertical = 8.dp)
-                    .background(
-                        TransparentlyGray.copy(alpha = 0.1f),
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .fillMaxWidth()
-                    .height(1.dp)
+        Card(
+            colors = CardColors(
+                containerColor = TransparentlyGray,
+                contentColor = Color.Black,
+                disabledContainerColor = Color.Gray,
+                disabledContentColor = Color.Gray
             )
-
-            LazyColumn {
-                items(currencyPriceList) { item ->
-                    CurrencyPriceItemView(currencyPriceEntity = item, modifier = Modifier)
+        ) {
+            Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
+                LazyColumn {
+                    items(bitPriceList + goldPriceList + currencyPriceList) { item ->
+                        CurrencyPriceItemView(obj = item, modifier = Modifier)
+                    }
                 }
             }
-
         }
     }
 }
@@ -179,7 +199,7 @@ val currencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPric
 
 
 @Composable
-fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Modifier = Modifier) {
+fun CurrencyPriceItemView(obj: CurrencyPriceEntity, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .padding(vertical = 4.dp)
@@ -189,7 +209,7 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
 
         Box(contentAlignment = Alignment.CenterStart, modifier = modifier.weight(1.4f)) {
             Text(
-                text = currencyPriceEntity.currencyPrice + " " + currencyPriceEntity.currencyUnitType,
+                text = obj.currencyPrice + " " + obj.currencyUnitType,
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 style = CustomTypography.labelLarge,
@@ -206,9 +226,9 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = currencyPriceEntity.currencyChangePercent,
+                text = obj.currencyChangePercent,
                 modifier = modifier.align(Alignment.CenterStart),
-                color = currencyPriceEntity.currencyChangePercentColor,
+                color = obj.currencyChangePercentColor,
                 maxLines = 1,
                 style = CustomTypography.labelSmall,
                 textAlign = TextAlign.Center
@@ -218,7 +238,7 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
         Row(modifier = modifier.weight(1f), horizontalArrangement = Arrangement.End) {
 
             Text(
-                text = currencyPriceEntity.currencyName,
+                text = obj.currencyName,
                 style = CustomTypography.labelLarge,
                 maxLines = 1,
                 modifier = modifier
@@ -227,8 +247,8 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
 
 
             Image(
-                painter = painterResource(id = currencyPriceEntity.currencyFlagId),
-                contentDescription = currencyPriceEntity.currencyName,
+                painter = painterResource(id = obj.currencyFlagId),
+                contentDescription = obj.currencyName,
                 modifier = modifier
                     .size(28.dp)
                     .padding(4.dp)
@@ -237,6 +257,33 @@ fun CurrencyPriceItemView(currencyPriceEntity: CurrencyPriceEntity, modifier: Mo
 
 
     }
+
+
+    when (obj.currencyName) {
+        "تتر" -> {
+            CustomSpacer()
+        }
+
+        "سکه امامی" -> {
+            CustomSpacer()
+        }
+    }
+
+}
+
+
+@Composable
+fun CustomSpacer() {
+    Spacer(
+        Modifier
+            .padding(horizontal = 4.dp, vertical = 8.dp)
+            .background(
+                TransparentlyGray.copy(alpha = 0.1f),
+                shape = RoundedCornerShape(8.dp)
+            )
+            .fillMaxWidth()
+            .height(1.dp)
+    )
 }
 
 

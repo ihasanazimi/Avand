@@ -60,8 +60,10 @@ fun BottomNavigationBar(navController: NavController) {
             NavigationBarItem(
                 selected = selectedNavigationIndex.intValue == index,
                 onClick = {
-                    selectedNavigationIndex.intValue = index
-                    navController.navigate(item.route)
+                    if (selectedNavigationIndex.intValue != index){
+                        selectedNavigationIndex.intValue = index
+                        navController.navigate(item.route)
+                    }
                 },
                 icon = {
                     Icon(imageVector = item.icon, contentDescription = item.title)
