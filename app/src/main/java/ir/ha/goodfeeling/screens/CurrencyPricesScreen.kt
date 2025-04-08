@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -98,15 +99,11 @@ fun CurrencyPricesScreen() {
 
 
         Card(
-            colors = CardColors(
-                containerColor = Color.White,
-                contentColor = Color.Black,
-                disabledContainerColor = Color.Gray,
-                disabledContentColor = Color.Gray
-            ), border = BorderStroke(
+            colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(
                 2.dp,
                 TransparentlyBlue
-            )
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
         ) {
             Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
                 LazyColumn {

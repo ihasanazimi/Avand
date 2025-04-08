@@ -1,6 +1,9 @@
 package ir.ha.goodfeeling.screens.itemViews
 
+import android.content.Context
+import android.os.Build
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
@@ -38,9 +42,9 @@ data class SettingItem(
 
 
 val settingItems: ArrayList<SettingItem> = arrayListOf(
-    SettingItem(Icons.Default.Settings, "تنظیمات"),
-    SettingItem(Icons.Default.AccountBox, "درباره ما"),
-    SettingItem(Icons.Default.AccountBox, "آب و هوا")
+    SettingItem(Icons.Default.Settings, "اطلاعات حساب کاربری"),
+    SettingItem(Icons.Default.AccountBox, "درباره توسعه دهنده"),
+    SettingItem(Icons.Default.AccountBox, "نسخه 1.1.0")
 )
 
 
@@ -48,14 +52,19 @@ val settingItems: ArrayList<SettingItem> = arrayListOf(
 fun SettingItemView(settingItem: SettingItem) {
 
     Card(
-        Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        border = BorderStroke(
             2.dp,
             TransparentlyBlue
-        )
+        ),
+        modifier = Modifier
+            .padding(horizontal = 4.dp, vertical = 4.dp)
+            .clickable {
+                // todo
+            },
     ) {
-        Column {
+        Column(modifier = Modifier.fillMaxWidth()) {
 
             Row(
                 modifier = Modifier
