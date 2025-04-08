@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,48 +36,48 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
 
     val scrollState = rememberScrollState()
 
-    Column(
-        modifier = modifier
-            .verticalScroll(scrollState)
-            .height(800.dp)
-            .offset(
-                y = (-40).dp
-            )
-    ) {
-
-        Row(
-            modifier = Modifier
-                .offset(
-                    y = (24).dp
-                )
-                .fillMaxWidth()
-                .padding(end = 16.dp), verticalAlignment = Alignment.CenterVertically
+    Surface {
+        Column(
+            modifier = modifier
+                .verticalScroll(scrollState)
+                .height(800.dp)
+                .offset(y = (-40).dp)
         ) {
-            MyLottieAnimation(Modifier
+
+            Row(
+                modifier = Modifier
+                    .offset(
+                        y = (24).dp
+                    )
+                    .fillMaxWidth()
+                    .padding(end = 16.dp), verticalAlignment = Alignment.CenterVertically
+            ) {
+                MyLottieAnimation(Modifier
                     .height(134.dp)
                     .width(230.dp)
                     .weight(1f)
                     .graphicsLayer(rotationZ = 180f)
                     .graphicsLayer(rotationX = 180f))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = "سـلام",
-                    style = CustomTypography.labelSmall,
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(bottom = 4.dp)
-                )
-                Text(
-                    text = "حسن عظیمی",
-                    style = CustomTypography.titleLarge,
-                    modifier = Modifier.align(Alignment.End)
-                )
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = "سـلام",
+                        style = CustomTypography.labelSmall,
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(bottom = 4.dp)
+                    )
+                    Text(
+                        text = "حسن عظیمی",
+                        style = CustomTypography.titleLarge,
+                        modifier = Modifier.align(Alignment.End)
+                    )
+                }
             }
-        }
 
-        Column(modifier = modifier.padding(horizontal = 8.dp)) {
-            Widgets()
-            CurrencyPricesScreen()
+            Column(modifier = modifier.padding(horizontal = 8.dp)) {
+                Widgets()
+                CurrencyPricesScreen()
+            }
         }
     }
 }

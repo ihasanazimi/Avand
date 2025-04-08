@@ -1,5 +1,8 @@
 package ir.ha.goodfeeling.navigation
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -22,8 +25,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
+import ir.ha.goodfeeling.ui.theme.LightPrimary
+import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
+import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 import ir.ha.goodfeeling.ui.theme.TransparentlyGray
+import ir.ha.goodfeeling.ui.theme.TransparentlyWhite
 
 
 data class NavigationItem(
@@ -35,12 +43,12 @@ data class NavigationItem(
 
 val navigationItems = listOf(
     NavigationItem(
-        title = "Home",
+        title = "خانه",
         icon = Icons.Default.Home,
         route = Screens.Home.route
     ),
     NavigationItem(
-        title = "Setting",
+        title = "تنظیمات",
         icon = Icons.Default.Settings,
         route = Screens.Setting.route
     )
@@ -52,31 +60,36 @@ fun BottomNavigationBar(navController: NavController) {
     val selectedNavigationIndex = rememberSaveable { mutableIntStateOf(0) }
     NavigationBar(
         modifier = Modifier
-            .padding(8.dp)
-            .clip(RoundedCornerShape(16.dp)),
-        containerColor = TransparentlyGray
+            .padding(4.dp)
+            .clip(RoundedCornerShape(24.dp)).border(BorderStroke(2.dp, TransparentlyBlue), RoundedCornerShape(24.dp)),
+        containerColor = Color.White,
     ) {
         navigationItems.forEachIndexed { index, item ->
             NavigationBarItem(
                 selected = selectedNavigationIndex.intValue == index,
                 onClick = {
-                    if (selectedNavigationIndex.intValue != index){
+                    if (selectedNavigationIndex.intValue != index) {
                         selectedNavigationIndex.intValue = index
                         navController.navigate(item.route)
                     }
                 },
                 icon = {
-                    Icon(imageVector = item.icon, contentDescription = item.title)
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = item.title,
+                        tint = if (index == selectedNavigationIndex.intValue) LightPrimary else TransparentlyBlack
+                    )
                 },
                 label = {
                     Text(
                         item.title,
-                        color = if (index == selectedNavigationIndex.intValue) Color.Black else Color.Gray
+                        color = if (index == selectedNavigationIndex.intValue) LightPrimary else TransparentlyBlack,
+                        style = CustomTypography.labelSmall
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.surface,
-                    indicatorColor = MaterialTheme.colorScheme.primary
+                    selectedIconColor = TransparentlyBlack,
+                    indicatorColor = TransparentlyBlue
                 )
 
             )

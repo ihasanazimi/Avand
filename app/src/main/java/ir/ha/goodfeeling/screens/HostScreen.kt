@@ -2,6 +2,7 @@ package ir.ha.goodfeeling.screens
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,16 +26,18 @@ fun HostScreen() {
                 BottomNavigationBar(navController = hostNavController)
             }
         ) { innerPadding ->
-            NavHost(
-                navController = hostNavController,
-                startDestination = Screens.Home.route,
-                modifier = Modifier.padding(innerPadding)
-            ) {
-                composable(route = Screens.Home.route) {
-                    HomeScreen(modifier = Modifier, navController = hostNavController)
-                }
-                composable(route = Screens.Setting.route) {
-                    SettingScreen(modifier = Modifier, navController = hostNavController)
+            Surface {
+                NavHost(
+                    navController = hostNavController,
+                    startDestination = Screens.Home.route,
+                    modifier = Modifier.padding(innerPadding)
+                ) {
+                    composable(route = Screens.Home.route) {
+                        HomeScreen(modifier = Modifier, navController = hostNavController)
+                    }
+                    composable(route = Screens.Setting.route) {
+                        SettingScreen(modifier = Modifier, navController = hostNavController)
+                    }
                 }
             }
         }
