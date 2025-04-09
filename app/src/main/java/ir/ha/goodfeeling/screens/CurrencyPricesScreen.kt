@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,7 +42,9 @@ import ir.ha.goodfeeling.data.entities.CurrencyPriceEntity
 import ir.ha.goodfeeling.data.goldPriceList
 import ir.ha.goodfeeling.screens.itemViews.CurrencyPriceItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
+import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
+import ir.ha.goodfeeling.ui.theme.LightBackground
 import ir.ha.goodfeeling.ui.theme.LightPrimary
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 import ir.ha.goodfeeling.ui.theme.TransparentlyGray
@@ -49,66 +52,69 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 @Composable
 fun CurrencyPricesScreen() {
-    Column {
+    GoodFeelingTheme {
+        Column {
 
-        Row(
-            Modifier
-                .align(Alignment.End)
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-        ) {
+            Row(
+                Modifier
+                    .align(Alignment.End)
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+            ) {
 
 
-            Row {
-                Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = "refresh weather",
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .clip(CircleShape)
-                        .background(TransparentlyBlue)
-                        .size(28.dp)
-                        .padding(2.dp)
-                        .clickable {
-                            // todo
-                        },
-                    tint = LightPrimary
+                Row {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "refresh weather",
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .clip(CircleShape)
+                            .background(TransparentlyBlue)
+                            .size(28.dp)
+                            .padding(2.dp)
+                            .clickable {
+                                // todo
+                            },
+                        tint = LightPrimary
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "refresh weather",
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(TransparentlyBlue)
+                            .size(28.dp)
+                            .padding(5.dp)
+                            .clickable {
+                                // todo
+                            },
+                        tint = LightPrimary
+                    )
+                }
+
+                Text(
+                    text = "لیست قیمت ها :",
+                    style = CustomTypography.bodyLarge,
+                    modifier = Modifier.weight(1f)
                 )
-                Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = "refresh weather",
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(TransparentlyBlue)
-                        .size(28.dp)
-                        .padding(5.dp)
-                        .clickable {
-                            // todo
-                        },
-                    tint = LightPrimary
-                )
+
             }
 
-            Text(
-                text = "لیست قیمت ها :",
-                style = CustomTypography.bodyLarge,
-                modifier = Modifier.weight(1f)
-            )
+            val isDarkMode = isSystemInDarkTheme()
 
-        }
-
-
-        Card(
-            colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(
-                2.dp,
-                TransparentlyBlue
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-        ) {
-            Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
-                LazyColumn {
-                    items(bitPriceList + goldPriceList + currencyPriceList) { item ->
-                        CurrencyPriceItemView(obj = item, modifier = Modifier)
+            Card(
+                colors = CardDefaults.cardColors(containerColor = if (isDarkMode) DarkBackground else LightBackground), border = BorderStroke(
+                    2.dp,
+                    TransparentlyBlue
+                ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+            ) {
+                Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
+                    LazyColumn {
+                        items(bitPriceList + goldPriceList + currencyPriceList) { item ->
+                            CurrencyPriceItemView(obj = item, modifier = Modifier)
+                        }
                     }
                 }
             }

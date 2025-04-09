@@ -114,8 +114,7 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
                     modifier = Modifier
                         .weight(1f),
                     shape = RoundedCornerShape(10.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                    colors = CardDefaults.cardColors(containerColor = TransparentlyBlue.copy(0.1f)),
                     border = BorderStroke(
                         2.dp,
                         TransparentlyBlue
@@ -177,8 +176,7 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
 
                 Card(
                     shape = RoundedCornerShape(10.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                    colors = CardDefaults.cardColors(containerColor = TransparentlyBlue.copy(0.1f)),
                     border = BorderStroke(
                         2.dp,
                         TransparentlyBlue

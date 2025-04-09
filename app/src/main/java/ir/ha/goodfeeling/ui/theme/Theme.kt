@@ -3,6 +3,7 @@ package ir.ha.goodfeeling.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -10,6 +11,8 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+
+
 
 /** LIGHT */
 val LightColorScheme = lightColorScheme(
@@ -36,7 +39,6 @@ val DarkColorScheme = darkColorScheme(
 
 
 
-
 @Composable
 fun GoodFeelingTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -49,8 +51,12 @@ fun GoodFeelingTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        darkTheme -> LightColorScheme // todo check dark mode
-        else -> LightColorScheme
+        darkTheme -> {
+            LightColorScheme
+        }
+        else -> {
+            LightColorScheme
+        }
     }
 
     MaterialTheme(

@@ -35,8 +35,11 @@ import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.Gray
 import ir.ha.goodfeeling.ui.theme.LightBackground
 import ir.ha.goodfeeling.ui.theme.LightPrimary
+import ir.ha.goodfeeling.ui.theme.RedColor
+import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 import ir.ha.goodfeeling.ui.theme.TransparentlyGray
+import ir.ha.goodfeeling.ui.theme.TransparentlyWhite
 
 
 sealed class TimePickerFlag (val flag : String) {
@@ -80,14 +83,15 @@ fun ShowTimePickerDialog(
                 Button(
                     colors = ButtonDefaults.buttonColors(Color.Transparent),
                     onClick = { onDismiss() }) {
-                    Text("لغو", color = DarkerGray)
+                    Text("لغو", color = LightPrimary)
                 }
             }
         ) {
-            Column(modifier = modifier.padding(top = 4.dp)) {
+            Column(modifier = modifier.padding(vertical = 4.dp)) {
                 Text(
                     text = dialogTitle,
-                    modifier = modifier.align(Alignment.CenterHorizontally).padding(vertical = 16.dp)
+                    modifier = modifier.align(Alignment.CenterHorizontally).padding(vertical = 16.dp),
+                    color = LightPrimary
                 )
 
                 Box(
@@ -95,26 +99,26 @@ fun ShowTimePickerDialog(
                         .fillMaxWidth()
                         .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Gray)
+                        .background(TransparentlyBlue.copy(alpha = 0.1f))
                         .padding(24.dp)
                 ) {
                     TimePicker(
                         state = timePickerState,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         colors = TimePickerDefaults.colors(
-                            clockDialColor = Gray,
-                            clockDialSelectedContentColor = Color.White,
+                            clockDialColor = backgroundColor,
+                            clockDialSelectedContentColor = backgroundColor,
                             clockDialUnselectedContentColor = LightPrimary,
-                            selectorColor = TransparentlyBlue,
-                            containerColor = TransparentlyBlue,
-                            periodSelectorSelectedContainerColor = TransparentlyBlue,
-                            periodSelectorUnselectedContainerColor = Color.Transparent,
+                            selectorColor = LightPrimary,
+                            containerColor = LightPrimary,
+                            periodSelectorSelectedContainerColor = LightPrimary,
+                            periodSelectorUnselectedContainerColor = LightPrimary,
                             periodSelectorSelectedContentColor = LightPrimary,
                             periodSelectorUnselectedContentColor = LightPrimary,
                             timeSelectorSelectedContainerColor = LightPrimary,
-                            timeSelectorUnselectedContainerColor = TransparentlyGray,
-                            timeSelectorSelectedContentColor = DarkOnBackground,
-                            timeSelectorUnselectedContentColor = DarkerGray
+                            timeSelectorUnselectedContainerColor = TransparentlyBlue,
+                            timeSelectorSelectedContentColor = Color.White,
+                            timeSelectorUnselectedContentColor = Color.White
                         )
                     )
                 }

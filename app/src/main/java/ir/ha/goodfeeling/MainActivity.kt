@@ -28,10 +28,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GoodFillingApplication(navHostController: NavHostController) {
-    AppNavigator(
-        navController = navHostController  ,
-        introSkiped = false
-    )
+    GoodFeelingTheme {
+        AppNavigator(
+            navController = navHostController  ,
+            introSkiped = false
+        )
+    }
 }
 
 

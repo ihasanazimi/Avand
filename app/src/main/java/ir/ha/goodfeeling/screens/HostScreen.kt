@@ -1,5 +1,7 @@
 package ir.ha.goodfeeling.screens
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -12,7 +14,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.navigation.BottomNavigationBar
 import ir.ha.goodfeeling.navigation.Screens
+import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
+import ir.ha.goodfeeling.ui.theme.LightBackground
 
 @Composable
 fun HostScreen() {
@@ -21,7 +25,7 @@ fun HostScreen() {
         val hostNavController = rememberNavController()
 
         Scaffold(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.background(color = if (isSystemInDarkTheme()) DarkBackground else LightBackground),
             bottomBar = {
                 BottomNavigationBar(navController = hostNavController)
             }
@@ -43,8 +47,6 @@ fun HostScreen() {
         }
     }
 }
-
-
 
 
 @Preview(showBackground = true)

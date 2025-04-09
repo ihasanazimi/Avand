@@ -53,7 +53,7 @@ fun SettingItemView(settingItem: SettingItem) {
 
     Card(
         shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = TransparentlyBlue.copy(0.1f)),
         border = BorderStroke(
             2.dp,
             TransparentlyBlue
@@ -99,7 +99,6 @@ fun SettingItemView(settingItem: SettingItem) {
                                 .padding(start = 8.dp)
                                 .fillMaxWidth()
                                 .weight(0.8f),
-                            color = TransparentlyBlack
                         )
 
                         Icon(

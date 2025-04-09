@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,40 +23,37 @@ import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.data.entities.CityEntity
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.LightPrimary
+import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 @Composable
 fun CitiesItemView(city: CityEntity,onSelectedCity:(city  : CityEntity)->Unit) {
-    Log.i("CitiesItemView", "city : $city")
-    Surface {
-        Card(
+    Card(
+        modifier = Modifier
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .fillMaxWidth(),
+        border = BorderStroke(if (city.selected) 2.dp else 0.dp, LightPrimary),
+        colors = CardDefaults.cardColors(containerColor = TransparentlyBlue.copy(0.1f)),
+        onClick = {
+            onSelectedCity.invoke(city)
+        }
+    ) {
+        Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 4.dp)
-                .fillMaxWidth(),
-            border = BorderStroke(if (city.selected) 2.dp else 0.dp, LightPrimary),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
-            onClick = {
-                onSelectedCity.invoke(city)
-            }
+                .fillMaxWidth()
+                .height(56.dp)
         ) {
-            Row(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
+                    .padding(8.dp)
+                    .fillMaxSize(),
             ) {
-                Box(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
-                ) {
-                    Text(
-                        text = city.cityName,
-                        style = CustomTypography.bodyLarge.copy(
-                            textAlign = TextAlign.Center
-                        ),
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
+                Text(
+                    text = city.cityName,
+                    style = CustomTypography.bodyLarge.copy(
+                        textAlign = TextAlign.Center
+                    ),
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
         }
     }
