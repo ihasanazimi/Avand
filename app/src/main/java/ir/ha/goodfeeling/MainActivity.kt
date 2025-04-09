@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
 fun GoodFillingApplication(navHostController: NavHostController) {
     AppNavigator(
         navController = navHostController  ,
-        introSkiped = true
+        introSkiped = false
     )
 }
 

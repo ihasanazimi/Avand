@@ -60,7 +60,7 @@ fun ShowTimePickerDialog(
         val isDarkTheme = isSystemInDarkTheme()
         val backgroundColor = if (isDarkTheme) DarkBackground else LightBackground
         val timePickerState =
-            rememberTimePickerState(initialHour = 0, initialMinute = 0, is24Hour = false)
+            rememberTimePickerState(initialHour = 0, initialMinute = 0, is24Hour = true)
 
         DatePickerDialog(
             colors = DatePickerDefaults.colors(containerColor = backgroundColor),
