@@ -1,6 +1,7 @@
 package ir.ha.goodfeeling.data
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.data.entities.CityEntity
 import ir.ha.goodfeeling.data.entities.CurrencyPriceEntity
@@ -93,18 +94,26 @@ val currencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPric
 
 
 
-fun cities() = mutableStateListOf<CityEntity>(
-    CityEntity(cityName = "تهران", location = "", selected = false),
-    CityEntity(cityName = "کاشان", location = "", selected = false),
-    CityEntity(cityName = "اصفهان", location = "", selected = false),
-    CityEntity(cityName = "اهواز", location = "", selected = false),
-    CityEntity(cityName = "مازندران", location = "", selected = false),
-    CityEntity(cityName = "زنجان", location = "", selected = false),
-    CityEntity(cityName = "تبریز", location = "", selected = false),
-    CityEntity(cityName = "گلستان", location = "", selected = false),
-    CityEntity(cityName = "بروجرد", location = "", selected = false),
-    CityEntity(cityName = "یاسوج", location = "", selected = false),
-    CityEntity(cityName = "لرستان", location = "", selected = false),
-    CityEntity(cityName = "مشهد", location = "", selected = false),
-    CityEntity(cityName = "اردبیل", location = "", selected = false),
-)
+fun cities() : SnapshotStateList<CityEntity> {
+    val mutableStateListOf = mutableStateListOf<CityEntity>()
+    val _cities = arrayListOf<CityEntity>(
+        CityEntity(cityName = "تهران", location = "", selected = false),
+        CityEntity(cityName = "کاشان", location = "", selected = false),
+        CityEntity(cityName = "اصفهان", location = "", selected = false),
+        CityEntity(cityName = "اهواز", location = "", selected = false),
+        CityEntity(cityName = "مازندران", location = "", selected = false),
+        CityEntity(cityName = "زنجان", location = "", selected = false),
+        CityEntity(cityName = "تبریز", location = "", selected = false),
+        CityEntity(cityName = "گلستان", location = "", selected = false),
+        CityEntity(cityName = "بروجرد", location = "", selected = false),
+        CityEntity(cityName = "یاسوج", location = "", selected = false),
+        CityEntity(cityName = "لرستان", location = "", selected = false),
+        CityEntity(cityName = "مشهد", location = "", selected = false),
+        CityEntity(cityName = "اردبیل", location = "", selected = false),
+    )
+    val temp = _cities.sortedBy { it.selected }
+    temp.forEach {
+        mutableStateListOf.add(it)
+    }
+    return mutableStateListOf
+}

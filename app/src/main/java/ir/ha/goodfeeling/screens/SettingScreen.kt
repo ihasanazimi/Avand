@@ -1,5 +1,6 @@
 package ir.ha.goodfeeling.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -262,12 +264,14 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
 
         }
 
+        SideEffect {
+            Log.i("TAG", "SettingScreen: ")
+        }
 
         CitiesModalBottomSheet(
             citiesSnapshotList = cities(),
             isOpen = citiesModalOpenState,
         ){ returnedCity ->
-            Toast.makeText(context,returnedCity.cityName, Toast.LENGTH_LONG).show()
             selectedCity = returnedCity
             citiesModalOpenState = false
         }

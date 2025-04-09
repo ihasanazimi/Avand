@@ -1,7 +1,6 @@
 package ir.ha.goodfeeling.screens.bottom_sheets
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,19 +8,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,22 +33,28 @@ import ir.ha.goodfeeling.data.entities.CityEntity
 import ir.ha.goodfeeling.screens.itemViews.CitiesItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CitiesModalBottomSheet(
     citiesSnapshotList: SnapshotStateList<CityEntity>,
-    isOpen : Boolean,
-    onSelectedCity: (city: CityEntity) -> Unit
+    isOpen: Boolean,
+    onSelectedCity: (city: CityEntity?) -> Unit
 ) {
-    val sheetState =  rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState()
     var citiesList = remember { citiesSnapshotList }
     val context = LocalContext.current
+
+    // تعریف LazyListState برای کنترل اسکرول
+    val lazyListState = rememberLazyListState()
 
     if (isOpen) {
         Column(modifier = Modifier.fillMaxWidth()) {
             ModalBottomSheet(
-                onDismissRequest = {  },
+                onDismissRequest = {
+                    onSelectedCity.invoke(null)
+                },
                 sheetState = sheetState,
             ) {
                 Column(
@@ -58,7 +63,7 @@ fun CitiesModalBottomSheet(
                         .padding(8.dp)
                 ) {
 
-                    CitiesModal(citiesList) { updatedList -> citiesList = updatedList }
+                    CitiesModal(citiesList, lazyListState) { updatedList -> citiesList = updatedList }
 
                     Button(
                         modifier = Modifier
@@ -66,9 +71,10 @@ fun CitiesModalBottomSheet(
                             .fillMaxWidth()
                             .height(56.dp),
                         onClick = {
-                            onSelectedCity.invoke(
-                                citiesList.find { it.selected }!!
-                            )
+                            val selectedCity = citiesList.find { it.selected }
+                            if (selectedCity != null) {
+                                onSelectedCity.invoke(selectedCity)
+                            }
                         }) {
 
                         Box(
@@ -87,32 +93,35 @@ fun CitiesModalBottomSheet(
             }
         }
     }
-
-/*
-    Button(onClick = {
-        isSheetOpen = true
-    }) {
-        Text("باز کردن Bottom Sheet")
-    }*/
-
 }
 
 @Composable
 private fun CitiesModal(
     citiesState: SnapshotStateList<CityEntity>,
+    lazyListState: LazyListState, // دریافت LazyListState
     updatedList: (updatedList: SnapshotStateList<CityEntity>) -> Unit
 ) {
+    
+    val rememberCoroutineScope = rememberCoroutineScope()
 
     LazyColumn(
-        modifier = Modifier.fillMaxWidth().height(250.dp)
+        state = lazyListState, // تخصیص LazyListState به LazyColumn
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(250.dp)
     ) {
-        items(citiesState) { city ->
+        itemsIndexed(citiesState) { index, city ->  // استفاده از itemsIndexed
             CitiesItemView(city) { selectedCity ->
                 citiesState.forEachIndexed { i, _ ->
                     citiesState[i] =
                         citiesState[i].copy(selected = citiesState[i].cityName == selectedCity.cityName)
                 }
                 updatedList.invoke(citiesState)
+
+                rememberCoroutineScope.launch {
+                    Log.i("CitiesModal", "CitiesModal: $index")
+                    lazyListState.animateScrollToItem(index)
+                }
             }
         }
     }
@@ -125,7 +134,7 @@ private fun CitiesModal(
 private fun CitiesModalBottomSheetPreview() {
     GoodFeelingTheme {
         CitiesModalBottomSheet(citiesSnapshotList = cities(), isOpen = true) {
-            Log.i("CitiesModalBottomSheetPreview", "CitiesModalBottomSheetPreview: ${it.cityName}")
+            Log.i("CitiesModalBottomSheetPreview", "CitiesModalBottomSheetPreview: ${it?.cityName}")
         }
     }
 }
