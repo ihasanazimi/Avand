@@ -25,6 +25,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.DarkBackground
+import ir.ha.goodfeeling.ui.theme.DarkerGray
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.Gray
 import ir.ha.goodfeeling.ui.theme.LightBackground
@@ -76,13 +77,13 @@ fun BottomNavigationBar(navController: NavController) {
                     Icon(
                         imageVector = item.icon,
                         contentDescription = item.title,
-                        tint = if (index == selectedNavigationIndex.intValue) LightPrimary else Gray
+                        tint = if (index == selectedNavigationIndex.intValue) LightPrimary else TransparentlyBlue
                     )
                 },
                 label = {
                     Text(
                         item.title,
-                        color = if (index == selectedNavigationIndex.intValue) LightPrimary else Gray,
+                        color = if (index == selectedNavigationIndex.intValue) LightPrimary else TransparentlyBlue,
                         style = CustomTypography.labelSmall
                     )
                 },
