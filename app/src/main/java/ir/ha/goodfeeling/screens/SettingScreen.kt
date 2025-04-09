@@ -1,7 +1,7 @@
 package ir.ha.goodfeeling.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -40,6 +41,9 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import ir.ha.goodfeeling.data.cities
+import ir.ha.goodfeeling.data.entities.CityEntity
+import ir.ha.goodfeeling.screens.bottom_sheets.CitiesModalBottomSheet
 import ir.ha.goodfeeling.screens.itemViews.SettingItemView
 import ir.ha.goodfeeling.screens.itemViews.settingItems
 import ir.ha.goodfeeling.ui.theme.CustomTypography
@@ -51,9 +55,15 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 @Composable
 fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
+
+    val context = LocalContext.current
+
     Surface {
 
         val userName by remember { mutableStateOf("حسن عظیمی") }
+        var citiesModalOpenState by remember { mutableStateOf(false) }
+        var selectedCity by remember { mutableStateOf<CityEntity?>(null) }
+
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -117,7 +127,7 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
                         verticalArrangement = Arrangement.Center
                     ) {
 
-                        var checked by remember { mutableStateOf(true) }
+                        var notificationCheckedToggle by remember { mutableStateOf(true) }
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -138,14 +148,14 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
                                     lineHeight = TextUnit(20f, TextUnitType.Sp)
                                 )
                                 Text(
-                                    text = if (checked) "بله" else "خیر",
+                                    text = if (notificationCheckedToggle) "بله" else "خیر",
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(vertical = 8.dp),
                                     style = CustomTypography.labelSmall.copy(
                                         textAlign = TextAlign.Start,
                                     ),
-                                    color = if (checked) LightPrimary else RedColor,
+                                    color = if (notificationCheckedToggle) LightPrimary else RedColor,
                                     lineHeight = TextUnit(20f, TextUnitType.Sp)
                                 )
                             }
@@ -153,8 +163,8 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
 
                             Checkbox(
                                 colors = CheckboxDefaults.colors(checkedColor = LightPrimary),
-                                checked = checked,
-                                onCheckedChange = { checked = it }
+                                checked = notificationCheckedToggle,
+                                onCheckedChange = { notificationCheckedToggle = it }
                             )
                         }
 
@@ -173,10 +183,10 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
                     ),
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = 4.dp)
-                        .clickable {
-                            // todo
-                        },
+                        .padding(start = 4.dp),
+                    onClick = {
+                        citiesModalOpenState = true
+                    }
                 ) {
                     Column(
                         modifier = Modifier
@@ -212,7 +222,7 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = "تهران",
+                                        text = selectedCity?.cityName?:"....",
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(vertical = 8.dp),
@@ -251,8 +261,20 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
             }
 
         }
+
+
+        CitiesModalBottomSheet(
+            citiesSnapshotList = cities(),
+            isOpen = citiesModalOpenState,
+        ){ returnedCity ->
+            Toast.makeText(context,returnedCity.cityName, Toast.LENGTH_LONG).show()
+            selectedCity = returnedCity
+            citiesModalOpenState = false
+        }
+
     }
 }
+
 
 
 @Preview(showBackground = true)

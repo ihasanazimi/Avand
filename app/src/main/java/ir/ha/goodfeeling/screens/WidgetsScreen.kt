@@ -58,7 +58,7 @@ fun Widgets() {
     ) {
         Row(
             Modifier
-                .height(260.dp)
+                .height(240.dp)
                 .background(Color.Transparent)
         ) {
 
