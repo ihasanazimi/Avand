@@ -80,7 +80,7 @@ fun TopBar(userName: String) {
     Surface {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth().padding(top = 12.dp)
         ) {
 
             Row(

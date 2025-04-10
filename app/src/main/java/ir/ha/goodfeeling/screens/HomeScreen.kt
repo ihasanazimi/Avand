@@ -21,16 +21,18 @@ import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 @Composable
 fun HomeScreen(navController: NavController) {
 
+    val scrollState = rememberScrollState()
+
     GoodFeelingTheme {
         Surface {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                /*.height(800.dp)*/
-                /*.verticalScroll(rememberScrollState())*/
-                .padding(horizontal = 8.dp)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 8.dp)
             ) {
                 Widgets()
                 CurrencyPricesScreen()
+                NewsScreen()
             }
         }
     }
