@@ -31,7 +31,7 @@ fun GoodFillingApplication(navHostController: NavHostController) {
     GoodFeelingTheme {
         AppNavigator(
             navController = navHostController  ,
-            introSkiped = false
+            introSkiped = true
         )
     }
 }

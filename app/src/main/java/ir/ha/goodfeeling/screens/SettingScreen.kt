@@ -1,7 +1,6 @@
 package ir.ha.goodfeeling.screens
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,8 +31,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,58 +52,20 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 
 @Composable
-fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
-
-    val context = LocalContext.current
+fun SettingScreen(navController: NavController) {
 
     Surface {
 
-        val userName by remember { mutableStateOf("حسن عظیمی") }
+        val context = LocalContext.current
         var citiesModalOpenState by remember { mutableStateOf(false) }
         var selectedCity by remember { mutableStateOf<CityEntity?>(null) }
 
-
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
+        Column(modifier = Modifier.fillMaxSize()) {
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 16.dp), verticalAlignment = Alignment.CenterVertically
-            ) {
-                MyLottieAnimation(
-                    Modifier
-                        .height(134.dp)
-                        .width(230.dp)
-                        .weight(1f)
-                        .graphicsLayer(rotationZ = 180f)
-                        .graphicsLayer(rotationX = 180f)
-                )
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = "سـلام",
-                        style = CustomTypography.labelSmall,
-                        modifier = Modifier
-                            .align(Alignment.End)
-                            .padding(bottom = 4.dp)
-                    )
-                    Text(
-                        text = userName,
-                        style = CustomTypography.titleLarge,
-                        modifier = Modifier.align(Alignment.End)
-                    )
-                }
-            }
-
-
-            Row(
-                modifier = Modifier
-                    .padding(start = 12.dp, end = 12.dp, bottom = 4.dp)
-                    .fillMaxWidth()
-                    .height(80.dp)
+                    .fillMaxWidth().height(100.dp)
+                    .padding(start = 12.dp, end = 12.dp, bottom = 4.dp, top = 8.dp)
             ) {
 
                 Card(
@@ -222,7 +180,7 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = selectedCity?.cityName?:"....",
+                                        text = selectedCity?.cityName ?: "....",
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(vertical = 8.dp),
@@ -260,30 +218,27 @@ fun SettingScreen(modifier: Modifier = Modifier, navController: NavController) {
                 }
             }
 
-        }
 
-        SideEffect {
-            Log.i("TAG", "SettingScreen: ")
-        }
+            SideEffect {
+                Log.i("TAG", "SettingScreen: ")
+            }
 
-        CitiesModalBottomSheet(
-            citiesSnapshotList = cities(),
-            isOpen = citiesModalOpenState,
-        ){ returnedCity ->
-            selectedCity = returnedCity
-            citiesModalOpenState = false
+            CitiesModalBottomSheet(
+                citiesSnapshotList = cities(),
+                isOpen = citiesModalOpenState,
+            ) { returnedCity ->
+                selectedCity = returnedCity
+                citiesModalOpenState = false
+            }
         }
-
     }
 }
-
 
 
 @Preview(showBackground = true)
 @Composable
 fun SettingScreenPreview() {
     GoodFeelingTheme {
-        val navController = rememberNavController()
-        SettingScreen(Modifier, navController)
+        SettingScreen(rememberNavController())
     }
 }

@@ -58,7 +58,7 @@ fun CurrencyPricesScreen() {
             Row(
                 Modifier
                     .align(Alignment.End)
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
                     .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
 

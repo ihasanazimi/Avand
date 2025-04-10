@@ -53,11 +53,11 @@ fun NavGraphBuilder.hostNestedGraph(navController: NavHostController){
         }
 
         composable(Screens.Home.route) {
-            HomeScreen(modifier = Modifier, navController)
+            HomeScreen(navController)
         }
 
         composable(Screens.Setting.route) {
-            SettingScreen(modifier = Modifier, navController)
+            SettingScreen(navController)
         }
     }
 }

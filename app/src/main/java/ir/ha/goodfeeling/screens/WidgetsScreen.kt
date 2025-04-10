@@ -59,7 +59,7 @@ fun Widgets() {
         val whetherIsLoading by remember{ mutableStateOf(false) }
 
         Card(
-            modifier = Modifier.padding(vertical = 8.dp),
+            modifier = Modifier,
             colors = CardDefaults.cardColors(containerColor = if (isDarkMode) DarkBackground else LightBackground),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         ) {
