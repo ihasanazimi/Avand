@@ -1,5 +1,6 @@
 package ir.ha.goodfeeling.screens
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,8 +14,8 @@ import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 @Composable
 fun NewsScreen() {
     GoodFeelingTheme {
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(getNewsFakeData()) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            getNewsFakeData().forEach {
                 NewsItemView(it)
             }
         }

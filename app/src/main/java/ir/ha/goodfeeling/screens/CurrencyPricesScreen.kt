@@ -95,21 +95,15 @@ fun CurrencyPricesScreen() {
 
             Card(
                 colors = CardDefaults.cardColors(containerColor = if (isDarkMode) DarkBackground else LightBackground),
-                border = BorderStroke(
-                    2.dp,
-                    TransparentlyBlue
-                ),
+                border = BorderStroke(2.dp, TransparentlyBlue),
                 elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
             ) {
                 Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
-                    LazyColumn {
-                        items(bitPriceList + goldPriceList + currencyPriceList) { item ->
-                            CurrencyPriceItemView(obj = item, modifier = Modifier)
-                        }
+                    (bitPriceList + goldPriceList + currencyPriceList).forEach { item ->
+                        CurrencyPriceItemView(obj = item, modifier = Modifier)
                     }
                 }
             }
-
 
             Box(
                 modifier = Modifier
@@ -126,12 +120,9 @@ fun CurrencyPricesScreen() {
                     textAlign = TextAlign.Center
                 )
             }
-
-
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

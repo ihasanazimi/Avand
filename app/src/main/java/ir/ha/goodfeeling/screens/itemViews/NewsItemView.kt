@@ -1,7 +1,9 @@
 package ir.ha.goodfeeling.screens.itemViews
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +15,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -32,24 +37,29 @@ import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.data.NewsItemEntity
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
+import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 @Composable
 fun NewsItemView(newsItemEntity: NewsItemEntity) {
     Surface {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .padding(bottom = 8.dp, start = 8.dp, end = 8.dp, top = 8.dp)
+                .fillMaxWidth()
+                .border(2.dp, TransparentlyBlue, RoundedCornerShape(16.dp))
+        ) {
             Card(
                 modifier = Modifier
-                    .padding(start = 8.dp, end = 8.dp, top = 8.dp)
                     .fillMaxWidth(),
-                shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp)
+                shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp),
             ) {
                 Image(
                     painter = painterResource(newsItemEntity.cover),
                     contentDescription = newsItemEntity.title,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(180.dp),
+                        .height(200.dp),
                     alignment = Alignment.Center,
                     contentScale = ContentScale.Crop
                 )
@@ -63,7 +73,9 @@ fun NewsItemView(newsItemEntity: NewsItemEntity) {
                 ) {
                     Text(
                         text = newsItemEntity.title,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
                         style = CustomTypography.titleLarge
                     )
                 }
@@ -110,14 +122,17 @@ fun NewsItemView(newsItemEntity: NewsItemEntity) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        Image(
-                            painter = painterResource(R.drawable.seen),
+                        Icon(
+                            imageVector = Icons.Default.Face,
+                            contentDescription = "share prices",
                             modifier = Modifier
-                                .size(28.dp)
                                 .clip(CircleShape)
                                 .background(TransparentlyGray)
-                                .padding(4.dp),
-                            contentDescription = "seen",
+                                .size(28.dp)
+                                .padding(5.dp)
+                                .clickable {
+                                    // todo
+                                },
                         )
 
                         Text(
@@ -155,7 +170,7 @@ private fun NewsItemViewPreview() {
     GoodFeelingTheme {
         NewsItemView(
             NewsItemEntity(
-                cover = R.drawable.tara,
+                cover = R.drawable.hormoz,
                 title = "بازار خودرو تهران",
                 description = "از 700 کیلومتر دورتر آمده بود و سودای خرید اتومبیل شخصی داشت. به یکی از مراکز خرید و فروش خودرو در تهران رفته بود و با فرض اینکه یکی از بهترین ماشین\u200Cهای بازار خودرو را پیدا کرده برای عقد قرارداد و نوشتن قولنامه دست به جیب شده بود و بیعانه سنگینی پرداخت کرده بود غافل از آنکه طرف حسابش دلالی خبره یا بهتر بگوییم کلاهبرداری با سابقه است.",
                 link = "link"
