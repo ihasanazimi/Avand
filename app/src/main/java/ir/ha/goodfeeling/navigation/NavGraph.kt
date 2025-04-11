@@ -1,12 +1,12 @@
 package ir.ha.goodfeeling.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import ir.ha.goodfeeling.screens.AboutUsScreen
 import ir.ha.goodfeeling.screens.HomeScreen
 import ir.ha.goodfeeling.screens.HostScreen
 import ir.ha.goodfeeling.screens.IntroScreen
@@ -42,6 +42,10 @@ fun NavGraphBuilder.introNestedGraph(navController: NavHostController){
         composable(Screens.Scheduling.route) {
             SchedulingScreen(navController)
         }
+
+        composable(Screens.AboutUs.route) {
+            AboutUsScreen(navController)
+        }
     }
 }
 
@@ -49,7 +53,7 @@ fun NavGraphBuilder.introNestedGraph(navController: NavHostController){
 fun NavGraphBuilder.hostNestedGraph(navController: NavHostController){
     navigation(startDestination = Screens.Host.route , route = "hostGraph") {
         composable(Screens.Host.route) {
-            HostScreen()
+            HostScreen(navController)
         }
 
         composable(Screens.Home.route) {

@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.LightPrimary
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
@@ -38,18 +40,22 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 data class SettingItem(
     val icon: ImageVector,
     val title: String,
+    val type: Screens?,
 )
 
 
 val settingItems: ArrayList<SettingItem> = arrayListOf(
-    SettingItem(Icons.Default.Settings, "اطلاعات حساب کاربری"),
-    SettingItem(Icons.Default.AccountBox, "درباره توسعه دهنده"),
-    SettingItem(Icons.Default.AccountBox, "نسخه 1.1.0")
+    SettingItem(Icons.Default.Settings, "اطلاعات حساب کاربری", Screens.Setting),
+    SettingItem(Icons.Default.AccountBox, "درباره توسعه دهنده", Screens.AboutUs),
+    SettingItem(Icons.Default.Info, "نسخه 1.1.0", null)
 )
 
 
 @Composable
-fun SettingItemView(settingItem: SettingItem) {
+fun SettingItemView(
+    settingItem: SettingItem,
+    onItemClicked: (type : Screens?) -> Unit = {}
+) {
 
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -64,7 +70,9 @@ fun SettingItemView(settingItem: SettingItem) {
                 // todo
             },
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onItemClicked(settingItem.type) }) {
 
             Row(
                 modifier = Modifier

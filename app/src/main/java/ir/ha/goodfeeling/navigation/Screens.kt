@@ -7,4 +7,6 @@ sealed class Screens(val route: String) {
     object Host : Screens("host")
     object Home : Screens("home")
     object Setting : Screens("setting")
+    object AboutUs : Screens("about_us")
+
 }

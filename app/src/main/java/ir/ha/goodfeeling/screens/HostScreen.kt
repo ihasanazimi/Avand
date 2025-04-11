@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
@@ -23,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -40,7 +40,7 @@ import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.LightBackground
 
 @Composable
-fun HostScreen() {
+fun HostScreen(navController: NavHostController) {
     GoodFeelingTheme {
 
         val userName by remember { mutableStateOf("حسن عظیمی") }
@@ -63,10 +63,10 @@ fun HostScreen() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable(route = Screens.Home.route) {
-                            HomeScreen(navController = hostNavController)
+                            HomeScreen(navController = navController)
                         }
                         composable(route = Screens.Setting.route) {
-                            SettingScreen(navController = hostNavController)
+                            SettingScreen(navController = navController)
                         }
                     }
                 }
@@ -140,6 +140,6 @@ fun MyLottieAnimation(modifier: Modifier) {
 @Composable
 fun HostScreenPreview() {
     GoodFeelingTheme {
-        HostScreen()
+        HostScreen(rememberNavController())
     }
 }

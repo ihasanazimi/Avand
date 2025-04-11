@@ -41,6 +41,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.data.cities
 import ir.ha.goodfeeling.data.entities.CityEntity
+import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.screens.bottom_sheets.CitiesModalBottomSheet
 import ir.ha.goodfeeling.screens.itemViews.SettingItemView
 import ir.ha.goodfeeling.screens.itemViews.settingItems
@@ -205,7 +206,6 @@ fun SettingScreen(navController: NavController) {
 
             }
 
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -213,7 +213,19 @@ fun SettingScreen(navController: NavController) {
             ) {
                 LazyColumn {
                     items(settingItems) {
-                        SettingItemView(it)
+                        SettingItemView(it){ type ->
+                            when(type){
+                                Screens.Setting -> {
+
+                                }
+                                Screens.AboutUs -> {
+                                    navController.navigate(Screens.AboutUs.route)
+                                }
+                                else -> {
+                                    Log.i("TAG", "SettingScreen: ${type?.route}")
+                                }
+                            }
+                        }
                     }
                 }
             }
