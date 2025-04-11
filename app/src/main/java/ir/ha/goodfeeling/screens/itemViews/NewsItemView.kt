@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.R
-import ir.ha.goodfeeling.data.NewsItemEntity
+import ir.ha.goodfeeling.data.entities.NewsItemEntity
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
@@ -45,7 +45,7 @@ fun NewsItemView(newsItemEntity: NewsItemEntity) {
     Surface {
         Column(
             modifier = Modifier
-                .padding(bottom = 8.dp, start = 8.dp, end = 8.dp, top = 8.dp)
+                .padding(bottom = 8.dp, top = 8.dp)
                 .fillMaxWidth()
                 .border(2.dp, TransparentlyBlue, RoundedCornerShape(16.dp))
         ) {

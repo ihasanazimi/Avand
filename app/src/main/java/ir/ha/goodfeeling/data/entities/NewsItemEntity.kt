@@ -1,4 +1,4 @@
-package ir.ha.goodfeeling.data
+package ir.ha.goodfeeling.data.entities
 
 data class NewsItemEntity(
     val cover : Int,

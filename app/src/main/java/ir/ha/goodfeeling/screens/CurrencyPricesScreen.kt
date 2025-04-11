@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,6 +33,7 @@ import ir.ha.goodfeeling.data.bitPriceList
 import ir.ha.goodfeeling.data.currencyPriceList
 import ir.ha.goodfeeling.data.goldPriceList
 import ir.ha.goodfeeling.screens.itemViews.CurrencyPriceItemView
+import ir.ha.goodfeeling.screens.itemViews.CustomSpacer
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
@@ -43,82 +45,87 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 @Composable
 fun CurrencyPricesScreen() {
     GoodFeelingTheme {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Surface {
+            Column(modifier = Modifier.fillMaxWidth()) {
 
-            Row(
-                Modifier
-                    .align(Alignment.End)
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
-                    .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-            ) {
+                Row(
+                    Modifier
+                        .align(Alignment.End)
+                        .padding(horizontal = 16.dp, vertical = 12.dp)
+                        .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+                ) {
 
 
-                Row {
-                    Icon(
-                        imageVector = Icons.Default.Refresh,
-                        contentDescription = "refresh prices",
-                        modifier = Modifier
-                            .padding(end = 8.dp)
-                            .clip(CircleShape)
-                            .background(TransparentlyBlue)
-                            .size(28.dp)
-                            .padding(2.dp)
-                            .clickable {
-                                // todo
-                            },
-                        tint = LightPrimary
+                    Row {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = "refresh prices",
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .clip(CircleShape)
+                                .background(TransparentlyBlue)
+                                .size(28.dp)
+                                .padding(2.dp)
+                                .clickable {
+                                    // todo
+                                },
+                            tint = LightPrimary
+                        )
+                        Icon(
+                            imageVector = Icons.Default.Share,
+                            contentDescription = "share prices",
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(TransparentlyBlue)
+                                .size(28.dp)
+                                .padding(5.dp)
+                                .clickable {
+                                    // todo
+                                },
+                            tint = LightPrimary
+                        )
+                    }
+
+                    Text(
+                        text = "لیست قیمت ها :",
+                        style = CustomTypography.bodyLarge,
+                        modifier = Modifier.weight(1f)
                     )
-                    Icon(
-                        imageVector = Icons.Default.Share,
-                        contentDescription = "share prices",
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .background(TransparentlyBlue)
-                            .size(28.dp)
-                            .padding(5.dp)
-                            .clickable {
-                                // todo
-                            },
-                        tint = LightPrimary
-                    )
+
                 }
 
-                Text(
-                    text = "لیست قیمت ها :",
-                    style = CustomTypography.bodyLarge,
-                    modifier = Modifier.weight(1f)
-                )
+                val isDarkMode = isSystemInDarkTheme()
 
-            }
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = if (isDarkMode) DarkBackground else LightBackground),
+                    border = BorderStroke(2.dp, TransparentlyBlue),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+                ) {
+                    Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
+                        (bitPriceList + goldPriceList + currencyPriceList).forEach { item ->
+                            CurrencyPriceItemView(obj = item, modifier = Modifier)
+                        }
 
-            val isDarkMode = isSystemInDarkTheme()
 
-            Card(
-                colors = CardDefaults.cardColors(containerColor = if (isDarkMode) DarkBackground else LightBackground),
-                border = BorderStroke(2.dp, TransparentlyBlue),
-                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-            ) {
-                Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
-                    (bitPriceList + goldPriceList + currencyPriceList).forEach { item ->
-                        CurrencyPriceItemView(obj = item, modifier = Modifier)
+                        CustomSpacer()
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(32.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                text = "مشاهده بیشتر",
+                                style = CustomTypography.labelSmall.copy(color = LightPrimary),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(Alignment.Center),
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                     }
                 }
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "مشاهده بیشتر..",
-                    style = CustomTypography.labelSmall,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Center),
-                    textAlign = TextAlign.Center
-                )
             }
         }
     }

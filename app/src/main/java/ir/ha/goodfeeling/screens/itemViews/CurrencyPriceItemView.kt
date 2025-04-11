@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,78 +32,76 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 @Composable
 fun CurrencyPriceItemView(obj: CurrencyPriceEntity, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .padding(vertical = 4.dp)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Absolute.SpaceBetween
-    ) {
 
-        Box(contentAlignment = Alignment.CenterStart, modifier = modifier.weight(1.4f)) {
-            Text(
-                text = obj.currencyPrice + " " + obj.currencyUnitType,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                style = CustomTypography.labelLarge,
-                modifier = modifier
-                    .padding(4.dp)
-            )
-        }
-
-        Box(
+    GoodFeelingTheme {
+        Row(
             modifier = modifier
-                .fillMaxHeight()
-                .align(Alignment.CenterVertically)
-                .weight(0.3f),
-            contentAlignment = Alignment.Center
+                .padding(vertical = 4.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Absolute.SpaceBetween
         ) {
-            Text(
-                text = obj.currencyChangePercent,
-                modifier = modifier.align(Alignment.CenterStart),
-                color = obj.currencyChangePercentColor,
-                maxLines = 1,
-                style = CustomTypography.labelSmall,
-                textAlign = TextAlign.Center
-            )
-        }
 
-        Row(modifier = modifier.weight(1f), horizontalArrangement = Arrangement.End) {
+            Box(contentAlignment = Alignment.CenterStart, modifier = modifier.weight(1.4f)) {
+                Text(
+                    text = obj.currencyPrice + " " + obj.currencyUnitType,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    style = CustomTypography.labelLarge,
+                    modifier = modifier
+                        .padding(4.dp)
+                )
+            }
 
-            Text(
-                text = obj.currencyName,
-                style = CustomTypography.labelLarge,
-                maxLines = 1,
+            Box(
                 modifier = modifier
-                    .padding(4.dp)
-            )
+                    .align(Alignment.CenterVertically)
+                    .weight(0.3f),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = obj.currencyChangePercent,
+                    modifier = modifier.align(Alignment.CenterStart),
+                    color = obj.currencyChangePercentColor,
+                    maxLines = 1,
+                    style = CustomTypography.labelSmall,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            Row(modifier = modifier.weight(1f), horizontalArrangement = Arrangement.End) {
+
+                Text(
+                    text = obj.currencyName,
+                    style = CustomTypography.labelLarge,
+                    maxLines = 1,
+                    modifier = modifier
+                        .padding(4.dp)
+                )
 
 
-            Image(
-                painter = painterResource(id = obj.currencyFlagId),
-                contentDescription = obj.currencyName,
-                modifier = modifier
-                    .size(28.dp)
-                    .padding(4.dp)
-            )
+                Image(
+                    painter = painterResource(id = obj.currencyFlagId),
+                    contentDescription = obj.currencyName,
+                    modifier = modifier
+                        .size(28.dp)
+                        .padding(4.dp)
+                )
+            }
+
+
         }
 
+        when (obj.currencyName) {
+            "تتر" -> {
+                CustomSpacer()
+            }
 
+            "سکه امامی" -> {
+                CustomSpacer()
+            }
+        }
     }
-
-
-    when (obj.currencyName) {
-        "تتر" -> {
-            CustomSpacer()
-        }
-
-        "سکه امامی" -> {
-            CustomSpacer()
-        }
-    }
-
 }
-
-
 
 
 @Composable

@@ -5,6 +5,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.data.entities.CityEntity
 import ir.ha.goodfeeling.data.entities.CurrencyPriceEntity
+import ir.ha.goodfeeling.data.entities.NewsItemEntity
 import ir.ha.goodfeeling.data.entities.OccasionsOfTheDayEntity
 import ir.ha.goodfeeling.ui.theme.GreenColor
 import ir.ha.goodfeeling.ui.theme.RedColor
