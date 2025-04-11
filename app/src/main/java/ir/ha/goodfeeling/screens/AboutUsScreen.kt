@@ -80,7 +80,7 @@ fun AboutUsScreen(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(24.dp),
                 elevation = CardDefaults.cardElevation(8.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
+                colors = CardDefaults.cardColors()
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -120,7 +120,7 @@ fun AboutUsScreen(
                             painter = painterResource(id = R.drawable.github),
                             contentDescription = null,
                             modifier = Modifier
-                                .size(32.dp)
+                                .size(35.dp)
                                 .clickable {
                                     onGithubClick.invoke()
                                 }
