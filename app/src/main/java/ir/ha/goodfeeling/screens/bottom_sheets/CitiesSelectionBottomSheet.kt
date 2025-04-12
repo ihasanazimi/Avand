@@ -140,7 +140,7 @@ private fun CitiesModal(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.Transparent)
-            .height(300.dp)
+            .height(220.dp)
     ) {
         itemsIndexed(citiesState) { index, city ->
             CitiesItemView(city) { selectedItem ->
