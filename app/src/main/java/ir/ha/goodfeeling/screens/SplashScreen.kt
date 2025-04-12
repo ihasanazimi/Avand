@@ -9,6 +9,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,6 +20,7 @@ import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.LightPrimary
+import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
@@ -29,12 +32,13 @@ fun SplashScreen(navController: NavHostController) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(LightPrimary), contentAlignment = Alignment.Center
+                    .background(TransparentlyBlue), contentAlignment = Alignment.Center
             ) {
                 Image(
                     painter = painterResource(R.drawable.golden_coin),
                     contentDescription = "splash screen",
-                    modifier = Modifier.size(200.dp)
+                    modifier = Modifier.size(200.dp),
+                    colorFilter = ColorFilter.tint(LightPrimary)
                 )
             }
 

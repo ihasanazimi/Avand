@@ -29,10 +29,8 @@ import ir.ha.goodfeeling.ui.theme.LightPrimary
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 @Composable
-fun NewsScreen(news: ArrayList<NewsItemEntity>) {
+fun NewsScreen(news: ArrayList<NewsItemEntity> , takeCount: Int = 3) {
     GoodFeelingTheme {
-
-        val takeCount = 3
 
         Surface {
             Column(modifier = Modifier.fillMaxWidth()) {
