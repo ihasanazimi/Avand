@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ir.ha.goodfeeling.data.entities.NewsItemEntity
-import ir.ha.goodfeeling.data.getNewsFakeData
+import ir.ha.goodfeeling.data.getFakeNews
 import ir.ha.goodfeeling.screens.itemViews.NewsItemView
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 
@@ -26,6 +26,6 @@ fun NewsScreen(news : ArrayList<NewsItemEntity>) {
 @Composable
 private fun NewsScreenPreview() {
     GoodFeelingTheme {
-        NewsScreen(getNewsFakeData())
+        NewsScreen(getFakeNews())
     }
 }

@@ -1,6 +1,7 @@
 package ir.ha.goodfeeling.data.entities
 
 import androidx.compose.ui.graphics.Color
+import ir.ha.goodfeeling.data.CurrencyType
 
 data class CurrencyPriceEntity(
     val currencyName: String,
@@ -8,5 +9,5 @@ data class CurrencyPriceEntity(
     val currencyPrice: String,
     val currencyChangePercent: String,
     val currencyChangePercentColor: Color,
-    val currencyUnitType: String = " تومان "
+    val currencyUnitType: CurrencyType = CurrencyType.Toman
 )

@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.R
+import ir.ha.goodfeeling.data.CurrencyType
 import ir.ha.goodfeeling.data.entities.CurrencyPriceEntity
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
@@ -43,7 +44,7 @@ fun CurrencyPriceItemView(obj: CurrencyPriceEntity, modifier: Modifier = Modifie
 
             Box(contentAlignment = Alignment.CenterStart, modifier = modifier.weight(1.4f)) {
                 Text(
-                    text = obj.currencyPrice + " " + obj.currencyUnitType,
+                    text = obj.currencyPrice + " " + obj.currencyUnitType.unitType,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     style = CustomTypography.labelLarge,
@@ -59,7 +60,7 @@ fun CurrencyPriceItemView(obj: CurrencyPriceEntity, modifier: Modifier = Modifie
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = obj.currencyChangePercent,
+                    text = obj.currencyChangePercent + " % ",
                     modifier = modifier.align(Alignment.CenterStart),
                     color = obj.currencyChangePercentColor,
                     maxLines = 1,
@@ -119,12 +120,9 @@ fun CustomSpacer(modifier: Modifier = Modifier) {
 }
 
 
-
-
-
 @Preview
 @Composable
-fun CurrencyPriceItemViewPreview(){
+fun CurrencyPriceItemViewPreview() {
     GoodFeelingTheme {
         CurrencyPriceItemView(
             CurrencyPriceEntity(
@@ -133,7 +131,7 @@ fun CurrencyPriceItemViewPreview(){
                 currencyPrice = "103,250",
                 currencyChangePercent = "3.1" + " % ",
                 currencyChangePercentColor = GreenColor,
-                currencyUnitType = " $ "
+                currencyUnitType = CurrencyType.Toman
             ),
             modifier = Modifier
         )

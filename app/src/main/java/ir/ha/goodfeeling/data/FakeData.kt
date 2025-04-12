@@ -11,91 +11,90 @@ import ir.ha.goodfeeling.ui.theme.GreenColor
 import ir.ha.goodfeeling.ui.theme.RedColor
 
 
-val occasionsOfTheDayList: ArrayList<OccasionsOfTheDayEntity> = arrayListOf<OccasionsOfTheDayEntity>(
-    OccasionsOfTheDayEntity("روز بزرگداشت فردوسی", isHoliday = true),
-    OccasionsOfTheDayEntity("روز جوان", isHoliday = false),
-    OccasionsOfTheDayEntity("روز مهندس", isHoliday = false),
-)
+val fakeOccasionsOfTheDayList: ArrayList<OccasionsOfTheDayEntity> =
+    arrayListOf<OccasionsOfTheDayEntity>(
+        OccasionsOfTheDayEntity("روز بزرگداشت فردوسی", isHoliday = true),
+        OccasionsOfTheDayEntity("روز جوان", isHoliday = false),
+        OccasionsOfTheDayEntity("روز مهندس", isHoliday = false),
+    )
 
 
-
-val bitPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
+val fakeBitPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
     CurrencyPriceEntity(
         currencyName = "بیت کوین",
         currencyFlagId = R.drawable.bitcoin,
-        currencyPrice = "103,250",
-        currencyChangePercent = "3.1" + " % ",
+        currencyPrice = "83,250",
+        currencyChangePercent = "3.1",
         currencyChangePercentColor = GreenColor,
-        currencyUnitType = " $ "
+        currencyUnitType = CurrencyType.Dollar
     ),
     CurrencyPriceEntity(
         currencyName = "اتریوم",
         currencyFlagId = R.drawable.ethereum,
-        currencyPrice = "103,250",
-        currencyChangePercent = "1.8" + " % ",
+        currencyPrice = "1,750",
+        currencyChangePercent = "1.8",
         currencyChangePercentColor = RedColor,
-        currencyUnitType = " $ "
+        currencyUnitType = CurrencyType.Dollar
     ),
     CurrencyPriceEntity(
         currencyName = "تتر",
         currencyFlagId = R.drawable.tether,
-        currencyPrice = "103,250",
-        currencyChangePercent = "2.5" + " % ",
+        currencyPrice = "99,850",
+        currencyChangePercent = "2.5",
         currencyChangePercentColor = RedColor,
-        currencyUnitType = "تومان"
+        currencyUnitType = CurrencyType.Toman
     )
 )
 
 
-val goldPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
+val fakeGoldPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
     CurrencyPriceEntity(
         currencyName = "طلا 18 عیار",
         currencyFlagId = R.drawable.gold,
-        currencyPrice = "8,100,370",
-        currencyChangePercent = "5.1" + " % ",
+        currencyPrice = "7,775,000",
+        currencyChangePercent = "5.1",
         currencyChangePercentColor = GreenColor,
-        currencyUnitType = " تومان "
+        currencyUnitType = CurrencyType.Toman
     ),
     CurrencyPriceEntity(
         currencyName = "سکه امامی",
         currencyFlagId = R.drawable.golden_coin,
         currencyPrice = "98,103,250",
-        currencyChangePercent = "1.8" + " % ",
+        currencyChangePercent = "1.8",
         currencyChangePercentColor = RedColor,
-        currencyUnitType = " تومان "
+        currencyUnitType = CurrencyType.Toman
     )
 )
 
-val currencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
+val fakeCurrencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPriceEntity>(
     CurrencyPriceEntity(
         currencyName = "دلار",
         currencyFlagId = R.drawable.us,
-        currencyPrice = "103,250",
-        currencyChangePercent = "3.1" + " % ",
+        currencyPrice = "99,250",
+        currencyChangePercent = "3.1",
         currencyChangePercentColor = RedColor,
-        currencyUnitType = "تومان"
+        currencyUnitType = CurrencyType.Toman
     ),
     CurrencyPriceEntity(
         currencyName = "یورو",
         currencyFlagId = R.drawable.euro,
-        currencyPrice = "103,250",
-        currencyChangePercent = "1.8" + " % ",
+        currencyPrice = "106,250",
+        currencyChangePercent = "1.8",
         currencyChangePercentColor = GreenColor,
-        currencyUnitType = "تومان"
+        currencyUnitType = CurrencyType.Toman
     ),
     CurrencyPriceEntity(
         currencyName = "پوند",
         currencyFlagId = R.drawable.england,
-        currencyPrice = "103,250",
-        currencyChangePercent = "2.5" + " % ",
+        currencyPrice = "108,150",
+        currencyChangePercent = "2.5",
         currencyChangePercentColor = RedColor,
-        currencyUnitType = "تومان"
+        currencyUnitType = CurrencyType.Toman
     )
 )
 
 
-
-fun cities() : SnapshotStateList<CityEntity> {
+fun getFakeCitiesList(): SnapshotStateList<CityEntity> {
     val mutableStateListOf = mutableStateListOf<CityEntity>()
     val _cities = arrayListOf<CityEntity>(
         CityEntity(cityName = "تهران", location = "", selected = false),
@@ -120,25 +119,29 @@ fun cities() : SnapshotStateList<CityEntity> {
 }
 
 
-
-
-fun getNewsFakeData() = arrayListOf<NewsItemEntity>(
+fun getFakeNews() = arrayListOf<NewsItemEntity>(
     NewsItemEntity(
         cover = R.drawable.tara,
-        title = "افزایش 35 درصدی خودرو",
-        description = "از 700 کیلومتر دورتر آمده بود و سودای خرید اتومبیل شخصی داشت. به یکی از مراکز خرید و فروش خودرو در تهران رفته بود و با فرض اینکه یکی از بهترین ماشین\u200Cهای بازار خودرو را پیدا کرده برای عقد قرارداد و نوشتن قولنامه دست به جیب شده بود و بیعانه سنگینی پرداخت کرده بود غافل از آنکه طرف حسابش دلالی خبره یا بهتر بگوییم کلاهبرداری با سابقه است.",
-        link = "link"
+        title = "افزایش ۴۰ درصدی قیمت خودرو در ایران",
+        description = "رئیس اتحادیه نمایشگاه‌داران و فروشندگان خودروی تهران اعلام کرد که قیمت خودرو در ایران طی یک ماه گذشته ۴۰ درصد افزایش یافته است. این افزایش عمدتاً به دلیل محدودیت در عرضه خودرو و افزایش نرخ ارز بوده است.",
+        link = "https://www.trt.net.tr/persian/yrn/2023/01/09/qymt-khwdrw-dr-yrn-40-drsd-fzysh-yft-1929991",
+        seenCount = 4,
+        timeAgo = "2 روز پیش"
     ),
     NewsItemEntity(
         cover = R.drawable.hormoz,
         title = "خاک هرمزگان به غارت رفت",
-        description = "از 700 کیلومتر دورتر آمده بود و سودای خرید اتومبیل شخصی داشت. به یکی از مراکز خرید و فروش خودرو در تهران رفته بود و با فرض اینکه یکی از بهترین ماشین\u200Cهای بازار خودرو را پیدا کرده برای عقد قرارداد و نوشتن قولنامه دست به جیب شده بود و بیعانه سنگینی پرداخت کرده بود غافل از آنکه طرف حسابش دلالی خبره یا بهتر بگوییم کلاهبرداری با سابقه است.",
-        link = "link"
+        description = "گزارش‌ها حاکی از آن است که در استان هرمزگان، برداشت غیرمجاز خاک ساحلی توسط برخی شرکت‌ها و افراد سودجو صورت گرفته است. این اقدام باعث نگرانی‌های زیست‌محیطی و اعتراض فعالان محیط زیست شده است.",
+        link = "https://www.isna.ir/news/1401120503003",
+        seenCount = 896,
+        timeAgo = "2 روز پیش"
     ),
     NewsItemEntity(
         cover = R.drawable.dolat,
         title = "آخرین اخبار مذاکرات مستقیم",
-        description = "از 700 کیلومتر دورتر آمده بود و سودای خرید اتومبیل شخصی داشت. به یکی از مراکز خرید و فروش خودرو در تهران رفته بود و با فرض اینکه یکی از بهترین ماشین\u200Cهای بازار خودرو را پیدا کرده برای عقد قرارداد و نوشتن قولنامه دست به جیب شده بود و بیعانه سنگینی پرداخت کرده بود غافل از آنکه طرف حسابش دلالی خبره یا بهتر بگوییم کلاهبرداری با سابقه است.",
-        link = "link"
+        description = "در جریان مذاکرات اخیر، مقامات ایرانی و نمایندگان کشورهای غربی به بررسی راه‌های احیای توافق هسته‌ای پرداختند. این مذاکرات با هدف کاهش تنش‌ها و بازگشت به تعهدات قبلی انجام شده است.",
+        link = "https://www.irna.ir/news/85012345",
+        seenCount = 1830,
+        timeAgo = "2 روز پیش"
     )
 )

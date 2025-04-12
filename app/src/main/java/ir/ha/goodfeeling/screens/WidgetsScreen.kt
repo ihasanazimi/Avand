@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.R
-import ir.ha.goodfeeling.data.occasionsOfTheDayList
+import ir.ha.goodfeeling.data.fakeOccasionsOfTheDayList
 import ir.ha.goodfeeling.screens.itemViews.OccasionItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.DarkBackground
@@ -321,7 +321,7 @@ fun Widgets() {
                                         .background(TransparentlyGray),
                                     verticalArrangement = Arrangement.Center
                                 ) {
-                                    items(occasionsOfTheDayList) { item ->
+                                    items(fakeOccasionsOfTheDayList) { item ->
                                         OccasionItemView(occasionsOfTheDay = item)
                                     }
                                 }

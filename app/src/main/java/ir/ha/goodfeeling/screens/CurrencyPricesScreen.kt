@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -29,9 +27,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ir.ha.goodfeeling.data.bitPriceList
-import ir.ha.goodfeeling.data.currencyPriceList
-import ir.ha.goodfeeling.data.goldPriceList
+import ir.ha.goodfeeling.data.fakeBitPriceList
+import ir.ha.goodfeeling.data.fakeCurrencyPriceList
+import ir.ha.goodfeeling.data.fakeGoldPriceList
 import ir.ha.goodfeeling.screens.itemViews.CurrencyPriceItemView
 import ir.ha.goodfeeling.screens.itemViews.CustomSpacer
 import ir.ha.goodfeeling.ui.theme.CustomTypography
@@ -102,7 +100,7 @@ fun CurrencyPricesScreen() {
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
                 ) {
                     Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
-                        (bitPriceList + goldPriceList + currencyPriceList).forEach { item ->
+                        (fakeBitPriceList + fakeGoldPriceList + fakeCurrencyPriceList).forEach { item ->
                             CurrencyPriceItemView(obj = item, modifier = Modifier)
                         }
 

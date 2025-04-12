@@ -28,7 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ir.ha.goodfeeling.data.cities
+import ir.ha.goodfeeling.data.getFakeCitiesList
 import ir.ha.goodfeeling.data.entities.CityEntity
 import ir.ha.goodfeeling.screens.itemViews.CitiesItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
@@ -145,7 +145,7 @@ private fun CitiesModal(
 @Composable
 private fun CitiesModalBottomSheetPreview() {
     GoodFeelingTheme {
-        CitiesModalBottomSheet(citiesSnapshotList = cities(), isOpen = true) {
+        CitiesModalBottomSheet(citiesSnapshotList = getFakeCitiesList(), isOpen = true) {
             Log.i("CitiesModalBottomSheetPreview", "CitiesModalBottomSheetPreview: ${it?.cityName}")
         }
     }

@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import ir.ha.goodfeeling.data.cities
+import ir.ha.goodfeeling.data.getFakeCitiesList
 import ir.ha.goodfeeling.data.entities.CityEntity
 import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.screens.bottom_sheets.CitiesModalBottomSheet
@@ -236,7 +236,7 @@ fun SettingScreen(navController: NavController) {
             }
 
             CitiesModalBottomSheet(
-                citiesSnapshotList = cities(),
+                citiesSnapshotList = getFakeCitiesList(),
                 isOpen = citiesModalOpenState,
             ) { returnedCity ->
                 selectedCity = returnedCity

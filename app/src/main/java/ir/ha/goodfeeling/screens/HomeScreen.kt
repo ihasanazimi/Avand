@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import ir.ha.goodfeeling.data.getNewsFakeData
+import ir.ha.goodfeeling.data.getFakeNews
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,7 +28,7 @@ fun HomeScreen(navController: NavController) {
             ) {
                 item { Widgets() }
                 item { CurrencyPricesScreen() }
-                item { NewsScreen(getNewsFakeData()) }
+                item { NewsScreen(getFakeNews()) }
             }
         }
     }
