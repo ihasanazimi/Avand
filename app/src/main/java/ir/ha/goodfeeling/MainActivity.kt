@@ -30,8 +30,7 @@ class MainActivity : ComponentActivity() {
 fun GoodFillingApplication(navHostController: NavHostController) {
     GoodFeelingTheme {
         AppNavigator(
-            navController = navHostController  ,
-            introSkiped = true
+            navController = navHostController
         )
     }
 }

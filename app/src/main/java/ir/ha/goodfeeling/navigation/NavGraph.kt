@@ -13,24 +13,31 @@ import ir.ha.goodfeeling.screens.IntroScreen
 import ir.ha.goodfeeling.screens.NameRegisterScreen
 import ir.ha.goodfeeling.screens.SchedulingScreen
 import ir.ha.goodfeeling.screens.SettingScreen
+import ir.ha.goodfeeling.screens.SplashScreen
 
+
+val splashNavGraph = "splashGraph"
+val hostNavGraph = "hostGraph"
 
 @Composable
-fun AppNavigator(navController: NavHostController , introSkiped : Boolean) {
+fun AppNavigator(navController: NavHostController) {
 
-    val startDestination = if (introSkiped) "hostGraph" else "introGraph"
-
-    NavHost(navController = navController, startDestination = startDestination ) {
-        introNestedGraph(navController)
-        hostNestedGraph(navController)
+    NavHost(navController = navController, startDestination = splashNavGraph ) {
+        splashGraph(navController)
+        hostGraph(navController)
     }
 
 }
 
 
 
-fun NavGraphBuilder.introNestedGraph(navController: NavHostController){
-    navigation(startDestination = Screens.Intro.route , route = "introGraph") {
+fun NavGraphBuilder.splashGraph(navController: NavHostController){
+    navigation(startDestination = Screens.Splash.route , route = splashNavGraph) {
+
+        composable(Screens.Splash.route) {
+            SplashScreen(navController)
+        }
+
         composable(Screens.Intro.route) {
             IntroScreen(navController)
         }
@@ -50,8 +57,8 @@ fun NavGraphBuilder.introNestedGraph(navController: NavHostController){
 }
 
 
-fun NavGraphBuilder.hostNestedGraph(navController: NavHostController){
-    navigation(startDestination = Screens.Host.route , route = "hostGraph") {
+fun NavGraphBuilder.hostGraph(navController: NavHostController){
+    navigation(startDestination = Screens.Host.route , route = hostNavGraph) {
         composable(Screens.Host.route) {
             HostScreen(navController)
         }

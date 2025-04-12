@@ -1,6 +1,7 @@
 package ir.ha.goodfeeling.navigation
 
 sealed class Screens(val route: String) {
+    object Splash : Screens("splash")
     object Intro : Screens("intro")
     object NameRegister : Screens("name_register")
     object Scheduling : Screens("scheduling")

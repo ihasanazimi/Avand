@@ -43,6 +43,7 @@ import ir.ha.goodfeeling.data.getFakeCitiesList
 import ir.ha.goodfeeling.data.entities.CityEntity
 import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.screens.bottom_sheets.CitiesModalBottomSheet
+import ir.ha.goodfeeling.screens.bottom_sheets.UserProfileBottomSheet
 import ir.ha.goodfeeling.screens.itemViews.SettingItemView
 import ir.ha.goodfeeling.screens.itemViews.settingItems
 import ir.ha.goodfeeling.ui.theme.CustomTypography
@@ -59,6 +60,8 @@ fun SettingScreen(navController: NavController) {
 
         val context = LocalContext.current
         var citiesModalOpenState by remember { mutableStateOf(false) }
+        var userProfileModalOpenState by remember { mutableStateOf(false) }
+        var userName by remember { mutableStateOf("Hasan Azimi") }
         var selectedCity by remember { mutableStateOf<CityEntity?>(getFakeCitiesList().find { it.selected }) }
 
         Column(modifier = Modifier.fillMaxSize()) {
@@ -221,7 +224,7 @@ fun SettingScreen(navController: NavController) {
                         SettingItemView(it) { type ->
                             when (type) {
                                 Screens.Setting -> {
-
+                                    userProfileModalOpenState = true
                                 }
 
                                 Screens.AboutUs -> {
@@ -250,6 +253,13 @@ fun SettingScreen(navController: NavController) {
                 selectedCity = returnedCity
                 citiesModalOpenState = false
             }
+
+
+            UserProfileBottomSheet(lastUserName = userName, isOpen = userProfileModalOpenState) {
+                userName = it
+                userProfileModalOpenState = false
+            }
+            
         }
     }
 }
