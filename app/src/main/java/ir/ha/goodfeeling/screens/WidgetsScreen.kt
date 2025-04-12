@@ -56,7 +56,7 @@ fun Widgets() {
     GoodFeelingTheme {
 
         val isDarkMode = isSystemInDarkTheme()
-        val whetherIsLoading by remember{ mutableStateOf(false) }
+        val whetherIsLoading by remember { mutableStateOf(false) }
 
         Card(
             modifier = Modifier,
@@ -157,7 +157,7 @@ fun Widgets() {
 
                         }
 
-                        if (whetherIsLoading){
+                        if (whetherIsLoading) {
                             Column(
                                 Modifier
                                     .fillMaxSize()
@@ -262,7 +262,9 @@ fun Widgets() {
                         shape = RoundedCornerShape(20.dp)
                     ) {
                         Column(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(GreenColor),
                             verticalArrangement = Arrangement.Center
                         ) {
 
@@ -270,7 +272,7 @@ fun Widgets() {
                                 modifier = Modifier
                                     .weight(0.4f)
                                     .fillMaxWidth()
-                                    .background(GreenColor),
+                                    .background(TransparentlyBlack),
                                 contentAlignment = Alignment.CenterEnd
                             ) {
                                 Text(
@@ -290,7 +292,6 @@ fun Widgets() {
                                 Box(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier
-                                        .background(GreenColor.copy(alpha = 0.2f))
                                         .fillMaxSize()
                                         .alpha(1f)
                                 ) {

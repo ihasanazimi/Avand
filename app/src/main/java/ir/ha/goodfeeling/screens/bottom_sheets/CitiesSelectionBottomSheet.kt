@@ -18,6 +18,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -42,17 +43,24 @@ fun CitiesModalBottomSheet(
     isOpen: Boolean,
     onSelectedCity: (city: CityEntity?) -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var citiesList = remember { citiesSnapshotList }
     val context = LocalContext.current
 
     val lazyListState = rememberLazyListState()
 
+
+    LaunchedEffect(isOpen) {
+        if (isOpen) {
+            sheetState.expand()
+        }
+    }
+
     if (isOpen) {
         Column(modifier = Modifier.fillMaxWidth()) {
             ModalBottomSheet(
                 onDismissRequest = {
-                    onSelectedCity.invoke(null)
+                    onSelectedCity.invoke(citiesList.find { it.selected })
                 },
                 sheetState = sheetState,
             ) {
@@ -120,7 +128,7 @@ private fun CitiesModal(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.Transparent)
-            .height(200.dp)
+            .height(300.dp)
     ) {
         itemsIndexed(citiesState) { index, city ->  // استفاده از itemsIndexed
             CitiesItemView(city) { selectedCity ->

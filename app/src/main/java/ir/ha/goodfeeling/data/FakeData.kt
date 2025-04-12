@@ -97,7 +97,7 @@ val fakeCurrencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<Currency
 fun getFakeCitiesList(): SnapshotStateList<CityEntity> {
     val mutableStateListOf = mutableStateListOf<CityEntity>()
     val _cities = arrayListOf<CityEntity>(
-        CityEntity(cityName = "تهران", location = "", selected = false),
+        CityEntity(cityName = "تهران", location = "", selected = true),
         CityEntity(cityName = "کاشان", location = "", selected = false),
         CityEntity(cityName = "اصفهان", location = "", selected = false),
         CityEntity(cityName = "اهواز", location = "", selected = false),
@@ -111,7 +111,7 @@ fun getFakeCitiesList(): SnapshotStateList<CityEntity> {
         CityEntity(cityName = "مشهد", location = "", selected = false),
         CityEntity(cityName = "اردبیل", location = "", selected = false),
     )
-    val temp = _cities.sortedBy { it.selected }
+    val temp = _cities.sortedBy { it.cityName }
     temp.forEach {
         mutableStateListOf.add(it)
     }

@@ -59,13 +59,14 @@ fun SettingScreen(navController: NavController) {
 
         val context = LocalContext.current
         var citiesModalOpenState by remember { mutableStateOf(false) }
-        var selectedCity by remember { mutableStateOf<CityEntity?>(null) }
+        var selectedCity by remember { mutableStateOf<CityEntity?>(getFakeCitiesList().find { it.selected }) }
 
         Column(modifier = Modifier.fillMaxSize()) {
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth().height(100.dp)
+                    .fillMaxWidth()
+                    .height(100.dp)
                     .padding(start = 12.dp, end = 12.dp, bottom = 4.dp, top = 8.dp)
             ) {
 
@@ -105,7 +106,8 @@ fun SettingScreen(navController: NavController) {
                                     style = CustomTypography.labelSmall.copy(
                                         textAlign = TextAlign.Start,
                                     ),
-                                    lineHeight = TextUnit(20f, TextUnitType.Sp)
+                                    lineHeight = TextUnit(20f, TextUnitType.Sp),
+                                    maxLines = 1
                                 )
                                 Text(
                                     text = if (notificationCheckedToggle) "بله" else "خیر",
@@ -116,7 +118,8 @@ fun SettingScreen(navController: NavController) {
                                         textAlign = TextAlign.Start,
                                     ),
                                     color = if (notificationCheckedToggle) LightPrimary else RedColor,
-                                    lineHeight = TextUnit(20f, TextUnitType.Sp)
+                                    lineHeight = TextUnit(20f, TextUnitType.Sp),
+                                    maxLines = 1
                                 )
                             }
 
@@ -172,7 +175,8 @@ fun SettingScreen(navController: NavController) {
                                     style = CustomTypography.labelSmall.copy(
                                         textAlign = TextAlign.Start,
                                     ),
-                                    lineHeight = TextUnit(20f, TextUnitType.Sp)
+                                    lineHeight = TextUnit(20f, TextUnitType.Sp),
+                                    maxLines = 1
                                 )
 
                                 Row(
@@ -181,11 +185,12 @@ fun SettingScreen(navController: NavController) {
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = selectedCity?.cityName ?: "....",
+                                        text = selectedCity?.cityName ?: "",
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(vertical = 8.dp),
-                                        color = LightPrimary
+                                        color = LightPrimary,
+                                        maxLines = 1
                                     )
                                 }
 
@@ -213,14 +218,16 @@ fun SettingScreen(navController: NavController) {
             ) {
                 LazyColumn {
                     items(settingItems) {
-                        SettingItemView(it){ type ->
-                            when(type){
+                        SettingItemView(it) { type ->
+                            when (type) {
                                 Screens.Setting -> {
 
                                 }
+
                                 Screens.AboutUs -> {
                                     navController.navigate(Screens.AboutUs.route)
                                 }
+
                                 else -> {
                                     Log.i("TAG", "SettingScreen: ${type?.route}")
                                 }

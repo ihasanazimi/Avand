@@ -91,19 +91,22 @@ fun AboutUsScreen(
                         horizontalArrangement = Arrangement.SpaceAround,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.linkedin),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(32.dp)
-                                .clickable {
-                                    onLinkedinClick.invoke()
-                                }
-                        )
+
+                        Card(modifier = Modifier.size(38.dp), shape = RoundedCornerShape(4.dp)) {
+                            Image(
+                                painter = painterResource(id = R.drawable.linkedin),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clickable {
+                                        onLinkedinClick.invoke()
+                                    }
+                            )
+                        }
 
                         Box(
                             modifier = Modifier
-                                .size(100.dp)
+                                .size(130.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(Color.LightGray),
                             contentAlignment = Alignment.Center
@@ -116,33 +119,35 @@ fun AboutUsScreen(
                             )
                         }
 
-                        Image(
-                            painter = painterResource(id = R.drawable.github),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(35.dp)
-                                .clickable {
-                                    onGithubClick.invoke()
-                                }
-                        )
+                        Card(modifier = Modifier.size(42.dp), shape = RoundedCornerShape(4.dp)) {
+                            Image(
+                                painter = painterResource(id = R.drawable.github),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clickable {
+                                        onGithubClick.invoke()
+                                    }
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(24.dp))
 
                     Text(
-                        "سلام! من حسن عظیمی هستم، توسعه\u200Cدهنده\u200Cی اندروید. چند سالی می\u200Cشه که وارد دنیای برنامه\u200Cنویسی موبایل شدم و از همون روز اول، با علاقه و پشتکار سعی کردم اپلیکیشن\u200Cهایی بسازم که علاوه بر کارایی، تجربه\u200Cی خوبی برای کاربرها فراهم کنن.\n" +
+                        "سلام! من حسن عظیمی هستم، توسعه\u200Cدهنده\u200Cی اندروید." +
                                 "\n" +
-                                "در این مسیر، افتخار همکاری با شرکت\u200Cها و تیم\u200Cهای حرفه\u200Cای زیادی رو داشتم. تجربه\u200Cهایی مثل مشارکت در توسعه\u200Cی اپلیکیشن\u200Cهای بزرگ سازمانی، سیستم\u200Cهای خدمات شهری، پلتفرم\u200Cهای مالی و پروژه\u200Cهایی مثل کیف پول دیجیتال، سامانه\u200Cهای سلامت و اپلیکیشن\u200Cهای خدماتی، کمکم کرده نگاه عمیق\u200Cتری به توسعه و طراحی نرم\u200Cافزار داشته باشم.\n" +
+                                "چند سالی است که در حوزه\u200Cی برنامه\u200Cنویسی موبایل فعالیت می\u200Cکنم و با تمرکز بر ایجاد اپلیکیشن\u200Cهایی کاربرمحور، تجربه\u200Cهای متنوعی در پروژه\u200Cهای مختلف کسب کرده\u200Cام. همکاری با تیم\u200Cها و شرکت\u200Cهای بزرگ در توسعه\u200Cی اپلیکیشن\u200Cهای سازمانی، خدمات شهری و پلتفرم\u200Cهای مالی، دیدگاه من را نسبت به طراحی و توسعه\u200Cی نرم\u200Cافزار عمیق\u200Cتر کرده است.\u200B\n" +
                                 "\n" +
-                                "برام مهمه که اپلیکیشنی که می\u200Cسازم، فقط یه ابزار نباشه؛ بلکه تجربه\u200Cای مثبت و کاربردی برای مخاطب ایجاد کنه.\n" +
-                                "همچنان در حال یادگیری\u200Cام و به این مسیر علاقه\u200Cمندم — چون هر پروژه\u200Cی جدید، فرصتیه برای بهتر شدن.\n" +
+                                "همواره در تلاش هستم تا با یادگیری مستمر، اپلیکیشن\u200Cهایی بسازم که فراتر از یک ابزار، تجربه\u200Cای مثبت و کاربردی برای کاربران فراهم کنند.\u200B\n" +
                                 "\n" +
-                                "ممنونم که به من و اپلیکیشنم اعتماد کردی \uD83C\uDF31\n" +
+                                "از اعتماد شما به من و اپلیکیشنم سپاسگزارم.\u200B\n" +
+                                "\n" +
                                 "با احترام،\n" +
                                 "حسن عظیمی",
                         style = CustomTypography.labelSmall,
                         lineHeight = TextUnit(
-                            20f,
+                            22f,
                             TextUnitType.Sp
                         )
                     )
@@ -153,7 +158,9 @@ fun AboutUsScreen(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Button(
-                            modifier = modifier.fillMaxWidth(),
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .height(56.dp),
                             onClick = onMessageClick,
                             colors = ButtonDefaults.buttonColors(containerColor = LightPrimary)
                         ) {
