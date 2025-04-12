@@ -245,6 +245,7 @@ fun SettingScreen(navController: NavController) {
             CitiesModalBottomSheet(
                 citiesSnapshotList = getFakeCitiesList(),
                 isOpen = citiesModalOpenState,
+                selectedCity = selectedCity
             ) { returnedCity ->
                 selectedCity = returnedCity
                 citiesModalOpenState = false
