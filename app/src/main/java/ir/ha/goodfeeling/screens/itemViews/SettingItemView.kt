@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,7 +32,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.navigation.Screens
+import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
+import ir.ha.goodfeeling.ui.theme.LightBackground
 import ir.ha.goodfeeling.ui.theme.LightPrimary
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
@@ -59,7 +62,7 @@ fun SettingItemView(
 
     Card(
         shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(containerColor = TransparentlyBlue.copy(0.1f)),
+        colors = CardDefaults.cardColors(containerColor = if (isSystemInDarkTheme()) DarkBackground else LightBackground),
         border = BorderStroke(
             2.dp,
             TransparentlyBlue

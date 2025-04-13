@@ -23,7 +23,7 @@ val fakeBitPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPrice
     CurrencyPriceEntity(
         currencyName = "بیت کوین",
         currencyFlagId = R.drawable.bitcoin,
-        currencyPrice = "83,250",
+        currencyPrice = "83250",
         currencyChangePercent = "3.1",
         currencyChangePercentColor = GreenColor,
         currencyUnitType = CurrencyType.Dollar
@@ -31,7 +31,7 @@ val fakeBitPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPrice
     CurrencyPriceEntity(
         currencyName = "اتریوم",
         currencyFlagId = R.drawable.ethereum,
-        currencyPrice = "1,750",
+        currencyPrice = "1750",
         currencyChangePercent = "1.8",
         currencyChangePercentColor = RedColor,
         currencyUnitType = CurrencyType.Dollar
@@ -39,7 +39,7 @@ val fakeBitPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPrice
     CurrencyPriceEntity(
         currencyName = "تتر",
         currencyFlagId = R.drawable.tether,
-        currencyPrice = "99,850",
+        currencyPrice = "99850",
         currencyChangePercent = "2.5",
         currencyChangePercentColor = RedColor,
         currencyUnitType = CurrencyType.Toman
@@ -51,7 +51,7 @@ val fakeGoldPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPric
     CurrencyPriceEntity(
         currencyName = "طلا 18 عیار",
         currencyFlagId = R.drawable.gold,
-        currencyPrice = "7,775,000",
+        currencyPrice = "7775000",
         currencyChangePercent = "5.1",
         currencyChangePercentColor = GreenColor,
         currencyUnitType = CurrencyType.Toman
@@ -59,7 +59,7 @@ val fakeGoldPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<CurrencyPric
     CurrencyPriceEntity(
         currencyName = "سکه امامی",
         currencyFlagId = R.drawable.golden_coin,
-        currencyPrice = "98,103,250",
+        currencyPrice = "98103250",
         currencyChangePercent = "1.8",
         currencyChangePercentColor = RedColor,
         currencyUnitType = CurrencyType.Toman
@@ -70,7 +70,7 @@ val fakeCurrencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<Currency
     CurrencyPriceEntity(
         currencyName = "دلار",
         currencyFlagId = R.drawable.us,
-        currencyPrice = "99,250",
+        currencyPrice = "99250",
         currencyChangePercent = "3.1",
         currencyChangePercentColor = RedColor,
         currencyUnitType = CurrencyType.Toman
@@ -78,7 +78,7 @@ val fakeCurrencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<Currency
     CurrencyPriceEntity(
         currencyName = "یورو",
         currencyFlagId = R.drawable.euro,
-        currencyPrice = "106,250",
+        currencyPrice = "106250",
         currencyChangePercent = "1.8",
         currencyChangePercentColor = GreenColor,
         currencyUnitType = CurrencyType.Toman
@@ -86,7 +86,7 @@ val fakeCurrencyPriceList: ArrayList<CurrencyPriceEntity> = arrayListOf<Currency
     CurrencyPriceEntity(
         currencyName = "پوند",
         currencyFlagId = R.drawable.england,
-        currencyPrice = "108,150",
+        currencyPrice = "108150",
         currencyChangePercent = "2.5",
         currencyChangePercentColor = RedColor,
         currencyUnitType = CurrencyType.Toman

@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -27,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,15 +37,19 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.R
+import ir.ha.goodfeeling.common.extensions.getAmountFormatBySeparator
 import ir.ha.goodfeeling.data.entities.NewsItemEntity
 import ir.ha.goodfeeling.ui.theme.CustomTypography
+import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
+import ir.ha.goodfeeling.ui.theme.LightBackground
+import ir.ha.goodfeeling.ui.theme.LightPrimary
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 @Composable
 fun NewsItemView(newsItemEntity: NewsItemEntity) {
-    Surface {
+    GoodFeelingTheme {
         Column(
             modifier = Modifier
                 .padding(bottom = 8.dp, top = 8.dp)
@@ -52,6 +59,7 @@ fun NewsItemView(newsItemEntity: NewsItemEntity) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = if (isSystemInDarkTheme()) DarkBackground else LightBackground),
                 shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp),
             ) {
                 Image(
@@ -65,7 +73,11 @@ fun NewsItemView(newsItemEntity: NewsItemEntity) {
                 )
             }
 
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.Transparent)
+            ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -98,7 +110,11 @@ fun NewsItemView(newsItemEntity: NewsItemEntity) {
             }
 
 
-            Box(modifier = Modifier.fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Transparent)
+            ) {
                 Row(
                     modifier = Modifier
                         .padding(16.dp)
@@ -109,12 +125,13 @@ fun NewsItemView(newsItemEntity: NewsItemEntity) {
                         contentDescription = "share prices",
                         modifier = Modifier
                             .clip(CircleShape)
-                            .background(TransparentlyGray)
+                            .background(TransparentlyBlue)
                             .size(28.dp)
                             .padding(5.dp)
                             .clickable {
                                 // todo
                             },
+                        tint = LightPrimary
                     )
                     Row(
                         modifier = Modifier
@@ -127,18 +144,19 @@ fun NewsItemView(newsItemEntity: NewsItemEntity) {
                             contentDescription = "share prices",
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(TransparentlyGray)
+                                .background(TransparentlyBlue)
                                 .size(28.dp)
-                                .padding(5.dp)
+                                .padding(2.dp)
                                 .clickable {
                                     // todo
                                 },
+                            tint = LightPrimary
                         )
 
                         Text(
-                            text = newsItemEntity.seenCount.toString(),
-                            style = CustomTypography.labelSmall,
-                            modifier = Modifier.padding(horizontal = 2.dp)
+                            text = newsItemEntity.seenCount.toString().getAmountFormatBySeparator(),
+                            style = CustomTypography.labelSmall.copy(color = LightPrimary),
+                            modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     }
                 }
@@ -153,7 +171,7 @@ fun NewsItemView(newsItemEntity: NewsItemEntity) {
 
                     Text(
                         text = newsItemEntity.timeAgo,
-                        style = CustomTypography.labelSmall,
+                        style = CustomTypography.labelSmall.copy(color = LightPrimary),
                         modifier = Modifier.padding(horizontal = 8.dp)
                     )
                 }

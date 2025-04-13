@@ -60,7 +60,7 @@ fun Widgets() {
 
         Card(
             modifier = Modifier,
-            colors = CardDefaults.cardColors(containerColor = if (isDarkMode) DarkBackground else LightBackground),
+            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         ) {
             Row(

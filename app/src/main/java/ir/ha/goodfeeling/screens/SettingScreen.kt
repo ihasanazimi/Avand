@@ -2,6 +2,7 @@ package ir.ha.goodfeeling.screens
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,7 +48,9 @@ import ir.ha.goodfeeling.screens.bottom_sheets.UserProfileBottomSheet
 import ir.ha.goodfeeling.screens.itemViews.SettingItemView
 import ir.ha.goodfeeling.screens.itemViews.settingItems
 import ir.ha.goodfeeling.ui.theme.CustomTypography
+import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
+import ir.ha.goodfeeling.ui.theme.LightBackground
 import ir.ha.goodfeeling.ui.theme.LightPrimary
 import ir.ha.goodfeeling.ui.theme.RedColor
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
@@ -61,7 +64,7 @@ fun SettingScreen(navController: NavController) {
         val context = LocalContext.current
         var citiesModalOpenState by remember { mutableStateOf(false) }
         var userProfileModalOpenState by remember { mutableStateOf(false) }
-        var userName by remember { mutableStateOf("Hasan Azimi") }
+        var userName by remember { mutableStateOf("حسن عظیمی") }
         var selectedCity by remember { mutableStateOf<CityEntity?>(getFakeCitiesList().find { it.selected }) }
 
         Column(modifier = Modifier.fillMaxSize()) {
@@ -77,7 +80,7 @@ fun SettingScreen(navController: NavController) {
                     modifier = Modifier
                         .weight(1f),
                     shape = RoundedCornerShape(10.dp),
-                    colors = CardDefaults.cardColors(containerColor = TransparentlyBlue.copy(0.1f)),
+                    colors = CardDefaults.cardColors(containerColor = if (isSystemInDarkTheme()) DarkBackground else LightBackground),
                     border = BorderStroke(
                         2.dp,
                         TransparentlyBlue
@@ -141,7 +144,7 @@ fun SettingScreen(navController: NavController) {
 
                 Card(
                     shape = RoundedCornerShape(10.dp),
-                    colors = CardDefaults.cardColors(containerColor = TransparentlyBlue.copy(0.1f)),
+                    colors = CardDefaults.cardColors(containerColor = if (isSystemInDarkTheme()) DarkBackground else LightBackground),
                     border = BorderStroke(
                         2.dp,
                         TransparentlyBlue
@@ -259,7 +262,7 @@ fun SettingScreen(navController: NavController) {
                 userName = it
                 userProfileModalOpenState = false
             }
-            
+
         }
     }
 }

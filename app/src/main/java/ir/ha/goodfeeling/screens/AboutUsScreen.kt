@@ -164,7 +164,7 @@ fun AboutUsScreen(
                             onClick = onMessageClick,
                             colors = ButtonDefaults.buttonColors(containerColor = LightPrimary)
                         ) {
-                            Text("ارتباط با توسعه دهنده")
+                            Text("ارتباط با توسعه دهنده" , style = CustomTypography.bodyLarge.copy(color = Color.White))
                         }
 
                         TextButton(

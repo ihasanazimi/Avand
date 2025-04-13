@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -58,6 +60,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
 
+    // GoogleServices (location)
+    implementation(libs.play.services.location)
+
 
     implementation("io.coil-kt:coil-compose:2.5.0")
 
@@ -66,5 +71,25 @@ dependencies {
     implementation ("androidx.navigation:navigation-compose:2.8.9")
 
     implementation("com.airbnb.android:lottie-compose:6.1.0")
+
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    implementation(libs.androidx.biometric)
+
+    implementation (libs.retrofit) // okHttp
+
+    // chucker
+    releaseImplementation (libs.chucker2)
+    debugImplementation (libs.chucker1)
+
+    //stetho
+    implementation(libs.stetho)
+    implementation(libs.stetho.okhttp3)
+    implementation(libs.stetho.js.rhino)
+
+    /*  Dagger Hilt  */
+    androidTestImplementation(libs.androidx.rules)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
 }

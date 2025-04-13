@@ -15,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,7 +23,6 @@ import ir.ha.goodfeeling.data.getFakeNews
 import ir.ha.goodfeeling.screens.itemViews.NewsItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
-import ir.ha.goodfeeling.ui.theme.Gray
 import ir.ha.goodfeeling.ui.theme.LightPrimary
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
@@ -56,10 +54,10 @@ fun NewsScreen(news: ArrayList<NewsItemEntity> , takeCount: Int = 3) {
                 )
 
                 news.take(takeCount).forEachIndexed { index, item ->
-                    if (index + 1 < takeCount) {
-                        NewsItemView(item)
-                    } else {
-                        NewsItemView(item)
+
+                    NewsItemView(item)
+
+                    if (index + 1 >= takeCount) {
                         Button(
                             enabled = true,
                             modifier = Modifier

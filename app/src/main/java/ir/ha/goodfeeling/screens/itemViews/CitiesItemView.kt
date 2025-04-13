@@ -2,6 +2,7 @@ package ir.ha.goodfeeling.screens.itemViews
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,17 +23,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.data.entities.CityEntity
 import ir.ha.goodfeeling.ui.theme.CustomTypography
+import ir.ha.goodfeeling.ui.theme.DarkBackground
+import ir.ha.goodfeeling.ui.theme.LightBackground
 import ir.ha.goodfeeling.ui.theme.LightPrimary
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 @Composable
-fun CitiesItemView(city: CityEntity,onSelectedCity:(city  : CityEntity)->Unit) {
+fun CitiesItemView(city: CityEntity, onSelectedCity: (city: CityEntity) -> Unit) {
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 4.dp)
             .fillMaxWidth(),
-        border = BorderStroke(if (city.selected) 2.dp else 0.dp, LightPrimary),
-        colors = CardDefaults.cardColors(containerColor = TransparentlyBlue.copy(0.1f)),
+        border = BorderStroke(if (city.selected) 3.dp else 0.dp, LightPrimary),
+        colors = CardDefaults.cardColors(containerColor = if (isSystemInDarkTheme()) DarkBackground else LightBackground),
         onClick = {
             onSelectedCity.invoke(city)
         }
@@ -50,7 +53,8 @@ fun CitiesItemView(city: CityEntity,onSelectedCity:(city  : CityEntity)->Unit) {
                 Text(
                     text = city.cityName,
                     style = CustomTypography.bodyLarge.copy(
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        color = if (city.selected) LightPrimary else (if (isSystemInDarkTheme()) Color.White else Color.Black)
                     ),
                     modifier = Modifier.align(Alignment.Center)
                 )
@@ -63,7 +67,7 @@ fun CitiesItemView(city: CityEntity,onSelectedCity:(city  : CityEntity)->Unit) {
 @Preview(showBackground = false)
 @Composable
 private fun CitiesItemViewPreview() {
-    CitiesItemView(CityEntity(cityName = "تهران", location = "", selected = false)){
+    CitiesItemView(CityEntity(cityName = "تهران", location = "", selected = false)) {
         Log.i("CitiesItemViewPreview", "CitiesItemViewPreview: ${it.cityName}")
     }
 }

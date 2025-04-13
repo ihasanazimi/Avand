@@ -42,21 +42,19 @@ val DarkColorScheme = darkColorScheme(
 @Composable
 fun GoodFeelingTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    val context = LocalContext.current
+
     val colorScheme = when {
+        // ✅ Android 12+ dynamic colors
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        darkTheme -> {
-            LightColorScheme
-        }
-        else -> {
-            LightColorScheme
-        }
+        // ✅ Manual fallback for older versions
+        darkTheme -> DarkColorScheme
+        else -> LightColorScheme
     }
 
     MaterialTheme(
