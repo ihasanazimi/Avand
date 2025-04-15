@@ -21,7 +21,6 @@ import ir.ha.goodfeeling.screens.NewsScreen
 import ir.ha.goodfeeling.screens.SchedulingScreen
 import ir.ha.goodfeeling.screens.SettingScreen
 import ir.ha.goodfeeling.screens.SplashScreen
-import ir.ha.goodfeeling.screens.WebViewScreen
 
 
 val splashNavGraph = "splashGraph"
@@ -72,7 +71,7 @@ fun NavGraphBuilder.splashGraph(navController: NavHostController, activity: Main
             }
         }
 
-        composable(
+      /*  composable(
             route = Screens.WebView.route + "/{url}",
             arguments = listOf(
                 navArgument("url") {
@@ -82,10 +81,10 @@ fun NavGraphBuilder.splashGraph(navController: NavHostController, activity: Main
         ) { backStackEntry ->
             val encodedUrl = backStackEntry.arguments?.getString("url").orEmpty()
             val url = Uri.decode(encodedUrl)
-            WebViewScreen(url) {
+            WebViewScreen(url = url, ) {
                 navController.popBackStack()
             }
-        }
+        }*/
     }
 }
 

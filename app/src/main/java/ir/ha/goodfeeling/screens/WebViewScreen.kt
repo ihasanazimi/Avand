@@ -57,127 +57,132 @@ import kotlin.math.roundToInt
 @Composable
 fun WebViewScreen(
     url: String,
+    isShow  : Boolean,
     onBackPressed: (() -> Unit)? = null
 ) {
 
-    val systemUiController = rememberSystemUiController()
-    var useDarkIcons = isSystemInDarkTheme()
-    var defaultColor = MaterialTheme.colorScheme.primary
+    if (isShow && url.isNotEmpty()){
 
-    val context = LocalContext.current
-    val loading = remember { mutableStateOf(true) }
+        val systemUiController = rememberSystemUiController()
+        var useDarkIcons = isSystemInDarkTheme()
+        var defaultColor = MaterialTheme.colorScheme.secondary
 
-    val webView = remember {
-        WebView(context).apply {
-            settings.javaScriptEnabled = true
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            webViewClient = object : WebViewClient() {
-                override fun onPageStarted(
-                    view: WebView?,
-                    url: String?,
-                    favicon: android.graphics.Bitmap?
-                ) {
-                    loading.value = true
+        val context = LocalContext.current
+        val loading = remember { mutableStateOf(true) }
+
+        val webView = remember {
+            WebView(context).apply {
+                settings.javaScriptEnabled = true
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                webViewClient = object : WebViewClient() {
+                    override fun onPageStarted(
+                        view: WebView?,
+                        url: String?,
+                        favicon: android.graphics.Bitmap?
+                    ) {
+                        loading.value = true
+                    }
+
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        loading.value = false
+                    }
                 }
-
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    loading.value = false
-                }
+                loadUrl(url)
             }
-            loadUrl(url)
         }
-    }
-
-    BackHandler(enabled = true) {
-        if (webView.canGoBack()) {
-            webView.goBack()
-        } else {
-            onBackPressed?.invoke()
+        BackHandler(enabled = true) {
+            if (webView.canGoBack()) {
+                webView.goBack()
+            } else {
+                onBackPressed?.invoke()
+            }
         }
-    }
 
-    Column(
-        modifier = Modifier
-            .padding(WindowInsets.statusBars.asPaddingValues())
-    ) {
-
-        Row(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .background(defaultColor)
+                .padding(WindowInsets.statusBars.asPaddingValues())
         ) {
 
-            Icon(
-                imageVector = Icons.Default.Close,
-                contentDescription = "close btn",
-                tint = MaterialTheme.colorScheme.background,
+            Row(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .clip(
-                        CircleShape
-                    )
-                    .clickable {
-                        onBackPressed?.invoke()
-                    }
-                    .size(28.dp)
-                    .align(Alignment.CenterVertically)
-            )
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .background(defaultColor)
+            ) {
 
-            Box(Modifier.fillMaxWidth().fillMaxHeight() , contentAlignment = Alignment.CenterStart){
-                Text(
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "close btn",
+                    tint = MaterialTheme.colorScheme.surface,
                     modifier = Modifier
-                        .fillMaxWidth().padding(end = 16.dp),
-                    text = url.take((url.length / 1.5f).roundToInt()),
-                    style = CustomTypography.bodyLarge.copy(color = Color.White , textAlign = TextAlign.Center),
-                    maxLines = 1,
+                        .padding(horizontal = 16.dp)
+                        .clip(
+                            CircleShape
+                        )
+                        .clickable {
+                            onBackPressed?.invoke()
+                        }
+                        .size(28.dp)
+                        .align(Alignment.CenterVertically)
                 )
+
+                Box(Modifier.fillMaxWidth().fillMaxHeight() , contentAlignment = Alignment.CenterStart){
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth().padding(end = 16.dp),
+                        text = url.take((url.length / 1.5f).roundToInt()),
+                        style = CustomTypography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSecondary , textAlign = TextAlign.Center),
+                        maxLines = 1,
+                    )
+                }
+
             }
 
-        }
+            Box(modifier = Modifier.fillMaxSize()) {
+                AndroidView(factory = { webView }, modifier = Modifier.fillMaxSize())
+                if (loading.value) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.4f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        val composition by rememberLottieComposition(
+                            LottieCompositionSpec.RawRes(R.raw.loading)
+                        )
+                        val progress by animateLottieCompositionAsState(
+                            composition,
+                            iterations = LottieConstants.IterateForever
+                        )
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            AndroidView(factory = { webView }, modifier = Modifier.fillMaxSize())
-            if (loading.value) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.4f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    val composition by rememberLottieComposition(
-                        LottieCompositionSpec.RawRes(R.raw.loading)
-                    )
-                    val progress by animateLottieCompositionAsState(
-                        composition,
-                        iterations = LottieConstants.IterateForever
-                    )
-
-                    LottieAnimation(
-                        composition = composition,
-                        progress = { progress },
-                        modifier = Modifier.size(120.dp)
-                    )
+                        LottieAnimation(
+                            composition = composition,
+                            progress = { progress },
+                            modifier = Modifier.size(120.dp)
+                        )
+                    }
                 }
             }
         }
     }
 
-    useDarkIcons = isSystemInDarkTheme()
-    SetStatusBarColor(MaterialTheme.colorScheme.primary, useDarkIcons)
 
-    DisposableEffect(Unit) {
-        onDispose {
-            defaultColor = Color.Transparent
-            systemUiController.setStatusBarColor(defaultColor,useDarkIcons.not())
-        }
-    }
 
 }
 
+
+/*useDarkIcons = isSystemInDarkTheme()
+ SetStatusBarColor(defaultColor, useDarkIcons)
+
+ DisposableEffect(Unit) {
+     onDispose {
+         defaultColor = Color.Transparent
+         systemUiController.setStatusBarColor(defaultColor,useDarkIcons.not())
+     }
+ }*/
 
 @Composable
 fun SetStatusBarColor(color: Color, darkIcons: Boolean = true) {
@@ -197,6 +202,7 @@ private fun WebViewScreenPreview() {
     GoodFeelingTheme {
         WebViewScreen(
             url = "https://www.google.com",
+            false,
             onBackPressed = {
 
             }
