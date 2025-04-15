@@ -5,7 +5,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,8 +43,13 @@ val navigationItems = listOf(
         route = Screens.Home.route
     ),
     NavigationItem(
-        title = "تنظیمات",
-        icon = Icons.Default.Settings,
+        title = "بازار مالی",
+        icon = Icons.Default.Info,
+        route = Screens.CurrencyPrices.route
+    ),
+    NavigationItem(
+        title = "پروفایل",
+        icon = Icons.Default.AccountCircle,
         route = Screens.Setting.route
     )
 )

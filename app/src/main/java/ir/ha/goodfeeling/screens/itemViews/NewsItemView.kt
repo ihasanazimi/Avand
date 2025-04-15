@@ -50,7 +50,6 @@ fun NewsItemView(newsItemEntity: NewsItemEntity) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    colors = CardDefaults.cardColors(),
                     shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp),
                 ) {
                     Image(

@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.data.entities.NewsItemEntity
 import ir.ha.goodfeeling.data.getFakeNews
 import ir.ha.goodfeeling.screens.itemViews.NewsItemView
@@ -26,7 +28,11 @@ import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 
 @Composable
-fun NewsScreen(news: ArrayList<NewsItemEntity> , takeCount: Int = 3) {
+fun NewsScreen(navController: NavHostController , onMoreBtnClick: () -> Unit) {
+
+    val news: ArrayList<NewsItemEntity> = getFakeNews()
+    val takeCount = news.take(3).size
+
     GoodFeelingTheme {
 
         Surface {
@@ -40,7 +46,7 @@ fun NewsScreen(news: ArrayList<NewsItemEntity> , takeCount: Int = 3) {
                 )
 
                 Text(
-                    text = "اخبار روز",
+                    text = "اخبار روز :",
                     style = CustomTypography.bodyLarge,
                     modifier = Modifier
                         .padding(
@@ -66,7 +72,7 @@ fun NewsScreen(news: ArrayList<NewsItemEntity> , takeCount: Int = 3) {
                                 .height(52.dp),
                             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
                             onClick = {
-
+                                onMoreBtnClick.invoke()
                             }) {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
@@ -76,7 +82,7 @@ fun NewsScreen(news: ArrayList<NewsItemEntity> , takeCount: Int = 3) {
                                     text = "بیشتر",
                                     style = CustomTypography.bodyLarge,
                                     textAlign = TextAlign.Center,
-                                    color = MaterialTheme.colorScheme.primary
+                                    color = MaterialTheme.colorScheme.primary,
                                 )
                             }
 
@@ -95,6 +101,6 @@ fun NewsScreen(news: ArrayList<NewsItemEntity> , takeCount: Int = 3) {
 @Composable
 private fun NewsScreenPreview() {
     GoodFeelingTheme {
-        NewsScreen(getFakeNews())
+        NewsScreen(rememberNavController()){}
     }
 }

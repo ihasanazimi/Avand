@@ -66,6 +66,11 @@ fun HostScreen(navController: NavHostController) {
                         composable(route = Screens.Home.route) {
                             HomeScreen(navController = navController)
                         }
+
+                        composable(route = Screens.CurrencyPrices.route) {
+                            CurrencyPricesScreen(navController = navController)
+                        }
+
                         composable(route = Screens.Setting.route) {
                             SettingScreen(navController = navController)
                         }

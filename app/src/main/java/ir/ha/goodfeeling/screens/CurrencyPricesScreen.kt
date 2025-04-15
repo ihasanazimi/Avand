@@ -26,6 +26,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.data.fakeBitPriceList
 import ir.ha.goodfeeling.data.fakeCurrencyPriceList
 import ir.ha.goodfeeling.data.fakeGoldPriceList
@@ -36,10 +38,10 @@ import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 
 
 @Composable
-fun CurrencyPricesScreen() {
+fun CurrencyPricesScreen(navController: NavHostController) {
     GoodFeelingTheme {
         Surface {
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp , bottom = 8.dp)) {
 
                 Row(
                     Modifier
@@ -126,7 +128,7 @@ fun CurrencyPricesScreen() {
 @Composable
 fun CurrencyPricesScreenPreview() {
     GoodFeelingTheme {
-        CurrencyPricesScreen()
+        CurrencyPricesScreen(rememberNavController())
     }
 }
 
