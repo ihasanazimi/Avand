@@ -1,5 +1,6 @@
 package ir.ha.goodfeeling.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,6 +19,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -38,9 +41,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.ui.theme.CustomTypography
-import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
-import ir.ha.goodfeeling.ui.theme.LightPrimary
 
 
 @Composable
@@ -54,7 +55,7 @@ fun AboutUsScreen(
     GoodFeelingTheme {
 
         val backgroundColor = Brush.verticalGradient(
-            colors = listOf(LightPrimary, Color.Black)
+            colors = listOf(MaterialTheme.colorScheme.primary, Color.Black)
         )
 
         Column(
@@ -92,17 +93,19 @@ fun AboutUsScreen(
                         modifier = Modifier.fillMaxWidth()
                     ) {
 
-                        Card(modifier = Modifier.size(38.dp), shape = RoundedCornerShape(4.dp)) {
-                            Image(
+                        Card(colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary)) {
+                            Icon(
                                 painter = painterResource(id = R.drawable.linkedin),
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .fillMaxSize()
+                                    .size(37.dp)
+                                    .padding(6.dp)
                                     .clickable {
                                         onLinkedinClick.invoke()
-                                    }
+                                    }, tint = Color.White
                             )
                         }
+
 
                         Box(
                             modifier = Modifier
@@ -119,15 +122,17 @@ fun AboutUsScreen(
                             )
                         }
 
-                        Card(modifier = Modifier.size(42.dp), shape = RoundedCornerShape(4.dp)) {
-                            Image(
+
+                        Card(colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary)) {
+                            Icon(
                                 painter = painterResource(id = R.drawable.github),
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .fillMaxSize()
+                                    .size(37.dp)
+                                    .padding(7.dp)
                                     .clickable {
                                         onGithubClick.invoke()
-                                    }
+                                    }, tint = Color.White
                             )
                         }
                     }
@@ -162,9 +167,16 @@ fun AboutUsScreen(
                                 .fillMaxWidth()
                                 .height(56.dp),
                             onClick = onMessageClick,
-                            colors = ButtonDefaults.buttonColors(containerColor = LightPrimary)
+                            shape = RoundedCornerShape(12.dp),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
                         ) {
-                            Text("ارتباط با توسعه دهنده" , style = CustomTypography.bodyLarge.copy(color = Color.White))
+                            Text(
+                                "ارتباط با توسعه دهنده",
+                                style = CustomTypography.bodyLarge.copy(
+                                    MaterialTheme.colorScheme.primary
+                                )
+                            )
                         }
 
                         TextButton(
@@ -173,7 +185,7 @@ fun AboutUsScreen(
                                 navHostController.popBackStack()
                             },
                         ) {
-                            Text("بازگشت")
+                            Text("بازگشت", color = MaterialTheme.colorScheme.primary)
                         }
                     }
                 }

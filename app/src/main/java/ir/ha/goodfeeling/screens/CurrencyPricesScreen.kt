@@ -1,9 +1,7 @@
 package ir.ha.goodfeeling.screens
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +16,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,11 +32,7 @@ import ir.ha.goodfeeling.data.fakeGoldPriceList
 import ir.ha.goodfeeling.screens.itemViews.CurrencyPriceItemView
 import ir.ha.goodfeeling.screens.itemViews.CustomSpacer
 import ir.ha.goodfeeling.ui.theme.CustomTypography
-import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
-import ir.ha.goodfeeling.ui.theme.LightBackground
-import ir.ha.goodfeeling.ui.theme.LightPrimary
-import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 
 @Composable
@@ -61,26 +56,24 @@ fun CurrencyPricesScreen() {
                             modifier = Modifier
                                 .padding(end = 8.dp)
                                 .clip(CircleShape)
-                                .background(TransparentlyBlue)
                                 .size(28.dp)
                                 .padding(2.dp)
                                 .clickable {
                                     // todo
                                 },
-                            tint = LightPrimary
+                            tint = MaterialTheme.colorScheme.primary
                         )
                         Icon(
                             imageVector = Icons.Default.Share,
                             contentDescription = "share prices",
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(TransparentlyBlue)
                                 .size(28.dp)
                                 .padding(5.dp)
                                 .clickable {
                                     // todo
                                 },
-                            tint = LightPrimary
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
 
@@ -92,11 +85,9 @@ fun CurrencyPricesScreen() {
 
                 }
 
-                val isDarkMode = isSystemInDarkTheme()
 
                 Card(
-                    colors = CardDefaults.cardColors(containerColor = if (isDarkMode) DarkBackground else LightBackground),
-                    border = BorderStroke(2.dp, TransparentlyBlue),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
                 ) {
                     Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
@@ -115,7 +106,9 @@ fun CurrencyPricesScreen() {
                         ) {
                             Text(
                                 text = "مشاهده بیشتر",
-                                style = CustomTypography.labelSmall.copy(color = LightPrimary),
+                                style = CustomTypography.labelSmall.copy(
+                                    color = MaterialTheme.colorScheme.primary
+                                ),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .align(Alignment.Center),

@@ -1,10 +1,7 @@
 package ir.ha.goodfeeling.screens.itemViews
 
-import android.content.Context
-import android.os.Build
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,24 +17,17 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.navigation.Screens
-import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
-import ir.ha.goodfeeling.ui.theme.LightBackground
-import ir.ha.goodfeeling.ui.theme.LightPrimary
-import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
-import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 
 data class SettingItem(
@@ -61,11 +51,10 @@ fun SettingItemView(
 ) {
 
     Card(
-        shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(containerColor = if (isSystemInDarkTheme()) DarkBackground else LightBackground),
+        shape = RoundedCornerShape(14.dp),
         border = BorderStroke(
-            2.dp,
-            TransparentlyBlue
+            1.dp,
+            MaterialTheme.colorScheme.primary
         ),
         modifier = Modifier
             .padding(horizontal = 4.dp, vertical = 4.dp)
@@ -94,7 +83,7 @@ fun SettingItemView(
                         modifier = Modifier
                             .padding(start = 8.dp)
                             .size(24.dp),
-                        tint = LightPrimary.copy(alpha = 0.7f)
+                        tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
                     )
 
                     Row(
@@ -118,7 +107,7 @@ fun SettingItemView(
                             modifier = Modifier
                                 .padding(start = 8.dp)
                                 .size(24.dp),
-                            tint = LightPrimary.copy(alpha = 0.7f)
+                            tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
                         )
                     }
                 }

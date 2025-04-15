@@ -38,6 +38,7 @@ import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.LightBackground
+import ir.ha.goodfeeling.ui.theme.getBackgroundColor
 
 @Composable
 fun HostScreen(navController: NavHostController) {
@@ -47,7 +48,7 @@ fun HostScreen(navController: NavHostController) {
         val hostNavController = rememberNavController()
 
         Scaffold(
-            modifier = Modifier.background(color = if (isSystemInDarkTheme()) DarkBackground else LightBackground),
+            modifier = Modifier.background(color = getBackgroundColor()),
             bottomBar = {
                 BottomNavigationBar(navController = hostNavController)
             },

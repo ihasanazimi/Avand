@@ -1,6 +1,7 @@
 package ir.ha.goodfeeling.screens.bottom_sheets
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +13,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -30,6 +33,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
+import ir.ha.goodfeeling.ui.theme.getBackgroundColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,6 +69,8 @@ fun UserProfileBottomSheet(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp),
+                        singleLine = true,
+                        colors = OutlinedTextFieldDefaults.colors(),
                         value = temp,
                         onValueChange = { temp = it },
                         label = {

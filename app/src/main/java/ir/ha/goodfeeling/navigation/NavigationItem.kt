@@ -2,13 +2,13 @@ package ir.ha.goodfeeling.navigation
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -24,14 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.ui.theme.CustomTypography
-import ir.ha.goodfeeling.ui.theme.DarkBackground
-import ir.ha.goodfeeling.ui.theme.DarkerGray
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
-import ir.ha.goodfeeling.ui.theme.Gray
-import ir.ha.goodfeeling.ui.theme.LightBackground
-import ir.ha.goodfeeling.ui.theme.LightPrimary
-import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
-import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 
 data class NavigationItem(
@@ -61,8 +54,7 @@ fun BottomNavigationBar(navController: NavController) {
     NavigationBar(
         modifier = Modifier
             .padding(4.dp)
-            .clip(RoundedCornerShape(24.dp)).border(BorderStroke(2.dp, TransparentlyBlue), RoundedCornerShape(24.dp)),
-        containerColor = if (isSystemInDarkTheme()) DarkBackground else LightBackground,
+            .clip(RoundedCornerShape(24.dp)).border(BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)), RoundedCornerShape(24.dp)),
     ) {
         navigationItems.forEachIndexed { index, item ->
             NavigationBarItem(
@@ -77,19 +69,19 @@ fun BottomNavigationBar(navController: NavController) {
                     Icon(
                         imageVector = item.icon,
                         contentDescription = item.title,
-                        tint = if (index == selectedNavigationIndex.intValue) LightPrimary else TransparentlyBlue
+                        tint = if (index == selectedNavigationIndex.intValue) MaterialTheme.colorScheme.primary.copy(alpha = 0.8f) else MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
                     )
                 },
                 label = {
                     Text(
                         item.title,
-                        color = if (index == selectedNavigationIndex.intValue) LightPrimary else TransparentlyBlue,
+                        color = if (index == selectedNavigationIndex.intValue) MaterialTheme.colorScheme.primary.copy(alpha = 0.8f) else MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
                         style = CustomTypography.labelSmall
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = TransparentlyBlack,
-                    indicatorColor = TransparentlyBlue
+                    selectedIconColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                 )
 
             )

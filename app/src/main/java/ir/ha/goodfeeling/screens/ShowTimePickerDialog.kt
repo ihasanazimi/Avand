@@ -40,6 +40,7 @@ import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
 import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 import ir.ha.goodfeeling.ui.theme.TransparentlyWhite
+import ir.ha.goodfeeling.ui.theme.getBackgroundColor
 
 
 sealed class TimePickerFlag (val flag : String) {
@@ -60,8 +61,7 @@ fun ShowTimePickerDialog(
 ) {
     if (showDialog) {
 
-        val isDarkTheme = isSystemInDarkTheme()
-        val backgroundColor = if (isDarkTheme) DarkBackground else LightBackground
+        val backgroundColor = getBackgroundColor()
         val timePickerState =
             rememberTimePickerState(initialHour = 0, initialMinute = 0, is24Hour = true)
 

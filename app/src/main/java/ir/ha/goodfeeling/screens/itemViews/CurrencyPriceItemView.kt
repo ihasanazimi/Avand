@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -109,7 +110,7 @@ fun CustomSpacer(modifier: Modifier = Modifier) {
         modifier
             .padding(horizontal = 4.dp, vertical = 4.dp)
             .background(
-                TransparentlyBlue,
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
                 shape = RoundedCornerShape(8.dp)
             )
             .fillMaxWidth()

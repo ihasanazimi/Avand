@@ -2,7 +2,6 @@ package ir.ha.goodfeeling.screens
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +21,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,20 +40,16 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import ir.ha.goodfeeling.data.getFakeCitiesList
 import ir.ha.goodfeeling.data.entities.CityEntity
+import ir.ha.goodfeeling.data.getFakeCitiesList
 import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.screens.bottom_sheets.CitiesModalBottomSheet
 import ir.ha.goodfeeling.screens.bottom_sheets.UserProfileBottomSheet
 import ir.ha.goodfeeling.screens.itemViews.SettingItemView
 import ir.ha.goodfeeling.screens.itemViews.settingItems
 import ir.ha.goodfeeling.ui.theme.CustomTypography
-import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
-import ir.ha.goodfeeling.ui.theme.LightBackground
-import ir.ha.goodfeeling.ui.theme.LightPrimary
 import ir.ha.goodfeeling.ui.theme.RedColor
-import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 
 @Composable
@@ -73,17 +69,17 @@ fun SettingScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
-                    .padding(start = 12.dp, end = 12.dp, bottom = 4.dp, top = 8.dp)
+                    .padding(start = 14.dp, end = 14.dp, bottom = 8.dp, top = 8.dp)
             ) {
 
                 Card(
                     modifier = Modifier
-                        .weight(1f),
-                    shape = RoundedCornerShape(10.dp),
-                    colors = CardDefaults.cardColors(containerColor = if (isSystemInDarkTheme()) DarkBackground else LightBackground),
+                        .weight(1f)
+                        .padding(end = 4.dp),
+                    shape = RoundedCornerShape(14.dp),
                     border = BorderStroke(
-                        2.dp,
-                        TransparentlyBlue
+                        1.dp,
+                        MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Column(
@@ -123,7 +119,7 @@ fun SettingScreen(navController: NavController) {
                                     style = CustomTypography.labelSmall.copy(
                                         textAlign = TextAlign.Start,
                                     ),
-                                    color = if (notificationCheckedToggle) LightPrimary else RedColor,
+                                    color = if (notificationCheckedToggle) MaterialTheme.colorScheme.primary else RedColor,
                                     lineHeight = TextUnit(20f, TextUnitType.Sp),
                                     maxLines = 1
                                 )
@@ -131,7 +127,6 @@ fun SettingScreen(navController: NavController) {
 
 
                             Checkbox(
-                                colors = CheckboxDefaults.colors(checkedColor = LightPrimary),
                                 checked = notificationCheckedToggle,
                                 onCheckedChange = { notificationCheckedToggle = it }
                             )
@@ -143,13 +138,13 @@ fun SettingScreen(navController: NavController) {
 
 
                 Card(
-                    shape = RoundedCornerShape(10.dp),
-                    colors = CardDefaults.cardColors(containerColor = if (isSystemInDarkTheme()) DarkBackground else LightBackground),
+                    shape = RoundedCornerShape(14.dp),
                     border = BorderStroke(
-                        2.dp,
-                        TransparentlyBlue
+                        1.dp,
+                        MaterialTheme.colorScheme.primary
                     ),
                     modifier = Modifier
+                        .padding(start = 4.dp)
                         .weight(1f)
                         .padding(start = 4.dp),
                     onClick = {
@@ -195,7 +190,7 @@ fun SettingScreen(navController: NavController) {
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(vertical = 8.dp),
-                                        color = LightPrimary,
+                                        color = MaterialTheme.colorScheme.primary,
                                         maxLines = 1
                                     )
                                 }
