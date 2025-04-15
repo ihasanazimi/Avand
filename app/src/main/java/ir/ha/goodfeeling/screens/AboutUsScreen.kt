@@ -47,7 +47,6 @@ import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 @Composable
 fun AboutUsScreen(
     navHostController: NavHostController,
-    modifier: Modifier = Modifier,
     onGithubClick: () -> Unit = {},
     onLinkedinClick: () -> Unit = {},
     onMessageClick: () -> Unit = {},
@@ -59,7 +58,7 @@ fun AboutUsScreen(
         )
 
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(backgroundColor)
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp),
@@ -163,7 +162,7 @@ fun AboutUsScreen(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Button(
-                            modifier = modifier
+                            modifier = Modifier
                                 .fillMaxWidth()
                                 .height(56.dp),
                             onClick = onMessageClick,
@@ -180,7 +179,7 @@ fun AboutUsScreen(
                         }
 
                         TextButton(
-                            modifier = modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth(),
                             onClick = {
                                 navHostController.popBackStack()
                             },

@@ -23,7 +23,7 @@ import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 @Composable
 fun SplashScreen(navController: NavHostController) {
 
-    val introSkipped = false
+    val introSkipped = true
 
     GoodFeelingTheme {
         Surface {

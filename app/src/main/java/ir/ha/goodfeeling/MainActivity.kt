@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             GoodFeelingTheme {
                 val navHostController = rememberNavController()
-                GoodFillingApplication(navHostController)
+                GoodFillingApplication(navHostController = navHostController, activity = this)
             }
         }
     }
@@ -27,15 +27,14 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun GoodFillingApplication(navHostController: NavHostController) {
+fun GoodFillingApplication(navHostController: NavHostController, activity: MainActivity) {
     GoodFeelingTheme {
         AppNavigator(
-            navController = navHostController
+            navController = navHostController,
+            activity = activity
         )
     }
 }
-
-
 
 
 @Preview(showBackground = true)
@@ -43,6 +42,6 @@ fun GoodFillingApplication(navHostController: NavHostController) {
 fun GreetingPreview() {
     GoodFeelingTheme {
         val navHostController = rememberNavController()
-        GoodFillingApplication(navHostController)
+        GoodFillingApplication(navHostController , MainActivity())
     }
 }

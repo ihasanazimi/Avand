@@ -1,5 +1,6 @@
 package ir.ha.goodfeeling.screens
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,6 +24,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.data.entities.NewsItemEntity
 import ir.ha.goodfeeling.data.getFakeNews
+import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.screens.itemViews.NewsItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
@@ -60,7 +62,10 @@ fun NewsScreen(navController: NavHostController , onMoreBtnClick: () -> Unit) {
 
                 news.take(takeCount).forEachIndexed { index, item ->
 
-                    NewsItemView(item)
+                    NewsItemView(item){ news ->
+                        val encodedUrl = Uri.encode(news.link)
+                        navController.navigate(Screens.WebView.route + "/$encodedUrl")
+                    }
 
                     if (index + 1 >= takeCount) {
                         Button(

@@ -38,14 +38,16 @@ import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 
 @Composable
-fun NewsItemView(newsItemEntity: NewsItemEntity) {
+fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity : NewsItemEntity) -> Unit) {
     GoodFeelingTheme {
         Surface{
             Column(
                 modifier = Modifier
                     .padding(bottom = 8.dp, top = 8.dp)
                     .fillMaxWidth()
-                    .border(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f), RoundedCornerShape(16.dp))
+                    .border(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f), RoundedCornerShape(16.dp)).clickable{
+                        onNewsClick.invoke(newsItemEntity)
+                    }
             ) {
                 Card(
                     modifier = Modifier
@@ -180,6 +182,8 @@ private fun NewsItemViewPreview() {
                 description = "از 700 کیلومتر دورتر آمده بود و سودای خرید اتومبیل شخصی داشت. به یکی از مراکز خرید و فروش خودرو در تهران رفته بود و با فرض اینکه یکی از بهترین ماشین\u200Cهای بازار خودرو را پیدا کرده برای عقد قرارداد و نوشتن قولنامه دست به جیب شده بود و بیعانه سنگینی پرداخت کرده بود غافل از آنکه طرف حسابش دلالی خبره یا بهتر بگوییم کلاهبرداری با سابقه است.",
                 link = "link"
             )
-        )
+        ){
+            // todo
+        }
     }
 }
