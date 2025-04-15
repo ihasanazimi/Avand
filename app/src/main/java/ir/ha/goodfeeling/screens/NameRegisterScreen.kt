@@ -31,14 +31,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
-import ir.ha.goodfeeling.ui.theme.TransparentlyGray
 
 
 @Composable
@@ -137,10 +135,6 @@ fun NameRegisterScreen(navController: NavHostController) {
                                 style = CustomTypography.bodyLarge
                             )
                         },
-                        colors = TextFieldDefaults.colors(
-                            focusedContainerColor = TransparentlyGray,
-                            unfocusedContainerColor = TransparentlyGray,
-                        ),
                     )
                 }
 

@@ -1,7 +1,6 @@
 package ir.ha.goodfeeling.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +11,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerDefaults
@@ -28,18 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ir.ha.goodfeeling.ui.theme.DarkBackground
-import ir.ha.goodfeeling.ui.theme.DarkOnBackground
-import ir.ha.goodfeeling.ui.theme.DarkerGray
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
-import ir.ha.goodfeeling.ui.theme.Gray
-import ir.ha.goodfeeling.ui.theme.LightBackground
-import ir.ha.goodfeeling.ui.theme.LightPrimary
-import ir.ha.goodfeeling.ui.theme.RedColor
-import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
-import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
-import ir.ha.goodfeeling.ui.theme.TransparentlyGray
-import ir.ha.goodfeeling.ui.theme.TransparentlyWhite
 import ir.ha.goodfeeling.ui.theme.getBackgroundColor
 
 
@@ -61,17 +50,15 @@ fun ShowTimePickerDialog(
 ) {
     if (showDialog) {
 
-        val backgroundColor = getBackgroundColor()
         val timePickerState =
             rememberTimePickerState(initialHour = 0, initialMinute = 0, is24Hour = true)
 
         DatePickerDialog(
-            colors = DatePickerDefaults.colors(containerColor = backgroundColor),
+            colors = DatePickerDefaults.colors(containerColor = MaterialTheme.colorScheme.background),
             onDismissRequest = { onDismiss() },
             confirmButton = {
                 Button(
-                    modifier = modifier.padding(horizontal = 8.dp),
-                    colors = ButtonDefaults.buttonColors(LightPrimary), onClick = {
+                    modifier = modifier.padding(horizontal = 8.dp), onClick = {
                         val selectedTime = mutableStateOf("%02d:%02d".format(timePickerState.hour, timePickerState.minute))
                         onTimeSelected(timePickerState.hour, timePickerState.minute,selectedTime,timerPickerFlag)
                         onDismiss()
@@ -83,7 +70,7 @@ fun ShowTimePickerDialog(
                 Button(
                     colors = ButtonDefaults.buttonColors(Color.Transparent),
                     onClick = { onDismiss() }) {
-                    Text("لغو", color = LightPrimary)
+                    Text("لغو", color = MaterialTheme.colorScheme.primary)
                 }
             }
         ) {
@@ -91,7 +78,7 @@ fun ShowTimePickerDialog(
                 Text(
                     text = dialogTitle,
                     modifier = modifier.align(Alignment.CenterHorizontally).padding(vertical = 16.dp),
-                    color = LightPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
 
                 Box(
@@ -99,24 +86,24 @@ fun ShowTimePickerDialog(
                         .fillMaxWidth()
                         .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(TransparentlyBlue.copy(alpha = 0.1f))
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
                         .padding(24.dp)
                 ) {
                     TimePicker(
                         state = timePickerState,
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         colors = TimePickerDefaults.colors(
-                            clockDialColor = backgroundColor,
-                            clockDialSelectedContentColor = backgroundColor,
-                            clockDialUnselectedContentColor = LightPrimary,
-                            selectorColor = LightPrimary,
-                            containerColor = LightPrimary,
-                            periodSelectorSelectedContainerColor = LightPrimary,
-                            periodSelectorUnselectedContainerColor = LightPrimary,
-                            periodSelectorSelectedContentColor = LightPrimary,
-                            periodSelectorUnselectedContentColor = LightPrimary,
-                            timeSelectorSelectedContainerColor = LightPrimary,
-                            timeSelectorUnselectedContainerColor = TransparentlyBlue,
+                            clockDialColor = getBackgroundColor(),
+                            clockDialSelectedContentColor = getBackgroundColor(),
+                            clockDialUnselectedContentColor = MaterialTheme.colorScheme.primary,
+                            selectorColor = MaterialTheme.colorScheme.primary,
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            periodSelectorSelectedContainerColor = MaterialTheme.colorScheme.primary,
+                            periodSelectorUnselectedContainerColor = MaterialTheme.colorScheme.primary,
+                            periodSelectorSelectedContentColor = MaterialTheme.colorScheme.primary,
+                            periodSelectorUnselectedContentColor = MaterialTheme.colorScheme.primary,
+                            timeSelectorSelectedContainerColor = MaterialTheme.colorScheme.primary,
+                            timeSelectorUnselectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
                             timeSelectorSelectedContentColor = Color.White,
                             timeSelectorUnselectedContentColor = Color.White
                         )

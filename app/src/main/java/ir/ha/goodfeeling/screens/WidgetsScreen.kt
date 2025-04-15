@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -188,7 +189,7 @@ fun Widgets() {
                         .weight(1f)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
-                    border = BorderStroke(1.dp, TransparentlyBlack)
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
                 ) {
                     Column(
                         modifier = Modifier.fillMaxSize(),
@@ -199,7 +200,7 @@ fun Widgets() {
                             modifier = Modifier
                                 .weight(0.4f)
                                 .fillMaxWidth()
-                                .background(TransparentlyBlack),
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -243,7 +244,7 @@ fun Widgets() {
                         .weight(1f)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
-                    border = BorderStroke(1.dp, TransparentlyBlack)
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
                 ) {
                     Column(
                         modifier = Modifier
@@ -255,7 +256,7 @@ fun Widgets() {
                             modifier = Modifier
                                 .weight(0.4f)
                                 .fillMaxWidth()
-                                .background(TransparentlyBlack),
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
                             contentAlignment = Alignment.CenterEnd
                         ) {
                             Text(

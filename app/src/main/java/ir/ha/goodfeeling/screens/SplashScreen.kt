@@ -19,13 +19,11 @@ import androidx.navigation.compose.rememberNavController
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
-import ir.ha.goodfeeling.ui.theme.LightPrimary
-import ir.ha.goodfeeling.ui.theme.TransparentlyBlue
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
 
-    val introSkipped = true
+    val introSkipped = false
 
     GoodFeelingTheme {
         Surface {
