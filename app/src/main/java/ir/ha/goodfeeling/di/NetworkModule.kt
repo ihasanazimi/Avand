@@ -55,11 +55,11 @@ object NetworkModule {
             .writeTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
             .followSslRedirects(false)
-            /*.addInterceptor(
+            .addInterceptor(
                 ChuckerInterceptor.Builder(context)
                     .redactHeaders("Auth-Token", "Bearer")
                     .build()
-            )*/
+            )
             .addNetworkInterceptor(StethoInterceptor())
             .hostnameVerifier { hostname: String, session: SSLSession -> true }
             .build()

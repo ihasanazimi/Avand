@@ -200,7 +200,7 @@ fun Widgets() {
                             modifier = Modifier
                                 .weight(0.4f)
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.secondary),
+                                .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -256,7 +256,7 @@ fun Widgets() {
                             modifier = Modifier
                                 .weight(0.4f)
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.secondary),
+                                .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)),
                             contentAlignment = Alignment.CenterEnd
                         ) {
                             Text(

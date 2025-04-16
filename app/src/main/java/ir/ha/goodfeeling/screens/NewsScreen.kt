@@ -97,7 +97,7 @@ fun NewsScreen(navController: NavHostController, onMoreBtnClick: () -> Unit) {
                                     text = "بیشتر",
                                     style = CustomTypography.bodyLarge,
                                     textAlign = TextAlign.Center,
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                 )
                             }
 
