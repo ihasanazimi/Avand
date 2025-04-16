@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.ha.goodfeeling.data.entities.OccasionsOfTheDayEntity
+import ir.ha.goodfeeling.data.models.entities.OccasionsOfTheDayEntity
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.RedColor

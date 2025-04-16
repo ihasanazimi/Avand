@@ -39,6 +39,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 chucker1 = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker_libraryNoOp" }

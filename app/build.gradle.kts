@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.androidx.biometric)
 
     implementation (libs.retrofit) // okHttp
+    implementation (libs.converter.gson) // GSON Converter
 
     // chucker
     releaseImplementation (libs.chucker2)
@@ -93,5 +94,7 @@ dependencies {
     androidTestImplementation(libs.androidx.rules)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
 }

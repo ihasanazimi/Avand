@@ -17,9 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -40,8 +38,8 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import ir.ha.goodfeeling.data.entities.CityEntity
-import ir.ha.goodfeeling.data.getFakeCitiesList
+import ir.ha.goodfeeling.data.models.entities.CityEntity
+import ir.ha.goodfeeling.data.models.other.getFakeCitiesList
 import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.screens.bottom_sheets.CitiesModalBottomSheet
 import ir.ha.goodfeeling.screens.bottom_sheets.UserProfileBottomSheet

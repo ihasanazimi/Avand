@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.R
-import ir.ha.goodfeeling.data.fakeOccasionsOfTheDayList
+import ir.ha.goodfeeling.data.models.other.fakeOccasionsOfTheDayList
 import ir.ha.goodfeeling.screens.itemViews.OccasionItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
@@ -200,7 +200,7 @@ fun Widgets() {
                             modifier = Modifier
                                 .weight(0.4f)
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
+                                .background(MaterialTheme.colorScheme.secondary),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -256,7 +256,7 @@ fun Widgets() {
                             modifier = Modifier
                                 .weight(0.4f)
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
+                                .background(MaterialTheme.colorScheme.secondary),
                             contentAlignment = Alignment.CenterEnd
                         ) {
                             Text(
