@@ -36,7 +36,7 @@ fun NewsScreen(navController: NavHostController, onMoreBtnClick: () -> Unit) {
 
     val newsList: ArrayList<NewsItemEntity> = getFakeNews()
     val takeCount = newsList.take(3).size
-    var url by remember { mutableStateOf<String>("") }
+    var newsUrl by remember { mutableStateOf<String>("") }
     var webViewDialogIsShow by remember { mutableStateOf(false) }
 
     GoodFeelingTheme {
@@ -69,7 +69,7 @@ fun NewsScreen(navController: NavHostController, onMoreBtnClick: () -> Unit) {
                     NewsItemView(item) { news ->
                         /*val encodedUrl = Uri.encode(news.link)*/
                         /*navController.navigate(Screens.WebView.route + "/$encodedUrl")*/
-                        url = news.link
+                        newsUrl = news.link
                         webViewDialogIsShow = true
                     }
 
@@ -105,23 +105,23 @@ fun NewsScreen(navController: NavHostController, onMoreBtnClick: () -> Unit) {
                     }
                 }
             }
-        }
-    }
 
-    if (url.isNotEmpty()){
-        FullScreenDialog(
-            onDismissRequest = { url = "" },
-            content = {
-                WebViewScreen(
-                    url = url,
-                    isShow = webViewDialogIsShow
-                ) {
-                    url = ""
-                    webViewDialogIsShow = false
-                    navController.popBackStack()
-                }
+            if (newsUrl.isNotEmpty()){
+                FullScreenDialog(
+                    onDismissRequest = { newsUrl = "" },
+                    content = {
+                        WebViewScreen(
+                            url = newsUrl,
+                            isShow = webViewDialogIsShow
+                        ) {
+                            newsUrl = ""
+                            webViewDialogIsShow = false
+                        }
+                    }
+                )
             }
-        )
+
+        }
     }
 }
 
