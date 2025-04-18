@@ -103,7 +103,7 @@ fun Widgets(
 
                         Box {
                             Text(
-                                text = "℃" + "${weatherData?.current?.tempC?.roundToInt() ?: "?"}",
+                                text = "℃ " + "${weatherData?.current?.tempC?.roundToInt() ?: "?"}",
                                 style = CustomTypography.titleLarge,
                                 modifier = Modifier
                                     .fillMaxWidth()
