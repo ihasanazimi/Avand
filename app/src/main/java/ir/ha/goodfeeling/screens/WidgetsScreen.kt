@@ -93,7 +93,7 @@ fun Widgets(
                     Column(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .padding(16.dp),
+                            .padding(8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
@@ -161,18 +161,27 @@ fun Widgets(
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .weight(0.7f)
-                                .padding(vertical = 14.dp)
+                                .weight(0.6f)
+                                .padding(vertical =4.dp)
                         )
 
                         Text(
-                            text = WeatherCondition.getSentences(weatherData?.current?.feelslikeC?.roundToInt()?:0),
+                            text = "uv : ${weatherData?.current?.uv?.roundToInt()?:""}" +"\n"+ WeatherCondition.getUVSentences(weatherData?.current?.uv?.roundToInt()?:0,weatherData?.current?.isDay == 1),
                             Modifier
                                 .fillMaxSize()
-                                .weight(0.4f)
-                                .padding(vertical = 8.dp),
+                                .weight(0.4f),
                             textAlign = TextAlign.Right,
                             lineHeight = TextUnit(24f, TextUnitType.Sp),
+                            style = CustomTypography.labelSmall,
+                            maxLines = 2
+                        )
+
+                        Text(
+                            text = WeatherCondition.getSentences(weatherData?.current?.feelslikeC?.roundToInt()?:0,weatherData?.current?.isDay == 1),
+                            Modifier
+                                .fillMaxSize()
+                                .weight(0.4f),
+                            textAlign = TextAlign.Right,
                             style = CustomTypography.labelSmall,
                             maxLines = 2
                         )
