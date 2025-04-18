@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -54,10 +55,12 @@ import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.data.fakeOccasionsOfTheDayList
 import ir.ha.goodfeeling.data.models.enums.WeatherCondition
 import ir.ha.goodfeeling.data.models.remote_response.weather.WeatherRemoteResponse
+import ir.ha.goodfeeling.screens.itemViews.CustomSpacer
 import ir.ha.goodfeeling.screens.itemViews.OccasionItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.LightPrimary
+import ir.ha.goodfeeling.ui.theme.TransparentlyWhite
 import kotlin.math.roundToInt
 
 @Composable
@@ -123,7 +126,7 @@ fun Widgets(
                         }
 
                         Row(
-                            modifier = Modifier.padding(top = 4.dp , start = 4.dp),
+                            modifier = Modifier.padding(top = 4.dp, start = 4.dp),
                             horizontalArrangement = Arrangement.SpaceEvenly,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -183,13 +186,22 @@ fun Widgets(
                             maxLines = 2
                         )
 
+                        Spacer(
+                            Modifier
+                                .padding(vertical = 5.dp)
+                                .background(TransparentlyWhite)
+                                .fillMaxWidth()
+                                .height(1.dp)
+                        )
+
                         Text(
                             text = WeatherCondition.getSentences(
                                 weatherData?.current?.feelslikeC?.roundToInt() ?: 0,
                                 weatherData?.current?.isDay == 1
                             ),
                             Modifier
-                                .fillMaxWidth().padding(bottom = 8.dp , top = 4.dp),
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
                             textAlign = TextAlign.Right,
                             lineHeight = TextUnit(20f, TextUnitType.Sp),
                             style = CustomTypography.labelSmall,
