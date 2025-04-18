@@ -123,7 +123,7 @@ fun Widgets(
                         }
 
                         Row(
-                            modifier = Modifier.padding(top = 4.dp),
+                            modifier = Modifier.padding(top = 4.dp , start = 4.dp),
                             horizontalArrangement = Arrangement.SpaceEvenly,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -131,12 +131,11 @@ fun Widgets(
                                 imageVector = Icons.Default.LocationOn,
                                 contentDescription = "location",
                                 modifier = Modifier
-                                    .size(20.dp)
-                                    .padding(horizontal = 4.dp),
+                                    .size(20.dp),
                             )
                             Text(
                                 text = weatherData?.location?.name ?: "",
-                                style = CustomTypography.bodyLarge,
+                                style = CustomTypography.labelSmall,
                                 modifier = Modifier.fillMaxWidth(),
                                 maxLines = 1,
                                 textAlign = TextAlign.End,
@@ -175,12 +174,11 @@ fun Widgets(
                             text = "uv : ${weatherData?.current?.uv?.roundToInt() ?: ""}" + "\n" + WeatherCondition.getUVSentences(
                                 weatherData?.current?.uv?.roundToInt() ?: 0,
                                 weatherData?.current?.isDay == 1
-                            ),
+                            ) + "!",
                             Modifier
-                                .fillMaxSize()
-                                .weight(0.4f),
+                                .fillMaxWidth(),
                             textAlign = TextAlign.Right,
-                            lineHeight = TextUnit(24f, TextUnitType.Sp),
+                            lineHeight = TextUnit(16f, TextUnitType.Sp),
                             style = CustomTypography.labelSmall,
                             maxLines = 2
                         )
@@ -191,9 +189,9 @@ fun Widgets(
                                 weatherData?.current?.isDay == 1
                             ),
                             Modifier
-                                .fillMaxSize()
-                                .weight(0.4f),
+                                .fillMaxWidth().padding(bottom = 8.dp , top = 4.dp),
                             textAlign = TextAlign.Right,
+                            lineHeight = TextUnit(20f, TextUnitType.Sp),
                             style = CustomTypography.labelSmall,
                             maxLines = 2
                         )

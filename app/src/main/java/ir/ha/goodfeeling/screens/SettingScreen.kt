@@ -36,10 +36,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.ha.goodfeeling.data.models.local_entities.CityEntity
 import ir.ha.goodfeeling.data.getFakeCitiesList
+import ir.ha.goodfeeling.db.DataStoreManager
 import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.screens.bottom_sheets.CitiesModalBottomSheet
 import ir.ha.goodfeeling.screens.bottom_sheets.UserProfileBottomSheet
@@ -48,18 +53,29 @@ import ir.ha.goodfeeling.screens.itemViews.settingItems
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.RedColor
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @Composable
 fun SettingScreen(navController: NavController) {
+
+    val viewModel = hiltViewModel<SettingScreenVM>()
 
     Surface {
 
         val context = LocalContext.current
         var citiesModalOpenState by remember { mutableStateOf(false) }
         var userProfileModalOpenState by remember { mutableStateOf(false) }
-        var userName by remember { mutableStateOf("حسن عظیمی") }
-        var selectedCity by remember { mutableStateOf<CityEntity?>(getFakeCitiesList().find { it.selected }) }
+        var userNameState by remember { mutableStateOf("") }
+        var selectedCityState by remember { mutableStateOf<CityEntity?>(getFakeCitiesList().find { it.selected }) }
+
+
+        SideEffect {
+            viewModel.getUserName()
+            userNameState = viewModel.userName.value
+        }
 
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -184,7 +200,7 @@ fun SettingScreen(navController: NavController) {
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = selectedCity?.cityName ?: "",
+                                        text = selectedCityState?.cityName ?: "",
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(vertical = 8.dp),
@@ -220,7 +236,9 @@ fun SettingScreen(navController: NavController) {
                         SettingItemView(it) { type ->
                             when (type) {
                                 Screens.Setting -> {
-                                    userProfileModalOpenState = true
+                                    viewModel.getUserName().also {
+                                        userProfileModalOpenState = true
+                                    }
                                 }
 
                                 Screens.AboutUs -> {
@@ -244,20 +262,49 @@ fun SettingScreen(navController: NavController) {
             CitiesModalBottomSheet(
                 citiesSnapshotList = getFakeCitiesList(),
                 isOpen = citiesModalOpenState,
-                selectedCity = selectedCity
+                selectedCity = selectedCityState
             ) { returnedCity ->
-                selectedCity = returnedCity
+                selectedCityState = returnedCity
                 citiesModalOpenState = false
             }
 
 
-            UserProfileBottomSheet(lastUserName = userName, isOpen = userProfileModalOpenState) {
-                userName = it
-                userProfileModalOpenState = false
+            UserProfileBottomSheet(lastUserName = userNameState, isOpen = userProfileModalOpenState) {
+                userNameState = it
+                viewModel.saveUserName(userNameState).also {
+                    userProfileModalOpenState = false
+                }
             }
 
         }
     }
+}
+
+
+@HiltViewModel
+class SettingScreenVM @Inject constructor(
+    private val dataStoreManager: DataStoreManager
+) : ViewModel(){
+
+    val TAG = "SettingScreenVM"
+
+    val userName = MutableStateFlow("")
+
+    fun saveUserName(newName : String){
+        viewModelScope.launch {
+            dataStoreManager.saveUserName(newName)
+        }
+    }
+
+    fun getUserName(){
+        viewModelScope.launch {
+            dataStoreManager.userNameFlow.collect {
+                Log.i(TAG, "getUserName: $it")
+                userName.emit(it?:"unknown")
+            }
+        }
+    }
+
 }
 
 
