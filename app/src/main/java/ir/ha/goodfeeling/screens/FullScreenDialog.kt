@@ -25,7 +25,7 @@ fun FullScreenDialog(
     ) {
         Surface(
             modifier = Modifier
-                .fillMaxSize().padding(vertical = 42.dp),
+                .fillMaxSize().padding(vertical = 32.dp),
             shape = RoundedCornerShape(20.dp),
             color = MaterialTheme.colorScheme.background
         ) {

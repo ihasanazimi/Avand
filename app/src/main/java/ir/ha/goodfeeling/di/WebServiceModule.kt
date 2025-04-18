@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ir.ha.goodfeeling.data.remote.webServices.WeatherApiWebServices
+import ir.ha.goodfeeling.data.remote.webServices.WeatherWebServices
 import retrofit2.Retrofit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -17,8 +17,8 @@ object WebServiceModule {
 
     @Singleton
     @Provides
-    fun provideWebServices(@Named("weather")retrofit: Retrofit.Builder) : WeatherApiWebServices {
-        return retrofit.build().create(WeatherApiWebServices::class.java)
+    fun provideWebServices(@Named("weather")retrofit: Retrofit.Builder) : WeatherWebServices {
+        return retrofit.build().create(WeatherWebServices::class.java)
     }
 
 

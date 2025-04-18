@@ -28,9 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import ir.ha.goodfeeling.data.models.other.fakeBitPriceList
-import ir.ha.goodfeeling.data.models.other.fakeCurrencyPriceList
-import ir.ha.goodfeeling.data.models.other.fakeGoldPriceList
+import ir.ha.goodfeeling.data.fakeBitPriceList
+import ir.ha.goodfeeling.data.fakeCurrencyPriceList
+import ir.ha.goodfeeling.data.fakeGoldPriceList
 import ir.ha.goodfeeling.screens.itemViews.CurrencyPriceItemView
 import ir.ha.goodfeeling.screens.itemViews.CustomSpacer
 import ir.ha.goodfeeling.ui.theme.CustomTypography

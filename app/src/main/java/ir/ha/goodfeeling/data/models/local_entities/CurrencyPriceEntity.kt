@@ -1,7 +1,7 @@
-package ir.ha.goodfeeling.data.models.entities
+package ir.ha.goodfeeling.data.models.local_entities
 
 import androidx.compose.ui.graphics.Color
-import ir.ha.goodfeeling.data.models.other.CurrencyType
+import ir.ha.goodfeeling.data.models.enums.CurrencyType
 
 data class CurrencyPriceEntity(
     val currencyName: String,

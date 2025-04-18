@@ -1,5 +1,11 @@
 package ir.ha.goodfeeling.screens
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,25 +38,35 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import ir.ha.goodfeeling.R
-import ir.ha.goodfeeling.data.models.other.fakeOccasionsOfTheDayList
+import ir.ha.goodfeeling.data.fakeOccasionsOfTheDayList
+import ir.ha.goodfeeling.data.models.enums.WeatherCondition
+import ir.ha.goodfeeling.data.models.remote_response.weather.WeatherRemoteResponse
 import ir.ha.goodfeeling.screens.itemViews.OccasionItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.LightPrimary
-import ir.ha.goodfeeling.ui.theme.TransparentlyBlack
+import kotlin.math.roundToInt
 
 @Composable
-fun Widgets() {
+fun Widgets(
+    weatherLoading: Boolean = false,
+    weatherData: WeatherRemoteResponse? = null,
+    onRefresh: () -> Unit = {}
+) {
 
-    val whetherIsLoading by remember { mutableStateOf(false) }
     val time by remember { mutableStateOf("14:05") }
     val persianDate by remember { mutableStateOf("سه شنبه 26 فروردین") }
     val globalDate by remember { mutableStateOf("15 آوریل 2025") }
@@ -84,7 +100,7 @@ fun Widgets() {
 
                         Box {
                             Text(
-                                text = "℃" + "32",
+                                text = "℃" + "${weatherData?.current?.tempC?.roundToInt()?:"?"}",
                                 style = CustomTypography.titleLarge,
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -99,7 +115,7 @@ fun Widgets() {
                                 modifier = Modifier
                                     .align(Alignment.CenterEnd)
                                     .clickable {
-                                        // todo
+                                        onRefresh.invoke()
                                     }
                             )
 
@@ -116,7 +132,7 @@ fun Widgets() {
                                 modifier = Modifier.size(20.dp),
                             )
                             Text(
-                                text = "تهران",
+                                text = weatherData?.location?.name?:"",
                                 style = CustomTypography.bodyLarge,
                                 modifier = Modifier.fillMaxWidth(),
                                 maxLines = 1,
@@ -124,8 +140,24 @@ fun Widgets() {
                             )
                         }
 
+                        /*AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(painterResource(WeatherCondition.fromCode(weatherData?.current?.condition?.code?: WeatherCondition.Unknown.code).iconResId))
+                                .crossfade(true)
+                                .build(),
+                            contentDescription = "Loaded image",
+                            modifier = Modifier
+                                .size(120.dp)
+                                .fillMaxWidth()
+                                .weight(0.7f)
+                                .clip(RoundedCornerShape(12.dp))
+                        )*/
+
                         Image(
-                            painter = painterResource(id = R.drawable.cloudy),
+                            painter = painterResource(WeatherCondition.fromCode(
+                                code = weatherData?.current?.condition?.code?: WeatherCondition.Unknown.code,
+                                isDay = weatherData?.current?.isDay == 1 /* 1 is day and 0 is night*/
+                            ).iconResId),
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -134,7 +166,7 @@ fun Widgets() {
                         )
 
                         Text(
-                            text = "آخ که توی این هوا بستنی خیلی زیاد میچسبه ✌ ",
+                            text = WeatherCondition.getSentences(weatherData?.current?.feelslikeC?.roundToInt()?:0),
                             Modifier
                                 .fillMaxSize()
                                 .weight(0.4f)
@@ -147,30 +179,7 @@ fun Widgets() {
 
                     }
 
-                    if (whetherIsLoading) {
-                        Column(
-                            Modifier
-                                .fillMaxSize()
-                                .background(TransparentlyBlack)
-                                .alpha(0f),
-                            verticalArrangement = Arrangement.Center,
-                        ) {
-                            Image(
-                                contentDescription = "loading image",
-                                painter = painterResource(R.drawable.loading),
-                                modifier = Modifier.align(Alignment.CenterHorizontally),
-                            )
-
-                            Text(
-                                text = "کمی صبر کنید..",
-                                textAlign = TextAlign.Center,
-                                style = CustomTypography.labelLarge,
-                                modifier = Modifier
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(vertical = 8.dp)
-                            )
-                        }
-                    }
+                    if (weatherLoading) { Loading() }
                 }
             }
 
@@ -316,6 +325,50 @@ fun Widgets() {
                 }
             }
         }
+    }
+}
+
+
+@Composable
+fun Loading() {
+    val infiniteTransition = rememberInfiniteTransition(label = "rotation")
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1200, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "rotationAnim"
+    )
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.8f)),
+        verticalArrangement = Arrangement.Center,
+    ) {
+
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
+            Image(
+                painter = painterResource(R.drawable.loading),
+                contentDescription = "loading image",
+                modifier = Modifier
+                    .size(32.dp)
+                    .graphicsLayer {
+                        rotationZ = rotation
+                    }
+            )
+        }
+
+        Text(
+            text = "کمی صبر کنید..",
+            textAlign = TextAlign.Center,
+            style = CustomTypography.labelLarge,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(vertical = 8.dp)
+        )
     }
 }
 

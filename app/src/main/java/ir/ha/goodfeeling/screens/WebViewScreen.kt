@@ -113,6 +113,17 @@ fun WebViewScreen(
                     .background(defaultColor)
             ) {
 
+                Box(Modifier.fillMaxWidth().fillMaxHeight() , contentAlignment = Alignment.CenterEnd){
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth().padding(start = 16.dp),
+                        text = url.take((url.length / 1.5f).roundToInt()),
+                        style = CustomTypography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSecondary , textAlign = TextAlign.Center),
+                        maxLines = 1,
+                    )
+                }
+
+
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "close btn",
@@ -128,16 +139,6 @@ fun WebViewScreen(
                         .size(28.dp)
                         .align(Alignment.CenterVertically)
                 )
-
-                Box(Modifier.fillMaxWidth().fillMaxHeight() , contentAlignment = Alignment.CenterStart){
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth().padding(end = 16.dp),
-                        text = url.take((url.length / 1.5f).roundToInt()),
-                        style = CustomTypography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSecondary , textAlign = TextAlign.Center),
-                        maxLines = 1,
-                    )
-                }
 
             }
 

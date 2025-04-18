@@ -1,13 +1,5 @@
 package ir.ha.goodfeeling.data.repository.news
 
-import ir.ha.goodfeeling.data.ResponseState
-import ir.ha.goodfeeling.data.remote.remote_response.weather.WeatherRemoteResponse
-import ir.ha.goodfeeling.data.remote.webServices.WeatherApiWebServices
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import okio.IOException
-import javax.inject.Inject
-
 /*
 interface WeatherRepository {
 

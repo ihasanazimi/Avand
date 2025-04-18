@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.common.extensions.getAmountFormatBySeparator
-import ir.ha.goodfeeling.data.models.entities.NewsItemEntity
+import ir.ha.goodfeeling.data.models.local_entities.NewsItemEntity
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 

@@ -1,4 +1,4 @@
-package ir.ha.goodfeeling.data.models.other
+package ir.ha.goodfeeling.data.models.enums
 
 
 sealed class CurrencyType(val unitType : String) {

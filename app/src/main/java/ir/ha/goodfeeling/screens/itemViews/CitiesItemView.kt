@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ir.ha.goodfeeling.data.models.entities.CityEntity
+import ir.ha.goodfeeling.data.models.local_entities.CityEntity
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 
 @Composable

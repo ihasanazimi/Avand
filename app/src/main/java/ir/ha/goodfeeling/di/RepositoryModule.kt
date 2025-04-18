@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ir.ha.goodfeeling.data.remote.webServices.WeatherApiWebServices
+import ir.ha.goodfeeling.data.remote.webServices.WeatherWebServices
 import ir.ha.goodfeeling.data.repository.weather.WeatherRepository
 import ir.ha.goodfeeling.data.repository.weather.WeatherRepositoryImpl
 import javax.inject.Singleton
@@ -16,7 +16,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideDeveloperInfoRepository(webServices: WeatherApiWebServices) : WeatherRepository{
+    fun provideDeveloperInfoRepository(webServices: WeatherWebServices) : WeatherRepository{
         return WeatherRepositoryImpl(webServices)
     }
 
