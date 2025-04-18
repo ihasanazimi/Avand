@@ -134,7 +134,7 @@ fun Widgets(
                                 imageVector = Icons.Default.LocationOn,
                                 contentDescription = "location",
                                 modifier = Modifier
-                                    .size(20.dp),
+                                    .size(18.dp),
                             )
                             Text(
                                 text = weatherData?.location?.name ?: "",
