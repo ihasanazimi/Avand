@@ -22,7 +22,7 @@ sealed class WeatherCondition(val code: Int, val iconResId: Int) {
     object LightSnow : WeatherCondition(1213, R.drawable.patchy_snow) // برف سبک
     object ModerateSnow : WeatherCondition(1219, R.drawable.patchy_snow) // برف متوسط
     object HeavySnow : WeatherCondition(1225, R.drawable.patchy_snow) // برف سنگین
-    object Unknown : WeatherCondition(-1, R.drawable.unknown_weather) // ناشناخته / پیش‌فرض
+    object Unknown : WeatherCondition(-1, R.drawable.loading) // ناشناخته / پیش‌فرض
 
 
     // night weathers

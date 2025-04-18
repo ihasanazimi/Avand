@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import ir.ha.goodfeeling.data.ResponseState
 import ir.ha.goodfeeling.data.models.remote_response.weather.WeatherRemoteResponse
 import ir.ha.goodfeeling.data.remote.webServices.WeatherWebServices
+import ir.ha.goodfeeling.db.DataStoreManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
@@ -35,7 +36,8 @@ interface WeatherRepository {
 
 
 class WeatherRepositoryImpl @Inject constructor(
-    private val weatherWebServices: WeatherWebServices
+    private val weatherWebServices: WeatherWebServices,
+    private val dataStoreManager: DataStoreManager
 ) : WeatherRepository {
 
     val TAG = "WeatherRepositoryImpl"
@@ -46,6 +48,7 @@ class WeatherRepositoryImpl @Inject constructor(
                 val result = weatherWebServices.getCurrentWeather(q)
                 if (result.isSuccessful){
                     result.body()?.let {
+                        dataStoreManager.saveWeatherData(Gson().toJson(result.body()))
                         emit(ResponseState.Success(it)).also {
                             Log.i(TAG, "getCurrentWeather: ${Gson().toJson(result.body())} ")
                         }

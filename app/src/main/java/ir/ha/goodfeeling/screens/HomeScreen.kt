@@ -23,16 +23,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.ha.goodfeeling.data.ResponseState
 import ir.ha.goodfeeling.data.models.remote_response.weather.WeatherRemoteResponse
 import ir.ha.goodfeeling.data.repository.weather.WeatherRepository
+import ir.ha.goodfeeling.db.DataStoreManager
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import okio.IOException
 import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,7 +52,7 @@ fun HomeScreen(navController: NavHostController) {
 
     SideEffect {
 
-        viewModel.getCurrentWeather(q = "35.561,51.235")
+        viewModel.getCurrentWeatherFromLocal()
 
         coroutineScope.launch {
             viewModel.errorMessage.collect {
@@ -83,7 +86,7 @@ fun HomeScreen(navController: NavHostController) {
                     weatherLoading = weatherLoading,
                     weatherData = weatherData,
                     onRefresh = {
-                        viewModel.getCurrentWeather(q = "35.561,51.235")
+                        viewModel.getCurrentWeather(q = "35.761008, 51.404626")
                     }
                 ) }
                 item {
@@ -99,7 +102,8 @@ fun HomeScreen(navController: NavHostController) {
 
 @HiltViewModel
 class HomeScreenVM @Inject constructor(
-    private val weatherRepository: WeatherRepository
+    private val weatherRepository: WeatherRepository,
+    private val dataStoreManager : DataStoreManager
 ) : ViewModel() {
 
     val TAG = "HomeScreenVM"
@@ -107,7 +111,7 @@ class HomeScreenVM @Inject constructor(
     val errorMessage = MutableSharedFlow<String>()
 
     val weatherLoading = MutableStateFlow<Boolean>(false)
-    val weatherData = MutableStateFlow<WeatherRemoteResponse?>(null)
+    var weatherData = MutableStateFlow<WeatherRemoteResponse?>(null)
 
     val newsLoading = MutableSharedFlow<Boolean>()
     val newsData = MutableSharedFlow<List<String>>()
@@ -134,9 +138,30 @@ class HomeScreenVM @Inject constructor(
         }
     }
 
+    fun getCurrentWeatherFromLocal(q: String = "35.761008, 51.404626") {
+        viewModelScope.launch {
+            dataStoreManager.weatherDataFlow.collect {
+                if (it == null) {
+                    getCurrentWeather(q)
+                }else{
+                    try {
+                        val w = Gson().fromJson<WeatherRemoteResponse>(it, WeatherRemoteResponse::class.java)
+                        weatherData.emit(w)
+                    }catch (e : IOException){
+                        Log.i(TAG, "getCurrentWeatherFromLocal error is ${e.message}")
+                        getCurrentWeather(q)
+                    }
+                }
+            }
+        }
+    }
+
     fun getNews() {
 
     }
+
+
+
 }
 
 

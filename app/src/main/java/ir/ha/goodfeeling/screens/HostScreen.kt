@@ -1,5 +1,6 @@
 package ir.ha.goodfeeling.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -14,14 +15,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,7 +38,9 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.ha.goodfeeling.R
+import ir.ha.goodfeeling.db.DataStoreManager
 import ir.ha.goodfeeling.navigation.BottomNavigationBar
 import ir.ha.goodfeeling.navigation.Screens
 import ir.ha.goodfeeling.ui.theme.CustomTypography
@@ -39,13 +48,28 @@ import ir.ha.goodfeeling.ui.theme.DarkBackground
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.LightBackground
 import ir.ha.goodfeeling.ui.theme.getBackgroundColor
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @Composable
 fun HostScreen(navController: NavHostController) {
+
+    val viewModel = hiltViewModel<HostScreenVM>()
     GoodFeelingTheme {
 
-        val userName by remember { mutableStateOf("حسن عظیمی") }
         val hostNavController = rememberNavController()
+        val coroutineScope = rememberCoroutineScope()
+        var userName by remember { mutableStateOf("حسن عظیمی") }
+
+
+        SideEffect {
+            coroutineScope.launch {
+                viewModel.userName.collect {
+                    userName = it
+                }
+            }
+        }
 
         Scaffold(
             modifier = Modifier.background(color = getBackgroundColor()),
@@ -57,7 +81,7 @@ fun HostScreen(navController: NavHostController) {
             }
         ) { innerPadding ->
             Surface {
-                Box(modifier = Modifier.fillMaxSize()){
+                Box(modifier = Modifier.fillMaxSize()) {
                     NavHost(
                         navController = hostNavController,
                         startDestination = Screens.Home.route,
@@ -86,7 +110,8 @@ fun TopBar(userName: String) {
     Surface {
         Column(
             modifier = Modifier
-                .fillMaxWidth().padding(top = 12.dp)
+                .fillMaxWidth()
+                .padding(top = 12.dp)
         ) {
 
             Row(
@@ -139,6 +164,31 @@ fun MyLottieAnimation(modifier: Modifier) {
         progress = { progress },
         modifier = modifier
     )
+}
+
+@HiltViewModel
+class HostScreenVM @Inject constructor(
+    private val dataStoreManager: DataStoreManager
+) : ViewModel(){
+
+    val TAG = "HostScreenVM"
+    
+    init {
+        getUserName()
+    }
+
+    val userName = MutableStateFlow("")
+
+    fun getUserName(){
+        viewModelScope.launch {
+            dataStoreManager.userNameFlow.collect {
+                Log.i(TAG, "getUserName: $it")
+                userName.emit(it?:"")
+            }
+        }
+    }
+
+
 }
 
 

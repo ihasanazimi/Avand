@@ -93,19 +93,19 @@ fun Widgets(
                     Column(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .padding(8.dp),
+                            .padding(start = 8.dp, end = 12.dp, bottom = 8.dp, top = 16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
 
                         Box {
                             Text(
-                                text = "℃" + "${weatherData?.current?.tempC?.roundToInt()?:"?"}",
+                                text = "℃" + "${weatherData?.current?.tempC?.roundToInt() ?: "?"}",
                                 style = CustomTypography.titleLarge,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .align(Alignment.CenterStart)
-                                    .padding(horizontal = 4.dp),
+                                    .padding(horizontal = 8.dp),
                                 textAlign = TextAlign.Left
                             )
 
@@ -114,6 +114,7 @@ fun Widgets(
                                 contentDescription = "refresh weather",
                                 modifier = Modifier
                                     .align(Alignment.CenterEnd)
+                                    .padding(horizontal = 4.dp)
                                     .clickable {
                                         onRefresh.invoke()
                                     }
@@ -129,10 +130,12 @@ fun Widgets(
                             Icon(
                                 imageVector = Icons.Default.LocationOn,
                                 contentDescription = "location",
-                                modifier = Modifier.size(20.dp),
+                                modifier = Modifier
+                                    .size(20.dp)
+                                    .padding(horizontal = 4.dp),
                             )
                             Text(
-                                text = weatherData?.location?.name?:"",
+                                text = weatherData?.location?.name ?: "",
                                 style = CustomTypography.bodyLarge,
                                 modifier = Modifier.fillMaxWidth(),
                                 maxLines = 1,
@@ -154,19 +157,25 @@ fun Widgets(
                         )*/
 
                         Image(
-                            painter = painterResource(WeatherCondition.fromCode(
-                                code = weatherData?.current?.condition?.code?: WeatherCondition.Unknown.code,
-                                isDay = weatherData?.current?.isDay == 1 /* 1 is day and 0 is night*/
-                            ).iconResId),
+                            painter = painterResource(
+                                WeatherCondition.fromCode(
+                                    code = weatherData?.current?.condition?.code
+                                        ?: WeatherCondition.Unknown.code,
+                                    isDay = weatherData?.current?.isDay == 1 /* 1 is day and 0 is night*/
+                                ).iconResId
+                            ),
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(0.6f)
-                                .padding(vertical =4.dp)
+                                .padding(vertical = 4.dp)
                         )
 
                         Text(
-                            text = "uv : ${weatherData?.current?.uv?.roundToInt()?:""}" +"\n"+ WeatherCondition.getUVSentences(weatherData?.current?.uv?.roundToInt()?:0,weatherData?.current?.isDay == 1),
+                            text = "uv : ${weatherData?.current?.uv?.roundToInt() ?: ""}" + "\n" + WeatherCondition.getUVSentences(
+                                weatherData?.current?.uv?.roundToInt() ?: 0,
+                                weatherData?.current?.isDay == 1
+                            ),
                             Modifier
                                 .fillMaxSize()
                                 .weight(0.4f),
@@ -177,7 +186,10 @@ fun Widgets(
                         )
 
                         Text(
-                            text = WeatherCondition.getSentences(weatherData?.current?.feelslikeC?.roundToInt()?:0,weatherData?.current?.isDay == 1),
+                            text = WeatherCondition.getSentences(
+                                weatherData?.current?.feelslikeC?.roundToInt() ?: 0,
+                                weatherData?.current?.isDay == 1
+                            ),
                             Modifier
                                 .fillMaxSize()
                                 .weight(0.4f),
@@ -188,7 +200,9 @@ fun Widgets(
 
                     }
 
-                    if (weatherLoading) { Loading() }
+                    if (weatherLoading) {
+                        Loading()
+                    }
                 }
             }
 
@@ -354,11 +368,11 @@ fun Loading() {
     Column(
         Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.8f)),
+            .background(Color.Black.copy(alpha = 0.9f)),
         verticalArrangement = Arrangement.Center,
     ) {
 
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             Image(
                 painter = painterResource(R.drawable.loading),
                 contentDescription = "loading image",
