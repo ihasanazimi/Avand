@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     val TAG = "MainActivity"
-    val permissionsResult = MutableSharedFlow<Pair<Int , String>>()
+    val permissionsResult = MutableSharedFlow<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +49,10 @@ class MainActivity : ComponentActivity() {
                 lifecycleScope.launch {
                     if (isPermissionGranted(permissions[0].toString())) {
                         // Permission granted, handle accordingly
-                        permissionsResult.emit(Pair(1001 , "granted"))
+                        permissionsResult.emit(1001)
                     } else {
                         // Permission denied, handle accordingly
-                        permissionsResult.emit(Pair(1001 , "denied"))
+                        permissionsResult.emit(1001)
                     }
                 }
                 return

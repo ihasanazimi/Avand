@@ -2,7 +2,7 @@ package ir.ha.goodfeeling.data.models.remote_response.weather
 
 import com.google.gson.annotations.SerializedName
 
-data class AirQuality(
+data class AirQualityRemoteResponse(
     @SerializedName("co")
     val co: Double,
     @SerializedName("gb-defra-index")

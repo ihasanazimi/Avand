@@ -1,4 +1,4 @@
-package ir.ha.goodfeeling.data.models.local_entities
+package ir.ha.goodfeeling.data.models.local_entities.other
 
 import androidx.compose.ui.graphics.Color
 import ir.ha.goodfeeling.data.models.enums.CurrencyType

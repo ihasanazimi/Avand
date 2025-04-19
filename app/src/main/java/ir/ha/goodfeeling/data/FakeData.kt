@@ -4,10 +4,10 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.data.models.enums.CurrencyType
-import ir.ha.goodfeeling.data.models.local_entities.CityEntity
-import ir.ha.goodfeeling.data.models.local_entities.CurrencyPriceEntity
-import ir.ha.goodfeeling.data.models.local_entities.NewsItemEntity
-import ir.ha.goodfeeling.data.models.local_entities.OccasionsOfTheDayEntity
+import ir.ha.goodfeeling.data.models.local_entities.other.CityEntity
+import ir.ha.goodfeeling.data.models.local_entities.other.CurrencyPriceEntity
+import ir.ha.goodfeeling.data.models.local_entities.other.NewsItemEntity
+import ir.ha.goodfeeling.data.models.local_entities.other.OccasionsOfTheDayEntity
 import ir.ha.goodfeeling.ui.theme.GreenColor
 import ir.ha.goodfeeling.ui.theme.RedColor
 

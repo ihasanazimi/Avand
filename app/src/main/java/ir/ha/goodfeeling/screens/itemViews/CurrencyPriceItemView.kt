@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.common.extensions.getAmountFormatBySeparator
 import ir.ha.goodfeeling.data.models.enums.CurrencyType
-import ir.ha.goodfeeling.data.models.local_entities.CurrencyPriceEntity
+import ir.ha.goodfeeling.data.models.local_entities.other.CurrencyPriceEntity
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.GreenColor

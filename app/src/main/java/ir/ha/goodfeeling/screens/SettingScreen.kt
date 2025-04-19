@@ -42,7 +42,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.ha.goodfeeling.data.models.local_entities.CityEntity
+import ir.ha.goodfeeling.data.models.local_entities.other.CityEntity
 import ir.ha.goodfeeling.data.getFakeCitiesList
 import ir.ha.goodfeeling.db.DataStoreManager
 import ir.ha.goodfeeling.navigation.Screens

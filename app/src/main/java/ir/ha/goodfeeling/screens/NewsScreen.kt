@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import ir.ha.goodfeeling.data.models.local_entities.NewsItemEntity
+import ir.ha.goodfeeling.data.models.local_entities.other.NewsItemEntity
 import ir.ha.goodfeeling.data.getFakeNews
 import ir.ha.goodfeeling.screens.itemViews.NewsItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography

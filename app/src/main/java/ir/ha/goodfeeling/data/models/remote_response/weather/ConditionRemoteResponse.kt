@@ -2,7 +2,7 @@ package ir.ha.goodfeeling.data.models.remote_response.weather
 
 import com.google.gson.annotations.SerializedName
 
-data class Condition(
+data class ConditionRemoteResponse(
     @SerializedName("code")
     val code: Int,
     @SerializedName("icon")

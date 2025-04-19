@@ -54,6 +54,7 @@ import coil.request.ImageRequest
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.data.fakeOccasionsOfTheDayList
 import ir.ha.goodfeeling.data.models.enums.WeatherCondition
+import ir.ha.goodfeeling.data.models.local_entities.weather.WeatherEntity
 import ir.ha.goodfeeling.data.models.remote_response.weather.WeatherRemoteResponse
 import ir.ha.goodfeeling.screens.itemViews.CustomSpacer
 import ir.ha.goodfeeling.screens.itemViews.OccasionItemView
@@ -66,7 +67,7 @@ import kotlin.math.roundToInt
 @Composable
 fun Widgets(
     weatherLoading: Boolean = false,
-    weatherData: WeatherRemoteResponse? = null,
+    weatherData: WeatherEntity? = null,
     onRefresh: () -> Unit = {}
 ) {
 

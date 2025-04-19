@@ -33,6 +33,7 @@ import ir.ha.goodfeeling.common.more.LocationHelper
 import ir.ha.goodfeeling.common.security_and_permissions.askPermission
 import ir.ha.goodfeeling.common.security_and_permissions.isPermissionGranted
 import ir.ha.goodfeeling.data.ResponseState
+import ir.ha.goodfeeling.data.models.local_entities.weather.WeatherEntity
 import ir.ha.goodfeeling.data.models.remote_response.weather.WeatherRemoteResponse
 import ir.ha.goodfeeling.data.repository.weather.WeatherRepository
 import ir.ha.goodfeeling.db.DataStoreManager
@@ -84,10 +85,10 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
         coroutineScope.launch {
             activity.permissionsResult.collect {
 
-                Log.i(TAG, "HomeScreen: permission code is ${it.first} ")
-                Log.i(TAG, "HomeScreen: permission result is ${it.second} ")
+                Log.i(TAG, "HomeScreen: permission code is ${it} ")
+                Log.i(TAG, "HomeScreen: permission result is ${it} ")
 
-                if (it.first == 1001) {
+                if (it == 1001) {
                     if (activity.isPermissionGranted(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
                         getLastLocation(activity, viewModel)
                     } else {
@@ -128,7 +129,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                         weatherData = weatherData,
                         onRefresh = {
                             coroutineScope.launch {
-                                activity.permissionsResult.emit(Pair(1001,"granted"))
+                                activity.permissionsResult.emit(1001)
                             }
                         }
                     )
@@ -189,7 +190,7 @@ class HomeScreenVM @Inject constructor(
     val errorMessage = MutableSharedFlow<String>()
 
     val weatherLoading = MutableStateFlow<Boolean>(false)
-    var weatherData = MutableStateFlow<WeatherRemoteResponse?>(null)
+    var weatherData = MutableStateFlow<WeatherEntity?>(null)
 
     val newsLoading = MutableSharedFlow<Boolean>()
     val newsData = MutableSharedFlow<List<String>>()
@@ -227,9 +228,9 @@ class HomeScreenVM @Inject constructor(
                     weatherLoading.emit(true)
                     delay(100)
                     try {
-                        val w = Gson().fromJson<WeatherRemoteResponse>(
+                        val w = Gson().fromJson<WeatherEntity>(
                             it,
-                            WeatherRemoteResponse::class.java
+                            WeatherEntity::class.java
                         )
                         weatherData.emit(w)
                     } catch (e: IOException) {

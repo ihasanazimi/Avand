@@ -10,7 +10,7 @@ interface WeatherWebServices {
     @GET("current.json")
     suspend fun getCurrentWeather(
         @Query("q") q : String,
-        @Query("aqi") aqi : String = "no",
+        @Query("aqi") airQuality : String = "yes",
         @Query("key") key : String = "59683c52643e4c96ab780645251604"
     ) : Response<WeatherRemoteResponse>
 

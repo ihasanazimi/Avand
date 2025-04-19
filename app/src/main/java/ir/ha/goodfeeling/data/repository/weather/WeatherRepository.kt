@@ -3,7 +3,9 @@ package ir.ha.goodfeeling.data.repository.weather
 import android.util.Log
 import com.google.gson.Gson
 import ir.ha.goodfeeling.data.ResponseState
+import ir.ha.goodfeeling.data.models.local_entities.weather.WeatherEntity
 import ir.ha.goodfeeling.data.models.remote_response.weather.WeatherRemoteResponse
+import ir.ha.goodfeeling.data.models.toWeatherEntity
 import ir.ha.goodfeeling.data.remote.webServices.WeatherWebServices
 import ir.ha.goodfeeling.db.DataStoreManager
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +32,7 @@ interface WeatherRepository {
      * bulk New
      * */
 
-    suspend fun getCurrentWeather(q : String) : Flow<ResponseState<WeatherRemoteResponse>>
+    suspend fun getCurrentWeather(q : String) : Flow<ResponseState<WeatherEntity>>
 
 }
 
@@ -42,15 +44,16 @@ class WeatherRepositoryImpl @Inject constructor(
 
     val TAG = "WeatherRepositoryImpl"
 
-    override suspend fun getCurrentWeather(q: String): Flow<ResponseState<WeatherRemoteResponse>>  = flow{
+    override suspend fun getCurrentWeather(q: String): Flow<ResponseState<WeatherEntity>>  = flow{
         emit(ResponseState.Loading)
             try {
                 val result = weatherWebServices.getCurrentWeather(q)
                 if (result.isSuccessful){
                     result.body()?.let {
-                        dataStoreManager.saveWeatherData(Gson().toJson(result.body()))
-                        emit(ResponseState.Success(it)).also {
-                            Log.i(TAG, "getCurrentWeather: ${Gson().toJson(result.body())} ")
+                        val weatherEntity = it.toWeatherEntity()
+                        dataStoreManager.saveWeatherData(Gson().toJson(weatherEntity))
+                        emit(ResponseState.Success(weatherEntity)).also {
+                            Log.i(TAG, "getCurrentWeather: ${Gson().toJson(weatherEntity)} ")
                         }
                     }
                 }else{

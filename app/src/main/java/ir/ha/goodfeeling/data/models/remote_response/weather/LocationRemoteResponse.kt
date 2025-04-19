@@ -2,7 +2,7 @@ package ir.ha.goodfeeling.data.models.remote_response.weather
 
 import com.google.gson.annotations.SerializedName
 
-data class Location(
+data class LocationRemoteResponse(
     @SerializedName("name")
     val name: String,
     @SerializedName("region")

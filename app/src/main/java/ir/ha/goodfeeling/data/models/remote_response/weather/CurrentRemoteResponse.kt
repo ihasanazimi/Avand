@@ -2,13 +2,13 @@ package ir.ha.goodfeeling.data.models.remote_response.weather
 
 import com.google.gson.annotations.SerializedName
 
-data class Current(
+data class CurrentRemoteResponse(
     @SerializedName("air_quality")
-    val air_quality: AirQuality,
+    val airQuality: AirQualityRemoteResponse,
     @SerializedName("cloud")
     val cloud: Int,
     @SerializedName("condition")
-    val condition: Condition,
+    val condition: ConditionRemoteResponse,
     @SerializedName("dewpoint_c")
     val dewpointC: Double,
     @SerializedName("dewpoint_f")

@@ -32,7 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ir.ha.goodfeeling.data.models.local_entities.CityEntity
+import ir.ha.goodfeeling.data.models.local_entities.other.CityEntity
 import ir.ha.goodfeeling.data.getFakeCitiesList
 import ir.ha.goodfeeling.screens.itemViews.CitiesItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
