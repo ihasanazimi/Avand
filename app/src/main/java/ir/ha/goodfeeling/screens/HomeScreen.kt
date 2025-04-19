@@ -224,6 +224,8 @@ class HomeScreenVM @Inject constructor(
                 if (it == null) {
                     getCurrentWeather(q)
                 } else {
+                    weatherLoading.emit(true)
+                    delay(100)
                     try {
                         val w = Gson().fromJson<WeatherRemoteResponse>(
                             it,
@@ -234,6 +236,8 @@ class HomeScreenVM @Inject constructor(
                         Log.i(TAG, "getCurrentWeatherFromLocal error is ${e.message}")
                         getCurrentWeather(q)
                     }
+                    delay(100)
+                    weatherLoading.emit(false)
                 }
             }
         }
