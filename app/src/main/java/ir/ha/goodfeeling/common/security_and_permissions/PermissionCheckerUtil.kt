@@ -2,11 +2,8 @@ package ir.ha.goodfeeling.common.security_and_permissions
 
 import android.app.Activity
 import android.content.pm.PackageManager
-import android.util.Log
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import ir.ha.goodfeeling.common.extensions.isMarshmallowPlus
 
 const val PERMISSION_REQUEST_CODE = 10010
 
