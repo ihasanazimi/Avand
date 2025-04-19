@@ -39,24 +39,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.data.fakeOccasionsOfTheDayList
 import ir.ha.goodfeeling.data.models.enums.WeatherCondition
 import ir.ha.goodfeeling.data.models.local_entities.weather.WeatherEntity
-import ir.ha.goodfeeling.data.models.remote_response.weather.WeatherRemoteResponse
-import ir.ha.goodfeeling.screens.itemViews.CustomSpacer
 import ir.ha.goodfeeling.screens.itemViews.OccasionItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
@@ -71,8 +65,8 @@ fun Widgets(
     onRefresh: () -> Unit = {}
 ) {
 
-    val time by remember { mutableStateOf("14:05") }
-    val persianDate by remember { mutableStateOf("سه شنبه 26 فروردین") }
+    val dayOfWeek by remember { mutableStateOf("سه شنبه") }
+    val persianDate by remember { mutableStateOf("26 فروردین 1404") }
     val globalDate by remember { mutableStateOf("15 آوریل 2025") }
 
     GoodFeelingTheme {
@@ -225,7 +219,7 @@ fun Widgets(
                     .fillMaxHeight()
             ) {
 
-                /** Time and Date */
+                /** dayOfWeek and persian and global Date */
                 Card(
                     modifier = Modifier
                         .padding(start = 4.dp, bottom = 4.dp)
@@ -247,7 +241,7 @@ fun Widgets(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = time,
+                                text = dayOfWeek,
                                 modifier = Modifier,
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,

@@ -1,6 +1,6 @@
 package ir.ha.goodfeeling.screens
 
-import android.content.Context
+import android.Manifest
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,7 +34,6 @@ import ir.ha.goodfeeling.common.security_and_permissions.askPermission
 import ir.ha.goodfeeling.common.security_and_permissions.isPermissionGranted
 import ir.ha.goodfeeling.data.ResponseState
 import ir.ha.goodfeeling.data.models.local_entities.weather.WeatherEntity
-import ir.ha.goodfeeling.data.models.remote_response.weather.WeatherRemoteResponse
 import ir.ha.goodfeeling.data.repository.weather.WeatherRepository
 import ir.ha.goodfeeling.db.DataStoreManager
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
@@ -83,12 +82,11 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
 
 
         coroutineScope.launch {
-            activity.permissionsResult.collect {
+            activity.locationAccessFinePermissionsResult.collect { result ->
 
-                Log.i(TAG, "HomeScreen: permission code is ${it} ")
-                Log.i(TAG, "HomeScreen: permission result is ${it} ")
+                Log.i(TAG, "HomeScreen: permission result is $result ")
 
-                if (it == 1001) {
+                if (result) {
                     if (activity.isPermissionGranted(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
                         getLastLocation(activity, viewModel)
                     } else {
@@ -99,7 +97,11 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                                 getLastLocation(activity, viewModel)
                             },
                             onShowRationale = {
-                                Toast.makeText(context, "برای دریافت موقعیت ممکانی شما نیاز به مجوز داریم", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    context,
+                                    "برای دریافت موقعیت ممکانی شما نیاز به مجوز داریم",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             },
                             onRequest = {
                                 getLastLocation(activity, viewModel)
@@ -107,7 +109,11 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                         )
                     }
                 } else {
-                    Toast.makeText(context, "دسترسی شما غیر مجاز است", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "اجازه دسترسی به سرویس مکان توسط شما صادر نشده است!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -128,8 +134,14 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                         weatherLoading = weatherLoading,
                         weatherData = weatherData,
                         onRefresh = {
+                            /*activity.onRequestPermissionsResult(
+                                requestCode = 1001,
+                                permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                                grantResults = intArrayOf(1),
+                                deviceId = 1
+                            )*/
                             coroutineScope.launch {
-                                activity.permissionsResult.emit(1001)
+                                activity.locationAccessFinePermissionsResult.emit(true)
                             }
                         }
                     )
@@ -149,9 +161,9 @@ private fun getLastLocation(
     viewModel: HomeScreenVM
 ) {
 
-    if (isLocationEnabled(activity).not()){
+    if (isLocationEnabled(activity).not()) {
         turnOnGPS(activity)
-    }else{
+    } else {
 
         LocationHelper(activity).getLastLocation(
             onSuccess = {
@@ -170,7 +182,7 @@ private fun getLastLocation(
                 )
                 Toast.makeText(
                     activity,
-                    "خطا در دریافت موقعیت مکانی!",
+                    "خطا در دریافت موقعیت مکانی ، مجدد تلاش کنید...",
                     Toast.LENGTH_SHORT
                 ).show()
             }

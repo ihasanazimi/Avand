@@ -1,6 +1,5 @@
 package ir.ha.goodfeeling
 
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -11,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import ir.ha.goodfeeling.common.security_and_permissions.isPermissionGranted
 import ir.ha.goodfeeling.navigation.AppNavigator
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     val TAG = "MainActivity"
-    val permissionsResult = MutableSharedFlow<Int>()
+    val locationAccessFinePermissionsResult = MutableSharedFlow<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,20 +43,25 @@ class MainActivity : ComponentActivity() {
         grantResults: IntArray,
         deviceId: Int
     ) {
-        Log.i(TAG, "onRequestPermissionsResult: ${permissions.get(0)}")
+        Log.i(TAG, "onRequestPermissionsResult: data: ${Gson().toJson(permissions)}")
+        Log.i(TAG, "onRequestPermissionsResult code: $requestCode")
         when (requestCode) {
+
             1001 -> {
                 lifecycleScope.launch {
-                    if (isPermissionGranted(permissions[0].toString())) {
-                        // Permission granted, handle accordingly
-                        permissionsResult.emit(1001)
-                    } else {
-                        // Permission denied, handle accordingly
-                        permissionsResult.emit(1001)
+                    if (permissions.isNotEmpty()){
+                        locationAccessFinePermissionsResult.emit(isPermissionGranted(permissions[0].toString()))
                     }
                 }
                 return
             }
+
+            1002 -> {
+                if (permissions.isNotEmpty()){
+
+                }
+            }
+
             // Handle other permission request codes if needed
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults, deviceId)
