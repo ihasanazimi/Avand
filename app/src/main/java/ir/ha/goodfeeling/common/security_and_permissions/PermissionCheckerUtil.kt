@@ -2,6 +2,7 @@ package ir.ha.goodfeeling.common.security_and_permissions
 
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -10,36 +11,33 @@ import ir.ha.goodfeeling.common.extensions.isMarshmallowPlus
 const val PERMISSION_REQUEST_CODE = 10010
 
 
-fun checkPermission(activity: Activity, permission: String?): Boolean {
-    return if (isMarshmallowPlus()) {
-        activity.checkSelfPermission(permission!!) == PackageManager.PERMISSION_GRANTED
-    } else {
-        activity.packageManager.checkPermission(
-            permission!!,
-            activity.packageName
-        ) == PackageManager.PERMISSION_GRANTED
-    }
+fun Activity.isPermissionGranted(permission: String): Boolean {
+    return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
 
-fun requestPermission(activity: Activity, permission: String) {
-    if (isMarshmallowPlus()) { activity.requestPermissions(arrayOf(permission), PERMISSION_REQUEST_CODE) }
-} // You can add more methods as needed for handling permission results, etc.
-
-
-fun Activity.requestPermission(permission: String, requestCode: Int = PERMISSION_REQUEST_CODE) {
-    if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
-    }
+fun Activity.shouldShowRationale(permission: String): Boolean {
+    return ActivityCompat.shouldShowRequestPermissionRationale(this, permission)
 }
 
 
-
-fun checkPermission(activity: Activity , permission: String, requestCode: Int) {
-    if (ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_DENIED) {
-        // Requesting the permission
-        ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
+fun Activity.askPermission(
+    permission: String,
+    requestCode: Int = PERMISSION_REQUEST_CODE,
+    onPermissionAlreadyGranted: () -> Unit = {},
+    onShowRationale: () -> Unit = {},
+    onRequest: () -> Unit = {}
+) {
+    if (isPermissionGranted(permission)) {
+        onPermissionAlreadyGranted()
     } else {
-        Toast.makeText(activity, "Permission already granted", Toast.LENGTH_SHORT).show()
+        if (shouldShowRationale(permission)) {
+            // کاربر رد کرده قبلاً، باید براش توضیح بدی
+            onShowRationale()
+        } else {
+            // مستقیم درخواست بده
+            ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+            onRequest()
+        }
     }
 }
 

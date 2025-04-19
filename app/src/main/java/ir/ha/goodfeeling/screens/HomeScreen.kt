@@ -1,5 +1,6 @@
 package ir.ha.goodfeeling.screens
 
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.ha.goodfeeling.MainActivity
+import ir.ha.goodfeeling.common.extensions.isLocationEnabled
+import ir.ha.goodfeeling.common.extensions.turnOnGPS
+import ir.ha.goodfeeling.common.more.LocationHelper
+import ir.ha.goodfeeling.common.security_and_permissions.askPermission
+import ir.ha.goodfeeling.common.security_and_permissions.isPermissionGranted
 import ir.ha.goodfeeling.data.ResponseState
 import ir.ha.goodfeeling.data.models.remote_response.weather.WeatherRemoteResponse
 import ir.ha.goodfeeling.data.repository.weather.WeatherRepository
@@ -40,8 +47,9 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(activity: MainActivity, navController: NavHostController) {
 
+    val TAG = "HomeScreen"
     val context = LocalContext.current
     val viewModel = hiltViewModel<HomeScreenVM>()
     val coroutineScope = rememberCoroutineScope()
@@ -71,6 +79,38 @@ fun HomeScreen(navController: NavHostController) {
                 weatherData = it
             }
         }
+
+
+        coroutineScope.launch {
+            activity.permissionsResult.collect {
+
+                Log.i(TAG, "HomeScreen: permission code is ${it.first} ")
+                Log.i(TAG, "HomeScreen: permission result is ${it.second} ")
+
+                if (it.first == 1001) {
+                    if (activity.isPermissionGranted(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        getLastLocation(activity, viewModel)
+                    } else {
+                        activity.askPermission(
+                            permission = android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            requestCode = 1001,
+                            onPermissionAlreadyGranted = {
+                                getLastLocation(activity, viewModel)
+                            },
+                            onShowRationale = {
+                                Toast.makeText(context, "برای دریافت موقعیت ممکانی شما نیاز به مجوز داریم", Toast.LENGTH_SHORT).show()
+                            },
+                            onRequest = {
+                                getLastLocation(activity, viewModel)
+                            }
+                        )
+                    }
+                } else {
+                    Toast.makeText(context, "دسترسی شما غیر مجاز است", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
     }
 
     GoodFeelingTheme {
@@ -82,13 +122,17 @@ fun HomeScreen(navController: NavHostController) {
                     .fillMaxSize()
                     .padding(horizontal = 8.dp)
             ) {
-                item { Widgets(
-                    weatherLoading = weatherLoading,
-                    weatherData = weatherData,
-                    onRefresh = {
-                        viewModel.getCurrentWeather(q = "35.761008, 51.404626")
-                    }
-                ) }
+                item {
+                    Widgets(
+                        weatherLoading = weatherLoading,
+                        weatherData = weatherData,
+                        onRefresh = {
+                            coroutineScope.launch {
+                                activity.permissionsResult.emit(Pair(1001,"granted"))
+                            }
+                        }
+                    )
+                }
                 item {
                     NewsScreen(navController) {
                         Toast.makeText(context, "more news clicked", Toast.LENGTH_SHORT).show()
@@ -99,11 +143,45 @@ fun HomeScreen(navController: NavHostController) {
     }
 }
 
+private fun getLastLocation(
+    activity: MainActivity,
+    viewModel: HomeScreenVM
+) {
+
+    if (isLocationEnabled(activity).not()){
+        turnOnGPS(activity)
+    }else{
+
+        LocationHelper(activity).getLastLocation(
+            onSuccess = {
+                val latLng = it.latitude.toString() + "," + it.longitude.toString()
+                viewModel.getCurrentWeather(latLng).also {
+                    Log.d(
+                        "TAG",
+                        "LocationHelper(context).getLastLocation - onSuccess by $latLng "
+                    )
+                }
+            },
+            onFailure = {
+                Log.e(
+                    "TAG",
+                    "LocationHelper(context).getLastLocation - onFailure by ${it.message} "
+                )
+                Toast.makeText(
+                    activity,
+                    "خطا در دریافت موقعیت مکانی!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
+    }
+}
+
 
 @HiltViewModel
 class HomeScreenVM @Inject constructor(
     private val weatherRepository: WeatherRepository,
-    private val dataStoreManager : DataStoreManager
+    private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
     val TAG = "HomeScreenVM"
@@ -120,15 +198,17 @@ class HomeScreenVM @Inject constructor(
         viewModelScope.launch {
             weatherRepository.getCurrentWeather(q).collectLatest { result ->
                 Log.i(TAG, "getCurrentWeather: $result ")
-                when(result){
+                when (result) {
                     is ResponseState.Loading -> {
                         weatherLoading.emit(true)
                     }
+
                     is ResponseState.Success -> {
                         delay(500)
                         weatherLoading.emit(false)
                         weatherData.value = result.data
                     }
+
                     is ResponseState.Error -> {
                         weatherLoading.emit(false)
                         errorMessage.emit("خطای نامشخص")
@@ -143,11 +223,14 @@ class HomeScreenVM @Inject constructor(
             dataStoreManager.weatherDataFlow.collect {
                 if (it == null) {
                     getCurrentWeather(q)
-                }else{
+                } else {
                     try {
-                        val w = Gson().fromJson<WeatherRemoteResponse>(it, WeatherRemoteResponse::class.java)
+                        val w = Gson().fromJson<WeatherRemoteResponse>(
+                            it,
+                            WeatherRemoteResponse::class.java
+                        )
                         weatherData.emit(w)
-                    }catch (e : IOException){
+                    } catch (e: IOException) {
                         Log.i(TAG, "getCurrentWeatherFromLocal error is ${e.message}")
                         getCurrentWeather(q)
                     }
@@ -161,9 +244,7 @@ class HomeScreenVM @Inject constructor(
     }
 
 
-
 }
-
 
 
 @Preview(showBackground = true)
@@ -171,6 +252,6 @@ class HomeScreenVM @Inject constructor(
 fun HomeScreenPreview() {
     GoodFeelingTheme {
         val navController = rememberNavController()
-        HomeScreen(navController)
+        HomeScreen(activity = MainActivity(), navController = navController)
     }
 }

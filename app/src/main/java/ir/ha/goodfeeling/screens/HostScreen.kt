@@ -39,6 +39,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.ha.goodfeeling.MainActivity
 import ir.ha.goodfeeling.R
 import ir.ha.goodfeeling.db.DataStoreManager
 import ir.ha.goodfeeling.navigation.BottomNavigationBar
@@ -53,7 +54,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Composable
-fun HostScreen(navController: NavHostController) {
+fun HostScreen(activity : MainActivity , navController: NavHostController) {
 
     val viewModel = hiltViewModel<HostScreenVM>()
     GoodFeelingTheme {
@@ -88,7 +89,7 @@ fun HostScreen(navController: NavHostController) {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable(route = Screens.Home.route) {
-                            HomeScreen(navController = navController)
+                            HomeScreen(navController = navController,activity = activity)
                         }
 
                         composable(route = Screens.CurrencyPrices.route) {
@@ -196,6 +197,6 @@ class HostScreenVM @Inject constructor(
 @Composable
 fun HostScreenPreview() {
     GoodFeelingTheme {
-        HostScreen(rememberNavController())
+        HostScreen(activity = MainActivity() , navController = rememberNavController())
     }
 }

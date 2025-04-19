@@ -92,11 +92,11 @@ fun NavGraphBuilder.splashGraph(navController: NavHostController, activity: Main
 fun NavGraphBuilder.hostGraph(navController: NavHostController, activity: MainActivity) {
     navigation(startDestination = Screens.Host.route, route = hostNavGraph) {
         composable(Screens.Host.route) {
-            HostScreen(navController)
+            HostScreen(activity = activity , navController = navController)
         }
 
         composable(Screens.Home.route) {
-            HomeScreen(navController)
+            HomeScreen(activity = activity , navController = navController)
         }
 
 
