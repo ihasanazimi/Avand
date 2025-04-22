@@ -56,6 +56,7 @@ import ir.ha.goodfeeling.common.extensions.withNotNull
 import ir.ha.goodfeeling.data.ResponseState
 import ir.ha.goodfeeling.data.fakeOccasionsOfTheDayList
 import ir.ha.goodfeeling.data.models.enums.WeatherCondition
+import ir.ha.goodfeeling.data.models.local_entities.calander.CalendarEntity
 import ir.ha.goodfeeling.data.models.local_entities.weather.WeatherEntity
 import ir.ha.goodfeeling.screens.itemViews.OccasionItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
@@ -68,12 +69,9 @@ import kotlin.math.roundToInt
 fun Widgets(
     activity: MainActivity,
     weatherData: ResponseState<WeatherEntity>? = null,
+    calendarData : CalendarEntity,
     onGetData: () -> Unit = {}
 ) {
-
-    val dayOfWeek by remember { mutableStateOf("سه شنبه") }
-    val persianDate by remember { mutableStateOf("26 فروردین 1404") }
-    val globalDate by remember { mutableStateOf("15 آوریل 2025") }
 
 
     GoodFeelingTheme {
@@ -143,7 +141,7 @@ fun Widgets(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = dayOfWeek,
+                                text = calendarData.dayOfWeek,
                                 modifier = Modifier,
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,
@@ -153,7 +151,7 @@ fun Widgets(
 
                         Column(modifier = Modifier.weight(0.6f)) {
                             Text(
-                                text = persianDate,
+                                text = calendarData.persianDate,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 8.dp),
@@ -164,7 +162,7 @@ fun Widgets(
 
 
                             Text(
-                                text = globalDate,
+                                text = calendarData.globalDate,
                                 modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,
@@ -212,45 +210,43 @@ fun Widgets(
                             contentAlignment = Alignment.Center
                         ) {
 
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .alpha(1f)
-                            ) {
-                                Row(
-                                    modifier = Modifier.align(Alignment.Center),
-                                    verticalAlignment = Alignment.CenterVertically
-
+                            if (calendarData.occasionsOfTheDayEntities.isNotEmpty()){
+                                LazyColumn(
+                                    modifier = Modifier,
+                                    verticalArrangement = Arrangement.Center
                                 ) {
+                                    items(calendarData.occasionsOfTheDayEntities) { item ->
+                                        OccasionItemView(occasionsOfTheDay = item)
+                                    }
+                                }
+                            }else{
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                ) {
+                                    Row(
+                                        modifier = Modifier.align(Alignment.Center),
+                                        verticalAlignment = Alignment.CenterVertically
 
-                                    Text(
-                                        text = "خبری نیست..",
-                                        modifier = Modifier.padding(horizontal = 8.dp)
-                                    )
+                                    ) {
 
-                                    Icon(
-                                        painter = painterResource(R.drawable.nothing),
-                                        contentDescription = "nothing",
-                                        modifier = Modifier
-                                            .size(18.dp),
-                                    )
+                                        Text(
+                                            text = "خبری نیست..",
+                                            modifier = Modifier.padding(horizontal = 8.dp)
+                                        )
 
+                                        Icon(
+                                            painter = painterResource(R.drawable.nothing),
+                                            contentDescription = "nothing",
+                                            modifier = Modifier
+                                                .size(18.dp),
+                                        )
+
+                                    }
                                 }
                             }
-
-                            LazyColumn(
-                                modifier = Modifier
-                                    .alpha(0f),
-                                verticalArrangement = Arrangement.Center
-                            ) {
-                                items(fakeOccasionsOfTheDayList) { item ->
-                                    OccasionItemView(occasionsOfTheDay = item)
-                                }
-                            }
-
                         }
-
                     }
                 }
             }
@@ -514,8 +510,14 @@ fun LoadingState() {
 fun WidgetScreenPreview() {
     GoodFeelingTheme {
         Widgets(
-            MainActivity(),
+            activity = MainActivity(),
             weatherData = ResponseState.Error(Exception("تست")),
+            calendarData = CalendarEntity(
+                dayOfWeek = "سه شنبه",
+                globalDate = "15 آوریل 2025",
+                persianDate = "26 فروردین 1404",
+                fakeOccasionsOfTheDayList
+            ),
             onGetData = {
                 // todo
             }

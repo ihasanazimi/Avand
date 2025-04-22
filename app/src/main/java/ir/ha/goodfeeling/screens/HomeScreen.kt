@@ -33,6 +33,8 @@ import ir.ha.goodfeeling.common.more.LocationHelper
 import ir.ha.goodfeeling.common.security_and_permissions.askPermission
 import ir.ha.goodfeeling.common.security_and_permissions.isPermissionGranted
 import ir.ha.goodfeeling.data.ResponseState
+import ir.ha.goodfeeling.data.fakeOccasionsOfTheDayList
+import ir.ha.goodfeeling.data.models.local_entities.calander.CalendarEntity
 import ir.ha.goodfeeling.data.models.local_entities.weather.WeatherEntity
 import ir.ha.goodfeeling.data.repository.weather.WeatherRepository
 import ir.ha.goodfeeling.db.DataStoreManager
@@ -54,6 +56,14 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
 
     var weatherResponseState by remember { mutableStateOf<ResponseState<WeatherEntity>?>(viewModel.weatherResponse.value) }
+    var calendarEntityState by remember { mutableStateOf<CalendarEntity>(
+        CalendarEntity(
+            dayOfWeek = "سه شنبه",
+            globalDate = "15 آوریل 2025",
+            persianDate = "26 فروردین 1404",
+            fakeOccasionsOfTheDayList
+        )
+    ) }
 
 
     SideEffect {
@@ -125,6 +135,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     Widgets(
                         activity = activity,
                         weatherData = weatherResponseState,
+                        calendarData = calendarEntityState,
                         onGetData = {
                             coroutineScope.launch {
                                 activity.locationAccessFinePermissionsResult.emit(true)
