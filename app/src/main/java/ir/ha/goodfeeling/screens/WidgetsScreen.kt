@@ -1,6 +1,6 @@
 package ir.ha.goodfeeling.screens
 
-import android.widget.Toast
+import android.content.Context
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -43,14 +43,16 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import ir.ha.goodfeeling.MainActivity
 import ir.ha.goodfeeling.R
+import ir.ha.goodfeeling.common.extensions.showToast
+import ir.ha.goodfeeling.common.extensions.withNotNull
 import ir.ha.goodfeeling.data.ResponseState
 import ir.ha.goodfeeling.data.fakeOccasionsOfTheDayList
 import ir.ha.goodfeeling.data.models.enums.WeatherCondition
@@ -59,12 +61,12 @@ import ir.ha.goodfeeling.screens.itemViews.OccasionItemView
 import ir.ha.goodfeeling.ui.theme.CustomTypography
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
 import ir.ha.goodfeeling.ui.theme.LightPrimary
-import ir.ha.goodfeeling.ui.theme.RedColor
 import ir.ha.goodfeeling.ui.theme.TransparentlyWhite
 import kotlin.math.roundToInt
 
 @Composable
 fun Widgets(
+    activity: MainActivity,
     weatherData: ResponseState<WeatherEntity>? = null,
     onGetData: () -> Unit = {}
 ) {
@@ -93,9 +95,19 @@ fun Widgets(
             ) {
                 Box {
                     when (weatherData) {
-                        is ResponseState.Success -> SuccessState(weatherData, onGetData)
+                        is ResponseState.Success -> SuccessState(
+                            weatherData = weatherData,
+                            onRefresh = onGetData
+                        )
+
                         is ResponseState.Loading -> LoadingState()
-                        is ResponseState.Error -> ErrorState(onGetData)
+
+                        is ResponseState.Error -> ErrorState(
+                            context = activity,
+                            exception = weatherData.exception,
+                            onRefresh = onGetData
+                        )
+
                         else -> {}
                     }
                 }
@@ -380,7 +392,12 @@ private fun SuccessState(
 }
 
 @Composable
-fun ErrorState(onRefresh: () -> Unit = {}) {
+fun ErrorState(context: Context, exception: Exception?, onRefresh: () -> Unit = {}) {
+
+    exception.withNotNull {
+        showToast(context, message = it.message ?: "")
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -497,7 +514,8 @@ fun LoadingState() {
 fun WidgetScreenPreview() {
     GoodFeelingTheme {
         Widgets(
-            weatherData = ResponseState.Error(Exception("sldlfk")),
+            MainActivity(),
+            weatherData = ResponseState.Error(Exception("تست")),
             onGetData = {
                 // todo
             }

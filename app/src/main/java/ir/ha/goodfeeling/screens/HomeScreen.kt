@@ -66,12 +66,6 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
             }
         }
 
-  /*      coroutineScope.launch {
-            viewModel.weatherLoading.collect { it ->
-                weatherLoading = it
-            }
-        }*/
-
         coroutineScope.launch {
             viewModel.weatherResponse.collect { it ->
                 weatherResponseState = it
@@ -129,6 +123,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
             ) {
                 item {
                     Widgets(
+                        activity = activity,
                         weatherData = weatherResponseState,
                         onGetData = {
                             coroutineScope.launch {
@@ -156,7 +151,7 @@ private fun getLastLocation(
         turnOnGPS(activity)
         showToast(activity,"لطفا سرویس مکان را روشن کنید")
     } else {
-
+        viewModel.weatherResponse.value = ResponseState.Loading
         LocationHelper(activity).getLastLocation(
             onSuccess = {
                 val latLng = it.latitude.toString() + "," + it.longitude.toString()
@@ -174,9 +169,10 @@ private fun getLastLocation(
                 )
                 Toast.makeText(
                     activity,
-                    "خطا در دریافت موقعیت مکانی ، مجدد تلاش کنید...",
+                    "خطا در دریافت موقعیت مکانی",
                     Toast.LENGTH_SHORT
                 ).show()
+                viewModel.weatherResponse.value = ResponseState.Error(Exception("خطا در دریافت موقعیت مکانی"))
             }
         )
     }
