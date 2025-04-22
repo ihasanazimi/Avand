@@ -300,7 +300,7 @@ class SettingScreenVM @Inject constructor(
         viewModelScope.launch {
             dataStoreManager.userNameFlow.collect {
                 Log.i(TAG, "getUserName: $it")
-                userName.emit(it?:"unknown")
+                userName.emit(it?:"کاربر بدون نام")
             }
         }
     }

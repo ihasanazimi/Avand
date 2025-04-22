@@ -1,6 +1,5 @@
 package ir.ha.goodfeeling.screens
 
-import android.Manifest
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,7 +36,6 @@ import ir.ha.goodfeeling.data.models.local_entities.weather.WeatherEntity
 import ir.ha.goodfeeling.data.repository.weather.WeatherRepository
 import ir.ha.goodfeeling.db.DataStoreManager
 import ir.ha.goodfeeling.ui.theme.GoodFeelingTheme
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -54,8 +52,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     val viewModel = hiltViewModel<HomeScreenVM>()
     val coroutineScope = rememberCoroutineScope()
 
-    var weatherLoading by remember { mutableStateOf(viewModel.weatherLoading.value) }
-    var weatherData by remember { mutableStateOf(viewModel.weatherData.value) }
+    var weatherResponseState by remember { mutableStateOf<ResponseState<WeatherEntity>?>(viewModel.weatherResponse.value) }
 
 
     SideEffect {
@@ -68,15 +65,15 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
             }
         }
 
-        coroutineScope.launch {
+  /*      coroutineScope.launch {
             viewModel.weatherLoading.collect { it ->
                 weatherLoading = it
             }
-        }
+        }*/
 
         coroutineScope.launch {
-            viewModel.weatherData.collect { it ->
-                weatherData = it
+            viewModel.weatherResponse.collect { it ->
+                weatherResponseState = it
             }
         }
 
@@ -131,15 +128,8 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
             ) {
                 item {
                     Widgets(
-                        weatherLoading = weatherLoading,
-                        weatherData = weatherData,
-                        onRefresh = {
-                            /*activity.onRequestPermissionsResult(
-                                requestCode = 1001,
-                                permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                                grantResults = intArrayOf(1),
-                                deviceId = 1
-                            )*/
+                        weatherData = weatherResponseState,
+                        onGetData = {
                             coroutineScope.launch {
                                 activity.locationAccessFinePermissionsResult.emit(true)
                             }
@@ -168,7 +158,7 @@ private fun getLastLocation(
         LocationHelper(activity).getLastLocation(
             onSuccess = {
                 val latLng = it.latitude.toString() + "," + it.longitude.toString()
-                viewModel.getCurrentWeather(latLng).also {
+                viewModel.getCurrentWeatherFromRemote(latLng).also {
                     Log.d(
                         "TAG",
                         "LocationHelper(context).getLastLocation - onSuccess by $latLng "
@@ -201,56 +191,38 @@ class HomeScreenVM @Inject constructor(
 
     val errorMessage = MutableSharedFlow<String>()
 
-    val weatherLoading = MutableStateFlow<Boolean>(false)
-    var weatherData = MutableStateFlow<WeatherEntity?>(null)
+    var weatherResponse = MutableStateFlow<ResponseState<WeatherEntity>?>(null)
+    val newsResponse = MutableStateFlow<ResponseState<List<String>>?>(null)
 
-    val newsLoading = MutableSharedFlow<Boolean>()
-    val newsData = MutableSharedFlow<List<String>>()
-
-    fun getCurrentWeather(q: String) {
+    fun getCurrentWeatherFromRemote(q: String) {
+        Log.i(TAG, "getCurrentWeatherFromRemote called")
         viewModelScope.launch {
             weatherRepository.getCurrentWeather(q).collectLatest { result ->
-                Log.i(TAG, "getCurrentWeather: $result ")
-                when (result) {
-                    is ResponseState.Loading -> {
-                        weatherLoading.emit(true)
-                    }
-
-                    is ResponseState.Success -> {
-                        delay(500)
-                        weatherLoading.emit(false)
-                        weatherData.value = result.data
-                    }
-
-                    is ResponseState.Error -> {
-                        weatherLoading.emit(false)
-                        errorMessage.emit("خطای نامشخص")
-                    }
-                }
+                Log.i(TAG, "getCurrentWeatherFromRemote: $result ")
+                weatherResponse.emit(result)
             }
         }
     }
 
     fun getCurrentWeatherFromLocal(q: String = "35.761008, 51.404626") {
+        Log.i(TAG, "getCurrentWeatherFromLocal called")
         viewModelScope.launch {
-            dataStoreManager.weatherDataFlow.collect {
-                if (it == null) {
-                    getCurrentWeather(q)
+            dataStoreManager.weatherDataFlow.collect { cash ->
+                /** IF cache was empty then get data from remote */
+                if (cash == null) {
+                    getCurrentWeatherFromRemote(q)
                 } else {
-                    weatherLoading.emit(true)
-                    delay(100)
                     try {
+                        Log.i(TAG, "getCurrentWeatherFromLocal: local weather is : $cash")
                         val w = Gson().fromJson<WeatherEntity>(
-                            it,
+                            cash,
                             WeatherEntity::class.java
                         )
-                        weatherData.emit(w)
+                        weatherResponse.emit(ResponseState.Success(w))
                     } catch (e: IOException) {
-                        Log.i(TAG, "getCurrentWeatherFromLocal error is ${e.message}")
-                        getCurrentWeather(q)
+                        getCurrentWeatherFromRemote(q)
+                        Log.i(TAG, "getCurrentWeatherFromLocal: error is ${e.message}")
                     }
-                    delay(100)
-                    weatherLoading.emit(false)
                 }
             }
         }
