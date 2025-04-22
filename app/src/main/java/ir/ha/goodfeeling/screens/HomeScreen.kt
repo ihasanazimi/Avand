@@ -27,6 +27,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.ha.goodfeeling.MainActivity
 import ir.ha.goodfeeling.common.extensions.isLocationEnabled
+import ir.ha.goodfeeling.common.extensions.showToast
 import ir.ha.goodfeeling.common.extensions.turnOnGPS
 import ir.ha.goodfeeling.common.more.LocationHelper
 import ir.ha.goodfeeling.common.security_and_permissions.askPermission
@@ -153,6 +154,7 @@ private fun getLastLocation(
 
     if (isLocationEnabled(activity).not()) {
         turnOnGPS(activity)
+        showToast(activity,"لطفا سرویس مکان را روشن کنید")
     } else {
 
         LocationHelper(activity).getLastLocation(

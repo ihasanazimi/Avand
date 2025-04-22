@@ -399,7 +399,7 @@ fun ErrorState(onRefresh: () -> Unit = {}) {
                 modifier = Modifier
                     .size(52.dp)
                     .align(Alignment.CenterHorizontally),
-                colorFilter = ColorFilter.tint(RedColor)
+                colorFilter = ColorFilter.tint(Color.White)
             )
 
             Text(
@@ -418,7 +418,10 @@ fun ErrorState(onRefresh: () -> Unit = {}) {
                     .align(Alignment.CenterHorizontally)
                     .clickable {
                         onRefresh.invoke()
-                    }
+                    },
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondary
+                )
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -428,7 +431,7 @@ fun ErrorState(onRefresh: () -> Unit = {}) {
                         textAlign = TextAlign.Center,
                         style = CustomTypography.labelSmall,
                         modifier = Modifier
-                            .padding(start = 10.dp, bottom = 8.dp, top = 8.dp, end = 4.dp)
+                            .padding(start = 16.dp, bottom = 8.dp, top = 8.dp, end = 4.dp)
                     )
                     Icon(
                         imageVector = Icons.Default.Refresh,
