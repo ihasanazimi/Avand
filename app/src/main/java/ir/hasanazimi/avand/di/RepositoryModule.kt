@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ir.hasanazimi.avand.data.remote.webServices.WeatherWebServices
+import ir.hasanazimi.avand.data.remote.web_services.WeatherWebServices
 import ir.hasanazimi.avand.db.DataStoreManager
 import javax.inject.Singleton
 

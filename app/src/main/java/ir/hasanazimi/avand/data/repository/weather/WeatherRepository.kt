@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import ir.hasanazimi.avand.data.ResponseState
 import ir.hasanazimi.avand.data.models.local_entities.weather.WeatherEntity
 import ir.hasanazimi.avand.data.models.toWeatherEntity
-import ir.hasanazimi.avand.data.remote.webServices.WeatherWebServices
+import ir.hasanazimi.avand.data.remote.web_services.WeatherWebServices
 import ir.hasanazimi.avand.db.DataStoreManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

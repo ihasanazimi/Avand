@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.screens.bottom_sheets
+package ir.hasanazimi.avand.presentation.bottom_sheets
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.hasanazimi.avand.data.getFakeCitiesList
 import ir.hasanazimi.avand.data.models.local_entities.other.CityEntity
-import ir.hasanazimi.avand.screens.itemViews.CitiesItemView
+import ir.hasanazimi.avand.presentation.itemViews.CitiesItemView
 import ir.hasanazimi.avand.ui.theme.AvandTheme
 import ir.hasanazimi.avand.ui.theme.CustomTypography
 import kotlinx.coroutines.launch

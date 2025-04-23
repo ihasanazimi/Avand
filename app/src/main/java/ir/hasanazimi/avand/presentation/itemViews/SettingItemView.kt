@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.screens.itemViews
+package ir.hasanazimi.avand.presentation.itemViews
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable

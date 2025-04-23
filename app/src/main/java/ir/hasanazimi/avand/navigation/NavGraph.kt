@@ -8,16 +8,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.common.more.IntentActionsHelper
-import ir.hasanazimi.avand.screens.AboutUsScreen
-import ir.hasanazimi.avand.screens.CurrencyPricesScreen
-import ir.hasanazimi.avand.screens.HomeScreen
-import ir.hasanazimi.avand.screens.HostScreen
-import ir.hasanazimi.avand.screens.IntroScreen
-import ir.hasanazimi.avand.screens.NameRegisterScreen
-import ir.hasanazimi.avand.screens.NewsScreen
-import ir.hasanazimi.avand.screens.SchedulingScreen
-import ir.hasanazimi.avand.screens.SettingScreen
-import ir.hasanazimi.avand.screens.SplashScreen
+import ir.hasanazimi.avand.presentation.screens.AboutUsScreen
+import ir.hasanazimi.avand.presentation.screens.CurrencyPricesScreen
+import ir.hasanazimi.avand.presentation.screens.HomeScreen
+import ir.hasanazimi.avand.presentation.screens.HostScreen
+import ir.hasanazimi.avand.presentation.screens.IntroScreen
+import ir.hasanazimi.avand.presentation.screens.NameRegisterScreen
+import ir.hasanazimi.avand.presentation.screens.NewsScreen
+import ir.hasanazimi.avand.presentation.screens.SchedulingScreen
+import ir.hasanazimi.avand.presentation.screens.SettingScreen
+import ir.hasanazimi.avand.presentation.screens.SplashScreen
 
 
 val splashNavGraph = "splashGraph"
@@ -38,19 +38,19 @@ fun NavGraphBuilder.splashGraph(navController: NavHostController, activity: Main
     navigation(startDestination = Screens.Splash.route, route = splashNavGraph) {
 
         composable(Screens.Splash.route) {
-            SplashScreen(navController)
+            SplashScreen(navController = navController)
         }
 
         composable(Screens.Intro.route) {
-            IntroScreen(navController)
+            IntroScreen(navController = navController)
         }
 
         composable(Screens.NameRegister.route) {
-            NameRegisterScreen(navController)
+            NameRegisterScreen(navController = navController)
         }
 
         composable(Screens.Scheduling.route) {
-            SchedulingScreen(navController)
+            SchedulingScreen(navController = navController)
         }
 
         composable(Screens.AboutUs.route) {
@@ -89,20 +89,32 @@ fun NavGraphBuilder.splashGraph(navController: NavHostController, activity: Main
 fun NavGraphBuilder.hostGraph(navController: NavHostController, activity: MainActivity) {
     navigation(startDestination = Screens.Host.route, route = hostNavGraph) {
         composable(Screens.Host.route) {
-            HostScreen(activity = activity , navController = navController)
+            HostScreen(
+                activity = activity ,
+                navController = navController
+            )
         }
 
         composable(Screens.Home.route) {
-            HomeScreen(activity = activity , navController = navController)
+            HomeScreen(
+                activity = activity ,
+                navController = navController
+            )
         }
 
 
         composable(Screens.CurrencyPrices.route) {
-            CurrencyPricesScreen(navController)
+            CurrencyPricesScreen(
+                activity = activity,
+                navController = navController
+            )
         }
 
         composable(Screens.Setting.route) {
-            SettingScreen(navController)
+            SettingScreen(
+                activity = activity,
+                navController = navController
+            )
         }
     }
 }

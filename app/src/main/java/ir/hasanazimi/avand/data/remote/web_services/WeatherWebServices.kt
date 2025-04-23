@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.data.remote.webServices
+package ir.hasanazimi.avand.data.remote.web_services
 
 import ir.hasanazimi.avand.data.models.remote_response.weather.WeatherRemoteResponse
 import retrofit2.Response

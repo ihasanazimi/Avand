@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.screens.bottom_sheets
+package ir.hasanazimi.avand.presentation.bottom_sheets
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
