@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -56,7 +57,6 @@ fun HostScreen(activity : MainActivity , navController: NavHostController) {
     val viewModel = hiltViewModel<HostScreenVM>()
     AvandTheme {
 
-        val hostNavController = rememberNavController()
         val coroutineScope = rememberCoroutineScope()
         var userName by remember { mutableStateOf("حسن عظیمی") }
 
@@ -69,34 +69,44 @@ fun HostScreen(activity : MainActivity , navController: NavHostController) {
             }
         }
 
+
+        val hostNavController = rememberNavController()
+
         Scaffold(
             modifier = Modifier.background(color = getBackgroundColor()),
-            bottomBar = {
-                BottomNavigationBar(navController = hostNavController)
-            },
-            topBar = {
-                TopBar(userName)
-            }
+            bottomBar = { BottomNavigationBar(navController = hostNavController) },
+            topBar = { TopBar(userName) }
         ) { innerPadding ->
-            Surface {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    NavHost(
-                        navController = hostNavController,
-                        startDestination = Screens.Home.route,
-                        modifier = Modifier.padding(innerPadding)
-                    ) {
-                        composable(route = Screens.Home.route) {
-                            HomeScreen(navController = navController, activity = activity)
-                        }
+            Content(hostNavController, innerPadding, navController, activity)
+        }
 
-                        composable(route = Screens.CurrencyPrices.route) {
-                            CurrencyPricesScreen(navController = navController)
-                        }
+    }
+}
 
-                        composable(route = Screens.Setting.route) {
-                            SettingScreen(navController = navController)
-                        }
-                    }
+@Composable
+private fun Content(
+    hostNavController: NavHostController,
+    innerPadding: PaddingValues,
+    navController: NavHostController,
+    activity: MainActivity
+) {
+    Surface {
+        Box(modifier = Modifier.fillMaxSize()) {
+            NavHost(
+                navController = hostNavController,
+                startDestination = Screens.Home.route,
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                composable(route = Screens.Home.route) {
+                    HomeScreen(navController = navController, activity = activity)
+                }
+
+                composable(route = Screens.CurrencyPrices.route) {
+                    CurrencyPricesScreen(navController = navController)
+                }
+
+                composable(route = Screens.Setting.route) {
+                    SettingScreen(navController = navController)
                 }
             }
         }
