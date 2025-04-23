@@ -39,7 +39,7 @@ import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
 import ir.hasanazimi.avand.data.entities.remote.news.NewsItem
 import ir.hasanazimi.avand.db.DataStoreManager
-import ir.hasanazimi.avand.ui.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.use_cases.NewsRssUseCase
 import ir.hasanazimi.avand.use_cases.WeatherUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow

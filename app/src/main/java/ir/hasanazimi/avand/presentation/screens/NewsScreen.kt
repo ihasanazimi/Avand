@@ -29,10 +29,8 @@ import ir.hasanazimi.avand.data.getFakeNews
 import ir.hasanazimi.avand.data.entities.local.other.NewsItemEntity
 import ir.hasanazimi.avand.presentation.dialogs.Wide70PercentHeightDialog
 import ir.hasanazimi.avand.presentation.itemViews.NewsItemView
-import ir.hasanazimi.avand.ui.theme.AvandTheme
-import ir.hasanazimi.avand.ui.theme.CustomTypography
-import ir.hasanazimi.avand.use_cases.NewsRssUseCase
-import javax.inject.Inject
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 @Composable
 fun NewsScreen(navController: NavHostController, onMoreBtnClick: () -> Unit) {

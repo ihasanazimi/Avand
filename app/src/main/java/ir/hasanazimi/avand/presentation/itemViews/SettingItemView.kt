@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ir.hasanazimi.avand.navigation.Screens
-import ir.hasanazimi.avand.ui.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.navigation.Screens
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
 
 
 data class SettingItem(

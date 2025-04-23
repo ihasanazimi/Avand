@@ -13,8 +13,8 @@ import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import ir.hasanazimi.avand.common.security_and_permissions.isPermissionGranted
-import ir.hasanazimi.avand.navigation.AppNavigator
-import ir.hasanazimi.avand.ui.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.navigation.AppNavigator
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 

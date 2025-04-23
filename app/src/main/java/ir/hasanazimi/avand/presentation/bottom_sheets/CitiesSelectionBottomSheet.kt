@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.dp
 import ir.hasanazimi.avand.data.getFakeCitiesList
 import ir.hasanazimi.avand.data.entities.local.other.CityEntity
 import ir.hasanazimi.avand.presentation.itemViews.CitiesItemView
-import ir.hasanazimi.avand.ui.theme.AvandTheme
-import ir.hasanazimi.avand.ui.theme.CustomTypography
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.hasanazimi.avand.data.entities.local.other.CityEntity
-import ir.hasanazimi.avand.ui.theme.CustomTypography
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 @Composable
 fun CitiesItemView(city: CityEntity, onSelectedCity: (city: CityEntity) -> Unit) {

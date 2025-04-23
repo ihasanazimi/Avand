@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.ui.theme
+package ir.hasanazimi.avand.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

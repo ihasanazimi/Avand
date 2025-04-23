@@ -30,10 +30,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.extensions.getAmountFormatBySeparator
 import ir.hasanazimi.avand.data.entities.local.other.NewsItemEntity
-import ir.hasanazimi.avand.ui.theme.AvandTheme
-import ir.hasanazimi.avand.ui.theme.CustomTypography
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 @Composable
 fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity : NewsItemEntity) -> Unit) {
@@ -175,7 +176,7 @@ private fun NewsItemViewPreview() {
     AvandTheme {
         NewsItemView(
             NewsItemEntity(
-                cover = ir.hasanazimi.avand.R.drawable.hormoz,
+                cover = R.drawable.hormoz,
                 title = "بازار خودرو تهران",
                 description = "از 700 کیلومتر دورتر آمده بود و سودای خرید اتومبیل شخصی داشت. به یکی از مراکز خرید و فروش خودرو در تهران رفته بود و با فرض اینکه یکی از بهترین ماشین\u200Cهای بازار خودرو را پیدا کرده برای عقد قرارداد و نوشتن قولنامه دست به جیب شده بود و بیعانه سنگینی پرداخت کرده بود غافل از آنکه طرف حسابش دلالی خبره یا بهتر بگوییم کلاهبرداری با سابقه است.",
                 link = "link"

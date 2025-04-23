@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.navigation
+package ir.hasanazimi.avand.presentation.navigation
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -24,8 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import ir.hasanazimi.avand.ui.theme.AvandTheme
-import ir.hasanazimi.avand.ui.theme.CustomTypography
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 
 data class NavigationItem(

@@ -34,8 +34,8 @@ import ir.hasanazimi.avand.data.fakeCurrencyPriceList
 import ir.hasanazimi.avand.data.fakeGoldPriceList
 import ir.hasanazimi.avand.presentation.itemViews.CurrencyPriceItemView
 import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
-import ir.hasanazimi.avand.ui.theme.AvandTheme
-import ir.hasanazimi.avand.ui.theme.CustomTypography
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 
 @Composable

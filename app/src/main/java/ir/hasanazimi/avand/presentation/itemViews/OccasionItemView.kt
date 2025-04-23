@@ -17,10 +17,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.hasanazimi.avand.data.entities.local.other.OccasionsOfTheDayEntity
-import ir.hasanazimi.avand.ui.theme.AvandTheme
-import ir.hasanazimi.avand.ui.theme.CustomTypography
-import ir.hasanazimi.avand.ui.theme.RedColor
-import ir.hasanazimi.avand.ui.theme.TransparentlyBlack
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
+import ir.hasanazimi.avand.presentation.theme.RedColor
+import ir.hasanazimi.avand.presentation.theme.TransparentlyBlack
 
 
 @Composable

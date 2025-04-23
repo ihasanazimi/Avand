@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.R
-import ir.hasanazimi.avand.navigation.Screens
-import ir.hasanazimi.avand.ui.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.navigation.Screens
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
 
 @Composable
 fun SplashScreen(navController: NavHostController) {

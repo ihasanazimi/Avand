@@ -39,9 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import ir.hasanazimi.avand.ui.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.R
-import ir.hasanazimi.avand.ui.theme.CustomTypography
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 
 @Composable

@@ -56,10 +56,10 @@ import ir.hasanazimi.avand.data.entities.sealed_enums.WeatherCondition
 import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
 import ir.hasanazimi.avand.presentation.itemViews.OccasionItemView
-import ir.hasanazimi.avand.ui.theme.AvandTheme
-import ir.hasanazimi.avand.ui.theme.CustomTypography
-import ir.hasanazimi.avand.ui.theme.LightPrimary
-import ir.hasanazimi.avand.ui.theme.TransparentlyWhite
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
+import ir.hasanazimi.avand.presentation.theme.LightPrimary
+import ir.hasanazimi.avand.presentation.theme.TransparentlyWhite
 import kotlin.math.roundToInt
 
 @Composable

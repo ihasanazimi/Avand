@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.navigation
+package ir.hasanazimi.avand.presentation.navigation
 
 sealed class Screens(val route: String) {
     object Splash : Screens("splash")

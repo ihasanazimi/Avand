@@ -41,11 +41,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.db.DataStoreManager
-import ir.hasanazimi.avand.navigation.BottomNavigationBar
-import ir.hasanazimi.avand.navigation.Screens
-import ir.hasanazimi.avand.ui.theme.AvandTheme
-import ir.hasanazimi.avand.ui.theme.CustomTypography
-import ir.hasanazimi.avand.ui.theme.getBackgroundColor
+import ir.hasanazimi.avand.presentation.navigation.BottomNavigationBar
+import ir.hasanazimi.avand.presentation.navigation.Screens
+import ir.hasanazimi.avand.presentation.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
+import ir.hasanazimi.avand.presentation.theme.getBackgroundColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject

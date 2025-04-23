@@ -1,4 +1,4 @@
-package avand.ha.avand
+package ir.hasanazimi.avand
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.navigation
+package ir.hasanazimi.avand.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder

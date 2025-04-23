@@ -8,8 +8,8 @@ import ir.hasanazimi.avand.data.entities.local.other.CityEntity
 import ir.hasanazimi.avand.data.entities.local.other.CurrencyPriceEntity
 import ir.hasanazimi.avand.data.entities.local.other.NewsItemEntity
 import ir.hasanazimi.avand.data.entities.local.other.OccasionsOfTheDayEntity
-import ir.hasanazimi.avand.ui.theme.GreenColor
-import ir.hasanazimi.avand.ui.theme.RedColor
+import ir.hasanazimi.avand.presentation.theme.GreenColor
+import ir.hasanazimi.avand.presentation.theme.RedColor
 
 
 val fakeOccasionsOfTheDayList: ArrayList<OccasionsOfTheDayEntity> =
