@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.GoodFeeling" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Avand" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
