@@ -50,11 +50,11 @@ import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.extensions.showToast
 import ir.hasanazimi.avand.common.extensions.withNotNull
-import ir.hasanazimi.avand.data.ResponseState
+import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.fakeOccasionsOfTheDayList
-import ir.hasanazimi.avand.data.models.enums.WeatherCondition
-import ir.hasanazimi.avand.data.models.local_entities.calander.CalendarEntity
-import ir.hasanazimi.avand.data.models.local_entities.weather.WeatherEntity
+import ir.hasanazimi.avand.data.entities.sealed_enums.WeatherCondition
+import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
+import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
 import ir.hasanazimi.avand.presentation.itemViews.OccasionItemView
 import ir.hasanazimi.avand.ui.theme.AvandTheme
 import ir.hasanazimi.avand.ui.theme.CustomTypography

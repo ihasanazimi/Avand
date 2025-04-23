@@ -33,13 +33,15 @@ import ir.hasanazimi.avand.common.extensions.turnOnGPS
 import ir.hasanazimi.avand.common.more.LocationHelper
 import ir.hasanazimi.avand.common.security_and_permissions.askPermission
 import ir.hasanazimi.avand.common.security_and_permissions.isPermissionGranted
-import ir.hasanazimi.avand.data.ResponseState
+import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.fakeOccasionsOfTheDayList
-import ir.hasanazimi.avand.data.models.local_entities.calander.CalendarEntity
-import ir.hasanazimi.avand.data.models.local_entities.weather.WeatherEntity
-import ir.hasanazimi.avand.data.repository.weather.WeatherRepository
+import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
+import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
+import ir.hasanazimi.avand.data.entities.remote.news.NewsItem
 import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.ui.theme.AvandTheme
+import ir.hasanazimi.avand.use_cases.NewsRssUseCase
+import ir.hasanazimi.avand.use_cases.WeatherUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -70,6 +72,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     SideEffect {
 
         viewModel.getCurrentWeatherFromLocal()
+        /*viewModel.getNewsRss()*/
 
         coroutineScope.launch {
             viewModel.errorMessage.collect {
@@ -193,7 +196,8 @@ private fun getLastLocation(
 
 @HiltViewModel
 class HomeScreenVM @Inject constructor(
-    private val weatherRepository: WeatherRepository,
+    private val weatherUseCase: WeatherUseCase,
+    private val newsRssUseCase: NewsRssUseCase,
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
@@ -202,11 +206,12 @@ class HomeScreenVM @Inject constructor(
     val errorMessage = MutableSharedFlow<String>()
 
     var weatherResponse = MutableStateFlow<ResponseState<WeatherEntity>?>(null)
+    var newsResponse = MutableStateFlow<ResponseState<List<NewsItem>>?>(null)
 
     fun getCurrentWeatherFromRemote(q: String) {
         Log.i(TAG, "getCurrentWeatherFromRemote called")
         viewModelScope.launch {
-            weatherRepository.getCurrentWeather(q).collectLatest { result ->
+            weatherUseCase.getCurrentWeather(q).collectLatest { result ->
                 Log.i(TAG, "getCurrentWeatherFromRemote: $result ")
                 weatherResponse.emit(result)
             }
@@ -237,6 +242,16 @@ class HomeScreenVM @Inject constructor(
         }
     }
 
+
+
+    fun getNewsRss(q : String = "ایران"){
+        viewModelScope.launch {
+            newsRssUseCase.getNews(q).collect {
+                Log.i(TAG, "getNewsRss: ${it.data}")
+                newsResponse.emit(it)
+            }
+        }
+    }
 
 }
 

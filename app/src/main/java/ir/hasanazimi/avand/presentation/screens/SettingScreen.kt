@@ -44,7 +44,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.data.getFakeCitiesList
-import ir.hasanazimi.avand.data.models.local_entities.other.CityEntity
+import ir.hasanazimi.avand.data.entities.local.other.CityEntity
 import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.navigation.Screens
 import ir.hasanazimi.avand.presentation.bottom_sheets.CitiesModalBottomSheet

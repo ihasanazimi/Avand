@@ -3,11 +3,11 @@ package ir.hasanazimi.avand.data
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import ir.hasanazimi.avand.R
-import ir.hasanazimi.avand.data.models.enums.CurrencyType
-import ir.hasanazimi.avand.data.models.local_entities.other.CityEntity
-import ir.hasanazimi.avand.data.models.local_entities.other.CurrencyPriceEntity
-import ir.hasanazimi.avand.data.models.local_entities.other.NewsItemEntity
-import ir.hasanazimi.avand.data.models.local_entities.other.OccasionsOfTheDayEntity
+import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyType
+import ir.hasanazimi.avand.data.entities.local.other.CityEntity
+import ir.hasanazimi.avand.data.entities.local.other.CurrencyPriceEntity
+import ir.hasanazimi.avand.data.entities.local.other.NewsItemEntity
+import ir.hasanazimi.avand.data.entities.local.other.OccasionsOfTheDayEntity
 import ir.hasanazimi.avand.ui.theme.GreenColor
 import ir.hasanazimi.avand.ui.theme.RedColor
 

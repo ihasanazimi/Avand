@@ -21,8 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.hasanazimi.avand.common.extensions.getAmountFormatBySeparator
-import ir.hasanazimi.avand.data.models.enums.CurrencyType
-import ir.hasanazimi.avand.data.models.local_entities.other.CurrencyPriceEntity
+import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyType
+import ir.hasanazimi.avand.data.entities.local.other.CurrencyPriceEntity
 import ir.hasanazimi.avand.ui.theme.AvandTheme
 import ir.hasanazimi.avand.ui.theme.CustomTypography
 import ir.hasanazimi.avand.ui.theme.GreenColor

@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import ir.hasanazimi.avand.common.extensions.getAmountFormatBySeparator
-import ir.hasanazimi.avand.data.models.local_entities.other.NewsItemEntity
+import ir.hasanazimi.avand.data.entities.local.other.NewsItemEntity
 import ir.hasanazimi.avand.ui.theme.AvandTheme
 import ir.hasanazimi.avand.ui.theme.CustomTypography
 

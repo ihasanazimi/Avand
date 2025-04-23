@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ir.hasanazimi.avand.data.models.local_entities.other.CityEntity
+import ir.hasanazimi.avand.data.entities.local.other.CityEntity
 import ir.hasanazimi.avand.ui.theme.CustomTypography
 
 @Composable
