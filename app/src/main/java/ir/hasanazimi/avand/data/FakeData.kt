@@ -17,6 +17,9 @@ val fakeOccasionsOfTheDayList: ArrayList<OccasionsOfTheDayEntity> =
         OccasionsOfTheDayEntity("روز بزرگداشت فردوسی", isHoliday = true),
         OccasionsOfTheDayEntity("روز جوان", isHoliday = false),
         OccasionsOfTheDayEntity("روز مهندس", isHoliday = false),
+        OccasionsOfTheDayEntity("روز مهندس", isHoliday = false),
+        OccasionsOfTheDayEntity("روز مهندس", isHoliday = false),
+        OccasionsOfTheDayEntity("روز مهندس", isHoliday = false),
     )
 
 
