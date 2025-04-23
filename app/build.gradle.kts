@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "ir.ha.goodfeeling"
+    namespace = "ir.hasanazimi.avand"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "ir.ha.goodfeeling"
+        applicationId = "ir.hasanazimi.avand"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -99,4 +99,7 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:1.1.0")
 
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-simplexml:2.9.0")
 }
