@@ -1,6 +1,6 @@
 package ir.hasanazimi.avand.presentation.navigation
 
-sealed class Screens(val route: String) {
+sealed class Screens(val routeId: String) {
     object Splash : Screens("splash")
     object Intro : Screens("intro")
     object NameRegister : Screens("nameRegister")

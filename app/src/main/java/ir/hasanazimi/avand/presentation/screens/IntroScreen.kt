@@ -43,7 +43,7 @@ fun IntroScreen(navController: NavHostController) {
                         .padding(16.dp)
                         .height(58.dp),
                     onClick = {
-                        navController.navigate(Screens.NameRegister.route)
+                        navController.navigate(Screens.NameRegister.routeId)
                     },
                     enabled = true
                 ) {

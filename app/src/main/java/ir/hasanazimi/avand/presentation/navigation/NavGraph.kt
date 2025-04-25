@@ -35,25 +35,25 @@ fun AppNavigator(navController: NavHostController, activity: MainActivity) {
 
 
 fun NavGraphBuilder.splashGraph(navController: NavHostController, activity: MainActivity) {
-    navigation(startDestination = Screens.Splash.route, route = splashNavGraph) {
+    navigation(startDestination = Screens.Splash.routeId, route = splashNavGraph) {
 
-        composable(Screens.Splash.route) {
+        composable(Screens.Splash.routeId) {
             SplashScreen(navController = navController)
         }
 
-        composable(Screens.Intro.route) {
+        composable(Screens.Intro.routeId) {
             IntroScreen(navController = navController)
         }
 
-        composable(Screens.NameRegister.route) {
+        composable(Screens.NameRegister.routeId) {
             NameRegisterScreen(navController = navController)
         }
 
-        composable(Screens.Scheduling.route) {
+        composable(Screens.Scheduling.routeId) {
             SchedulingScreen(navController = navController)
         }
 
-        composable(Screens.AboutUs.route) {
+        composable(Screens.AboutUs.routeId) {
             AboutUsScreen(
                 navHostController = navController,
                 onGithubClick = { IntentActionsHelper(activity).openWebSite("https://github.com/ihasanazimi") },
@@ -62,7 +62,7 @@ fun NavGraphBuilder.splashGraph(navController: NavHostController, activity: Main
             )
         }
 
-        composable(Screens.News.route) {
+        composable(Screens.News.routeId) {
             NewsScreen(navController) {
 
             }
@@ -87,15 +87,15 @@ fun NavGraphBuilder.splashGraph(navController: NavHostController, activity: Main
 
 
 fun NavGraphBuilder.hostGraph(navController: NavHostController, activity: MainActivity) {
-    navigation(startDestination = Screens.Host.route, route = hostNavGraph) {
-        composable(Screens.Host.route) {
+    navigation(startDestination = Screens.Host.routeId, route = hostNavGraph) {
+        composable(Screens.Host.routeId) {
             HostScreen(
                 activity = activity ,
                 navController = navController
             )
         }
 
-        composable(Screens.Home.route) {
+        composable(Screens.Home.routeId) {
             HomeScreen(
                 activity = activity ,
                 navController = navController
@@ -103,14 +103,14 @@ fun NavGraphBuilder.hostGraph(navController: NavHostController, activity: MainAc
         }
 
 
-        composable(Screens.CurrencyPrices.route) {
+        composable(Screens.CurrencyPrices.routeId) {
             CurrencyPricesScreen(
                 activity = activity,
                 navController = navController
             )
         }
 
-        composable(Screens.Setting.route) {
+        composable(Screens.Setting.routeId) {
             SettingScreen(
                 activity = activity,
                 navController = navController

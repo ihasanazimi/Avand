@@ -1,5 +1,13 @@
 package ir.hasanazimi.avand.presentation.dialogs
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,7 +37,8 @@ fun Wide70PercentHeightDialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
-                .height(screenHeight * 0.6f), // 70 درصد ارتفاع
+                .border(2.dp,MaterialTheme.colorScheme.onPrimary,RoundedCornerShape(20.dp))
+                .height(screenHeight * 0.9f), // 70 درصد ارتفاع
             shape = RoundedCornerShape(20.dp),
             color = MaterialTheme.colorScheme.background
         ) {

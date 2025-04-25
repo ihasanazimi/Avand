@@ -1,5 +1,6 @@
 package ir.hasanazimi.avand.presentation.screens
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -25,10 +26,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -41,16 +44,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
-import ir.hasanazimi.avand.data.getFakeCitiesList
+import ir.hasanazimi.avand.common.file.AssetHelper
 import ir.hasanazimi.avand.data.entities.local.other.CityEntity
 import ir.hasanazimi.avand.db.DataStoreManager
-import ir.hasanazimi.avand.presentation.navigation.Screens
 import ir.hasanazimi.avand.presentation.bottom_sheets.CitiesModalBottomSheet
 import ir.hasanazimi.avand.presentation.bottom_sheets.UserProfileBottomSheet
 import ir.hasanazimi.avand.presentation.itemViews.SettingItemView
 import ir.hasanazimi.avand.presentation.itemViews.settingItems
+import ir.hasanazimi.avand.presentation.navigation.Screens
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import ir.hasanazimi.avand.presentation.theme.RedColor
@@ -60,25 +65,29 @@ import javax.inject.Inject
 
 
 @Composable
-fun SettingScreen(activity: MainActivity , navController: NavController) {
+fun SettingScreen(activity: MainActivity, navController: NavController) {
 
     val viewModel = hiltViewModel<SettingScreenVM>()
     var citiesModalOpenState by remember { mutableStateOf(false) }
     var userProfileModalOpenState by remember { mutableStateOf(false) }
     var userNameState by remember { mutableStateOf("") }
-    var selectedCityState by remember { mutableStateOf<CityEntity?>(getFakeCitiesList().find { it.selected }) }
+    var selectedCityState by remember { mutableStateOf<CityEntity?>(viewModel.selectedLocation.value) }
     val coroutineScope = rememberCoroutineScope()
 
 
     Surface {
 
         CitiesModalBottomSheet(
-            citiesSnapshotList = getFakeCitiesList(),
+            citiesSnapshotList = viewModel.prepareLocalCities(),
             isOpen = citiesModalOpenState,
             selectedCity = selectedCityState
         ) { returnedCity ->
             selectedCityState = returnedCity
             citiesModalOpenState = false
+            viewModel.saveSelectedLocation(
+                selectedCityState?.location ?: "35.761008, 51.404626",
+                false
+            )
         }
 
 
@@ -90,13 +99,8 @@ fun SettingScreen(activity: MainActivity , navController: NavController) {
         }
 
         SideEffect {
-            viewModel.getUserName()
-        }
-
-
-        SideEffect {
             coroutineScope.launch {
-                viewModel.userName.collect{ userName ->
+                viewModel.userName.collect { userName ->
                     userNameState = userName
                 }
             }
@@ -269,13 +273,13 @@ fun SettingScreen(activity: MainActivity , navController: NavController) {
                                 }
 
                                 Screens.AboutUs -> {
-                                    navController.navigate(Screens.AboutUs.route)
+                                    navController.navigate(Screens.AboutUs.routeId)
                                 }
 
                                 else -> {
-                                    Log.i("TAG", "SettingScreen: ${type?.route}")
+                                    Log.i("TAG", "SettingScreen: ${type?.routeId}")
                                 }
-                                
+
                             }
                         }
                     }
@@ -289,24 +293,86 @@ fun SettingScreen(activity: MainActivity , navController: NavController) {
 
 @HiltViewModel
 class SettingScreenVM @Inject constructor(
-    private val dataStoreManager: DataStoreManager
+    private val dataStoreManager: DataStoreManager,
+    private val context: Context
 ) : ViewModel() {
 
     val TAG = "SettingScreenVM"
 
-    val userName = MutableStateFlow("")
+    init {
+        getUserName()
+        getSelectedLocation()
+    }
 
-    fun saveUserName(newName : String){
+    val userName = MutableStateFlow("")
+    val selectedLocation = MutableStateFlow<CityEntity?>(null)
+    var snapShotCities = mutableStateListOf<CityEntity>()
+
+    fun saveUserName(newName: String) {
         viewModelScope.launch {
             dataStoreManager.saveUserName(newName)
         }
     }
 
-    fun getUserName(){
+    fun getUserName() {
         viewModelScope.launch {
             dataStoreManager.userNameFlow.collect {
                 Log.i(TAG, "getUserName: $it")
-                userName.emit(it?:"کاربر بدون نام")
+                userName.emit(it ?: "کاربر بدون نام")
+            }
+        }
+    }
+
+
+    private fun readCitiesFromAssets() : List<CityEntity>{
+        var localCities = emptyList<CityEntity>()
+        val jsonText = AssetHelper.readJsonFromAssets(context, "cities.json")
+        val typeToken = object : TypeToken<List<CityEntity>>() {}.type
+        runCatching {
+            localCities = Gson().fromJson<List<CityEntity>>(jsonText, typeToken)
+            localCities = localCities.sortedBy { it.cityName }
+        }.onFailure {
+            Log.i(TAG, "prepareLocalCities: ${it.message}")
+        }
+        return localCities
+    }
+
+    fun prepareLocalCities() : SnapshotStateList<CityEntity>{
+        var temp = readCitiesFromAssets()
+        val selectedCity = temp.find { it.location == selectedLocation.value?.location }
+        temp = temp.map {
+            if (it.location == selectedCity?.location){
+                it.copy(selected = true)
+            }else{
+                it.copy(selected = false)
+            }
+        }
+        temp.forEach { snapShotCities.add(it) }
+        return snapShotCities
+    }
+
+    fun saveSelectedLocation(latitudeLongitude: String, teakLocationByGPS: Boolean) {
+        viewModelScope.launch {
+            dataStoreManager.saveSelectedLocation(
+                latitudeLongitude = latitudeLongitude,
+                teakLocationByGPS = teakLocationByGPS
+            )
+        }
+    }
+
+
+    fun getSelectedLocation() {
+        viewModelScope.launch {
+            dataStoreManager.selectedLocation.collect { location ->
+                if (location.second == false){
+                    val tempList = readCitiesFromAssets()
+                    val selected = tempList.find { it.location == location.first }
+                    selectedLocation.emit(selected)
+                }else{
+                    dataStoreManager.weatherDataFlow.collect { location ->
+                        selectedLocation.emit(CityEntity(cityName = "تست","35.761008, 51.404626",false))
+                    }
+                }
             }
         }
     }

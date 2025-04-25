@@ -1,7 +1,7 @@
 package ir.hasanazimi.avand.presentation.screens
 
 import android.util.Log
-import androidx.compose.foundation.background
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,6 +19,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,7 +46,7 @@ import ir.hasanazimi.avand.presentation.navigation.BottomNavigationBar
 import ir.hasanazimi.avand.presentation.navigation.Screens
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
-import ir.hasanazimi.avand.presentation.theme.getBackgroundColor
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,18 +55,22 @@ import javax.inject.Inject
 fun HostScreen(activity : MainActivity , navController: NavHostController) {
 
     val viewModel = hiltViewModel<HostScreenVM>()
+    var userNameState by remember { mutableStateOf("") }
+    val hostNavController = rememberNavController()
+    val coroutineScope = rememberCoroutineScope()
+
+    SideEffect {
+        coroutineScope.launch {
+            viewModel.userName.collect {
+                userNameState = it
+            }
+        }
+    }
+
     AvandTheme {
 
-        var userNameState by remember { mutableStateOf(viewModel.userName.value) }
-        val hostNavController = rememberNavController()
-
-
-        SideEffect {
-            viewModel.getUserName()
-        }
-
         Scaffold(
-            modifier = Modifier.background(color = getBackgroundColor()),
+            modifier = Modifier,
             bottomBar = { BottomNavigationBar(navController = hostNavController) },
             topBar = { TopBar(userNameState) }
         ) { innerPadding ->
@@ -87,28 +92,43 @@ private fun Content(
     mainNavController: NavHostController,
     activity: MainActivity
 ) {
+    val TAG = "ContentTag"
+
+    BackHandler(
+    /*enabled = hostNavController.currentBackStackEntry?.destination?.route != Screens.Home.routeId*/)
+    {
+        if (hostNavController.currentBackStackEntry?.destination?.route == Screens.Home.routeId) {
+            activity.finish()
+        } else {
+            hostNavController.popBackStack(Screens.Home.routeId, inclusive = true)
+        }
+    }
+
     Surface {
         Box(modifier = Modifier.fillMaxSize()) {
             NavHost(
                 navController = hostNavController,
-                startDestination = Screens.Home.route,
+                startDestination = Screens.Home.routeId,
                 modifier = Modifier.padding(innerPadding)
             ) {
-                composable(route = Screens.Home.route) {
-                    HomeScreen(activity = activity , navController = mainNavController)
+                composable(route = Screens.Home.routeId) {
+                    HomeScreen(activity = activity, navController = mainNavController)
                 }
 
-                composable(route = Screens.CurrencyPrices.route) {
-                    CurrencyPricesScreen(activity = activity , navController = mainNavController)
+                composable(route = Screens.CurrencyPrices.routeId) {
+                    CurrencyPricesScreen(activity = activity, navController = mainNavController)
                 }
 
-                composable(route = Screens.Setting.route) {
-                    SettingScreen(activity = activity , navController = mainNavController)
+                composable(route = Screens.Setting.routeId) {
+                    SettingScreen(activity = activity, navController = mainNavController)
                 }
             }
         }
     }
 }
+
+
+
 
 @Composable
 fun TopBar(userName: String) {
@@ -178,7 +198,11 @@ class HostScreenVM @Inject constructor(
 
     val TAG = "HostScreenVM"
 
-    val userName = MutableStateFlow("")
+    init {
+        getUserName()
+    }
+
+    val userName = MutableSharedFlow<String>()
 
     fun getUserName(){
         viewModelScope.launch {

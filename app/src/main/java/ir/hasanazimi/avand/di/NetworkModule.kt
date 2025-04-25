@@ -28,7 +28,7 @@ object NetworkModule {
     @Provides
     @Singleton
     @Named("weather")
-    fun provideRegularRetrofit(
+    fun provideWeatherRetrofit(
         okHttpClient: OkHttpClient,
         gson: Gson,
     ): Retrofit.Builder {
@@ -65,9 +65,9 @@ object NetworkModule {
         context: Context,
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
             .followSslRedirects(false)
             .addInterceptor(
                 ChuckerInterceptor.Builder(context)

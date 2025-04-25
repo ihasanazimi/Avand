@@ -1,0 +1,162 @@
+[
+  {
+    "cityName": "تهران",
+    "location": "35.6892,51.3890",
+    "selected": false
+  },
+  {
+    "cityName": "کرج",
+    "location": "35.8400,50.9391",
+    "selected": false
+  },
+  {
+    "cityName": "مشهد",
+    "location": "36.2605,59.6168",
+    "selected": false
+  },
+  {
+    "cityName": "اصفهان",
+    "location": "32.6539,51.6660",
+    "selected": false
+  },
+  {
+    "cityName": "تبریز",
+    "location": "38.0962,46.2738",
+    "selected": false
+  },
+  {
+    "cityName": "شیراز",
+    "location": "29.5926,52.5836",
+    "selected": false
+  },
+  {
+    "cityName": "اهواز",
+    "location": "31.3183,48.6706",
+    "selected": false
+  },
+  {
+    "cityName": "کرمانشاه",
+    "location": "34.3142,47.0650",
+    "selected": false
+  },
+  {
+    "cityName": "ارومیه",
+    "location": "37.5527,45.0759",
+    "selected": false
+  },
+  {
+    "cityName": "رشت",
+    "location": "37.2808,49.5832",
+    "selected": false
+  },
+  {
+    "cityName": "زاهدان",
+    "location": "29.4969,60.8629",
+    "selected": false
+  },
+  {
+    "cityName": "همدان",
+    "location": "34.7983,48.5146",
+    "selected": false
+  },
+  {
+    "cityName": "کرمان",
+    "location": "30.2839,57.0834",
+    "selected": false
+  },
+  {
+    "cityName": "یزد",
+    "location": "31.8974,54.3569",
+    "selected": false
+  },
+  {
+    "cityName": "اردبیل",
+    "location": "38.2498,48.2966",
+    "selected": false
+  },
+  {
+    "cityName": "بندرعباس",
+    "location": "27.1836,56.2666",
+    "selected": false
+  },
+  {
+    "cityName": "اراک",
+    "location": "34.0956,49.6981",
+    "selected": false
+  },
+  {
+    "cityName": "زنجان",
+    "location": "36.6769,48.4963",
+    "selected": false
+  },
+  {
+    "cityName": "قزوین",
+    "location": "36.2797,50.0049",
+    "selected": false
+  },
+  {
+    "cityName": "خرم‌آباد",
+    "location": "33.4878,48.3558",
+    "selected": false
+  },
+  {
+    "cityName": "گرگان",
+    "location": "36.8456,54.4343",
+    "selected": false
+  },
+  {
+    "cityName": "ساری",
+    "location": "36.5633,53.0601",
+    "selected": false
+  },
+  {
+    "cityName": "شهرکرد",
+    "location": "32.3256,50.8644",
+    "selected": false
+  },
+  {
+    "cityName": "بجنورد",
+    "location": "37.4750,57.3294",
+    "selected": false
+  },
+  {
+    "cityName": "بوشهر",
+    "location": "28.9234,50.8203",
+    "selected": false
+  },
+  {
+    "cityName": "سبزوار",
+    "location": "36.2150,57.6678",
+    "selected": false
+  },
+  {
+    "cityName": "بیرجند",
+    "location": "32.8649,59.2262",
+    "selected": false
+  },
+  {
+    "cityName": "ایلام",
+    "location": "33.6374,46.4226",
+    "selected": false
+  },
+  {
+    "cityName": "سنندج",
+    "location": "35.3219,46.9862",
+    "selected": false
+  },
+  {
+    "cityName": "سمنان",
+    "location": "35.5728,53.3971",
+    "selected": false
+  },
+  {
+    "cityName": "یاسوج",
+    "location": "30.6680,51.5880",
+    "selected": false
+  },
+  {
+    "cityName": "قم",
+    "location": "34.6401,50.8764",
+    "selected": false
+  }
+]

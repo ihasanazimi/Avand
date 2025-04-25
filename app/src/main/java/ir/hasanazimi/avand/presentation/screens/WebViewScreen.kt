@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -97,6 +99,7 @@ fun WebViewScreen(
 
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(WindowInsets.statusBars.asPaddingValues())
         ) {
 
@@ -130,21 +133,18 @@ fun WebViewScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(0.1f)
-                    .background(secondaryColor)
+                    .weight(0.08f)
             ) {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .clickable {
-                            onBackPressed?.invoke()
-                        }, contentAlignment = Alignment.Center
+                Button(
+                    modifier = Modifier.fillMaxSize(),
+                    shape = RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp), onClick = {
+                        onBackPressed?.invoke()
+                    }
                 ) {
                     Text(
                         modifier = Modifier,
                         text = "بستن",
                         style = CustomTypography.bodyLarge.copy(
-                            color = Color.White,
                             textAlign = TextAlign.Center
                         ),
                         maxLines = 1,

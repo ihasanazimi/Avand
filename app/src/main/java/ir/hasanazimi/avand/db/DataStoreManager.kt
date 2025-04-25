@@ -1,6 +1,7 @@
 package ir.hasanazimi.avand.db
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -19,7 +20,9 @@ class DataStoreManager(private val context: Context) {
         val WAKE_TIME = stringPreferencesKey("WakeTimeKey")
         val BED_TIME = stringPreferencesKey("BedTimeKey")
         val WEATHER_DATA = stringPreferencesKey("WeatherDataKey")
-        val SELECTED_LOCATION = stringPreferencesKey("SelectedLocationKey")
+        val DEFAULT_SELECTED_LOCATION = stringPreferencesKey("SelectedLocationKey")
+        val TEAK_LOCATION_BY_GPS = booleanPreferencesKey("TEAK_LOCATION_BY_GPS")
+        val INTRO_SKIPPED = booleanPreferencesKey("INTRO_SKIPPED")
     }
 
 
@@ -35,9 +38,9 @@ class DataStoreManager(private val context: Context) {
 
 
 
-    suspend fun saveWakeTime(name: String) {
+    suspend fun saveWakeTime(wakeTime: String) {
         context.dataStore.edit { preferences ->
-            preferences[WAKE_TIME] = name
+            preferences[WAKE_TIME] = wakeTime
         }
     }
     val wakeTimeFlow: Flow<String?> = context.dataStore.data.map { preferences ->
@@ -48,9 +51,9 @@ class DataStoreManager(private val context: Context) {
 
 
 
-    suspend fun saveBedTime(name: String) {
+    suspend fun saveBedTime(BedTime: String) {
         context.dataStore.edit { preferences ->
-            preferences[BED_TIME] = name
+            preferences[BED_TIME] = BedTime
         }
     }
     val bedTimeFlow: Flow<String?> = context.dataStore.data.map { preferences ->
@@ -60,9 +63,9 @@ class DataStoreManager(private val context: Context) {
 
 
 
-    suspend fun saveWeatherData(name: String) {
+    suspend fun saveWeatherData(weatherJson: String) {
         context.dataStore.edit { preferences ->
-            preferences[WEATHER_DATA] = name
+            preferences[WEATHER_DATA] = weatherJson
         }
     }
     val weatherDataFlow: Flow<String?> = context.dataStore.data.map { preferences ->
@@ -72,13 +75,26 @@ class DataStoreManager(private val context: Context) {
 
 
 
-    suspend fun saveSelectedLocation(name: String) {
+    suspend fun saveSelectedLocation(latitudeLongitude: String, teakLocationByGPS : Boolean) {
         context.dataStore.edit { preferences ->
-            preferences[SELECTED_LOCATION] = name
+            preferences[DEFAULT_SELECTED_LOCATION] = latitudeLongitude
+            preferences[TEAK_LOCATION_BY_GPS] = teakLocationByGPS
         }
     }
-    val selectedLocationFlow: Flow<String?> = context.dataStore.data.map { preferences ->
-        preferences[SELECTED_LOCATION]
+    val selectedLocation: Flow<Pair<String?, Boolean?>> = context.dataStore.data.map { preferences ->
+        val city = preferences[DEFAULT_SELECTED_LOCATION]
+        val currentlySaved = preferences[TEAK_LOCATION_BY_GPS]
+        return@map Pair(city,currentlySaved)
+    }
+
+
+    suspend fun saveIntroSkipped(skipped: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[INTRO_SKIPPED] = skipped
+        }
+    }
+    val introSkipped: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[INTRO_SKIPPED] == true
     }
 
 

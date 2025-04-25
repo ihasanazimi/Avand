@@ -25,8 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import ir.hasanazimi.avand.data.getFakeNews
 import ir.hasanazimi.avand.data.entities.local.other.NewsItemEntity
+import ir.hasanazimi.avand.data.getFakeNews
 import ir.hasanazimi.avand.presentation.dialogs.Wide70PercentHeightDialog
 import ir.hasanazimi.avand.presentation.itemViews.NewsItemView
 import ir.hasanazimi.avand.presentation.theme.AvandTheme

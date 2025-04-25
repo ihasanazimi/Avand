@@ -32,11 +32,6 @@ val DarkColorScheme = darkColorScheme(
     onSurface = DarkOnSurface
 )
 
-@Composable
-fun getBackgroundColor(isDarkMode : Boolean = isSystemInDarkTheme()) : Color{
-    return if (isSystemInDarkTheme()) DarkBackground else LightBackground
-}
-
 
 @Composable
 fun AvandTheme(

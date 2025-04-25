@@ -1,6 +1,7 @@
 package ir.hasanazimi.avand.presentation.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +30,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
-import ir.hasanazimi.avand.presentation.theme.getBackgroundColor
+import ir.hasanazimi.avand.presentation.theme.DarkBackground
+import ir.hasanazimi.avand.presentation.theme.LightBackground
 
 
 sealed class TimePickerFlag (val flag : String) {
@@ -49,6 +51,8 @@ fun ShowTimePickerDialog(
     onTimeSelected: (Int, Int , MutableState<String> , TimePickerFlag ) -> Unit
 ) {
     if (showDialog) {
+
+        val backgroundColor = if (isSystemInDarkTheme()) DarkBackground else LightBackground
 
         val timePickerState =
             rememberTimePickerState(initialHour = 0, initialMinute = 0, is24Hour = true)
@@ -93,8 +97,8 @@ fun ShowTimePickerDialog(
                         state = timePickerState,
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         colors = TimePickerDefaults.colors(
-                            clockDialColor = getBackgroundColor(),
-                            clockDialSelectedContentColor = getBackgroundColor(),
+                            clockDialColor = backgroundColor,
+                            clockDialSelectedContentColor = backgroundColor,
                             clockDialUnselectedContentColor = MaterialTheme.colorScheme.primary,
                             selectorColor = MaterialTheme.colorScheme.primary,
                             containerColor = MaterialTheme.colorScheme.primary,

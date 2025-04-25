@@ -20,8 +20,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -30,23 +32,32 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.R
+import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.navigation.Screens
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @Composable
 fun NameRegisterScreen(navController: NavHostController) {
 
-    AvandTheme {
+    val viewModel = hiltViewModel<NameRegisterScreenVM>()
+    val scrollState = rememberScrollState()
+    var userNameState by remember { mutableStateOf("") }
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
 
-        val scrollState = rememberScrollState()
-        val textFieldValue = remember { mutableStateOf("") }
-        val context = LocalContext.current
-        val focusManager = LocalFocusManager.current
+
+    AvandTheme {
 
         Scaffold(bottomBar = {
             Button(
@@ -54,9 +65,11 @@ fun NameRegisterScreen(navController: NavHostController) {
                     .padding(16.dp)
                     .height(58.dp),
                 onClick = {
-                    navController.navigate(Screens.Scheduling.route)
+                    viewModel.nameRegistration(userNameState).also {
+                        navController.navigate(Screens.Scheduling.routeId)
+                    }
                 },
-                enabled = textFieldValue.value.isNotEmpty()
+                enabled = userNameState.isNotEmpty()
             ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
@@ -117,10 +130,10 @@ fun NameRegisterScreen(navController: NavHostController) {
                             .padding(horizontal = 16.dp)
                             .align(Alignment.Start)
                             .fillMaxWidth(),
-                        value = textFieldValue.value,
+                        value = userNameState,
                         onValueChange = { characters ->
-                            textFieldValue.value = characters
-                            if (textFieldValue.value.isEmpty()) {
+                            userNameState = characters
+                            if (userNameState.isEmpty()) {
                                 focusManager.clearFocus()
                             }
                         },
@@ -141,6 +154,22 @@ fun NameRegisterScreen(navController: NavHostController) {
         }
 
     }
+}
+
+
+
+@HiltViewModel
+class NameRegisterScreenVM @Inject constructor(
+    private val dataStoreManager: DataStoreManager
+) : ViewModel(){
+
+    fun nameRegistration(newName : String){
+        viewModelScope.launch {
+            dataStoreManager.saveUserName(newName)
+        }
+    }
+
+
 }
 
 

@@ -27,8 +27,8 @@ fun CitiesItemView(city: CityEntity, onSelectedCity: (city: CityEntity) -> Unit)
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 4.dp)
             .fillMaxWidth(),
-        border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.primary),
-        colors = CardDefaults.cardColors(if (city.selected) MaterialTheme.colorScheme.primary.copy(0.2f) else MaterialTheme.colorScheme.background),
+        border = BorderStroke(if (city.selected) 1.dp else 0.1.dp, MaterialTheme.colorScheme.secondary),
+        colors = CardDefaults.cardColors(if (city.selected) MaterialTheme.colorScheme.secondary.copy(0.1f) else MaterialTheme.colorScheme.background),
         onClick = {
             onSelectedCity.invoke(city)
         }
@@ -47,7 +47,7 @@ fun CitiesItemView(city: CityEntity, onSelectedCity: (city: CityEntity) -> Unit)
                     text = city.cityName,
                     style = CustomTypography.bodyLarge.copy(
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.secondary
                     ),
                     modifier = Modifier.align(Alignment.Center)
                 )
