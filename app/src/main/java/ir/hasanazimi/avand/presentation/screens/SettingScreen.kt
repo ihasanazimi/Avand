@@ -82,24 +82,6 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
 
     Surface {
 
-        CitiesModalBottomSheet(
-            citiesSnapshotList = viewModel.prepareLocalCities(),
-            isOpen = citiesModalOpenState,
-            selectedCity = defaultCityState
-        ) { city ->
-            defaultCityState = city
-            defaultCityState.withNotNull { viewModel.saveDefaultCity(it) }
-            citiesModalOpenState = false
-        }
-
-
-        UserProfileBottomSheet(lastUserName = userNameState, isOpen = userProfileModalOpenState) {
-            userNameState = it
-            viewModel.saveUserName(userNameState).also {
-                userProfileModalOpenState = false
-            }
-        }
-
         SideEffect {
 
             viewModel.getDefaultCity()
@@ -300,6 +282,30 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
 
         }
     }
+
+
+    CitiesModalBottomSheet(
+        isOpen = citiesModalOpenState,
+        selectedCity = defaultCityState,
+        citiesSnapshotList = viewModel.prepareCities(),
+        onDismiss = { city ->
+            defaultCityState = city
+            citiesModalOpenState = false
+        }
+    ) { city ->
+        defaultCityState = city
+        defaultCityState.withNotNull { viewModel.saveDefaultCity(it) }
+        citiesModalOpenState = false
+    }
+
+
+    UserProfileBottomSheet(lastUserName = userNameState, isOpen = userProfileModalOpenState) {
+        userNameState = it
+        viewModel.saveUserName(userNameState).also {
+            userProfileModalOpenState = false
+        }
+    }
+
 }
 
 
@@ -331,7 +337,7 @@ class SettingScreenVM @Inject constructor(
     }
 
 
-    private fun readCitiesFromAssets() : List<CityEntity>{
+    private fun readCitiesFromJson() : List<CityEntity>{
         var localCities = emptyList<CityEntity>()
         val jsonText = AssetHelper.readJsonFromAssets(context, "cities.json")
         val typeToken = object : TypeToken<List<CityEntity>>() {}.type
@@ -344,17 +350,18 @@ class SettingScreenVM @Inject constructor(
         return localCities
     }
 
-    fun prepareLocalCities() : SnapshotStateList<CityEntity>{
-        var temp = readCitiesFromAssets()
-        val selectedCity = temp.find { it.location == defaultCity.value?.location }
-        temp = temp.map {
-            if (it.location == selectedCity?.location){
+    fun prepareCities() : SnapshotStateList<CityEntity>{
+        var tempOfCities = readCitiesFromJson()
+        val selectedCity = tempOfCities.find { it.cityName == defaultCity.value?.cityName }
+        val toc = tempOfCities.map {
+            if (it.cityName == selectedCity?.cityName){
                 it.copy(selected = true)
             }else{
                 it.copy(selected = false)
             }
         }
-        temp.forEach { snapShotCities.add(it) }
+        snapShotCities.clear()
+        snapShotCities.addAll(toc)
         return snapShotCities
     }
 
@@ -365,6 +372,13 @@ class SettingScreenVM @Inject constructor(
         viewModelScope.launch {
             val json = Gson().toJson(weatherEntity)
             dataStoreManager.saveManualWeatherData(json)
+        }
+    }
+    fun getManualWeatherData(){
+        viewModelScope.launch {
+            dataStoreManager.manualWeatherData.collect {
+                // todo
+            }
         }
     }
     fun removeManualWeatherData() {

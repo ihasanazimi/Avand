@@ -28,7 +28,6 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,18 +41,18 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CitiesModalBottomSheet(
-    citiesSnapshotList: SnapshotStateList<CityEntity>,
-    selectedCity: CityEntity?,
     isOpen: Boolean,
+    selectedCity: CityEntity?,
+    citiesSnapshotList: SnapshotStateList<CityEntity>,
+    onDismiss: (city: CityEntity?) -> Unit,
     onFinallySelectedCity: (city: CityEntity?) -> Unit
 ) {
 
-    val context = LocalContext.current
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val lazyListState = rememberLazyListState()
+
     var citiesList = remember { citiesSnapshotList }
-    var selectedCityData by remember { mutableStateOf<CityEntity?>(selectedCity) }
-    var temp by remember { mutableStateOf<CityEntity?>(null) }
+    var tempCitySelection by remember { mutableStateOf<CityEntity?>(null) }
 
 
     LaunchedEffect(isOpen) {
@@ -67,7 +66,7 @@ fun CitiesModalBottomSheet(
             ModalBottomSheet(
                 sheetState = sheetState,
                 onDismissRequest = {
-                    onFinallySelectedCity.invoke(selectedCityData)
+                    onDismiss.invoke(selectedCity)
                 },
             ) {
                 Column(
@@ -76,22 +75,22 @@ fun CitiesModalBottomSheet(
                         .padding(8.dp)
                 ) {
 
-                    CitiesModal(citiesList, lazyListState) { updatedList ->
+                    CitiesLazyColumn(
+                        citiesSnapshotList,
+                        lazyListState
+                    ) { updatedList ->
                         citiesList = updatedList
-                        temp = citiesList.find { it.selected }
+                        tempCitySelection = citiesList.find { it.selected }
                     }
 
                     Button(
-                        enabled = temp != null,
+                        enabled = tempCitySelection != null || selectedCity != null,
                         modifier = Modifier
                             .padding(vertical = 8.dp, horizontal = 8.dp)
                             .fillMaxWidth()
                             .height(56.dp),
                         onClick = {
-                            selectedCityData = citiesList.find { it.selected }
-                            if (selectedCityData != null) {
-                                onFinallySelectedCity.invoke(selectedCityData)
-                            }
+                            onFinallySelectedCity.invoke(citiesList.find { it.selected })
                         }) {
 
                         Box(
@@ -113,7 +112,7 @@ fun CitiesModalBottomSheet(
 }
 
 @Composable
-private fun CitiesModal(
+private fun CitiesLazyColumn(
     citiesState: SnapshotStateList<CityEntity>,
     lazyListState: LazyListState,
     updatedList: (updatedList: SnapshotStateList<CityEntity>) -> Unit
@@ -168,6 +167,7 @@ private fun CitiesModalBottomSheetPreview() {
         CitiesModalBottomSheet(
             citiesSnapshotList = getFakeCitiesList(),
             isOpen = true,
+            onDismiss = {},
             selectedCity = null
         ) {
             Log.i("CitiesModalBottomSheetPreview", "CitiesModalBottomSheetPreview: ${it?.cityName}")
