@@ -50,7 +50,7 @@ class WeatherRepositoryImpl @Inject constructor(
                 if (result.isSuccessful){
                     result.body()?.let {
                         val weatherEntity = it.toWeatherEntity()
-                        dataStoreManager.saveWeatherData(Gson().toJson(weatherEntity))
+                        dataStoreManager.saveAutomaticWeatherData(Gson().toJson(weatherEntity))
                         emit(ResponseState.Success(weatherEntity)).also {
                             Log.i(TAG, "getCurrentWeather: ${Gson().toJson(weatherEntity)} ")
                         }

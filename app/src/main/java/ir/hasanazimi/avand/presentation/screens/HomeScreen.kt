@@ -218,10 +218,10 @@ class HomeScreenVM @Inject constructor(
         }
     }
 
-    fun getCurrentWeatherFromLocal(q: String = "35.761008, 51.404626") {
+    fun getCurrentWeatherFromLocal(q: String = "35.6892,51.3890") {
         Log.i(TAG, "getCurrentWeatherFromLocal called")
         viewModelScope.launch {
-            dataStoreManager.weatherDataFlow.collect { cash ->
+            dataStoreManager.automaticWeatherDataFlow.collect { cash ->
                 /** IF cache was empty then get data from remote */
                 if (cash == null) {
                     getCurrentWeatherFromRemote(q)

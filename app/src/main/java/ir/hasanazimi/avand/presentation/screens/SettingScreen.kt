@@ -48,8 +48,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
+import ir.hasanazimi.avand.common.extensions.withNotNull
 import ir.hasanazimi.avand.common.file.AssetHelper
 import ir.hasanazimi.avand.data.entities.local.other.CityEntity
+import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
 import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.bottom_sheets.CitiesModalBottomSheet
 import ir.hasanazimi.avand.presentation.bottom_sheets.UserProfileBottomSheet
@@ -61,6 +63,7 @@ import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import ir.hasanazimi.avand.presentation.theme.RedColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import okio.IOException
 import javax.inject.Inject
 
 
@@ -68,11 +71,13 @@ import javax.inject.Inject
 fun SettingScreen(activity: MainActivity, navController: NavController) {
 
     val viewModel = hiltViewModel<SettingScreenVM>()
+    val coroutineScope = rememberCoroutineScope()
+
     var citiesModalOpenState by remember { mutableStateOf(false) }
     var userProfileModalOpenState by remember { mutableStateOf(false) }
+
     var userNameState by remember { mutableStateOf("") }
-    var selectedCityState by remember { mutableStateOf<CityEntity?>(viewModel.selectedLocation.value) }
-    val coroutineScope = rememberCoroutineScope()
+    var defaultCityState by remember { mutableStateOf<CityEntity?>(viewModel.defaultCity.value) }
 
 
     Surface {
@@ -80,14 +85,11 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
         CitiesModalBottomSheet(
             citiesSnapshotList = viewModel.prepareLocalCities(),
             isOpen = citiesModalOpenState,
-            selectedCity = selectedCityState
-        ) { returnedCity ->
-            selectedCityState = returnedCity
+            selectedCity = defaultCityState
+        ) { city ->
+            defaultCityState = city
+            defaultCityState.withNotNull { viewModel.saveDefaultCity(it) }
             citiesModalOpenState = false
-            viewModel.saveSelectedLocation(
-                selectedCityState?.location ?: "35.761008, 51.404626",
-                false
-            )
         }
 
 
@@ -99,9 +101,19 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
         }
 
         SideEffect {
+
+            viewModel.getDefaultCity()
+            viewModel.getUserName()
+
             coroutineScope.launch {
                 viewModel.userName.collect { userName ->
                     userNameState = userName
+                }
+            }
+
+            coroutineScope.launch {
+                viewModel.defaultCity.collect {
+                    defaultCityState = it
                 }
             }
         }
@@ -230,7 +242,7 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = selectedCityState?.cityName ?: "",
+                                        text = defaultCityState?.cityName ?: "",
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(vertical = 8.dp),
@@ -299,13 +311,8 @@ class SettingScreenVM @Inject constructor(
 
     val TAG = "SettingScreenVM"
 
-    init {
-        getUserName()
-        getSelectedLocation()
-    }
-
     val userName = MutableStateFlow("")
-    val selectedLocation = MutableStateFlow<CityEntity?>(null)
+    val defaultCity = MutableStateFlow<CityEntity?>(null)
     var snapShotCities = mutableStateListOf<CityEntity>()
 
     fun saveUserName(newName: String) {
@@ -339,7 +346,7 @@ class SettingScreenVM @Inject constructor(
 
     fun prepareLocalCities() : SnapshotStateList<CityEntity>{
         var temp = readCitiesFromAssets()
-        val selectedCity = temp.find { it.location == selectedLocation.value?.location }
+        val selectedCity = temp.find { it.location == defaultCity.value?.location }
         temp = temp.map {
             if (it.location == selectedCity?.location){
                 it.copy(selected = true)
@@ -351,31 +358,64 @@ class SettingScreenVM @Inject constructor(
         return snapShotCities
     }
 
-    fun saveSelectedLocation(latitudeLongitude: String, teakLocationByGPS: Boolean) {
+
+
+
+    fun saveManualWeatherData(weatherEntity: WeatherEntity) {
         viewModelScope.launch {
-            dataStoreManager.saveSelectedLocation(
-                latitudeLongitude = latitudeLongitude,
-                teakLocationByGPS = teakLocationByGPS
-            )
+            val json = Gson().toJson(weatherEntity)
+            dataStoreManager.saveManualWeatherData(json)
+        }
+    }
+    fun removeManualWeatherData() {
+        viewModelScope.launch {
+            dataStoreManager.removeManualWeatherData()
         }
     }
 
 
-    fun getSelectedLocation() {
+
+
+    fun saveDefaultCity(cityEntity: CityEntity){
         viewModelScope.launch {
-            dataStoreManager.selectedLocation.collect { location ->
-                if (location.second == false){
-                    val tempList = readCitiesFromAssets()
-                    val selected = tempList.find { it.location == location.first }
-                    selectedLocation.emit(selected)
-                }else{
-                    dataStoreManager.weatherDataFlow.collect { location ->
-                        selectedLocation.emit(CityEntity(cityName = "تست","35.761008, 51.404626",false))
-                    }
+            val json = Gson().toJson(cityEntity)
+            dataStoreManager.saveDefaultCity(json)
+        }
+    }
+    fun getDefaultCity(){
+        viewModelScope.launch {
+            dataStoreManager.defaultCity.collect { cityJson ->
+                try{
+                    val type = object : TypeToken<CityEntity>(){}.type
+                    val city = Gson().fromJson<CityEntity>(cityJson,type)
+                    defaultCity.emit(city)
+                    Log.i(TAG, "getDefaultCity: $city")
+                }catch (e : IOException){
+                    Log.d(TAG, "getDefaultCity: ${e.message}")
                 }
             }
         }
     }
+    fun removeDefaultCity(){
+        viewModelScope.launch {
+            dataStoreManager.removeDefaultCity()
+        }
+    }
+
+
+
+
+
+    fun getManualWeather() {
+        viewModelScope.launch {
+            dataStoreManager.manualWeatherData.collect { location ->
+                
+            }
+        }
+    }
+
+
+
 
 }
 
