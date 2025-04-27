@@ -62,12 +62,6 @@ fun NavGraphBuilder.splashGraph(navController: NavHostController, activity: Main
             )
         }
 
-        composable(Screens.News.routeId) {
-            NewsScreen(navController) {
-
-            }
-        }
-
       /*  composable(
             route = Screens.WebView.route + "/{url}",
             arguments = listOf(

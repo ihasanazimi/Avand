@@ -1,6 +1,5 @@
 package ir.hasanazimi.avand.presentation.itemViews
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -25,19 +23,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import ir.hasanazimi.avand.R
-import ir.hasanazimi.avand.common.extensions.getAmountFormatBySeparator
-import ir.hasanazimi.avand.data.entities.local.other.NewsItemEntity
+import coil.compose.AsyncImage
+import ir.hasanazimi.avand.data.entities.remote.news.Item
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 @Composable
-fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity : NewsItemEntity) -> Unit) {
+fun NewsItemView(news: Item, onNewsClick : (newItemEntity : Item) -> Unit) {
     AvandTheme {
         Surface{
             Column(
@@ -45,7 +41,7 @@ fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity :
                     .padding(bottom = 8.dp, top = 8.dp)
                     .fillMaxWidth()
                     .border(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f), RoundedCornerShape(16.dp)).clickable{
-                        onNewsClick.invoke(newsItemEntity)
+                        onNewsClick.invoke(news)
                     }
             ) {
                 Card(
@@ -53,15 +49,17 @@ fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity :
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp),
                 ) {
-                    Image(
-                        painter = painterResource(newsItemEntity.cover),
-                        contentDescription = newsItemEntity.title,
+
+                    AsyncImage(
+                        model = news.enclosure?.url,
+                        contentDescription = news.title,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp),
                         alignment = Alignment.Center,
                         contentScale = ContentScale.Crop
                     )
+
                 }
 
                 Column(
@@ -74,7 +72,7 @@ fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity :
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
                         Text(
-                            text = newsItemEntity.title,
+                            text = news.title ?:"-_-",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 8.dp),
@@ -87,7 +85,7 @@ fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity :
                             .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
                         Text(
-                            text = newsItemEntity.description,
+                            text = news.description?:"-_-",
                             modifier = Modifier.fillMaxWidth(),
                             style = CustomTypography.labelSmall.copy(
                                 lineHeight = TextUnit(
@@ -121,7 +119,7 @@ fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity :
                                 },
                             tint = MaterialTheme.colorScheme.primary
                         )
-                        Row(
+                        /*Row(
                             modifier = Modifier
                                 .padding(end = 8.dp, start = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
@@ -141,11 +139,11 @@ fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity :
                             )
 
                             Text(
-                                text = newsItemEntity.seenCount.toString().getAmountFormatBySeparator(),
+                                text = newsItem.seenCount.toString().getAmountFormatBySeparator(),
                                 style = CustomTypography.labelSmall,
                                 modifier = Modifier.padding(horizontal = 8.dp)
                             )
-                        }
+                        }*/
                     }
 
 
@@ -157,7 +155,7 @@ fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity :
                     ) {
 
                         Text(
-                            text = newsItemEntity.timeAgo,
+                            text = news.pubDate?:"-_-",
                             style = CustomTypography.labelSmall,
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
@@ -174,15 +172,6 @@ fun NewsItemView(newsItemEntity: NewsItemEntity , onNewsClick : (newItemEntity :
 @Composable
 private fun NewsItemViewPreview() {
     AvandTheme {
-        NewsItemView(
-            NewsItemEntity(
-                cover = R.drawable.hormoz,
-                title = "بازار خودرو تهران",
-                description = "از 700 کیلومتر دورتر آمده بود و سودای خرید اتومبیل شخصی داشت. به یکی از مراکز خرید و فروش خودرو در تهران رفته بود و با فرض اینکه یکی از بهترین ماشین\u200Cهای بازار خودرو را پیدا کرده برای عقد قرارداد و نوشتن قولنامه دست به جیب شده بود و بیعانه سنگینی پرداخت کرده بود غافل از آنکه طرف حسابش دلالی خبره یا بهتر بگوییم کلاهبرداری با سابقه است.",
-                link = "link"
-            )
-        ){
-            // todo
-        }
+
     }
 }

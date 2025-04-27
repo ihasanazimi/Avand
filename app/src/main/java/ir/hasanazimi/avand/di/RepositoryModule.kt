@@ -6,10 +6,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ir.hasanazimi.avand.data.web_services.news.NewsRssWebService
 import ir.hasanazimi.avand.data.web_services.weather.WeatherWebServices
 import ir.hasanazimi.avand.data.repository.NewsRssRepository
 import ir.hasanazimi.avand.data.repository.NewsRssRepositoryImpl
+import ir.hasanazimi.avand.data.web_services.news.RssService
 import ir.hasanazimi.avand.db.DataStoreManager
 import javax.inject.Singleton
 
@@ -28,7 +28,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideRssNewsRepository(newsRssWebService: NewsRssWebService, dataStoreManager: DataStoreManager) : NewsRssRepository{
-        return NewsRssRepositoryImpl(newsRssWebService,dataStoreManager)
+    fun provideRssNewsRepository(rssService: RssService, dataStoreManager: DataStoreManager) : NewsRssRepository{
+        return NewsRssRepositoryImpl(rssService,dataStoreManager)
     }
 }

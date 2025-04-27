@@ -1,14 +1,14 @@
 package ir.hasanazimi.avand.use_cases
 
 import ir.hasanazimi.avand.data.entities.ResponseState
-import ir.hasanazimi.avand.data.entities.remote.news.NewsItem
+import ir.hasanazimi.avand.data.entities.remote.news.Item
 import ir.hasanazimi.avand.data.repository.NewsRssRepository
 import ir.hasanazimi.avand.db.DataStoreManager
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface NewsRssUseCase {
-    suspend fun getNews(q : String) : Flow<ResponseState<List<NewsItem>>>
+    suspend fun getNews() : Flow<ResponseState<List<Item>>>
 }
 
 
@@ -17,7 +17,7 @@ class NewsUseCaseImpl @Inject constructor(
     dataStoreManager: DataStoreManager
 ) : NewsRssUseCase{
 
-    override suspend fun getNews(q: String): Flow<ResponseState<List<NewsItem>>>{
-        return newsRssRepository.getNews(q)
+    override suspend fun getNews(): Flow<ResponseState<List<Item>>>{
+        return newsRssRepository.getNews()
     }
 }

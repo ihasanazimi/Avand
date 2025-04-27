@@ -15,6 +15,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,10 +36,10 @@ import ir.hasanazimi.avand.common.more.LocationHelper
 import ir.hasanazimi.avand.common.security_and_permissions.askPermission
 import ir.hasanazimi.avand.common.security_and_permissions.isPermissionGranted
 import ir.hasanazimi.avand.data.entities.ResponseState
-import ir.hasanazimi.avand.data.fakeOccasionsOfTheDayList
 import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
-import ir.hasanazimi.avand.data.entities.remote.news.NewsItem
+import ir.hasanazimi.avand.data.entities.remote.news.Item
+import ir.hasanazimi.avand.data.fakeOccasionsOfTheDayList
 import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.use_cases.NewsRssUseCase
@@ -68,11 +70,13 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
         )
     ) }
 
+    var newsResponseState by remember { mutableStateOf<ResponseState<List<Item>>?>(viewModel.newsResponse.value) }
+
 
     SideEffect {
 
         viewModel.getCurrentWeatherFromLocal()
-        /*viewModel.getNewsRss()*/
+        viewModel.getNewsRss()
 
         coroutineScope.launch {
             viewModel.errorMessage.collect {
@@ -83,6 +87,13 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
         coroutineScope.launch {
             viewModel.weatherResponse.collect { it ->
                 weatherResponseState = it
+            }
+        }
+
+
+        coroutineScope.launch {
+            viewModel.newsResponse.collect{ newsItems ->
+                newsResponseState = newsItems
             }
         }
 
@@ -148,7 +159,10 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     )
                 }
                 item {
-                    NewsScreen(navController) {
+                    NewsScreen(
+                        navController = navController,
+                        newsData = newsResponseState
+                    ) {
                         Toast.makeText(context, "more news clicked", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -206,7 +220,7 @@ class HomeScreenVM @Inject constructor(
     val errorMessage = MutableSharedFlow<String>()
 
     var weatherResponse = MutableStateFlow<ResponseState<WeatherEntity>?>(null)
-    var newsResponse = MutableStateFlow<ResponseState<List<NewsItem>>?>(null)
+    var newsResponse = MutableStateFlow<ResponseState<List<Item>>?>(null)
 
     fun getCurrentWeatherFromRemote(q: String) {
         Log.i(TAG, "getCurrentWeatherFromRemote called")
@@ -244,11 +258,21 @@ class HomeScreenVM @Inject constructor(
 
 
 
-    fun getNewsRss(q : String = "ایران"){
+    fun getNewsRss(){
         viewModelScope.launch {
-            newsRssUseCase.getNews(q).collect {
+            newsRssUseCase.getNews().collect {
                 Log.i(TAG, "getNewsRss: ${it.data}")
-                newsResponse.emit(it)
+                when(it){
+                    is ResponseState.Success -> {
+                        newsResponse.emit(ResponseState.Success(it.data?.toMutableStateList()))
+                    }
+                    is ResponseState.Error -> {
+                        newsResponse.emit(ResponseState.Error(IOException(it.exception)))
+                    }
+                    is ResponseState.Loading -> {
+                        newsResponse.emit(ResponseState.Loading)
+                    }
+                }
             }
         }
     }

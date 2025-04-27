@@ -40,13 +40,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @Named("newsRss")
+    @Named("rss")
     fun provideGoogleNewsApiRetrofit(
         okHttpClient: OkHttpClient,
-        gson: Gson,
     ): Retrofit.Builder {
         return Retrofit.Builder()
-            .baseUrl("https://news.google.com/")
+            .baseUrl("https://www.khabaronline.ir/")
             .client(okHttpClient)
             .addConverterFactory(SimpleXmlConverterFactory.create())
     }
