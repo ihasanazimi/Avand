@@ -7,19 +7,19 @@ import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyType
 import ir.hasanazimi.avand.data.entities.local.other.CityEntity
 import ir.hasanazimi.avand.data.entities.local.other.CurrencyPriceEntity
 import ir.hasanazimi.avand.data.entities.local.other.NewsItemEntity
-import ir.hasanazimi.avand.data.entities.local.other.OccasionsOfTheDayEntity
+import ir.hasanazimi.avand.data.entities.local.other.EventOfDayEntity
 import ir.hasanazimi.avand.presentation.theme.GreenColor
 import ir.hasanazimi.avand.presentation.theme.RedColor
 
 
-val fakeOccasionsOfTheDayList: ArrayList<OccasionsOfTheDayEntity> =
-    arrayListOf<OccasionsOfTheDayEntity>(
-        OccasionsOfTheDayEntity("روز بزرگداشت فردوسی", isHoliday = true),
-        OccasionsOfTheDayEntity("روز جوان", isHoliday = false),
-        OccasionsOfTheDayEntity("روز مهندس", isHoliday = false),
-        OccasionsOfTheDayEntity("روز مهندس", isHoliday = false),
-        OccasionsOfTheDayEntity("روز مهندس", isHoliday = false),
-        OccasionsOfTheDayEntity("روز مهندس", isHoliday = false),
+val fakeEventOfDays: ArrayList<EventOfDayEntity> =
+    arrayListOf<EventOfDayEntity>(
+        EventOfDayEntity("روز بزرگداشت فردوسی", isHoliday = true),
+        EventOfDayEntity("روز جوان", isHoliday = false),
+        EventOfDayEntity("روز مهندس", isHoliday = false),
+        EventOfDayEntity("روز مهندس", isHoliday = false),
+        EventOfDayEntity("روز مهندس", isHoliday = false),
+        EventOfDayEntity("روز مهندس", isHoliday = false),
     )
 
 

@@ -51,7 +51,7 @@ import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.extensions.showToast
 import ir.hasanazimi.avand.common.extensions.withNotNull
 import ir.hasanazimi.avand.data.entities.ResponseState
-import ir.hasanazimi.avand.data.fakeOccasionsOfTheDayList
+import ir.hasanazimi.avand.data.fakeEventOfDays
 import ir.hasanazimi.avand.data.entities.sealed_enums.WeatherCondition
 import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
@@ -207,12 +207,12 @@ fun Widgets(
                             contentAlignment = Alignment.Center
                         ) {
 
-                            if (calendarData.occasionsOfTheDayEntities.isNotEmpty()){
+                            if (calendarData.events.isNotEmpty()){
                                 LazyColumn(
                                     modifier = Modifier,
                                     verticalArrangement = Arrangement.Center
                                 ) {
-                                    items(calendarData.occasionsOfTheDayEntities) { item ->
+                                    items(calendarData.events) { item ->
                                         OccasionItemView(occasionsOfTheDay = item)
                                     }
                                 }
@@ -513,7 +513,7 @@ fun WidgetScreenPreview() {
                 dayOfWeek = "سه شنبه",
                 globalDate = "15 آوریل 2025",
                 persianDate = "26 فروردین 1404",
-                fakeOccasionsOfTheDayList
+                fakeEventOfDays
             ),
             onGetData = {
                 // todo

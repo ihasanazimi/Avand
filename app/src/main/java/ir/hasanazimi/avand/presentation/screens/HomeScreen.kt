@@ -1,8 +1,11 @@
 package ir.hasanazimi.avand.presentation.screens
 
 import android.Manifest
+import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,6 +31,11 @@ import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
+import ir.hasanazimi.avand.common.date_time.CalendarManager
+import ir.hasanazimi.avand.common.date_time.DateUtils
+import ir.hasanazimi.avand.common.date_time.DateUtils2
+import ir.hasanazimi.avand.common.date_time.PersianCalendar1
+import ir.hasanazimi.avand.common.date_time.RoozhDateConverter
 import ir.hasanazimi.avand.common.extensions.isLocationEnabled
 import ir.hasanazimi.avand.common.extensions.showToast
 import ir.hasanazimi.avand.common.extensions.turnOnGPS
@@ -39,7 +46,7 @@ import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
 import ir.hasanazimi.avand.data.entities.remote.news.Item
-import ir.hasanazimi.avand.data.fakeOccasionsOfTheDayList
+import ir.hasanazimi.avand.data.fakeEventOfDays
 import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.use_cases.NewsRssUseCase
@@ -51,6 +58,7 @@ import kotlinx.coroutines.launch
 import okio.IOException
 import javax.inject.Inject
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(activity: MainActivity, navController: NavHostController) {
@@ -60,23 +68,37 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     val viewModel = hiltViewModel<HomeScreenVM>()
     val coroutineScope = rememberCoroutineScope()
 
-    var weatherResponseState by remember { mutableStateOf<ResponseState<WeatherEntity>?>(viewModel.weatherResponse.value) }
-    var calendarEntityState by remember { mutableStateOf<CalendarEntity>(
-        CalendarEntity(
-            dayOfWeek = "سه شنبه",
-            globalDate = "15 آوریل 2025",
-            persianDate = "26 فروردین 1404",
-            fakeOccasionsOfTheDayList
+    // Short persian Date
+    val dateArray = PersianCalendar1.shamsiDate().split("/")
+    val persianDate = "${dateArray[2].toInt()} " + PersianCalendar1().strMonth + " ${dateArray[0].toInt()}"
+
+    val roozhDate = RoozhDateConverter()
+    roozhDate.persianToGregorian(dateArray[0].toInt(), dateArray[1].toInt(), dateArray[2].toInt())
+    val y = roozhDate.year
+    val m = roozhDate.month
+    val d = roozhDate.day
+
+    var calendarEntityState by remember {
+        mutableStateOf<CalendarEntity>(
+            CalendarEntity(
+                dayOfWeek = PersianCalendar1().strWeekDay,
+                globalDate = "${d.toInt()}  ${DateUtils.getGregorianMonthNameInPersian(m.toInt())}  ${y.toInt()}",
+                persianDate = persianDate,
+                fakeEventOfDays
+            )
         )
-    ) }
+    }
 
     var newsResponseState by remember { mutableStateOf<ResponseState<List<Item>>?>(viewModel.newsResponse.value) }
+    var weatherResponseState by remember { mutableStateOf<ResponseState<WeatherEntity>?>(viewModel.weatherResponse.value) }
+
 
 
     SideEffect {
 
         viewModel.getCurrentWeatherFromLocal()
         viewModel.getNewsRss()
+        viewModel.getEvents(context)
 
         coroutineScope.launch {
             viewModel.errorMessage.collect {
@@ -92,7 +114,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
 
 
         coroutineScope.launch {
-            viewModel.newsResponse.collect{ newsItems ->
+            viewModel.newsResponse.collect { newsItems ->
                 newsResponseState = newsItems
             }
         }
@@ -163,7 +185,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                         navController = navController,
                         newsData = newsResponseState
                     ) {
-                        Toast.makeText(context, "more news clicked", Toast.LENGTH_SHORT).show()
+                        viewModel.getNewsRss()
                     }
                 }
             }
@@ -178,7 +200,7 @@ private fun getLastLocation(
 
     if (isLocationEnabled(activity).not()) {
         turnOnGPS(activity)
-        showToast(activity,"لطفا سرویس مکان را روشن کنید")
+        showToast(activity, "لطفا سرویس مکان را روشن کنید")
     } else {
         viewModel.weatherResponse.value = ResponseState.Loading
         LocationHelper(activity).getLastLocation(
@@ -201,7 +223,8 @@ private fun getLastLocation(
                     "خطا در دریافت موقعیت مکانی",
                     Toast.LENGTH_SHORT
                 ).show()
-                viewModel.weatherResponse.value = ResponseState.Error(Exception("خطا در دریافت موقعیت مکانی"))
+                viewModel.weatherResponse.value =
+                    ResponseState.Error(Exception("خطا در دریافت موقعیت مکانی"))
             }
         )
     }
@@ -232,7 +255,7 @@ class HomeScreenVM @Inject constructor(
         }
     }
 
-    fun getCurrentWeatherFromLocal(q: String = "35.6892,51.3890") {
+    fun getCurrentWeatherFromLocal(q: String = "Tehran") {
         Log.i(TAG, "getCurrentWeatherFromLocal called")
         viewModelScope.launch {
             dataStoreManager.automaticWeatherDataFlow.collect { cash ->
@@ -257,21 +280,40 @@ class HomeScreenVM @Inject constructor(
     }
 
 
-
-    fun getNewsRss(){
+    fun getNewsRss() {
         viewModelScope.launch {
             newsRssUseCase.getNews().collect {
                 Log.i(TAG, "getNewsRss: ${it.data}")
-                when(it){
+                when (it) {
                     is ResponseState.Success -> {
                         newsResponse.emit(ResponseState.Success(it.data?.toMutableStateList()))
                     }
+
                     is ResponseState.Error -> {
                         newsResponse.emit(ResponseState.Error(IOException(it.exception)))
                     }
+
                     is ResponseState.Loading -> {
                         newsResponse.emit(ResponseState.Loading)
                     }
+                }
+            }
+        }
+    }
+
+
+
+    fun getEvents(context: Context){
+        viewModelScope.launch {
+            val calendarManager = CalendarManager(context)
+            calendarManager.loadCalendarData("taghvim.json")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                calendarManager.getDayInfo(
+                    shamsiDate = PersianCalendar1.shamsiDate(),
+                    gregorianDate = DateUtils2.getTodayDate().gregorianDate,
+                    hijriDate = "1406-10-01"
+                ).also {
+                    Log.i(TAG, "getEvents: $it")
                 }
             }
         }
@@ -284,6 +326,9 @@ class HomeScreenVM @Inject constructor(
 @Composable
 fun HomeScreenPreview() {
     AvandTheme {
-        HomeScreen(activity = MainActivity(), navController = rememberNavController())
+        HomeScreen(
+            activity = MainActivity(),
+            navController = rememberNavController()
+        )
     }
 }

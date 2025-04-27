@@ -1,13 +1,6 @@
 package ir.hasanazimi.avand.presentation.dialogs
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,14 +24,20 @@ fun Wide70PercentHeightDialog(
 
     Dialog(
         onDismissRequest = onDismissRequest,
-        properties = DialogProperties()
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false // این باعث می‌شه عرض دیالوگ رو خودمون کنترل کنیم
+        )
     ) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp)
-                .border(2.dp,MaterialTheme.colorScheme.onPrimary,RoundedCornerShape(20.dp))
-                .height(screenHeight * 0.9f), // 70 درصد ارتفاع
+                .padding(horizontal = 8.dp) // فاصله ۸ دی‌پی از چپ و راست
+                .height(screenHeight * 0.9f) // ۹۰ درصد ارتفاع صفحه
+                .border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    shape = RoundedCornerShape(20.dp)
+                ),
             shape = RoundedCornerShape(20.dp),
             color = MaterialTheme.colorScheme.background
         ) {

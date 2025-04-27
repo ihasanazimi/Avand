@@ -1,11 +1,11 @@
 package ir.hasanazimi.avand.data.entities.local.calander
 
-import ir.hasanazimi.avand.data.entities.local.other.OccasionsOfTheDayEntity
+import ir.hasanazimi.avand.data.entities.local.other.EventOfDayEntity
 
 
 data class CalendarEntity(
     var dayOfWeek: String,
     var globalDate : String ,
     var persianDate : String,
-    var occasionsOfTheDayEntities: List<OccasionsOfTheDayEntity>
+    var events: List<EventOfDayEntity>
 )

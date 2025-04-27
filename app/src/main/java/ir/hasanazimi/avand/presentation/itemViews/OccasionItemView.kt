@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.hasanazimi.avand.data.entities.local.other.OccasionsOfTheDayEntity
+import ir.hasanazimi.avand.data.entities.local.other.EventOfDayEntity
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import ir.hasanazimi.avand.presentation.theme.RedColor
@@ -24,7 +24,7 @@ import ir.hasanazimi.avand.presentation.theme.TransparentlyBlack
 
 
 @Composable
-fun OccasionItemView(occasionsOfTheDay: OccasionsOfTheDayEntity) {
+fun OccasionItemView(occasionsOfTheDay: EventOfDayEntity) {
     Row(
         modifier = Modifier
             .background(Color.Transparent)
@@ -58,6 +58,6 @@ fun OccasionItemView(occasionsOfTheDay: OccasionsOfTheDayEntity) {
 @Composable
 fun OccasionItemViewPreview(){
     AvandTheme {
-        OccasionItemView(occasionsOfTheDay = OccasionsOfTheDayEntity("روز بزرگداشت فردوسی", isHoliday = true))
+        OccasionItemView(occasionsOfTheDay = EventOfDayEntity("روز بزرگداشت فردوسی", isHoliday = true))
     }
 }

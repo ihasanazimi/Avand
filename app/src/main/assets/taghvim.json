@@ -1,0 +1,3232 @@
+{
+  "yearShamsi": 1404,
+  "yearHijri": 1447,
+  "yearGregorian": 2025,
+  "monthsShamsi": [
+    {
+      "monthNumber": 1,
+      "monthName": "فروردین",
+      "events": [
+        {
+          "day": 1,
+          "event": "نوروز",
+          "isOfficialHoliday": true,
+          "type": "باستانی",
+          "description": "آغاز سال نو ایرانی، جشن باستانی با سفره هفت‌سین.",
+          "equivalentGregorianDate": "2025-03-20",
+          "equivalentHijriDate": "1446-09-21"
+        },
+        {
+          "day": 1,
+          "event": "فروردینگان",
+          "isOfficialHoliday": false,
+          "type": "باستانی",
+          "description": "جشن زرتشتی برای گرامیداشت فروهرها.",
+          "equivalentGregorianDate": "2025-03-20",
+          "equivalentHijriDate": "1446-09-21"
+        },
+        {
+          "day": 1,
+          "event": "همه‌پرسی تغییر نظام شاهنشاهی به جمهوری اسلامی ایران",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "همه‌پرسی تغییر نظام به جمهوری اسلامی در سال ۱۳۵۸.",
+          "equivalentGregorianDate": "2025-03-20",
+          "equivalentHijriDate": "1446-09-21"
+        },
+        {
+          "day": 2,
+          "event": "نوروز",
+          "isOfficialHoliday": true,
+          "type": "باستانی",
+          "description": "دومین روز نوروز، ادامه جشن‌های سال نو.",
+          "equivalentGregorianDate": "2025-03-21",
+          "equivalentHijriDate": "1446-09-22"
+        },
+        {
+          "day": 2,
+          "event": "هجوم مأموران ستم‌شاهی پهلوی به مدرسه فیضیه قم",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "حمله به مدرسه فیضیه قم در سال ۱۳۴۲.",
+          "equivalentGregorianDate": "2025-03-21",
+          "equivalentHijriDate": "1446-09-22"
+        },
+        {
+          "day": 2,
+          "event": "آغاز عملیات فتح‌المبین",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "شروع عملیات فتح‌المبین در سال ۱۳۶۱.",
+          "equivalentGregorianDate": "2025-03-21",
+          "equivalentHijriDate": "1446-09-22"
+        },
+        {
+          "day": 3,
+          "event": "نوروز",
+          "isOfficialHoliday": true,
+          "type": "باستانی",
+          "description": "سومین روز نوروز، برای دید و بازدید.",
+          "equivalentGregorianDate": "2025-03-22",
+          "equivalentHijriDate": "1446-09-23"
+        },
+        {
+          "day": 4,
+          "event": "نوروز",
+          "isOfficialHoliday": true,
+          "type": "باستانی",
+          "description": "چهارمین روز نوروز، پایان تعطیلات رسمی نوروزی.",
+          "equivalentGregorianDate": "2025-03-23",
+          "equivalentHijriDate": "1446-09-24"
+        },
+        {
+          "day": 6,
+          "event": "زادروز زرتشت پیامبر",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "سالروز تولد زرتشت، پیامبر آیین زرتشتی.",
+          "equivalentGregorianDate": "2025-03-25",
+          "equivalentHijriDate": "1446-09-26"
+        },
+        {
+          "day": 7,
+          "event": "روز هنرهای نمایشی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت هنرهای نمایشی و تئاتر.",
+          "equivalentGregorianDate": "2025-03-26",
+          "equivalentHijriDate": "1446-09-27"
+        },
+        {
+          "day": 12,
+          "event": "روز جمهوری اسلامی ایران",
+          "isOfficialHoliday": true,
+          "type": "ملی",
+          "description": "سالگرد تأسیس جمهوری اسلامی ایران در ۱۳۵۸.",
+          "equivalentGregorianDate": "2025-03-31",
+          "equivalentHijriDate": "1446-10-02"
+        },
+        {
+          "day": 12,
+          "event": "عید فطر",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "جشن پایان ماه رمضان با نماز عید و خیرات.",
+          "equivalentGregorianDate": "2025-03-31",
+          "equivalentHijriDate": "1446-10-01",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 13,
+          "event": "روز طبیعت",
+          "isOfficialHoliday": true,
+          "type": "باستانی",
+          "description": "روز سیزده‌به‌در، پایان جشن‌های نوروزی با بیرون رفتن.",
+          "equivalentGregorianDate": "2025-04-01",
+          "equivalentHijriDate": "1446-10-03"
+        },
+        {
+          "day": 13,
+          "event": "عید فطر (تعطیل اضافی)",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "روز تعطیل اضافی برای عید فطر.",
+          "equivalentGregorianDate": "2025-04-01",
+          "equivalentHijriDate": "1446-10-02",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 15,
+          "event": "روز ذخایر ژنتیکی و زیستی",
+          "isOfficialHoliday": false,
+          "type": "علمی",
+          "description": "گرامیداشت حفاظت از منابع ژنتیکی و زیستی.",
+          "equivalentGregorianDate": "2025-04-03",
+          "equivalentHijriDate": "1446-10-05"
+        },
+        {
+          "day": 18,
+          "event": "روز سلامتی",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "گرامیداشت سلامت جهانی.",
+          "equivalentGregorianDate": "2025-04-06",
+          "equivalentHijriDate": "1446-10-08"
+        },
+        {
+          "day": 19,
+          "event": "شهادت آیت‌الله سید محمد باقر صدر و بنت‌الهدی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت توسط رژیم بعث عراق در سال ۱۳۵۹.",
+          "equivalentGregorianDate": "2025-04-07",
+          "equivalentHijriDate": "1446-10-09"
+        },
+        {
+          "day": 20,
+          "event": "قطع مناسبات سیاسی ایران و آمریکا",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "قطع روابط دیپلماتیک در سال ۱۳۵۹.",
+          "equivalentGregorianDate": "2025-04-08",
+          "equivalentHijriDate": "1446-10-10"
+        },
+        {
+          "day": 20,
+          "event": "روز ملی فناوری هسته‌ای",
+          "isOfficialHoliday": false,
+          "type": "علمی",
+          "description": "گرامیداشت پیشرفت‌های هسته‌ای ایران.",
+          "equivalentGregorianDate": "2025-04-08",
+          "equivalentHijriDate": "1446-10-10"
+        },
+        {
+          "day": 20,
+          "event": "شهادت سید مرتضی آوینی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "شهادت در سال ۱۳۷۲، روز هنر انقلاب اسلامی.",
+          "equivalentGregorianDate": "2025-04-08",
+          "equivalentHijriDate": "1446-10-10"
+        },
+        {
+          "day": 21,
+          "event": "شهادت امیر سپهبد علی صیاد شیرازی",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "شهادت در سال ۱۳۷۸.",
+          "equivalentGregorianDate": "2025-04-09",
+          "equivalentHijriDate": "1446-10-11"
+        },
+        {
+          "day": 21,
+          "event": "تأسیس بنیاد مسکن انقلاب اسلامی",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "افتتاح حساب شماره ۱۰۰ به فرمان امام خمینی در ۱۳۵۸.",
+          "equivalentGregorianDate": "2025-04-09",
+          "equivalentHijriDate": "1446-10-11"
+        },
+        {
+          "day": 25,
+          "event": "روز بزرگداشت عطار نیشابوری",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شاعر و عارف ایرانی.",
+          "equivalentGregorianDate": "2025-04-13",
+          "equivalentHijriDate": "1446-10-15"
+        },
+        {
+          "day": 29,
+          "event": "روز ارتش جمهوری اسلامی و نیروی زمینی",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "گرامیداشت ارتش و نیروی زمینی ایران.",
+          "equivalentGregorianDate": "2025-04-17",
+          "equivalentHijriDate": "1446-10-19"
+        }
+      ]
+    },
+    {
+      "monthNumber": 2,
+      "monthName": "اردیبهشت",
+      "events": [
+        {
+          "day": 1,
+          "event": "روز بزرگداشت سعدی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شاعر پارسی‌گو و روز نثر فارسی.",
+          "equivalentGregorianDate": "2025-04-21",
+          "equivalentHijriDate": "1446-10-23"
+        },
+        {
+          "day": 1,
+          "event": "روز شهدای ورزشکار",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "گرامیداشت شهدای ورزشکار ایران.",
+          "equivalentGregorianDate": "2025-04-21",
+          "equivalentHijriDate": "1446-10-23"
+        },
+        {
+          "day": 2,
+          "event": "روز زمین پاک",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج حفاظت از محیط زیست.",
+          "equivalentGregorianDate": "2025-04-22",
+          "equivalentHijriDate": "1446-10-24"
+        },
+        {
+          "day": 2,
+          "event": "تأسیس سپاه پاسداران انقلاب اسلامی",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "تأسیس در سال ۱۳۵۸ به فرمان امام خمینی.",
+          "equivalentGregorianDate": "2025-04-22",
+          "equivalentHijriDate": "1446-10-24"
+        },
+        {
+          "day": 2,
+          "event": "سالروز اعلام انقلاب فرهنگی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "آغاز انقلاب فرهنگی در سال ۱۳۵۹.",
+          "equivalentGregorianDate": "2025-04-22",
+          "equivalentHijriDate": "1446-10-24"
+        },
+        {
+          "day": 3,
+          "event": "شهادت امیر سپهبد قرنی",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "شهادت در سال ۱۳۵۸.",
+          "equivalentGregorianDate": "2025-04-23",
+          "equivalentHijriDate": "1446-10-25"
+        },
+        {
+          "day": 3,
+          "event": "روز بزرگداشت شیخ بهایی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت عالم و شاعر ایرانی.",
+          "equivalentGregorianDate": "2025-04-23",
+          "equivalentHijriDate": "1446-10-25"
+        },
+        {
+          "day": 3,
+          "event": "روز معماری",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت هنر و علم معماری.",
+          "equivalentGregorianDate": "2025-04-23",
+          "equivalentHijriDate": "1446-10-25"
+        },
+        {
+          "day": 5,
+          "event": "شکست حمله نظامی آمریکا به ایران در طبس",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "شکست حمله در سال ۱۳۵۹.",
+          "equivalentGregorianDate": "2025-04-25",
+          "equivalentHijriDate": "1446-10-27"
+        },
+        {
+          "day": 5,
+          "event": "شهادت امام صادق",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "سالگرد شهادت ششمین امام شیعیان.",
+          "equivalentGregorianDate": "2025-04-25",
+          "equivalentHijriDate": "1446-10-27",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 7,
+          "event": "روز ایمنی حمل و نقل",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج ایمنی در حمل و نقل.",
+          "equivalentGregorianDate": "2025-04-27",
+          "equivalentHijriDate": "1446-10-29"
+        },
+        {
+          "day": 9,
+          "event": "روز شوراها",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "گرامیداشت شوراهای اسلامی شهر و روستا.",
+          "equivalentGregorianDate": "2025-04-29",
+          "equivalentHijriDate": "1446-11-01"
+        },
+        {
+          "day": 10,
+          "event": "روز ملی خلیج فارس",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "گرامیداشت اهمیت تاریخی و استراتژیک خلیج فارس.",
+          "equivalentGregorianDate": "2025-04-30",
+          "equivalentHijriDate": "1446-11-02"
+        },
+        {
+          "day": 10,
+          "event": "آغاز عملیات بیت‌المقدس",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "شروع عملیات بیت‌المقدس در سال ۱۳۶۱.",
+          "equivalentGregorianDate": "2025-04-30",
+          "equivalentHijriDate": "1446-11-02"
+        },
+        {
+          "day": 11,
+          "event": "روز جهانی کارگر",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "گرامیداشت حقوق کارگران و جنبش‌های کارگری.",
+          "equivalentGregorianDate": "2025-05-01",
+          "equivalentHijriDate": "1446-11-03"
+        },
+        {
+          "day": 12,
+          "event": "شهادت استاد مرتضی مطهری",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "شهادت در سال ۱۳۵۸، روز معلم.",
+          "equivalentGregorianDate": "2025-05-02",
+          "equivalentHijriDate": "1446-11-04"
+        },
+        {
+          "day": 15,
+          "event": "روز بزرگداشت شیخ صدوق",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "گرامیداشت عالم شیعه.",
+          "equivalentGregorianDate": "2025-05-05",
+          "equivalentHijriDate": "1446-11-07"
+        },
+        {
+          "day": 16,
+          "event": "روز جهانی ماما",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "گرامیداشت نقش ماماها در سلامت.",
+          "equivalentGregorianDate": "2025-05-06",
+          "equivalentHijriDate": "1446-11-08"
+        },
+        {
+          "day": 18,
+          "event": "روز بیماری‌های خاص و صعب‌العلاج",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "حمایت از بیماران خاص.",
+          "equivalentGregorianDate": "2025-05-08",
+          "equivalentHijriDate": "1446-11-10"
+        },
+        {
+          "day": 18,
+          "event": "روز جهانی صلیب سرخ و هلال احمر",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "گرامیداشت فعالیت‌های بشردوستانه.",
+          "equivalentGregorianDate": "2025-05-08",
+          "equivalentHijriDate": "1446-11-10"
+        },
+        {
+          "day": 19,
+          "event": "روز بزرگداشت شیخ کلینی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "گرامیداشت عالم شیعه.",
+          "equivalentGregorianDate": "2025-05-09",
+          "equivalentHijriDate": "1446-11-11"
+        },
+        {
+          "day": 19,
+          "event": "روز اسناد ملی و میراث مکتوب",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "حفاظت از اسناد و میراث فرهنگی.",
+          "equivalentGregorianDate": "2025-05-09",
+          "equivalentHijriDate": "1446-11-11"
+        },
+        {
+          "day": 21,
+          "event": "میلاد پیامبر اکرم",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "گرامیداشت تولد پیامبر اسلام.",
+          "equivalentGregorianDate": "2025-05-11",
+          "equivalentHijriDate": "1446-11-12",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 24,
+          "event": "لغو امتیاز تنباکو",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "لغو امتیاز به فتوای آیت‌الله میرزا حسن شیرازی در ۱۲۷۰.",
+          "equivalentGregorianDate": "2025-05-14",
+          "equivalentHijriDate": "1446-11-16"
+        },
+        {
+          "day": 25,
+          "event": "روز پاسداشت زبان فارسی و بزرگداشت حکیم ابوالقاسم فردوسی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت زبان فارسی و شاعر حماسه‌سرای ایران.",
+          "equivalentGregorianDate": "2025-05-15",
+          "equivalentHijriDate": "1446-11-17"
+        },
+        {
+          "day": 27,
+          "event": "روز ارتباطات و روابط عمومی",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "گرامیداشت نقش روابط عمومی.",
+          "equivalentGregorianDate": "2025-05-17",
+          "equivalentHijriDate": "1446-11-19"
+        },
+        {
+          "day": 28,
+          "event": "روز بزرگداشت حکیم عمر خیام",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شاعر، ریاضیدان و فیلسوف ایرانی.",
+          "equivalentGregorianDate": "2025-05-18",
+          "equivalentHijriDate": "1446-11-20"
+        },
+        {
+          "day": 29,
+          "event": "روز جهانی موزه و میراث فرهنگی",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج حفاظت از میراث فرهنگی.",
+          "equivalentGregorianDate": "2025-05-19",
+          "equivalentHijriDate": "1446-11-21"
+        },
+        {
+          "day": 30,
+          "event": "روز ملی جمعیت",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج سیاست‌های جمعیتی.",
+          "equivalentGregorianDate": "2025-05-20",
+          "equivalentHijriDate": "1446-11-22"
+        },
+        {
+          "day": 31,
+          "event": "روز اهدای عضو، اهدای زندگی",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج فرهنگ اهدای عضو.",
+          "equivalentGregorianDate": "2025-05-21",
+          "equivalentHijriDate": "1446-11-23"
+        },
+        {
+          "day": 31,
+          "event": "روز جهانی بدون دخانیات",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج زندگی بدون دخانیات.",
+          "equivalentGregorianDate": "2025-05-21",
+          "equivalentHijriDate": "1446-11-23"
+        }
+      ]
+    },
+    {
+      "monthNumber": 3,
+      "monthName": "خرداد",
+      "events": [
+        {
+          "day": 1,
+          "event": "روز بهره‌وری و بهینه‌سازی مصرف",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج فرهنگ بهینه‌سازی مصرف.",
+          "equivalentGregorianDate": "2025-05-22",
+          "equivalentHijriDate": "1446-11-24"
+        },
+        {
+          "day": 1,
+          "event": "روز بزرگداشت ملاصدرا",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت فیلسوف ایرانی.",
+          "equivalentGregorianDate": "2025-05-22",
+          "equivalentHijriDate": "1446-11-24"
+        },
+        {
+          "day": 1,
+          "event": "روز جهانی والدین",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "گرامیداشت نقش والدین.",
+          "equivalentGregorianDate": "2025-05-22",
+          "equivalentHijriDate": "1446-11-24"
+        },
+        {
+          "day": 3,
+          "event": "فتح خرمشهر",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "فتح خرمشهر در عملیات بیت‌المقدس در ۱۳۶۱، روز مقاومت و پیروزی.",
+          "equivalentGregorianDate": "2025-05-24",
+          "equivalentHijriDate": "1446-11-26"
+        },
+        {
+          "day": 4,
+          "event": "روز مقاومت و پایداری - روز دزفول",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "گرامیداشت مقاومت مردم دزفول در دفاع مقدس.",
+          "equivalentGregorianDate": "2025-05-25",
+          "equivalentHijriDate": "1446-11-27"
+        },
+        {
+          "day": 5,
+          "event": "روز نسیم مهر",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "روز حمایت از خانواده زندانیان.",
+          "equivalentGregorianDate": "2025-05-26",
+          "equivalentHijriDate": "1446-11-28"
+        },
+        {
+          "day": 6,
+          "event": "خردادگان",
+          "isOfficialHoliday": false,
+          "type": "باستانی",
+          "description": "جشن زرتشتی برای گرامیداشت خرد و کمال.",
+          "equivalentGregorianDate": "2025-05-27",
+          "equivalentHijriDate": "1446-11-29"
+        },
+        {
+          "day": 6,
+          "event": "خرداد سال",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "سالگرد تولد پیامبر زرتشت.",
+          "equivalentGregorianDate": "2025-05-27",
+          "equivalentHijriDate": "1446-11-29"
+        },
+        {
+          "day": 7,
+          "event": "افتتاح اولین دوره مجلس شورای اسلامی",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "افتتاح مجلس در سال ۱۳۵۹.",
+          "equivalentGregorianDate": "2025-05-28",
+          "equivalentHijriDate": "1446-11-30"
+        },
+        {
+          "day": 15,
+          "event": "زندانی شدن حضرت امام خمینی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "زندانی شدن امام خمینی توسط رژیم پهلوی در ۱۳۴۲.",
+          "equivalentGregorianDate": "2025-06-04",
+          "equivalentHijriDate": "1446-12-07"
+        },
+        {
+          "day": 15,
+          "event": "رحلت حضرت امام خمینی",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "سالگرد درگذشت رهبر انقلاب اسلامی در ۱۳۶۸.",
+          "equivalentGregorianDate": "2025-06-04",
+          "equivalentHijriDate": "1446-12-07"
+        },
+        {
+          "day": 15,
+          "event": "انتخاب حضرت آیت‌الله خامنه‌ای به رهبری",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "انتخاب رهبر انقلاب در سال ۱۳۶۸.",
+          "equivalentGregorianDate": "2025-06-04",
+          "equivalentHijriDate": "1446-12-07"
+        },
+        {
+          "day": 16,
+          "event": "قیام خونین ۱۵ خرداد",
+          "isOfficialHoliday": true,
+          "type": "ملی",
+          "description": "سالگرد آغاز اعتراضات علیه رژیم پهلوی در ۱۳۴۲.",
+          "equivalentGregorianDate": "2025-06-05",
+          "equivalentHijriDate": "1446-12-08"
+        },
+        {
+          "day": 16,
+          "event": "روز جهانی محیط زیست",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج حفاظت از محیط زیست.",
+          "equivalentGregorianDate": "2025-06-05",
+          "equivalentHijriDate": "1446-12-08"
+        },
+        {
+          "day": 17,
+          "event": "عید قربان",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "جشن قربانی به یاد اطاعت حضرت ابراهیم.",
+          "equivalentGregorianDate": "2025-06-06",
+          "equivalentHijriDate": "1446-12-10",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 20,
+          "event": "روز صنایع دستی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت هنرهای دستی ایران.",
+          "equivalentGregorianDate": "2025-06-09",
+          "equivalentHijriDate": "1446-12-13"
+        },
+        {
+          "day": 20,
+          "event": "روز جهانی صنایع دستی",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج صنایع دستی در سطح جهانی.",
+          "equivalentGregorianDate": "2025-06-09",
+          "equivalentHijriDate": "1446-12-13"
+        },
+        {
+          "day": 20,
+          "event": "شهادت آیت‌الله سعیدی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت توسط رژیم پهلوی در ۱۳۴۹.",
+          "equivalentGregorianDate": "2025-06-09",
+          "equivalentHijriDate": "1446-12-13"
+        },
+        {
+          "day": 25,
+          "event": "روز گل و گیاه",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج فرهنگ نگهداری از گیاهان.",
+          "equivalentGregorianDate": "2025-06-14",
+          "equivalentHijriDate": "1446-12-18"
+        },
+        {
+          "day": 25,
+          "event": "عید غدیر",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "گرامیداشت منصوب شدن حضرت علی به عنوان جانشین پیامبر.",
+          "equivalentGregorianDate": "2025-06-14",
+          "equivalentHijriDate": "1446-12-18",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 26,
+          "event": "شهادت بخارایی، امانی، صفار هرندی و نیک‌نژاد",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "شهادت سربازان دلیر اسلام در سال ۱۳۴۴.",
+          "equivalentGregorianDate": "2025-06-15",
+          "equivalentHijriDate": "1446-12-19"
+        },
+        {
+          "day": 27,
+          "event": "روز جهاد کشاورزی",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "تشکیل جهاد سازندگی به فرمان امام خمینی در ۱۳۵۸.",
+          "equivalentGregorianDate": "2025-06-16",
+          "equivalentHijriDate": "1446-12-20"
+        },
+        {
+          "day": 29,
+          "event": "درگذشت دکتر علی شریعتی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "درگذشت در سال ۱۳۵۶.",
+          "equivalentGregorianDate": "2025-06-18",
+          "equivalentHijriDate": "1446-12-22"
+        },
+        {
+          "day": 30,
+          "event": "شهادت زائران حرم رضوی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت زائران در عاشورای ۱۳۷۳ به دست ایادی آمریکا.",
+          "equivalentGregorianDate": "2025-06-19",
+          "equivalentHijriDate": "1446-12-23"
+        },
+        {
+          "day": 31,
+          "event": "شهادت دکتر مصطفی چمران",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "شهادت در سال ۱۳۶۰، روز بسیج استادان.",
+          "equivalentGregorianDate": "2025-06-20",
+          "equivalentHijriDate": "1446-12-24"
+        }
+      ]
+    },
+    {
+      "monthNumber": 4,
+      "monthName": "تیر",
+      "events": [
+        {
+          "day": 1,
+          "event": "تأسیس سازمان تبلیغات اسلامی",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "تأسیس به فرمان امام خمینی در ۱۳۶۰، روز تبلیغ و اطلاع‌رسانی دینی.",
+          "equivalentGregorianDate": "2025-06-21",
+          "equivalentHijriDate": "1446-12-25"
+        },
+        {
+          "day": 1,
+          "event": "روز اصناف",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "گرامیداشت نقش اصناف در اقتصاد.",
+          "equivalentGregorianDate": "2025-06-21",
+          "equivalentHijriDate": "1446-12-25"
+        },
+        {
+          "day": 7,
+          "event": "شهادت آیت‌الله بهشتی و ۷۲ تن از یاران",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت در انفجار دفتر حزب جمهوری اسلامی در ۱۳۶۰، روز قوه قضاییه.",
+          "equivalentGregorianDate": "2025-06-27",
+          "equivalentHijriDate": "1447-01-01"
+        },
+        {
+          "day": 7,
+          "event": "بمباران شیمیایی شهر سردشت",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "بمباران شیمیایی در سال ۱۳۶۶.",
+          "equivalentGregorianDate": "2025-06-27",
+          "equivalentHijriDate": "1447-01-01"
+        },
+        {
+          "day": 8,
+          "event": "روز مبارزه با سلاح‌های شیمیایی و میکروبی",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "گرامیداشت قربانیان سلاح‌های شیمیایی.",
+          "equivalentGregorianDate": "2025-06-28",
+          "equivalentHijriDate": "1447-01-02"
+        },
+        {
+          "day": 10,
+          "event": "روز صنعت و معدن",
+          "isOfficialHoliday": false,
+          "type": "اقتصادی",
+          "description": "گرامیداشت بخش صنعت و معدن.",
+          "equivalentGregorianDate": "2025-06-30",
+          "equivalentHijriDate": "1447-01-04"
+        },
+        {
+          "day": 10,
+          "event": "روز دیپلماسی فرهنگی و تعامل با جهان",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج دیپلماسی فرهنگی.",
+          "equivalentGregorianDate": "2025-06-30",
+          "equivalentHijriDate": "1447-01-04"
+        },
+        {
+          "day": 10,
+          "event": "روز آزادسازی شهر مهران",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "آزادسازی مهران در دفاع مقدس.",
+          "equivalentGregorianDate": "2025-06-30",
+          "equivalentHijriDate": "1447-01-04"
+        },
+        {
+          "day": 10,
+          "event": "روز بزرگداشت صائب تبریزی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شاعر ایرانی.",
+          "equivalentGregorianDate": "2025-06-30",
+          "equivalentHijriDate": "1447-01-04"
+        },
+        {
+          "day": 10,
+          "event": "ورود حضرت امام رضا به نیشابور",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "یادبود ورود امام رضا و نقل حدیث سلسلة‌الذهب.",
+          "equivalentGregorianDate": "2025-06-30",
+          "equivalentHijriDate": "1447-01-04"
+        },
+        {
+          "day": 11,
+          "event": "شهادت آیت‌الله صدوقی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت چهارمین شهید محراب در ۱۳۶۱.",
+          "equivalentGregorianDate": "2025-07-01",
+          "equivalentHijriDate": "1447-01-05"
+        },
+        {
+          "day": 12,
+          "event": "حمله ناوگان آمریکا به هواپیمای مسافربری ایران",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "حمله در سال ۱۳۶۷، روز افشای حقوق بشر آمریکایی.",
+          "equivalentGregorianDate": "2025-07-02",
+          "equivalentHijriDate": "1447-01-06"
+        },
+        {
+          "day": 12,
+          "event": "روز بزرگداشت علامه امینی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "گرامیداشت عالم شیعه در سال ۱۳۴۹.",
+          "equivalentGregorianDate": "2025-07-02",
+          "equivalentHijriDate": "1447-01-06"
+        },
+        {
+          "day": 13,
+          "event": "جشن تیرگان",
+          "isOfficialHoliday": false,
+          "type": "باستانی",
+          "description": "جشن زرتشتی مرتبط با آب و باران.",
+          "equivalentGregorianDate": "2025-07-03",
+          "equivalentHijriDate": "1447-01-07"
+        },
+        {
+          "day": 14,
+          "event": "روز قلم",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت نقش نویسندگی و قلم.",
+          "equivalentGregorianDate": "2025-07-04",
+          "equivalentHijriDate": "1447-01-08"
+        },
+        {
+          "day": 15,
+          "event": "تاسوعا",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "روز نهم محرم، گرامیداشت یاران امام حسین.",
+          "equivalentGregorianDate": "2025-07-05",
+          "equivalentHijriDate": "1447-01-09",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 16,
+          "event": "عاشورا",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "روز شهادت امام حسین در کربلا، با عزاداری.",
+          "equivalentGregorianDate": "2025-07-06",
+          "equivalentHijriDate": "1447-01-10",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 16,
+          "event": "روز مالیات",
+          "isOfficialHoliday": false,
+          "type": "اقتصادی",
+          "description": "ترویج فرهنگ مالیاتی.",
+          "equivalentGregorianDate": "2025-07-06",
+          "equivalentHijriDate": "1447-01-10"
+        },
+        {
+          "day": 18,
+          "event": "کشف توطئه کودتای آمریکایی در پایگاه هوایی نوژه",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "کشف کودتا در سال ۱۳۵۹.",
+          "equivalentGregorianDate": "2025-07-08",
+          "equivalentHijriDate": "1447-01-12"
+        },
+        {
+          "day": 18,
+          "event": "روز ادبیات کودکان و نوجوانان",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "ترویج ادبیات برای کودکان و نوجوانان.",
+          "equivalentGregorianDate": "2025-07-08",
+          "equivalentHijriDate": "1447-01-12"
+        },
+        {
+          "day": 21,
+          "event": "حمله به مسجد گوهرشاد",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "کشتار مردم توسط رضاخان در سال ۱۳۱۴.",
+          "equivalentGregorianDate": "2025-07-11",
+          "equivalentHijriDate": "1447-01-15"
+        },
+        {
+          "day": 21,
+          "event": "روز عفاف و حجاب",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "ترویج فرهنگ عفاف و حجاب.",
+          "equivalentGregorianDate": "2025-07-11",
+          "equivalentHijriDate": "1447-01-15"
+        },
+        {
+          "day": 22,
+          "event": "روز بزرگداشت خوارزمی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت ریاضیدان ایرانی.",
+          "equivalentGregorianDate": "2025-07-12",
+          "equivalentHijriDate": "1447-01-16"
+        },
+        {
+          "day": 22,
+          "event": "روز فناوری اطلاعات",
+          "isOfficialHoliday": false,
+          "type": "علمی",
+          "description": "ترویج فناوری اطلاعات.",
+          "equivalentGregorianDate": "2025-07-12",
+          "equivalentHijriDate": "1447-01-16"
+        },
+        {
+          "day": 23,
+          "event": "روز گفت‌وگو و تعامل سازنده با جهان",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج دیپلماسی و تعامل جهانی.",
+          "equivalentGregorianDate": "2025-07-13",
+          "equivalentHijriDate": "1447-01-17"
+        },
+        {
+          "day": 23,
+          "event": "گشایش اولین مجلس خبرگان رهبری",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "افتتاح مجلس خبرگان در سال ۱۳۶۲.",
+          "equivalentGregorianDate": "2025-07-13",
+          "equivalentHijriDate": "1447-01-17"
+        },
+        {
+          "day": 25,
+          "event": "روز بهزیستی و تأمین اجتماعی",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "گرامیداشت خدمات بهزیستی.",
+          "equivalentGregorianDate": "2025-07-15",
+          "equivalentHijriDate": "1447-01-19"
+        },
+        {
+          "day": 26,
+          "event": "سالروز تأسیس نهاد شورای نگهبان",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "تأسیس شورای نگهبان.",
+          "equivalentGregorianDate": "2025-07-16",
+          "equivalentHijriDate": "1447-01-20"
+        },
+        {
+          "day": 27,
+          "event": "اعلام پذیرش قطعنامه ۵۹۸ شورای امنیت",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "پذیرش قطعنامه در سال ۱۳۶۷.",
+          "equivalentGregorianDate": "2025-07-17",
+          "equivalentHijriDate": "1447-01-21"
+        },
+        {
+          "day": 30,
+          "event": "روز بزرگداشت آیت‌الله کاشانی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "گرامیداشت روحانی مبارز.",
+          "equivalentGregorianDate": "2025-07-20",
+          "equivalentHijriDate": "1447-01-24"
+        }
+      ]
+    },
+    {
+      "monthNumber": 5,
+      "monthName": "مرداد",
+      "events": [
+        {
+          "day": 1,
+          "event": "امردادگان",
+          "isOfficialHoliday": false,
+          "type": "باستانی",
+          "description": "جشن زرتشتی برای گرامیداشت جاودانگی.",
+          "equivalentGregorianDate": "2025-07-21",
+          "equivalentHijriDate": "1447-01-25"
+        },
+        {
+          "day": 1,
+          "event": "روز جهانی شیر مادر",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج تغذیه با شیر مادر.",
+          "equivalentGregorianDate": "2025-07-21",
+          "equivalentHijriDate": "1447-01-25"
+        },
+        {
+          "day": 4,
+          "event": "روز بزرگداشت شیخ صفی‌الدین اردبیلی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت عارف ایرانی.",
+          "equivalentGregorianDate": "2025-07-24",
+          "equivalentHijriDate": "1447-01-28"
+        },
+        {
+          "day": 5,
+          "event": "سالروز عملیات مرصاد",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "عملیات افتخارآفرین مرصاد در سال ۱۳۶۷.",
+          "equivalentGregorianDate": "2025-07-25",
+          "equivalentHijriDate": "1447-01-29"
+        },
+        {
+          "day": 6,
+          "event": "روز کارآفرینی و آموزش‌های فنی و حرفه‌ای",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج کارآفرینی و آموزش فنی.",
+          "equivalentGregorianDate": "2025-07-26",
+          "equivalentHijriDate": "1447-01-30"
+        },
+        {
+          "day": 6,
+          "event": "انفجار بمب اتمی در هیروشیما",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "انفجار بمب اتمی آمریکا در ۱۹۴۵ با بیش از ۱۶۰ هزار کشته.",
+          "equivalentGregorianDate": "2025-07-26",
+          "equivalentHijriDate": "1447-01-30"
+        },
+        {
+          "day": 8,
+          "event": "روز بزرگداشت شیخ شهاب‌الدین سهروردی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت فیلسوف اشراقی.",
+          "equivalentGregorianDate": "2025-07-28",
+          "equivalentHijriDate": "1447-02-02"
+        },
+        {
+          "day": 9,
+          "event": "روز اهدای خون",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج فرهنگ اهدای خون.",
+          "equivalentGregorianDate": "2025-07-29",
+          "equivalentHijriDate": "1447-02-03"
+        },
+        {
+          "day": 11,
+          "event": "شهادت آیت‌الله شیخ فضل‌الله نوری",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت در سال ۱۲۸۸.",
+          "equivalentGregorianDate": "2025-07-31",
+          "equivalentHijriDate": "1447-02-05"
+        },
+        {
+          "day": 14,
+          "event": "صدور فرمان مشروطیت",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "صدور فرمان مشروطه در سال ۱۲۸۵.",
+          "equivalentGregorianDate": "2025-08-03",
+          "equivalentHijriDate": "1447-02-08"
+        },
+        {
+          "day": 14,
+          "event": "روز حقوق بشر اسلامی و کرامت انسانی",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج حقوق بشر اسلامی.",
+          "equivalentGregorianDate": "2025-08-03",
+          "equivalentHijriDate": "1447-02-08"
+        },
+        {
+          "day": 16,
+          "event": "تشکیل جهاد دانشگاهی",
+          "isOfficialHoliday": false,
+          "type": "علمی",
+          "description": "تشکیل در سال ۱۳۵۹.",
+          "equivalentGregorianDate": "2025-08-05",
+          "equivalentHijriDate": "1447-02-10"
+        },
+        {
+          "day": 17,
+          "event": "روز خبرنگار",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "سالروز شهادت محمود صارمی.",
+          "equivalentGregorianDate": "2025-08-06",
+          "equivalentHijriDate": "1447-02-11"
+        },
+        {
+          "day": 18,
+          "event": "روز بزرگداشت شهدای مدافع حرم",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "گرامیداشت شهدای مدافع حرم.",
+          "equivalentGregorianDate": "2025-08-07",
+          "equivalentHijriDate": "1447-02-12"
+        },
+        {
+          "day": 21,
+          "event": "روز حمایت از صنایع کوچک",
+          "isOfficialHoliday": false,
+          "type": "اقتصادی",
+          "description": "ترویج صنایع کوچک.",
+          "equivalentGregorianDate": "2025-08-10",
+          "equivalentHijriDate": "1447-02-15"
+        },
+        {
+          "day": 22,
+          "event": "روز تشکل‌ها و مشارکت‌های اجتماعی",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج مشارکت‌های اجتماعی.",
+          "equivalentGregorianDate": "2025-08-11",
+          "equivalentHijriDate": "1447-02-16"
+        },
+        {
+          "day": 23,
+          "event": "روز مقاومت اسلامی",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "گرامیداشت مقاومت اسلامی.",
+          "equivalentGregorianDate": "2025-08-12",
+          "equivalentHijriDate": "1447-02-17"
+        },
+        {
+          "day": 24,
+          "event": "اربعین حسینی",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "چهلمین روز شهادت امام حسین با زیارت.",
+          "equivalentGregorianDate": "2025-08-13",
+          "equivalentHijriDate": "1447-02-20",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 26,
+          "event": "آغاز بازگشت آزادگان به میهن اسلامی",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "بازگشت آزادگان در سال ۱۳۶۹.",
+          "equivalentGregorianDate": "2025-08-15",
+          "equivalentHijriDate": "1447-02-22"
+        },
+        {
+          "day": 28,
+          "event": "کودتای آمریکا برای بازگرداندن شاه",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "کودتای ۲۸ مرداد ۱۳۳۲.",
+          "equivalentGregorianDate": "2025-08-17",
+          "equivalentHijriDate": "1447-02-24"
+        },
+        {
+          "day": 30,
+          "event": "روز بزرگداشت علامه مجلسی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "گرامیداشت عالم شیعه.",
+          "equivalentGregorianDate": "2025-08-19",
+          "equivalentHijriDate": "1447-02-26"
+        },
+        {
+          "day": 31,
+          "event": "روز صنعت دفاعی",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "گرامیداشت صنعت دفاعی ایران.",
+          "equivalentGregorianDate": "2025-08-20",
+          "equivalentHijriDate": "1447-02-27"
+        }
+      ]
+    },
+    {
+      "monthNumber": 6,
+      "monthName": "شهریور",
+      "events": [
+        {
+          "day": 1,
+          "event": "روز بزرگداشت ابوعلی سینا",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت پزشک و فیلسوف ایرانی، روز پزشک.",
+          "equivalentGregorianDate": "2025-08-21",
+          "equivalentHijriDate": "1447-02-28"
+        },
+        {
+          "day": 1,
+          "event": "درگذشت پیامبر اکرم و شهادت امام حسن",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "سالگرد درگذشت پیامبر و شهادت دومین امام شیعیان.",
+          "equivalentGregorianDate": "2025-08-21",
+          "equivalentHijriDate": "1447-02-28",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 2,
+          "event": "آغاز هفته دولت",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "هفته گرامیداشت خدمات دولت.",
+          "equivalentGregorianDate": "2025-08-22",
+          "equivalentHijriDate": "1447-02-29"
+        },
+        {
+          "day": 2,
+          "event": "شهادت سید علی اندرزگو",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت در سال ۱۳۵۷.",
+          "equivalentGregorianDate": "2025-08-22",
+          "equivalentHijriDate": "1447-02-29"
+        },
+        {
+          "day": 3,
+          "event": "اشغال ایران توسط متفقین و فرار رضاخان",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "اشغال ایران در سال ۱۳۲۰.",
+          "equivalentGregorianDate": "2025-08-23",
+          "equivalentHijriDate": "1447-03-01"
+        },
+        {
+          "day": 3,
+          "event": "شهادت امام رضا",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "سالگرد شهادت هشتمین امام شیعیان.",
+          "equivalentGregorianDate": "2025-08-23",
+          "equivalentHijriDate": "1447-02-29",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 4,
+          "event": "روز کارمند",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "گرامیداشت کارمندان.",
+          "equivalentGregorianDate": "2025-08-24",
+          "equivalentHijriDate": "1447-03-02"
+        },
+        {
+          "day": 5,
+          "event": "روز بزرگداشت محمد بن زکریای رازی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت دانشمند ایرانی، روز داروسازی.",
+          "equivalentGregorianDate": "2025-08-25",
+          "equivalentHijriDate": "1447-03-03"
+        },
+        {
+          "day": 5,
+          "event": "روز کشتی",
+          "isOfficialHoliday": false,
+          "type": "ورزشی",
+          "description": "گرامیداشت ورزش کشتی.",
+          "equivalentGregorianDate": "2025-08-25",
+          "equivalentHijriDate": "1447-03-03"
+        },
+        {
+          "day": 8,
+          "event": "شهادت شهیدان رجایی و باهنر",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "شهادت در انفجار دفتر نخست‌وزیری در ۱۳۶۰، روز مبارزه با تروریسم.",
+          "equivalentGregorianDate": "2025-08-28",
+          "equivalentHijriDate": "1447-03-06"
+        },
+        {
+          "day": 10,
+          "event": "روز بانکداری اسلامی",
+          "isOfficialHoliday": false,
+          "type": "اقتصادی",
+          "description": "سالروز تصویب قانون عملیات بانکی بدون ربا در ۱۳۶۲.",
+          "equivalentGregorianDate": "2025-08-30",
+          "equivalentHijriDate": "1447-03-08"
+        },
+        {
+          "day": 10,
+          "event": "روز تشکیل قرارگاه پدافند هوایی خاتم‌الانبیا",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "تشکیل قرارگاه پدافند هوایی.",
+          "equivalentGregorianDate": "2025-08-30",
+          "equivalentHijriDate": "1447-03-08"
+        },
+        {
+          "day": 11,
+          "event": "روز صنعت چاپ",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت صنعت چاپ.",
+          "equivalentGregorianDate": "2025-08-31",
+          "equivalentHijriDate": "1447-03-09"
+        },
+        {
+          "day": 11,
+          "event": "شهادت امام حسن عسکری",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "سالگرد شهادت یازدهمین امام شیعیان.",
+          "equivalentGregorianDate": "2025-08-31",
+          "equivalentHijriDate": "1447-03-08",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 12,
+          "event": "روز بهورز",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "گرامیداشت بهورزان سلامت.",
+          "equivalentGregorianDate": "2025-09-01",
+          "equivalentHijriDate": "1447-03-10"
+        },
+        {
+          "day": 12,
+          "event": "روز جهانی برنامه‌نویس",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "روز ۲۵۶ام سال میلادی، گرامیداشت برنامه‌نویسان.",
+          "equivalentGregorianDate": "2025-09-01",
+          "equivalentHijriDate": "1447-03-10"
+        },
+        {
+          "day": 13,
+          "event": "روز مردم‌شناسی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت علم مردم‌شناسی.",
+          "equivalentGregorianDate": "2025-09-02",
+          "equivalentHijriDate": "1447-03-11"
+        },
+        {
+          "day": 13,
+          "event": "روز تعاون",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج فرهنگ تعاون.",
+          "equivalentGregorianDate": "2025-09-02",
+          "equivalentHijriDate": "1447-03-11"
+        },
+        {
+          "day": 13,
+          "event": "روز بزرگداشت ابوریحان بیرونی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت دانشمند ایرانی، روز علوم پایه.",
+          "equivalentGregorianDate": "2025-09-02",
+          "equivalentHijriDate": "1447-03-11"
+        },
+        {
+          "day": 14,
+          "event": "شهادت آیت‌الله قدوسی و سرتیپ دستجردی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت در سال ۱۳۶۰.",
+          "equivalentGregorianDate": "2025-09-03",
+          "equivalentHijriDate": "1447-03-12"
+        },
+        {
+          "day": 17,
+          "event": "قیام ۱۷ شهریور",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "کشتار مردم توسط رژیم پهلوی در ۱۳۵۷.",
+          "equivalentGregorianDate": "2025-09-06",
+          "equivalentHijriDate": "1447-03-15"
+        },
+        {
+          "day": 19,
+          "event": "وفات آیت‌الله طالقانی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "وفات اولین امام جمعه تهران در ۱۳۵۸.",
+          "equivalentGregorianDate": "2025-09-08",
+          "equivalentHijriDate": "1447-03-17"
+        },
+        {
+          "day": 20,
+          "event": "شهادت آیت‌الله مدنی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت دومین شهید محراب در ۱۳۶۰.",
+          "equivalentGregorianDate": "2025-09-09",
+          "equivalentHijriDate": "1447-03-18"
+        },
+        {
+          "day": 20,
+          "event": "تولد پیامبر اکرم و امام صادق",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "سالگرد تولد پیامبر و ششمین امام شیعیان.",
+          "equivalentGregorianDate": "2025-09-09",
+          "equivalentHijriDate": "1447-03-17",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 21,
+          "event": "روز سینما",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت هنر سینما.",
+          "equivalentGregorianDate": "2025-09-10",
+          "equivalentHijriDate": "1447-03-19"
+        },
+        {
+          "day": 25,
+          "event": "شهادت آیت‌الله اشرفی اصفهانی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت پنجمین شهید محراب در ۱۳۶۱.",
+          "equivalentGregorianDate": "2025-09-14",
+          "equivalentHijriDate": "1447-03-23"
+        },
+        {
+          "day": 27,
+          "event": "روز شعر و ادب فارسی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت استاد شهریار و شعر پارسی.",
+          "equivalentGregorianDate": "2025-09-16",
+          "equivalentHijriDate": "1447-03-25"
+        },
+        {
+          "day": 30,
+          "event": "روز گفت‌وگوی تمدن‌ها",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج گفت‌وگوی بین تمدن‌ها.",
+          "equivalentGregorianDate": "2025-09-19",
+          "equivalentHijriDate": "1447-03-28"
+        },
+        {
+          "day": 31,
+          "event": "آغاز جنگ تحمیلی",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "شروع جنگ تحمیلی در ۱۳۵۹، آغاز هفته دفاع مقدس.",
+          "equivalentGregorianDate": "2025-09-20",
+          "equivalentHijriDate": "1447-03-29"
+        }
+      ]
+    },
+    {
+      "monthNumber": 7,
+      "monthName": "مهر",
+      "events": [
+        {
+          "day": 2,
+          "event": "روز بزرگداشت شهدای منا",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "گرامیداشت شهدای فاجعه منا.",
+          "equivalentGregorianDate": "2025-09-22",
+          "equivalentHijriDate": "1447-04-01"
+        },
+        {
+          "day": 4,
+          "event": "روز سرباز",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "گرامیداشت سربازان.",
+          "equivalentGregorianDate": "2025-09-24",
+          "equivalentHijriDate": "1447-04-03"
+        },
+        {
+          "day": 5,
+          "event": "شکست حصر آبادان",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "شکست حصر آبادان در عملیات ثامن‌الائمه در ۱۳۶۰.",
+          "equivalentGregorianDate": "2025-09-25",
+          "equivalentHijriDate": "1447-04-04"
+        },
+        {
+          "day": 5,
+          "event": "روز گردشگری",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج صنعت گردشگری.",
+          "equivalentGregorianDate": "2025-09-25",
+          "equivalentHijriDate": "1447-04-04"
+        },
+        {
+          "day": 7,
+          "event": "شهادت سرداران فلاحی، فکوری، نامجو، کلاهدوز و جهان‌آرا",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "شهادت در سال ۱۳۶۰، روز بزرگداشت فرماندهان شهید.",
+          "equivalentGregorianDate": "2025-09-27",
+          "equivalentHijriDate": "1447-04-06"
+        },
+        {
+          "day": 7,
+          "event": "روز آتش‌نشانی و ایمنی",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "گرامیداشت آتش‌نشانان.",
+          "equivalentGregorianDate": "2025-09-27",
+          "equivalentHijriDate": "1447-04-06"
+        },
+        {
+          "day": 7,
+          "event": "روز بزرگداشت شمس",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شمس تبریزی.",
+          "equivalentGregorianDate": "2025-09-27",
+          "equivalentHijriDate": "1447-04-06"
+        },
+        {
+          "day": 8,
+          "event": "روز بزرگداشت مولوی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شاعر و عارف ایرانی.",
+          "equivalentGregorianDate": "2025-09-28",
+          "equivalentHijriDate": "1447-04-07"
+        },
+        {
+          "day": 10,
+          "event": "روز نخبگان",
+          "isOfficialHoliday": false,
+          "type": "علمی",
+          "description": "گرامیداشت نخبگان علمی.",
+          "equivalentGregorianDate": "2025-09-30",
+          "equivalentHijriDate": "1447-04-09"
+        },
+        {
+          "day": 13,
+          "event": "هجرت امام خمینی از عراق به پاریس",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "هجرت در سال ۱۳۵۷.",
+          "equivalentGregorianDate": "2025-10-03",
+          "equivalentHijriDate": "1447-04-12"
+        },
+        {
+          "day": 13,
+          "event": "روز نیروی انتظامی",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "گرامیداشت نیروی انتظامی.",
+          "equivalentGregorianDate": "2025-10-03",
+          "equivalentHijriDate": "1447-04-12"
+        },
+        {
+          "day": 14,
+          "event": "روز دامپزشکی",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "گرامیداشت دامپزشکان.",
+          "equivalentGregorianDate": "2025-10-04",
+          "equivalentHijriDate": "1447-04-13"
+        },
+        {
+          "day": 15,
+          "event": "روز روستا و عشایر",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "گرامیداشت جوامع روستایی و عشایری.",
+          "equivalentGregorianDate": "2025-10-05",
+          "equivalentHijriDate": "1447-04-14"
+        },
+        {
+          "day": 15,
+          "event": "روز جهانی حماسه فلسطین - طوفان الاقصی",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "گرامیداشت مقاومت فلسطین.",
+          "equivalentGregorianDate": "2025-10-05",
+          "equivalentHijriDate": "1447-04-14"
+        },
+        {
+          "day": 16,
+          "event": "مهرگان",
+          "isOfficialHoliday": false,
+          "type": "باستانی",
+          "description": "جشن باستانی زرتشتی برای گرامیداشت مهر و دوستی.",
+          "equivalentGregorianDate": "2025-10-06",
+          "equivalentHijriDate": "1447-04-15"
+        },
+        {
+          "day": 20,
+          "event": "روز بزرگداشت حافظ",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شاعر پارسی‌گو.",
+          "equivalentGregorianDate": "2025-10-10",
+          "equivalentHijriDate": "1447-04-19"
+        },
+        {
+          "day": 23,
+          "event": "شهادت آیت‌الله اشرفی اصفهانی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت پنجمین شهید محراب در ۱۳۶۱.",
+          "equivalentGregorianDate": "2025-10-13",
+          "equivalentHijriDate": "1447-04-22"
+        },
+        {
+          "day": 24,
+          "event": "روز ملی پارالمپیک",
+          "isOfficialHoliday": false,
+          "type": "ورزشی",
+          "description": "گرامیداشت ورزشکاران پارالمپیک.",
+          "equivalentGregorianDate": "2025-10-14",
+          "equivalentHijriDate": "1447-04-23"
+        },
+        {
+          "day": 25,
+          "event": "روز نسل‌کشی کودکان و زنان فلسطینی",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "گرامیداشت قربانیان فلسطینی.",
+          "equivalentGregorianDate": "2025-10-15",
+          "equivalentHijriDate": "1447-04-24"
+        },
+        {
+          "day": 26,
+          "event": "روز تربیت بدنی و ورزش",
+          "isOfficialHoliday": false,
+          "type": "ورزشی",
+          "description": "ترویج ورزش و سلامت.",
+          "equivalentGregorianDate": "2025-10-16",
+          "equivalentHijriDate": "1447-04-25"
+        },
+        {
+          "day": 29,
+          "event": "روز صادرات",
+          "isOfficialHoliday": false,
+          "type": "اقتصادی",
+          "description": "ترویج صادرات غیرنفتی.",
+          "equivalentGregorianDate": "2025-10-19",
+          "equivalentHijriDate": "1447-04-28"
+        }
+      ]
+    },
+    {
+      "monthNumber": 8,
+      "monthName": "آبان",
+      "events": [
+        {
+          "day": 1,
+          "event": "آبانگان",
+          "isOfficialHoliday": false,
+          "type": "باستانی",
+          "description": "جشن زرتشتی برای گرامیداشت آب و آناهیتا.",
+          "equivalentGregorianDate": "2025-10-21",
+          "equivalentHijriDate": "1447-05-01"
+        },
+        {
+          "day": 1,
+          "event": "شهادت آیت‌الله حاج سید مصطفی خمینی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت در سال ۱۳۵۶.",
+          "equivalentGregorianDate": "2025-10-21",
+          "equivalentHijriDate": "1447-05-01"
+        },
+        {
+          "day": 1,
+          "event": "روز آمار و برنامه‌ریزی",
+          "isOfficialHoliday": false,
+          "type": "علمی",
+          "description": "گرامیداشت علم آمار.",
+          "equivalentGregorianDate": "2025-10-21",
+          "equivalentHijriDate": "1447-05-01"
+        },
+        {
+          "day": 4,
+          "event": "اعتراض امام خمینی علیه کاپیتولاسیون",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "افشاگری علیه کاپیتولاسیون در ۱۳۴۳.",
+          "equivalentGregorianDate": "2025-10-24",
+          "equivalentHijriDate": "1447-05-04"
+        },
+        {
+          "day": 8,
+          "event": "روز پدافند غیرعامل",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "ترویج آمادگی پدافند غیرعامل.",
+          "equivalentGregorianDate": "2025-10-28",
+          "equivalentHijriDate": "1447-05-08"
+        },
+        {
+          "day": 8,
+          "event": "شهادت محمدحسین فهمیده",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت بسیجی ۱۳ ساله، روز نوجوان و بسیج دانش‌آموزی.",
+          "equivalentGregorianDate": "2025-10-28",
+          "equivalentHijriDate": "1447-05-08"
+        },
+        {
+          "day": 10,
+          "event": "شهادت آیت‌الله قاضی طباطبایی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت اولین شهید محراب در ۱۳۵۸.",
+          "equivalentGregorianDate": "2025-10-30",
+          "equivalentHijriDate": "1447-05-10"
+        },
+        {
+          "day": 13,
+          "event": "تبعید امام خمینی از ایران به ترکیه",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "تبعید در سال ۱۳۴۳.",
+          "equivalentGregorianDate": "2025-11-02",
+          "equivalentHijriDate": "1447-05-13"
+        },
+        {
+          "day": 13,
+          "event": "تسخیر لانه جاسوسی آمریکا",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "تسخیر توسط دانشجویان پیرو خط امام در ۱۳۵۸، روز مبارزه با استکبار.",
+          "equivalentGregorianDate": "2025-11-02",
+          "equivalentHijriDate": "1447-05-13"
+        },
+        {
+          "day": 13,
+          "event": "روز دانش‌آموز",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شهادت دانش‌آموزان در ۱۳۵۷.",
+          "equivalentGregorianDate": "2025-11-02",
+          "equivalentHijriDate": "1447-05-13"
+        },
+        {
+          "day": 14,
+          "event": "روز فرهنگ عمومی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "ترویج فرهنگ عمومی.",
+          "equivalentGregorianDate": "2025-11-03",
+          "equivalentHijriDate": "1447-05-14"
+        },
+        {
+          "day": 18,
+          "event": "روز کیفیت",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج فرهنگ کیفیت در تولید.",
+          "equivalentGregorianDate": "2025-11-07",
+          "equivalentHijriDate": "1447-05-18"
+        },
+        {
+          "day": 24,
+          "event": "روز کتاب، کتاب‌خوانی و کتابدار",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "ترویج فرهنگ کتاب‌خوانی.",
+          "equivalentGregorianDate": "2025-11-13",
+          "equivalentHijriDate": "1447-05-24"
+        },
+        {
+          "day": 24,
+          "event": "روز بزرگداشت آیت‌الله علامه طباطبایی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "گرامیداشت عالم شیعه در ۱۳۶۰.",
+          "equivalentGregorianDate": "2025-11-13",
+          "equivalentHijriDate": "1447-05-24"
+        },
+        {
+          "day": 26,
+          "event": "سالروز آزادسازی سوسنگرد",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "آزادسازی سوسنگرد در دفاع مقدس.",
+          "equivalentGregorianDate": "2025-11-15",
+          "equivalentHijriDate": "1447-05-26"
+        },
+        {
+          "day": 30,
+          "event": "روز قهرمان ملی",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "گرامیداشت قهرمانان ملی.",
+          "equivalentGregorianDate": "2025-11-19",
+          "equivalentHijriDate": "1447-05-30"
+        },
+        {
+          "day": 30,
+          "event": "روز بزرگداشت ابونصر فارابی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت فیلسوف ایرانی.",
+          "equivalentGregorianDate": "2025-11-19",
+          "equivalentHijriDate": "1447-05-30"
+        },
+        {
+          "day": 30,
+          "event": "روز حکمت و فلسفه",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت فلسفه و حکمت.",
+          "equivalentGregorianDate": "2025-11-19",
+          "equivalentHijriDate": "1447-05-30"
+        }
+      ]
+    },
+    {
+      "monthNumber": 9,
+      "monthName": "آذر",
+      "events": [
+        {
+          "day": 1,
+          "event": "آذرگان",
+          "isOfficialHoliday": false,
+          "type": "باستانی",
+          "description": "جشن زرتشتی برای گرامیداشت آتش.",
+          "equivalentGregorianDate": "2025-11-20",
+          "equivalentHijriDate": "1447-06-01"
+        },
+        {
+          "day": 3,
+          "event": "شهادت حضرت فاطمه زهرا",
+          "isOfficialHoliday": true,
+          "type": "مذهبی",
+          "description": "سالگرد شهادت دختر پیامبر.",
+          "equivalentGregorianDate": "2025-11-22",
+          "equivalentHijriDate": "1447-06-03",
+          "note": "تاریخ تقریبی"
+        },
+        {
+          "day": 5,
+          "event": "تشکیل بسیج مستضعفان",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "تشکیل به فرمان امام خمینی در ۱۳۵۸، روز بسیج مستضعفان.",
+          "equivalentGregorianDate": "2025-11-24",
+          "equivalentHijriDate": "1447-06-05"
+        },
+        {
+          "day": 5,
+          "event": "سالروز قیام مردم گرگان",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "قیام مردم گرگان در ۱۳۵۷.",
+          "equivalentGregorianDate": "2025-11-24",
+          "equivalentHijriDate": "1447-06-05"
+        },
+        {
+          "day": 7,
+          "event": "روز نیروی دریایی",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "گرامیداشت نیروی دریایی ایران.",
+          "equivalentGregorianDate": "2025-11-26",
+          "equivalentHijriDate": "1447-06-07"
+        },
+        {
+          "day": 7,
+          "event": "روز نوآوری و فناوری ایران ساخت",
+          "isOfficialHoliday": false,
+          "type": "علمی",
+          "description": "ترویج فناوری بومی.",
+          "equivalentGregorianDate": "2025-11-26",
+          "equivalentHijriDate": "1447-06-07"
+        },
+        {
+          "day": 9,
+          "event": "روز بزرگداشت شیخ مفید",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "گرامیداشت عالم شیعه.",
+          "equivalentGregorianDate": "2025-11-28",
+          "equivalentHijriDate": "1447-06-09"
+        },
+        {
+          "day": 10,
+          "event": "شهادت آیت‌الله مدرس",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "شهادت در ۱۳۱۶، روز مجلس.",
+          "equivalentGregorianDate": "2025-11-29",
+          "equivalentHijriDate": "1447-06-10"
+        },
+        {
+          "day": 11,
+          "event": "شهادت میرزا کوچک خان جنگلی",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "شهادت در ۱۳۰۰.",
+          "equivalentGregorianDate": "2025-11-30",
+          "equivalentHijriDate": "1447-06-11"
+        },
+        {
+          "day": 12,
+          "event": "تصویب قانون اساسی جمهوری اسلامی ایران",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "تصویب قانون اساسی در ۱۳۵۸، روز قانون اساسی.",
+          "equivalentGregorianDate": "2025-12-01",
+          "equivalentHijriDate": "1447-06-12"
+        },
+        {
+          "day": 13,
+          "event": "روز بیمه",
+          "isOfficialHoliday": false,
+          "type": "اقتصادی",
+          "description": "گرامیداشت صنعت بیمه.",
+          "equivalentGregorianDate": "2025-12-02",
+          "equivalentHijriDate": "1447-06-13"
+        },
+        {
+          "day": 16,
+          "event": "روز دانشجو",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شهادت سه دانشجو در ۱۳۳۲.",
+          "equivalentGregorianDate": "2025-12-05",
+          "equivalentHijriDate": "1447-06-16"
+        },
+        {
+          "day": 18,
+          "event": "معرفی عراق به عنوان آغازگر جنگ",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "اعلام سازمان ملل در ۱۳۷۰.",
+          "equivalentGregorianDate": "2025-12-07",
+          "equivalentHijriDate": "1447-06-18"
+        },
+        {
+          "day": 19,
+          "event": "تشکیل شورای عالی انقلاب فرهنگی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "تشکیل به فرمان امام خمینی در ۱۳۶۳.",
+          "equivalentGregorianDate": "2025-12-08",
+          "equivalentHijriDate": "1447-06-19"
+        },
+        {
+          "day": 20,
+          "event": "شهادت آیت‌الله دستغیب",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت سومین شهید محراب در ۱۳۶۰.",
+          "equivalentGregorianDate": "2025-12-09",
+          "equivalentHijriDate": "1447-06-20"
+        },
+        {
+          "day": 25,
+          "event": "روز پژوهش",
+          "isOfficialHoliday": false,
+          "type": "علمی",
+          "description": "ترویج فرهنگ پژوهش.",
+          "equivalentGregorianDate": "2025-12-14",
+          "equivalentHijriDate": "1447-06-25"
+        },
+        {
+          "day": 25,
+          "event": "روز تجلیل از شهید تندگویان",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "گرامیداشت شهید تندگویان.",
+          "equivalentGregorianDate": "2025-12-14",
+          "equivalentHijriDate": "1447-06-25"
+        },
+        {
+          "day": 26,
+          "event": "روز حمل و نقل و رانندگان",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "گرامیداشت رانندگان و صنعت حمل و نقل.",
+          "equivalentGregorianDate": "2025-12-15",
+          "equivalentHijriDate": "1447-06-26"
+        },
+        {
+          "day": 27,
+          "event": "شهادت آیت‌الله مفتح",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت در ۱۳۵۸، روز وحدت حوزه و دانشگاه.",
+          "equivalentGregorianDate": "2025-12-16",
+          "equivalentHijriDate": "1447-06-27"
+        },
+        {
+          "day": 27,
+          "event": "روز جهان عاری از خشونت و افراطی‌گری",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "ترویج صلح جهانی.",
+          "equivalentGregorianDate": "2025-12-16",
+          "equivalentHijriDate": "1447-06-27"
+        },
+        {
+          "day": 30,
+          "event": "شب یلدا",
+          "isOfficialHoliday": false,
+          "type": "باستانی",
+          "description": "جشن طولانی‌ترین شب سال با دورهمی خانوادگی.",
+          "equivalentGregorianDate": "2025-12-19",
+          "equivalentHijriDate": "1447-06-30"
+        },
+        {
+          "day": 30,
+          "event": "روز ترویج فرهنگ میهمانی و پیوند با خویشان",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "ترویج فرهنگ دورهمی و صله رحم.",
+          "equivalentGregorianDate": "2025-12-19",
+          "equivalentHijriDate": "1447-06-30"
+        }
+      ]
+    },
+    {
+      "monthNumber": 10,
+      "monthName": "دی",
+      "events": [
+        {
+          "day": 3,
+          "event": "روز ثبت احوال",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "گرامیداشت سازمان ثبت احوال.",
+          "equivalentGregorianDate": "2025-12-22",
+          "equivalentHijriDate": "1447-07-03"
+        },
+        {
+          "day": 4,
+          "event": "روز بزرگداشت رودکی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شاعر پارسی‌گو.",
+          "equivalentGregorianDate": "2025-12-23",
+          "equivalentHijriDate": "1447-07-04"
+        },
+        {
+          "day": 4,
+          "event": "کریسمس",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "جشن میلاد حضرت عیسی در مسیحیت.",
+          "equivalentGregorianDate": "2025-12-23",
+          "equivalentHijriDate": "1447-07-04"
+        },
+        {
+          "day": 5,
+          "event": "روز ایمنی در برابر زلزله و کاهش اثرات بلایای طبیعی",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج آمادگی در برابر زلزله.",
+          "equivalentGregorianDate": "2025-12-24",
+          "equivalentHijriDate": "1447-07-05"
+        },
+        {
+          "day": 7,
+          "event": "شهادت آیت‌الله حسین غفاری",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت توسط رژیم پهلوی در ۱۳۵۳.",
+          "equivalentGregorianDate": "2025-12-26",
+          "equivalentHijriDate": "1447-07-07"
+        },
+        {
+          "day": 7,
+          "event": "سالروز تشکیل نهضت سوادآموزی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "تشکیل به فرمان امام خمینی در ۱۳۵۸.",
+          "equivalentGregorianDate": "2025-12-26",
+          "equivalentHijriDate": "1447-07-07"
+        },
+        {
+          "day": 9,
+          "event": "روز بصیرت و میثاق امت با ولایت",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "گرامیداشت حماسه ۹ دی.",
+          "equivalentGregorianDate": "2025-12-28",
+          "equivalentHijriDate": "1447-07-09"
+        },
+        {
+          "day": 12,
+          "event": "بزرگداشت علامه مصباح یزدی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "گرامیداشت عالم شیعه، روز علوم انسانی اسلامی.",
+          "equivalentGregorianDate": "2025-12-31",
+          "equivalentHijriDate": "1447-07-12"
+        },
+        {
+          "day": 13,
+          "event": "روز جهانی مقاومت",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "شهادت سردار قاسم سلیمانی به دست استکبار جهانی.",
+          "equivalentGregorianDate": "2026-01-01",
+          "equivalentHijriDate": "1447-07-13"
+        },
+        {
+          "day": 16,
+          "event": "شهادت سیدحسین علم‌الهدی و همرزمان در هویزه",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت در هویزه، روز شهدای دانشجو.",
+          "equivalentGregorianDate": "2026-01-04",
+          "equivalentHijriDate": "1447-07-16"
+        },
+        {
+          "day": 17,
+          "event": "اجرای طرح استعماری حذف حجاب توسط رضاخان",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "اجرای طرح حذف حجاب در ۱۳۱۴.",
+          "equivalentGregorianDate": "2026-01-05",
+          "equivalentHijriDate": "1447-07-17"
+        },
+        {
+          "day": 19,
+          "event": "قیام خونین مردم قم",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "قیام مردم قم در ۱۳۵۶.",
+          "equivalentGregorianDate": "2026-01-07",
+          "equivalentHijriDate": "1447-07-19"
+        },
+        {
+          "day": 20,
+          "event": "شهادت میرزا تقی خان امیرکبیر",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "شهادت در ۱۲۳۰.",
+          "equivalentGregorianDate": "2026-01-08",
+          "equivalentHijriDate": "1447-07-20"
+        },
+        {
+          "day": 22,
+          "event": "تشکیل شورای انقلاب",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "تشکیل به فرمان امام خمینی در ۱۳۵۷.",
+          "equivalentGregorianDate": "2026-01-10",
+          "equivalentHijriDate": "1447-07-22"
+        },
+        {
+          "day": 25,
+          "event": "روز تاریخ‌نگاری انقلاب اسلامی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت تاریخ‌نگاری انقلاب.",
+          "equivalentGregorianDate": "2026-01-13",
+          "equivalentHijriDate": "1447-07-25"
+        },
+        {
+          "day": 26,
+          "event": "فرار شاه معدوم",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "فرار محمدرضا پهلوی در ۱۳۵۷.",
+          "equivalentGregorianDate": "2026-01-14",
+          "equivalentHijriDate": "1447-07-26"
+        },
+        {
+          "day": 27,
+          "event": "شهادت نواب صفوی، طهماسبی، برادران واحدی و ذوالقدر",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "شهادت فداییان اسلام در ۱۳۳۴.",
+          "equivalentGregorianDate": "2026-01-15",
+          "equivalentHijriDate": "1447-07-27"
+        }
+      ]
+    },
+    {
+      "monthNumber": 11,
+      "monthName": "بهمن",
+      "events": [
+        {
+          "day": 2,
+          "event": "بهمنگان",
+          "isOfficialHoliday": false,
+          "type": "باستانی",
+          "description": "جشن زرتشتی برای گرامیداشت بهمانا.",
+          "equivalentGregorianDate": "2026-01-20",
+          "equivalentHijriDate": "1447-08-02"
+        },
+        {
+          "day": 5,
+          "event": "انتخابات اولین دوره ریاست جمهوری",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "انتخابات در ۱۳۵۸.",
+          "equivalentGregorianDate": "2026-01-23",
+          "equivalentHijriDate": "1447-08-05"
+        },
+        {
+          "day": 6,
+          "event": "سالروز حماسه مردم آمل",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "حماسه مردم آمل.",
+          "equivalentGregorianDate": "2026-01-24",
+          "equivalentHijriDate": "1447-08-06"
+        },
+        {
+          "day": 6,
+          "event": "روز بزرگداشت صفی‌الدین اُرمَوی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت موسیقی‌دان ایرانی.",
+          "equivalentGregorianDate": "2026-01-24",
+          "equivalentHijriDate": "1447-08-06"
+        },
+        {
+          "day": 6,
+          "event": "روز آواها و نواهای ایرانی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت موسیقی ایرانی.",
+          "equivalentGregorianDate": "2026-01-24",
+          "equivalentHijriDate": "1447-08-06"
+        },
+        {
+          "day": 12,
+          "event": "بازگشت امام خمینی به ایران",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "بازگشت در ۱۳۵۷، آغاز دهه فجر.",
+          "equivalentGregorianDate": "2026-01-30",
+          "equivalentHijriDate": "1447-08-12"
+        },
+        {
+          "day": 14,
+          "event": "روز فناوری فضایی",
+          "isOfficialHoliday": false,
+          "type": "علمی",
+          "description": "گرامیداشت پیشرفت‌های فضایی ایران.",
+          "equivalentGregorianDate": "2026-02-01",
+          "equivalentHijriDate": "1447-08-14"
+        },
+        {
+          "day": 19,
+          "event": "روز نیروی هوایی",
+          "isOfficialHoliday": false,
+          "type": "نظامی",
+          "description": "گرامیداشت نیروی هوایی ایران.",
+          "equivalentGregorianDate": "2026-02-06",
+          "equivalentHijriDate": "1447-08-19"
+        },
+        {
+          "day": 21,
+          "event": "شکسته شدن حکومت نظامی",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "شکستن حکومت نظامی به فرمان امام خمینی در ۱۳۵۷.",
+          "equivalentGregorianDate": "2026-02-08",
+          "equivalentHijriDate": "1447-08-21"
+        },
+        {
+          "day": 22,
+          "event": "پیروزی انقلاب اسلامی ایران",
+          "isOfficialHoliday": true,
+          "type": "ملی",
+          "description": "پیروزی انقلاب و سقوط نظام پهلوی در ۱۳۵۷.",
+          "equivalentGregorianDate": "2026-02-09",
+          "equivalentHijriDate": "1447-08-22"
+        },
+        {
+          "day": 25,
+          "event": "صدور حکم ارتداد سلمان رشدی",
+          "isOfficialHoliday": false,
+          "type": "مذهبی",
+          "description": "حکم امام خمینی علیه نویسنده آیات شیطانی در ۱۳۶۷.",
+          "equivalentGregorianDate": "2026-02-12",
+          "equivalentHijriDate": "1447-08-25"
+        },
+        {
+          "day": 29,
+          "event": "قیام مردم تبریز",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "قیام تبریز در چهلم شهدای قم در ۱۳۵۶، روز اقتصاد مقاومتی.",
+          "equivalentGregorianDate": "2026-02-16",
+          "equivalentHijriDate": "1447-08-29"
+        }
+      ]
+    },
+    {
+      "monthNumber": 12,
+      "monthName": "اسفند",
+      "events": [
+        {
+          "day": 3,
+          "event": "کودتای انگلیسی رضاخان",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "کودتای رضاخان در ۱۲۹۹.",
+          "equivalentGregorianDate": "2026-02-20",
+          "equivalentHijriDate": "1447-09-03"
+        },
+        {
+          "day": 5,
+          "event": "روز بزرگداشت خواجه نصیرالدین طوسی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت دانشمند ایرانی، روز مهندسی.",
+          "equivalentGregorianDate": "2026-02-22",
+          "equivalentHijriDate": "1447-09-05"
+        },
+        {
+          "day": 8,
+          "event": "روز امور تربیتی و تربیت اسلامی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت امور تربیتی.",
+          "equivalentGregorianDate": "2026-02-25",
+          "equivalentHijriDate": "1447-09-08"
+        },
+        {
+          "day": 8,
+          "event": "روز حمایت از بیماران نادر",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "حمایت از بیماران نادر.",
+          "equivalentGregorianDate": "2026-02-25",
+          "equivalentHijriDate": "1447-09-08"
+        },
+        {
+          "day": 9,
+          "event": "روز ملی حمایت از حقوق مصرف‌کنندگان",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج حقوق مصرف‌کنندگان.",
+          "equivalentGregorianDate": "2026-02-26",
+          "equivalentHijriDate": "1447-09-09"
+        },
+        {
+          "day": 14,
+          "event": "روز احسان و نیکوکاری",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج فرهنگ احسان و نیکوکاری.",
+          "equivalentGregorianDate": "2026-03-03",
+          "equivalentHijriDate": "1447-09-14"
+        },
+        {
+          "day": 14,
+          "event": "روز ترویج فرهنگ قرض‌الحسنه",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج قرض‌الحسنه.",
+          "equivalentGregorianDate": "2026-03-03",
+          "equivalentHijriDate": "1447-09-14"
+        },
+        {
+          "day": 14,
+          "event": "چهارشنبه‌سوری",
+          "isOfficialHoliday": false,
+          "type": "باستانی",
+          "description": "جشن پیش از نوروز با پریدن از روی آتش.",
+          "equivalentGregorianDate": "2026-03-03",
+          "equivalentHijriDate": "1447-09-14"
+        },
+        {
+          "day": 15,
+          "event": "روز درختکاری",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج فرهنگ درختکاری.",
+          "equivalentGregorianDate": "2026-03-04",
+          "equivalentHijriDate": "1447-09-15"
+        },
+        {
+          "day": 15,
+          "event": "روز آموزش همگانی حفظ محیط زیست",
+          "isOfficialHoliday": false,
+          "type": "اجتماعی",
+          "description": "ترویج حفاظت از محیط زیست.",
+          "equivalentGregorianDate": "2026-03-04",
+          "equivalentHijriDate": "1447-09-15"
+        },
+        {
+          "day": 18,
+          "event": "روز بزرگداشت سید جمال‌الدین اسدآبادی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت مصلح اسلامی.",
+          "equivalentGregorianDate": "2026-03-07",
+          "equivalentHijriDate": "1447-09-18"
+        },
+        {
+          "day": 18,
+          "event": "سالروز تأسیس کانون‌های فرهنگی و هنری مساجد",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "تأسیس کانون‌های مساجد.",
+          "equivalentGregorianDate": "2026-03-07",
+          "equivalentHijriDate": "1447-09-18"
+        },
+        {
+          "day": 20,
+          "event": "روز راهیان نور",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت سفرهای راهیان نور.",
+          "equivalentGregorianDate": "2026-03-09",
+          "equivalentHijriDate": "1447-09-20"
+        },
+        {
+          "day": 21,
+          "event": "روز بزرگداشت نظامی گنجوی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شاعر پارسی‌گو.",
+          "equivalentGregorianDate": "2026-03-10",
+          "equivalentHijriDate": "1447-09-21"
+        },
+        {
+          "day": 22,
+          "event": "روز بزرگداشت شهدا",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "سالروز تأسیس بنیاد شهید به فرمان امام خمینی در ۱۳۵۸.",
+          "equivalentGregorianDate": "2026-03-11",
+          "equivalentHijriDate": "1447-09-22"
+        },
+        {
+          "day": 24,
+          "event": "برگزاری انتخابات اولین دوره مجلس شورای اسلامی",
+          "isOfficialHoliday": false,
+          "type": "ملی",
+          "description": "انتخابات در ۱۳۵۸.",
+          "equivalentGregorianDate": "2026-03-13",
+          "equivalentHijriDate": "1447-09-24"
+        },
+        {
+          "day": 25,
+          "event": "روز بزرگداشت پروین اعتصامی",
+          "isOfficialHoliday": false,
+          "type": "فرهنگی",
+          "description": "گرامیداشت شاعر پارسی‌گو.",
+          "equivalentGregorianDate": "2026-03-14",
+          "equivalentHijriDate": "1447-09-25"
+        },
+        {
+          "day": 25,
+          "event": "بمباران شیمیایی حلبچه",
+          "isOfficialHoliday": false,
+          "type": "بین‌المللی",
+          "description": "بمباران توسط ارتش بعث عراق در ۱۳۶۶.",
+          "equivalentGregorianDate": "2026-03-14",
+          "equivalentHijriDate": "1447-09-25"
+        },
+        {
+          "day": 29,
+          "event": "روز ملی شدن صنعت نفت ایران",
+          "isOfficialHoliday": true,
+          "type": "ملی",
+          "description": "ملی شدن صنعت نفت در ۱۳۲۹.",
+          "equivalentGregorianDate": "2026-03-18",
+          "equivalentHijriDate": "1447-09-29"
+        }
+      ]
+    }
+  ],
+  "gregorianEvents": [
+    {
+      "gregorianDate": "2025-01-07",
+      "event": "روز جهانی گالری",
+      "isOfficialHoliday": false,
+      "type": "فرهنگی",
+      "description": "گرامیداشت هنر و گالری‌های هنری.",
+      "equivalentShamsiDate": "1403/10/17",
+      "equivalentHijriDate": "1446-06-07"
+    },
+    {
+      "gregorianDate": "2025-01-14",
+      "event": "روز جهانی منطق",
+      "isOfficialHoliday": false,
+      "type": "علمی",
+      "description": "گرامیداشت علم منطق و اهمیت آن در تفکر.",
+      "equivalentShamsiDate": "1403/10/24",
+      "equivalentHijriDate": "1446-06-14"
+    },
+    {
+      "gregorianDate": "2025-01-15",
+      "event": "روز جهانی برف",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "جشن برف و فعالیت‌های زمستانی.",
+      "equivalentShamsiDate": "1403/10/25",
+      "equivalentHijriDate": "1446-06-15"
+    },
+    {
+      "gregorianDate": "2025-01-27",
+      "event": "روز جهانی هولوکاست",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت قربانیان هولوکاست و ترویج صلح.",
+      "equivalentShamsiDate": "1403/11/07",
+      "equivalentHijriDate": "1446-06-27"
+    },
+    {
+      "gregorianDate": "2025-02-04",
+      "event": "روز جهانی سرطان",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "آگاهی‌رسانی درباره پیشگیری و درمان سرطان.",
+      "equivalentShamsiDate": "1403/11/15",
+      "equivalentHijriDate": "1446-07-05"
+    },
+    {
+      "gregorianDate": "2025-02-10",
+      "event": "روز جهانی حبوبات",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج مصرف حبوبات برای تغذیه سالم.",
+      "equivalentShamsiDate": "1403/11/21",
+      "equivalentHijriDate": "1446-07-11"
+    },
+    {
+      "gregorianDate": "2025-02-11",
+      "event": "روز جهانی زنان و دختران در علم",
+      "isOfficialHoliday": false,
+      "type": "علمی",
+      "description": "ترویج مشارکت زنان و دختران در علوم.",
+      "equivalentShamsiDate": "1403/11/22",
+      "equivalentHijriDate": "1446-07-12"
+    },
+    {
+      "gregorianDate": "2025-02-13",
+      "event": "روز جهانی رادیو",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت رسانه رادیو و نقش آن در ارتباطات.",
+      "equivalentShamsiDate": "1403/11/24",
+      "equivalentHijriDate": "1446-07-14"
+    },
+    {
+      "gregorianDate": "2025-02-20",
+      "event": "روز جهانی عدالت اجتماعی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج عدالت اجتماعی و کاهش نابرابری‌ها.",
+      "equivalentShamsiDate": "1403/12/01",
+      "equivalentHijriDate": "1446-07-21"
+    },
+    {
+      "gregorianDate": "2025-02-21",
+      "event": "روز جهانی زبان مادری",
+      "isOfficialHoliday": false,
+      "type": "فرهنگی",
+      "description": "ترویج تنوع زبانی و حفاظت از زبان‌های مادری.",
+      "equivalentShamsiDate": "1403/12/02",
+      "equivalentHijriDate": "1446-07-22"
+    },
+    {
+      "gregorianDate": "2025-03-03",
+      "event": "روز جهانی حیات وحش",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حفاظت از گونه‌های حیات وحش.",
+      "equivalentShamsiDate": "1403/12/13",
+      "equivalentHijriDate": "1446-08-03"
+    },
+    {
+      "gregorianDate": "2025-03-08",
+      "event": "روز جهانی زن",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت دستاوردهای زنان و ترویج برابری جنسیتی.",
+      "equivalentShamsiDate": "1403/12/18",
+      "equivalentHijriDate": "1446-08-08"
+    },
+    {
+      "gregorianDate": "2025-03-14",
+      "event": "روز جهانی ریاضیات (روز عدد پی)",
+      "isOfficialHoliday": false,
+      "type": "علمی",
+      "description": "گرامیداشت عدد پی و اهمیت ریاضیات.",
+      "equivalentShamsiDate": "1403/12/24",
+      "equivalentHijriDate": "1446-08-14"
+    },
+    {
+      "gregorianDate": "2025-03-20",
+      "event": "روز جهانی شادی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج شادی و رفاه در سراسر جهان.",
+      "equivalentShamsiDate": "1403/12/30",
+      "equivalentHijriDate": "1446-08-20"
+    },
+    {
+      "gregorianDate": "2025-03-21",
+      "event": "روز جهانی نوروز",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "جشن باستانی نوروز، آغاز سال نو پارسی.",
+      "equivalentShamsiDate": "1404/01/01",
+      "equivalentHijriDate": "1446-08-21"
+    },
+    {
+      "gregorianDate": "2025-03-21",
+      "event": "روز جهانی جنگل",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حفاظت از جنگل‌ها.",
+      "equivalentShamsiDate": "1404/01/01",
+      "equivalentHijriDate": "1446-08-21"
+    },
+    {
+      "gregorianDate": "2025-03-22",
+      "event": "روز جهانی آب",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "آگاهی‌رسانی درباره اهمیت آب و مدیریت پایدار آن.",
+      "equivalentShamsiDate": "1404/01/02",
+      "equivalentHijriDate": "1446-08-22"
+    },
+    {
+      "gregorianDate": "2025-03-23",
+      "event": "روز جهانی هواشناسی",
+      "isOfficialHoliday": false,
+      "type": "علمی",
+      "description": "گرامیداشت علم هواشناسی و پیش‌بینی آب‌وهوا.",
+      "equivalentShamsiDate": "1404/01/03",
+      "equivalentHijriDate": "1446-08-23"
+    },
+    {
+      "gregorianDate": "2025-04-02",
+      "event": "روز جهانی اوتیسم",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "آگاهی‌رسانی درباره اوتیسم و حمایت از مبتلایان.",
+      "equivalentShamsiDate": "1404/01/13",
+      "equivalentHijriDate": "1446-09-03"
+    },
+    {
+      "gregorianDate": "2025-04-07",
+      "event": "روز جهانی بهداشت",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج سلامت جهانی و دسترسی به خدمات بهداشتی.",
+      "equivalentShamsiDate": "1404/01/18",
+      "equivalentHijriDate": "1446-09-08"
+    },
+    {
+      "gregorianDate": "2025-04-23",
+      "event": "روز جهانی کتاب و حق مؤلف",
+      "isOfficialHoliday": false,
+      "type": "فرهنگی",
+      "description": "ترویج کتاب‌خوانی و حمایت از حقوق نویسندگان.",
+      "equivalentShamsiDate": "1404/02/03",
+      "equivalentHijriDate": "1446-09-24"
+    },
+    {
+      "gregorianDate": "2025-04-25",
+      "event": "روز جهانی مالاریا",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "آگاهی‌رسانی درباره پیشگیری و درمان مالاریا.",
+      "equivalentShamsiDate": "1404/02/05",
+      "equivalentHijriDate": "1446-09-26"
+    },
+    {
+      "gregorianDate": "2025-04-26",
+      "event": "روز جهانی مالکیت فکری",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حفاظت از حقوق مالکیت فکری.",
+      "equivalentShamsiDate": "1404/02/06",
+      "equivalentHijriDate": "1446-09-27"
+    },
+    {
+      "gregorianDate": "2025-05-01",
+      "event": "روز جهانی کارگر",
+      "isOfficialHoliday": true,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت کارگران و حمایت از حقوق آنها.",
+      "equivalentShamsiDate": "1404/02/11",
+      "equivalentHijriDate": "1446-10-02"
+    },
+    {
+      "gregorianDate": "2025-05-03",
+      "event": "روز جهانی آزادی مطبوعات",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج آزادی بیان و استقلال رسانه‌ها.",
+      "equivalentShamsiDate": "1404/02/13",
+      "equivalentHijriDate": "1446-10-04"
+    },
+    {
+      "gregorianDate": "2025-05-08",
+      "event": "روز جهانی صلیب سرخ و هلال احمر",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت فعالیت‌های بشردوستانه صلیب سرخ و هلال احمر.",
+      "equivalentShamsiDate": "1404/02/18",
+      "equivalentHijriDate": "1446-10-09"
+    },
+    {
+      "gregorianDate": "2025-05-12",
+      "event": "روز جهانی پرستار",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت پرستاران و خدمات آنها.",
+      "equivalentShamsiDate": "1404/02/22",
+      "equivalentHijriDate": "1446-10-13"
+    },
+    {
+      "gregorianDate": "2025-05-15",
+      "event": "روز جهانی خانواده",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج اهمیت خانواده در جوامع.",
+      "equivalentShamsiDate": "1404/02/25",
+      "equivalentHijriDate": "1446-10-16"
+    },
+    {
+      "gregorianDate": "2025-05-17",
+      "event": "روز جهانی ارتباطات و جامعه اطلاعاتی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج فناوری اطلاعات و ارتباطات.",
+      "equivalentShamsiDate": "1404/02/27",
+      "equivalentHijriDate": "1446-10-18"
+    },
+    {
+      "gregorianDate": "2025-05-18",
+      "event": "روز جهانی موزه",
+      "isOfficialHoliday": false,
+      "type": "فرهنگی",
+      "description": "گرامیداشت موزه‌ها و نقش آنها در حفظ فرهنگ.",
+      "equivalentShamsiDate": "1404/02/28",
+      "equivalentHijriDate": "1446-10-19"
+    },
+    {
+      "gregorianDate": "2025-05-22",
+      "event": "روز جهانی تنوع زیستی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حفاظت از تنوع زیستی.",
+      "equivalentShamsiDate": "1404/03/01",
+      "equivalentHijriDate": "1446-10-23"
+    },
+    {
+      "gregorianDate": "2025-05-29",
+      "event": "روز جهانی کلاه‌آبی‌ها (نیروهای حافظ صلح)",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت نیروهای حافظ صلح سازمان ملل.",
+      "equivalentShamsiDate": "1404/03/08",
+      "equivalentHijriDate": "1446-10-30"
+    },
+    {
+      "gregorianDate": "2025-05-31",
+      "event": "روز جهانی بدون دخانیات",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "آگاهی‌رسانی درباره مضرات دخانیات.",
+      "equivalentShamsiDate": "1404/03/10",
+      "equivalentHijriDate": "1446-11-01"
+    },
+    {
+      "gregorianDate": "2025-06-01",
+      "event": "روز جهانی والدین",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت نقش والدین در تربیت فرزندان.",
+      "equivalentShamsiDate": "1404/03/11",
+      "equivalentHijriDate": "1446-11-02"
+    },
+    {
+      "gregorianDate": "2025-06-04",
+      "event": "روز جهانی کودکان قربانی تجاوز",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "حمایت از کودکان قربانی خشونت.",
+      "equivalentShamsiDate": "1404/03/14",
+      "equivalentHijriDate": "1446-11-05"
+    },
+    {
+      "gregorianDate": "2025-06-05",
+      "event": "روز جهانی محیط زیست",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حفاظت از محیط زیست.",
+      "equivalentShamsiDate": "1404/03/15",
+      "equivalentHijriDate": "1446-11-06"
+    },
+    {
+      "gregorianDate": "2025-06-08",
+      "event": "روز جهانی اقیانوس‌ها",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حفاظت از اقیانوس‌ها و منابع دریایی.",
+      "equivalentShamsiDate": "1404/03/18",
+      "equivalentHijriDate": "1446-11-09"
+    },
+    {
+      "gregorianDate": "2025-06-12",
+      "event": "روز جهانی مبارزه با کار کودکان",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "مبارزه با استثمار کودکان در کار.",
+      "equivalentShamsiDate": "1404/03/22",
+      "equivalentHijriDate": "1446-11-13"
+    },
+    {
+      "gregorianDate": "2025-06-15",
+      "event": "روز جهانی اهدای خون",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج اهدای خون داوطلبانه.",
+      "equivalentShamsiDate": "1404/03/25",
+      "equivalentHijriDate": "1446-11-16"
+    },
+    {
+      "gregorianDate": "2025-06-17",
+      "event": "روز جهانی مبارزه با بیابان‌زایی و خشکسالی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "آگاهی‌رسانی درباره بیابان‌زایی و مدیریت منابع آب.",
+      "equivalentShamsiDate": "1404/03/27",
+      "equivalentHijriDate": "1446-11-18"
+    },
+    {
+      "gregorianDate": "2025-06-20",
+      "event": "روز جهانی پناهندگان",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "حمایت از حقوق پناهندگان در سراسر جهان.",
+      "equivalentShamsiDate": "1404/03/30",
+      "equivalentHijriDate": "1446-11-21"
+    },
+    {
+      "gregorianDate": "2025-06-21",
+      "event": "روز جهانی یوگا",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج یوگا برای سلامت جسم و ذهن.",
+      "equivalentShamsiDate": "1404/03/31",
+      "equivalentHijriDate": "1446-11-22"
+    },
+    {
+      "gregorianDate": "2025-06-26",
+      "event": "روز جهانی مبارزه با مواد مخدر",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "آگاهی‌رسانی درباره مضرات مواد مخدر.",
+      "equivalentShamsiDate": "1404/04/05",
+      "equivalentHijriDate": "1446-11-27"
+    },
+    {
+      "gregorianDate": "2025-07-11",
+      "event": "روز جهانی جمعیت",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "آگاهی‌رسانی درباره مسائل جمعیتی.",
+      "equivalentShamsiDate": "1404/04/20",
+      "equivalentHijriDate": "1446-12-12"
+    },
+    {
+      "gregorianDate": "2025-07-18",
+      "event": "روز جهانی نلسون ماندلا",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت نلسون ماندلا و تلاش‌های او برای صلح.",
+      "equivalentShamsiDate": "1404/04/27",
+      "equivalentHijriDate": "1446-12-19"
+    },
+    {
+      "gregorianDate": "2025-07-30",
+      "event": "روز جهانی دوستی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج دوستی و صلح بین ملت‌ها.",
+      "equivalentShamsiDate": "1404/05/08",
+      "equivalentHijriDate": "1447-01-02"
+    },
+    {
+      "gregorianDate": "2025-08-09",
+      "event": "روز جهانی مردم بومی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "حمایت از حقوق مردم بومی و فرهنگ آنها.",
+      "equivalentShamsiDate": "1404/05/18",
+      "equivalentHijriDate": "1447-01-12"
+    },
+    {
+      "gregorianDate": "2025-08-12",
+      "event": "روز جهانی جوانان",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج مشارکت جوانان در توسعه جهانی.",
+      "equivalentShamsiDate": "1404/05/21",
+      "equivalentHijriDate": "1447-01-15"
+    },
+    {
+      "gregorianDate": "2025-08-19",
+      "event": "روز جهانی عکاسی",
+      "isOfficialHoliday": false,
+      "type": "فرهنگی",
+      "description": "گرامیداشت هنر عکاسی.",
+      "equivalentShamsiDate": "1404/05/28",
+      "equivalentHijriDate": "1447-01-22"
+    },
+    {
+      "gregorianDate": "2025-08-19",
+      "event": "روز جهانی کمک‌های بشردوستانه",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت تلاش‌های بشردوستانه جهانی.",
+      "equivalentShamsiDate": "1404/05/28",
+      "equivalentHijriDate": "1447-01-22"
+    },
+    {
+      "gregorianDate": "2025-08-23",
+      "event": "روز جهانی یادبود تجارت برده و لغو آن",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "یادبود قربانیان تجارت برده.",
+      "equivalentShamsiDate": "1404/06/01",
+      "equivalentHijriDate": "1447-01-26"
+    },
+    {
+      "gregorianDate": "2025-09-01",
+      "event": "روز جهانی برنامه‌نویس",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "روز ۲۵۶ام سال میلادی، گرامیداشت برنامه‌نویسان.",
+      "equivalentShamsiDate": "1404/06/12",
+      "equivalentHijriDate": "1447-03-10"
+    },
+    {
+      "gregorianDate": "2025-09-08",
+      "event": "روز جهانی سوادآموزی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج سوادآموزی در سراسر جهان.",
+      "equivalentShamsiDate": "1404/06/18",
+      "equivalentHijriDate": "1447-03-17"
+    },
+    {
+      "gregorianDate": "2025-09-10",
+      "event": "روز جهانی پیشگیری از خودکشی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "آگاهی‌رسانی درباره پیشگیری از خودکشی.",
+      "equivalentShamsiDate": "1404/06/20",
+      "equivalentHijriDate": "1447-03-19"
+    },
+    {
+      "gregorianDate": "2025-09-21",
+      "event": "روز جهانی صلح",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج صلح و پایان دادن به درگیری‌ها.",
+      "equivalentShamsiDate": "1404/06/30",
+      "equivalentHijriDate": "1447-03-30"
+    },
+    {
+      "gregorianDate": "2025-09-30",
+      "event": "روز جهانی ناشنوایان",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت حقوق ناشنوایان.",
+      "equivalentShamsiDate": "1404/07/10",
+      "equivalentHijriDate": "1447-04-09"
+    },
+    {
+      "gregorianDate": "2025-09-30",
+      "event": "روز جهانی دریانوردی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت صنعت دریانوردی.",
+      "equivalentShamsiDate": "1404/07/10",
+      "equivalentHijriDate": "1447-04-09"
+    },
+    {
+      "gregorianDate": "2025-10-08",
+      "event": "روز جهانی کودک",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت حقوق کودکان.",
+      "equivalentShamsiDate": "1404/07/17",
+      "equivalentHijriDate": "1447-04-17"
+    },
+    {
+      "gregorianDate": "2025-10-09",
+      "event": "روز جهانی پست",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت خدمات پستی.",
+      "equivalentShamsiDate": "1404/07/18",
+      "equivalentHijriDate": "1447-04-18"
+    },
+    {
+      "gregorianDate": "2025-10-16",
+      "event": "روز جهانی غذا",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج امنیت غذایی جهانی.",
+      "equivalentShamsiDate": "1404/07/25",
+      "equivalentHijriDate": "1447-04-25"
+    },
+    {
+      "gregorianDate": "2025-10-23",
+      "event": "روز جهانی مول (شیمی)",
+      "isOfficialHoliday": false,
+      "type": "علمی",
+      "description": "گرامیداشت واحد مول در شیمی.",
+      "equivalentShamsiDate": "1404/08/02",
+      "equivalentHijriDate": "1447-05-03"
+    },
+    {
+      "gregorianDate": "2025-11-11",
+      "event": "روز مجردها (Singles' Day)",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "جشن برای افراد مجرد.",
+      "equivalentShamsiDate": "1404/08/21",
+      "equivalentHijriDate": "1447-05-22"
+    },
+    {
+      "gregorianDate": "2025-11-23",
+      "event": "روز فیبوناچی",
+      "isOfficialHoliday": false,
+      "type": "علمی",
+      "description": "گرامیداشت دنباله فیبوناچی در ریاضیات.",
+      "equivalentShamsiDate": "1404/09/03",
+      "equivalentHijriDate": "1447-06-04"
+    },
+    {
+      "gregorianDate": "2025-11-24",
+      "event": "روز تکامل",
+      "isOfficialHoliday": false,
+      "type": "علمی",
+      "description": "گرامیداشت نظریه تکامل.",
+      "equivalentShamsiDate": "1404/09/04",
+      "equivalentHijriDate": "1447-06-05"
+    },
+    {
+      "gregorianDate": "2025-11-30",
+      "event": "روز جهانی امنیت کامپیوتری",
+      "isOfficialHoliday": false,
+      "type": "علمی",
+      "description": "ترویج امنیت سایبری.",
+      "equivalentShamsiDate": "1404/09/10",
+      "equivalentHijriDate": "1447-06-11"
+    },
+    {
+      "gregorianDate": "2025-11-30",
+      "event": "روز جهانی گرامیداشت قربانیان سلاح شیمیایی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت قربانیان سلاح‌های شیمیایی.",
+      "equivalentShamsiDate": "1404/09/10",
+      "equivalentHijriDate": "1447-06-11"
+    },
+    {
+      "gregorianDate": "2025-12-01",
+      "event": "روز جهانی ایدز",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "آگاهی‌رسانی درباره بیماری ایدز.",
+      "equivalentShamsiDate": "1404/09/11",
+      "equivalentHijriDate": "1447-06-12"
+    },
+    {
+      "gregorianDate": "2025-12-04",
+      "event": "روز جهانی یوزپلنگ",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حفاظت از یوزپلنگ.",
+      "equivalentShamsiDate": "1404/09/14",
+      "equivalentHijriDate": "1447-06-15"
+    },
+    {
+      "gregorianDate": "2025-12-04",
+      "event": "روز جهانی حفاظت از حیات وحش",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حفاظت از حیات وحش.",
+      "equivalentShamsiDate": "1404/09/14",
+      "equivalentHijriDate": "1447-06-15"
+    },
+    {
+      "gregorianDate": "2025-12-05",
+      "event": "روز جهانی خاک",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حفاظت از خاک.",
+      "equivalentShamsiDate": "1404/09/15",
+      "equivalentHijriDate": "1447-06-16"
+    },
+    {
+      "gregorianDate": "2025-12-07",
+      "event": "روز جهانی هواپیمایی",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت صنعت هواپیمایی.",
+      "equivalentShamsiDate": "1404/09/17",
+      "equivalentHijriDate": "1447-06-18"
+    },
+    {
+      "gregorianDate": "2025-12-10",
+      "event": "روز جهانی حقوق بشر",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حقوق بشر جهانی.",
+      "equivalentShamsiDate": "1404/09/20",
+      "equivalentHijriDate": "1447-06-21"
+    },
+    {
+      "gregorianDate": "2025-12-10",
+      "event": "روز جایزه نوبل",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت اهدای جوایز نوبل.",
+      "equivalentShamsiDate": "1404/09/20",
+      "equivalentHijriDate": "1447-06-21"
+    },
+    {
+      "gregorianDate": "2025-12-11",
+      "event": "روز یونیسف",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت فعالیت‌های یونیسف برای کودکان.",
+      "equivalentShamsiDate": "1404/09/21",
+      "equivalentHijriDate": "1447-06-22"
+    },
+    {
+      "gregorianDate": "2025-12-11",
+      "event": "روز جهانی کوهستان",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج حفاظت از کوهستان‌ها.",
+      "equivalentShamsiDate": "1404/09/21",
+      "equivalentHijriDate": "1447-06-22"
+    },
+    {
+      "gregorianDate": "2025-12-13",
+      "event": "روز جهانی ویولن",
+      "isOfficialHoliday": false,
+      "type": "فرهنگی",
+      "description": "گرامیداشت ساز ویولن.",
+      "equivalentShamsiDate": "1404/09/23",
+      "equivalentHijriDate": "1447-06-24"
+    },
+    {
+      "gregorianDate": "2025-12-14",
+      "event": "روز جهانی میمون",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "گرامیداشت میمون‌ها و حفاظت از آنها.",
+      "equivalentShamsiDate": "1404/09/24",
+      "equivalentHijriDate": "1447-06-25"
+    },
+    {
+      "gregorianDate": "2025-12-15",
+      "event": "روز جهانی چای",
+      "isOfficialHoliday": false,
+      "type": "بین‌المللی",
+      "description": "ترویج فرهنگ چای و تولید پایدار آن.",
+      "equivalentShamsiDate": "1404/09/25",
+      "equivalentHijriDate": "1447-06-26"
+    }
+  ],
+  "notes": {
+    "calendarInfo": "تقویم شمسی بر اساس سال خورشیدی است. ماه‌های ۱ تا ۶ (۳۱ روز)، ۷ تا ۱۱ (۳۰ روز)، اسفند ۳۰ روز (سال کبیسه). تقویم قمری ۳۵۴ روز دارد. تقویم میلادی ۳۶۵ روز دارد.",
+    "religiousHolidaysNote": "تاریخ‌های قمری تقریبی‌اند و به رویت هلال ماه بستگی دارند. ممکن است یک روز جابه‌جا شوند.",
+    "conversionNote": "تبدیل‌ها با ابزارهای آنلاین و فرمول‌های استاندارد انجام شده‌اند."
+  }
+}
