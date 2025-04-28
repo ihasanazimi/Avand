@@ -24,7 +24,7 @@ import ir.hasanazimi.avand.presentation.theme.TransparentlyBlack
 
 
 @Composable
-fun OccasionItemView(occasionsOfTheDay: EventOfDayEntity) {
+fun EventItemView(eventOfDay: EventOfDayEntity) {
     Row(
         modifier = Modifier
             .background(Color.Transparent)
@@ -33,7 +33,7 @@ fun OccasionItemView(occasionsOfTheDay: EventOfDayEntity) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = occasionsOfTheDay.eventTitle,
+            text = eventOfDay.eventTitle,
             modifier = Modifier
                 .weight(0.8f)
                 .fillMaxWidth(),
@@ -48,7 +48,7 @@ fun OccasionItemView(occasionsOfTheDay: EventOfDayEntity) {
                 .size(16.dp)
                 .weight(0.2f)
                 .fillMaxWidth(),
-            tint = if (occasionsOfTheDay.isHoliday) RedColor else TransparentlyBlack
+            tint = if (eventOfDay.isHoliday) RedColor else TransparentlyBlack
         )
     }
 }
@@ -58,6 +58,6 @@ fun OccasionItemView(occasionsOfTheDay: EventOfDayEntity) {
 @Composable
 fun OccasionItemViewPreview(){
     AvandTheme {
-        OccasionItemView(occasionsOfTheDay = EventOfDayEntity("روز بزرگداشت فردوسی", isHoliday = true))
+        EventItemView(eventOfDay = EventOfDayEntity("روز بزرگداشت فردوسی", isHoliday = true))
     }
 }

@@ -55,7 +55,7 @@ import ir.hasanazimi.avand.data.fakeEventOfDays
 import ir.hasanazimi.avand.data.entities.sealed_enums.WeatherCondition
 import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
-import ir.hasanazimi.avand.presentation.itemViews.OccasionItemView
+import ir.hasanazimi.avand.presentation.itemViews.EventItemView
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import ir.hasanazimi.avand.presentation.theme.LightPrimary
@@ -66,7 +66,7 @@ import kotlin.math.roundToInt
 fun Widgets(
     activity: MainActivity,
     weatherData: ResponseState<WeatherEntity>? = null,
-    calendarData : CalendarEntity,
+    calendarData: CalendarEntity,
     onGetData: () -> Unit = {}
 ) {
 
@@ -132,9 +132,9 @@ fun Widgets(
 
                         Box(
                             modifier = Modifier
-                                .weight(0.4f)
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)),
+                                .weight(0.4f)
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -146,24 +146,32 @@ fun Widgets(
                             )
                         }
 
-                        Column(modifier = Modifier.weight(0.6f)) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(0.6f), verticalArrangement = Arrangement.Center
+                        ) {
+
                             Text(
                                 text = calendarData.persianDate,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 8.dp),
+                                modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,
                                 style = CustomTypography.bodyLarge
                             )
 
+                            Spacer(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(8.dp)
+                            )
 
                             Text(
                                 text = calendarData.globalDate,
                                 modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,
-                                style = CustomTypography.labelLarge
+                                style = CustomTypography.bodyLarge
                             )
                         }
 
@@ -171,7 +179,7 @@ fun Widgets(
                 }
 
 
-                /** Occasions */
+                /** Events */
                 Card(
                     modifier = Modifier
                         .padding(start = 4.dp, top = 4.dp)
@@ -190,7 +198,7 @@ fun Widgets(
                             modifier = Modifier
                                 .weight(0.4f)
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)),
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
                             contentAlignment = Alignment.CenterEnd
                         ) {
                             Text(
@@ -207,16 +215,16 @@ fun Widgets(
                             contentAlignment = Alignment.Center
                         ) {
 
-                            if (calendarData.events.isNotEmpty()){
+                            if (calendarData.events.isNotEmpty()) {
                                 LazyColumn(
                                     modifier = Modifier,
                                     verticalArrangement = Arrangement.Center
                                 ) {
-                                    items(calendarData.events) { item ->
-                                        OccasionItemView(occasionsOfTheDay = item)
+                                    items(calendarData.events) { event ->
+                                        EventItemView(eventOfDay = event)
                                     }
                                 }
-                            }else{
+                            } else {
                                 Box(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier

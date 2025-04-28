@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -33,7 +34,11 @@ import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 @Composable
-fun NewsItemView(news: Item, onNewsClick: (newItemEntity: Item) -> Unit, onShareNews: (newItemEntity: Item) -> Unit) {
+fun NewsItemView(
+    news: Item,
+    onNewsClick: (newItemEntity: Item) -> Unit,
+    onShareNews: (newItemEntity: Item) -> Unit
+) {
     AvandTheme {
         Surface {
             Column(
@@ -42,7 +47,7 @@ fun NewsItemView(news: Item, onNewsClick: (newItemEntity: Item) -> Unit, onShare
                     .fillMaxWidth()
                     .border(
                         2.dp,
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                        MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f),
                         RoundedCornerShape(16.dp)
                     )
                     .clickable {
@@ -52,7 +57,7 @@ fun NewsItemView(news: Item, onNewsClick: (newItemEntity: Item) -> Unit, onShare
                 Card(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp),
+                    shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp)
                 ) {
 
                     AsyncImage(
@@ -96,7 +101,9 @@ fun NewsItemView(news: Item, onNewsClick: (newItemEntity: Item) -> Unit, onShare
                     ) {
                         Text(
                             text = news.description ?: "-_-",
-                            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp),
                             style = CustomTypography.labelLarge.copy(
                                 lineHeight = TextUnit(
                                     24f,
