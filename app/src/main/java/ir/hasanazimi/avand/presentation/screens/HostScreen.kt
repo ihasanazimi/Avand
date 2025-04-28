@@ -16,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,11 +58,14 @@ import javax.inject.Inject
 fun HostScreen(activity: MainActivity, navController: NavHostController) {
 
     val viewModel = hiltViewModel<HostScreenVM>()
-    var userNameState = viewModel.userName.collectAsStateWithLifecycle("")
+    var userNameState = viewModel.userName.collectAsStateWithLifecycle("کاربر بدون نام")
     val hostNavController = rememberNavController()
 
-    AvandTheme {
+    LaunchedEffect(Unit) {
+        viewModel.getUserName()
+    }
 
+    AvandTheme {
         Scaffold(
             modifier = Modifier,
             bottomBar = { BottomNavigationBar(navController = hostNavController) },
@@ -74,7 +78,6 @@ fun HostScreen(activity: MainActivity, navController: NavHostController) {
                 activity = activity
             )
         }
-
     }
 }
 
@@ -96,27 +99,26 @@ private fun Content(
         }
     }
 
-    Surface {
-        Box(modifier = Modifier.fillMaxSize()) {
-            NavHost(
-                navController = hostNavController,
-                startDestination = Screens.Home.routeId,
-                modifier = Modifier.padding(innerPadding)
-            ) {
-                composable(route = Screens.Home.routeId) {
-                    HomeScreen(activity = activity, navController = mainNavController)
-                }
+    Box(modifier = Modifier.fillMaxSize()) {
+        NavHost(
+            navController = hostNavController,
+            startDestination = Screens.Home.routeId,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(route = Screens.Home.routeId) {
+                HomeScreen(activity = activity, navController = mainNavController)
+            }
 
-                composable(route = Screens.CurrencyPrices.routeId) {
-                    CurrencyPricesScreen(activity = activity, navController = mainNavController)
-                }
+            composable(route = Screens.CurrencyPrices.routeId) {
+                CurrencyPricesScreen(activity = activity, navController = mainNavController)
+            }
 
-                composable(route = Screens.Setting.routeId) {
-                    SettingScreen(activity = activity, navController = mainNavController)
-                }
+            composable(route = Screens.Setting.routeId) {
+                SettingScreen(activity = activity, navController = mainNavController)
             }
         }
     }
+
 }
 
 
@@ -188,17 +190,13 @@ class HostScreenVM @Inject constructor(
 
     val TAG = "HostScreenVM"
 
-    init {
-        getUserName()
-    }
-
-    val userName = MutableSharedFlow<String>()
+    val userName = MutableStateFlow<String>("")
 
     fun getUserName() {
         viewModelScope.launch {
             dataStoreManager.userNameFlow.collect {
                 Log.i(TAG, "getUserName: $it")
-                userName.emit(it ?: "")
+                userName.emit(it?:"")
             }
         }
     }
