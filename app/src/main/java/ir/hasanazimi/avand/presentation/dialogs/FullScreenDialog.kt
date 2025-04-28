@@ -35,7 +35,7 @@ fun Wide70PercentHeightDialog(
                 .height(screenHeight * 0.9f) // ۹۰ درصد ارتفاع صفحه
                 .border(
                     width = 2.dp,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    color = MaterialTheme.colorScheme.secondary,
                     shape = RoundedCornerShape(20.dp)
                 ),
             shape = RoundedCornerShape(20.dp),

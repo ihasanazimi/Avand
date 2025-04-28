@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -53,27 +54,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Composable
-fun HostScreen(activity : MainActivity , navController: NavHostController) {
+fun HostScreen(activity: MainActivity, navController: NavHostController) {
 
     val viewModel = hiltViewModel<HostScreenVM>()
-    var userNameState by remember { mutableStateOf("") }
+    var userNameState = viewModel.userName.collectAsStateWithLifecycle("")
     val hostNavController = rememberNavController()
-    val coroutineScope = rememberCoroutineScope()
-
-    SideEffect {
-        coroutineScope.launch {
-            viewModel.userName.collect {
-                userNameState = it
-            }
-        }
-    }
 
     AvandTheme {
 
         Scaffold(
             modifier = Modifier,
             bottomBar = { BottomNavigationBar(navController = hostNavController) },
-            topBar = { TopBar(userNameState) }
+            topBar = { TopBar(userNameState.value) }
         ) { innerPadding ->
             Content(
                 innerPadding = innerPadding,
@@ -95,8 +87,7 @@ private fun Content(
 ) {
     val TAG = "ContentTag"
 
-    BackHandler(
-    /*enabled = hostNavController.currentBackStackEntry?.destination?.route != Screens.Home.routeId*/)
+    BackHandler(/*enabled = hostNavController.currentBackStackEntry?.destination?.route != Screens.Home.routeId*/)
     {
         if (hostNavController.currentBackStackEntry?.destination?.route == Screens.Home.routeId) {
             activity.finish()
@@ -127,8 +118,6 @@ private fun Content(
         }
     }
 }
-
-
 
 
 @Composable
@@ -195,7 +184,7 @@ fun MyLottieAnimation(modifier: Modifier) {
 @HiltViewModel
 class HostScreenVM @Inject constructor(
     private val dataStoreManager: DataStoreManager
-) : ViewModel(){
+) : ViewModel() {
 
     val TAG = "HostScreenVM"
 
@@ -205,11 +194,11 @@ class HostScreenVM @Inject constructor(
 
     val userName = MutableSharedFlow<String>()
 
-    fun getUserName(){
+    fun getUserName() {
         viewModelScope.launch {
             dataStoreManager.userNameFlow.collect {
                 Log.i(TAG, "getUserName: $it")
-                userName.emit(it?:"")
+                userName.emit(it ?: "")
             }
         }
     }
@@ -222,6 +211,6 @@ class HostScreenVM @Inject constructor(
 @Composable
 fun HostScreenPreview() {
     AvandTheme {
-        HostScreen(activity = MainActivity() , navController = rememberNavController())
+        HostScreen(activity = MainActivity(), navController = rememberNavController())
     }
 }

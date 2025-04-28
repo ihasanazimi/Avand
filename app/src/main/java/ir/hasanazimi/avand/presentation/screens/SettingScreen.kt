@@ -21,10 +21,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -41,6 +40,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -76,30 +76,16 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
     var citiesModalOpenState by remember { mutableStateOf(false) }
     var userProfileModalOpenState by remember { mutableStateOf(false) }
 
-    var userNameState by remember { mutableStateOf("") }
-    var defaultCityState by remember { mutableStateOf<CityEntity?>(viewModel.defaultCity.value) }
+    var userNameState = viewModel.userName.collectAsStateWithLifecycle()
+    var defaultCityState = viewModel.defaultCity.collectAsStateWithLifecycle()
 
 
-    Surface {
+    LaunchedEffect(Unit) {
+        viewModel.getDefaultCity()
+        viewModel.getUserName()
+    }
 
-        SideEffect {
-
-            viewModel.getDefaultCity()
-            viewModel.getUserName()
-
-            coroutineScope.launch {
-                viewModel.userName.collect { userName ->
-                    userNameState = userName
-                }
-            }
-
-            coroutineScope.launch {
-                viewModel.defaultCity.collect {
-                    defaultCityState = it
-                }
-            }
-        }
-
+    AvandTheme {
 
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -224,7 +210,7 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = defaultCityState?.cityName ?: "",
+                                        text = defaultCityState.value?.cityName ?: "",
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(vertical = 8.dp),
@@ -286,22 +272,20 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
 
     CitiesModalBottomSheet(
         isOpen = citiesModalOpenState,
-        selectedCity = defaultCityState,
+        selectedCity = defaultCityState.value,
         citiesSnapshotList = viewModel.prepareCities(),
         onDismiss = { city ->
-            defaultCityState = city
+            viewModel.saveAndNotifyDefaultCity(city)
             citiesModalOpenState = false
         }
     ) { city ->
-        defaultCityState = city
-        defaultCityState.withNotNull { viewModel.saveDefaultCity(it) }
         citiesModalOpenState = false
+        city.withNotNull { it -> viewModel.saveAndNotifyDefaultCity(it) }
     }
 
 
-    UserProfileBottomSheet(lastUserName = userNameState, isOpen = userProfileModalOpenState) {
-        userNameState = it
-        viewModel.saveUserName(userNameState).also {
+    UserProfileBottomSheet(lastUserName = userNameState.value, isOpen = userProfileModalOpenState) {
+        viewModel.saveAndNotifyUserName(userNameState.value).also {
             userProfileModalOpenState = false
         }
     }
@@ -321,9 +305,10 @@ class SettingScreenVM @Inject constructor(
     val defaultCity = MutableStateFlow<CityEntity?>(null)
     var snapShotCities = mutableStateListOf<CityEntity>()
 
-    fun saveUserName(newName: String) {
+    fun saveAndNotifyUserName(newName: String) {
         viewModelScope.launch {
             dataStoreManager.saveUserName(newName)
+            userName.emit(newName)
         }
     }
 
@@ -335,7 +320,6 @@ class SettingScreenVM @Inject constructor(
             }
         }
     }
-
 
     private fun readCitiesFromJson() : List<CityEntity>{
         var localCities = emptyList<CityEntity>()
@@ -368,7 +352,7 @@ class SettingScreenVM @Inject constructor(
 
 
 
-    fun saveManualWeatherData(weatherEntity: WeatherEntity) {
+    fun saveAndNotifyManualWeatherData(weatherEntity: WeatherEntity) {
         viewModelScope.launch {
             val json = Gson().toJson(weatherEntity)
             dataStoreManager.saveManualWeatherData(json)
@@ -390,10 +374,12 @@ class SettingScreenVM @Inject constructor(
 
 
 
-    fun saveDefaultCity(cityEntity: CityEntity){
+    fun saveAndNotifyDefaultCity(cityEntity: CityEntity?){
         viewModelScope.launch {
+            if (cityEntity == null) return@launch
             val json = Gson().toJson(cityEntity)
             dataStoreManager.saveDefaultCity(json)
+            defaultCity.emit(cityEntity)
         }
     }
     fun getDefaultCity(){
@@ -413,6 +399,7 @@ class SettingScreenVM @Inject constructor(
     fun removeDefaultCity(){
         viewModelScope.launch {
             dataStoreManager.removeDefaultCity()
+            defaultCity.emit(null)
         }
     }
 
