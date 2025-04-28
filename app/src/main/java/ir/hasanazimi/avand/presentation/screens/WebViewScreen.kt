@@ -130,7 +130,7 @@ fun WebViewScreen(
                     Column(
                         Modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.9f)),
+                            .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f)),
                         verticalArrangement = Arrangement.Center,
                     ) {
 
