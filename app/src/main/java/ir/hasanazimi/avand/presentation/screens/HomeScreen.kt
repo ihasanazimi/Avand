@@ -111,7 +111,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                 dayOfWeek = PersianCalendar1().strWeekDay,
                 globalDate = "${d.toInt()}  ${DateUtils.getGregorianMonthNameInPersian(m.toInt())}  ${y.toInt()}",
                 persianDate = persianDate,
-                events = viewModel.calendarResponse.value ?: fakeEventOfDays
+                events = viewModel.calendarResponse.value ?: emptyList()
             )
         )
     }
@@ -209,6 +209,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                 }
                 item {
                     NewsScreen(
+                        activity = activity,
                         navController = navController,
                         newsData = newsResponseState
                     ) {
@@ -341,8 +342,8 @@ class HomeScreenVM @Inject constructor(
                     gregorianDate = DateUtils2.getTodayDate().gregorianDate,
                     hijriDate = "1406-10-01"
                 )
-
                 calendarResponse.emit(obj?.getEvents())
+                Log.i(TAG, "getEvents: $obj")
             }
         }
     }

@@ -33,14 +33,19 @@ import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 @Composable
-fun NewsItemView(news: Item, onNewsClick : (newItemEntity : Item) -> Unit) {
+fun NewsItemView(news: Item, onNewsClick: (newItemEntity: Item) -> Unit, onShareNews: (newItemEntity: Item) -> Unit) {
     AvandTheme {
-        Surface{
+        Surface {
             Column(
                 modifier = Modifier
                     .padding(bottom = 8.dp, top = 8.dp)
                     .fillMaxWidth()
-                    .border(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f), RoundedCornerShape(16.dp)).clickable{
+                    .border(
+                        2.dp,
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                        RoundedCornerShape(16.dp)
+                    )
+                    .clickable {
                         onNewsClick.invoke(news)
                     }
             ) {
@@ -72,11 +77,16 @@ fun NewsItemView(news: Item, onNewsClick : (newItemEntity : Item) -> Unit) {
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
                         Text(
-                            text = news.title ?:"-_-",
+                            text = news.title ?: "-_-",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 8.dp),
-                            style = CustomTypography.titleLarge
+                            style = CustomTypography.titleLarge.copy(
+                                lineHeight = TextUnit(
+                                    32f,
+                                    TextUnitType.Sp
+                                )
+                            )
                         )
                     }
                     Box(
@@ -85,11 +95,11 @@ fun NewsItemView(news: Item, onNewsClick : (newItemEntity : Item) -> Unit) {
                             .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
                         Text(
-                            text = news.description?:"-_-",
-                            modifier = Modifier.fillMaxWidth(),
-                            style = CustomTypography.labelSmall.copy(
+                            text = news.description ?: "-_-",
+                            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                            style = CustomTypography.labelLarge.copy(
                                 lineHeight = TextUnit(
-                                    20f,
+                                    24f,
                                     TextUnitType.Sp
                                 )
                             )
@@ -115,35 +125,10 @@ fun NewsItemView(news: Item, onNewsClick : (newItemEntity : Item) -> Unit) {
                                 .size(28.dp)
                                 .padding(5.dp)
                                 .clickable {
-                                    // todo
+                                    onShareNews.invoke(news)
                                 },
                             tint = MaterialTheme.colorScheme.primary
                         )
-                        /*Row(
-                            modifier = Modifier
-                                .padding(end = 8.dp, start = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-
-                            Icon(
-                                imageVector = Icons.Default.Face,
-                                contentDescription = "share prices",
-                                modifier = Modifier
-                                    .clip(CircleShape)
-                                    .size(28.dp)
-                                    .padding(2.dp)
-                                    .clickable {
-                                        // todo
-                                    },
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-
-                            Text(
-                                text = newsItem.seenCount.toString().getAmountFormatBySeparator(),
-                                style = CustomTypography.labelSmall,
-                                modifier = Modifier.padding(horizontal = 8.dp)
-                            )
-                        }*/
                     }
 
 
@@ -155,7 +140,7 @@ fun NewsItemView(news: Item, onNewsClick : (newItemEntity : Item) -> Unit) {
                     ) {
 
                         Text(
-                            text = news.pubDate?:"-_-",
+                            text = news.pubDate ?: "-_-",
                             style = CustomTypography.labelSmall,
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )

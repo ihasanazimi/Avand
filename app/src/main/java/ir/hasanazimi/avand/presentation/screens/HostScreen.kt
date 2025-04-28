@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -156,7 +157,7 @@ fun TopBar(userName: String) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = "سـلام",
-                        style = CustomTypography.labelSmall,
+                        style = CustomTypography.labelSmall.copy(color = MaterialTheme.colorScheme.secondary),
                         modifier = Modifier
                             .align(Alignment.End)
                             .padding(bottom = 4.dp)

@@ -44,14 +44,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
+import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.extensions.showToast
 import ir.hasanazimi.avand.common.extensions.withNotNull
+import ir.hasanazimi.avand.common.more.IntentActionsHelper
 import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.remote.news.Item
 import ir.hasanazimi.avand.presentation.dialogs.Wide70PercentHeightDialog
@@ -62,12 +59,12 @@ import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 @Composable
 fun NewsScreen(
+    activity: MainActivity,
     navController: NavHostController,
     newsData: ResponseState<List<Item>>?,
     onRefresh: () -> Unit
 ) {
     var newsUrl by remember { mutableStateOf<String>("") }
-    var webViewDialogIsShow by remember { mutableStateOf(false) }
     var newsLoading by remember { mutableStateOf(false) }
     var newsHappenError by remember { mutableStateOf(false) }
 
@@ -87,7 +84,9 @@ fun NewsScreen(
 
                 Text(
                     text = "اخبار روز :",
-                    style = CustomTypography.titleLarge,
+                    style = CustomTypography.titleLarge.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    ),
                     modifier = Modifier
                         .padding(
                             start = 8.dp,
@@ -118,11 +117,12 @@ fun NewsScreen(
             is ResponseState.Success -> {
                 newsLoading = false
                 newsHappenError = false
-                newsData.data?.forEach {
-                    NewsItemView(it) { clickedNews ->
-                        newsUrl = clickedNews.link ?: ""
-                        webViewDialogIsShow = true
-                    }
+                newsData.data?.forEach { newsItem ->
+                    NewsItemView(
+                        newsItem,
+                        onNewsClick = { newsUrl = it.link ?: "" },
+                        onShareNews = { IntentActionsHelper(activity = activity).shareContent("",it.link?:"") }
+                    )
                 }
             }
 
@@ -149,10 +149,8 @@ fun NewsScreen(
                 content = {
                     WebViewScreen(
                         url = newsUrl,
-                        isShow = webViewDialogIsShow
                     ) {
                         newsUrl = ""
-                        webViewDialogIsShow = false
                     }
                 }
             )
@@ -299,6 +297,7 @@ private fun LoadingBox() {
 private fun NewsScreenPreview() {
     AvandTheme {
         NewsScreen(
+            activity = MainActivity(),
             navController = rememberNavController(),
             newsData = ResponseState.Success(emptyList()),
             onRefresh = {

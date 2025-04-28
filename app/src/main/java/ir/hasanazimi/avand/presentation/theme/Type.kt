@@ -21,7 +21,7 @@ val vazirFont = FontFamily(
 val CustomTypography = Typography(
     titleLarge = TextStyle(
         fontFamily = vazirFont,
-        fontSize = 24.sp,
+        fontSize = 20.sp,
         textDirection = TextDirection.Rtl,
         textAlign = TextAlign.Justify
     ),

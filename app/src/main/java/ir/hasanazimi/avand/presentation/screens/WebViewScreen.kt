@@ -20,15 +20,18 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -53,6 +57,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import ir.hasanazimi.avand.R
+import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
@@ -61,15 +66,10 @@ import ir.hasanazimi.avand.presentation.theme.CustomTypography
 @Composable
 fun WebViewScreen(
     url: String,
-    isShow: Boolean,
     onBackPressed: (() -> Unit)? = null
 ) {
 
-    if (isShow && url.isNotEmpty()) {
-
-        val systemUiController = rememberSystemUiController()
-        var useDarkIcons = isSystemInDarkTheme()
-        var secondaryColor = MaterialTheme.colorScheme.secondary
+    if (url.isNotEmpty()) {
 
         val context = LocalContext.current
         val loading = remember { mutableStateOf(true) }
@@ -130,11 +130,14 @@ fun WebViewScreen(
                     Column(
                         Modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f)),
+                            .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)),
                         verticalArrangement = Arrangement.Center,
                     ) {
 
-                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
                             Image(
                                 painter = painterResource(R.drawable.loading),
                                 contentDescription = "loading image",
@@ -142,14 +145,15 @@ fun WebViewScreen(
                                     .size(32.dp)
                                     .graphicsLayer {
                                         rotationZ = rotation
-                                    }
+                                    },
+                                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSecondary)
                             )
                         }
 
                         Text(
                             text = "کمی صبر کنید..",
                             textAlign = TextAlign.Center,
-                            style = CustomTypography.labelLarge.copy(color = Color.White),
+                            style = CustomTypography.labelLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
                                 .padding(vertical = 8.dp)
@@ -157,6 +161,14 @@ fun WebViewScreen(
                     }
                 }
             }
+
+
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(MaterialTheme.colorScheme.onSecondary)
+            )
 
 
             Row(
@@ -168,13 +180,15 @@ fun WebViewScreen(
                     modifier = Modifier.fillMaxSize(),
                     shape = RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp), onClick = {
                         onBackPressed?.invoke()
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
                 ) {
                     Text(
                         modifier = Modifier,
                         text = "بستن",
                         style = CustomTypography.bodyLarge.copy(
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onSecondary
                         ),
                         maxLines = 1,
                     )
@@ -213,8 +227,9 @@ private fun WebViewScreenPreview() {
     AvandTheme {
         WebViewScreen(
             url = "https://www.google.com",
-            isShow = false,
-            onBackPressed = {}
+            onBackPressed = {
+
+            }
         )
     }
 }
