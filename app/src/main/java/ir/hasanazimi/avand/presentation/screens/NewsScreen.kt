@@ -83,7 +83,7 @@ fun NewsScreen(
             ) {
 
                 Text(
-                    text = "اخبار روز :",
+                    text = "• اخبار روز",
                     style = CustomTypography.titleLarge.copy(
                         color = MaterialTheme.colorScheme.secondary
                     ),
@@ -98,17 +98,31 @@ fun NewsScreen(
                 )
 
 
-                Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = "location",
+                Row(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
-                        .align(Alignment.CenterStart)
-                        .size(24.dp)
-                        .fillMaxWidth()
-                        .clickable { onRefresh() },
-                    tint = MaterialTheme.colorScheme.secondary
-                )
+                        .align(Alignment.CenterStart).clickable { onRefresh() },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "location",
+                        modifier = Modifier
+                            .size(20.dp)
+                            .fillMaxWidth(),
+                        tint = MaterialTheme.colorScheme.secondary
+                    )
+
+
+                    Text(
+                        text = "اخرین اخبار",
+                        style = CustomTypography.labelSmall.copy(
+                            color = MaterialTheme.colorScheme.secondary
+                        ),
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                    )
+                }
 
             }
         }
@@ -121,7 +135,12 @@ fun NewsScreen(
                     NewsItemView(
                         newsItem,
                         onNewsClick = { newsUrl = it.link ?: "" },
-                        onShareNews = { IntentActionsHelper(activity = activity).shareContent("",it.link?:"") }
+                        onShareNews = {
+                            IntentActionsHelper(activity = activity).shareContent(
+                                "",
+                                it.link ?: ""
+                            )
+                        }
                     )
                 }
             }
@@ -162,8 +181,8 @@ fun NewsScreen(
         }
 
 
-        if (newsHappenError){
-            ErrorStateOnNews(context = LocalContext.current, exception = null){
+        if (newsHappenError) {
+            ErrorStateOnNews(context = LocalContext.current, exception = null) {
                 onRefresh()
             }
         }
