@@ -101,7 +101,7 @@ fun AboutUsScreen(
                                     .padding(6.dp)
                                     .clickable {
                                         onLinkedinClick.invoke()
-                                    }, tint = Color.White
+                                    }, tint = MaterialTheme.colorScheme.onPrimary
                             )
                         }
 
@@ -131,7 +131,7 @@ fun AboutUsScreen(
                                     .padding(7.dp)
                                     .clickable {
                                         onGithubClick.invoke()
-                                    }, tint = Color.White
+                                    }, tint = MaterialTheme.colorScheme.onPrimary
                             )
                         }
                     }
