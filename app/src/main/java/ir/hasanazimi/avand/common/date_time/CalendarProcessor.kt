@@ -3,6 +3,7 @@ package ir.hasanazimi.avand.common.date_time
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import ir.hasanazimi.avand.data.entities.local.other.EventOfDayEntity
 import java.io.IOException
 
 
@@ -175,3 +176,14 @@ class CalendarManager(private val context: Context) {
         return events
     }
 }
+
+
+fun CalendarInfo.getEvents() : List<EventOfDayEntity> {
+    val tempArr = mutableListOf<EventOfDayEntity>()
+    this.events.forEach {
+        tempArr.add(EventOfDayEntity(eventTitle = it.event, isHoliday = it.isOfficialHoliday))
+    }
+    return tempArr
+}
+
+fun Event.toEventOfDay() = EventOfDayEntity(eventTitle = this.event, isHoliday = this.isOfficialHoliday)

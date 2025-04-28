@@ -33,7 +33,7 @@ fun OccasionItemView(occasionsOfTheDay: EventOfDayEntity) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = occasionsOfTheDay.occasionText,
+            text = occasionsOfTheDay.eventTitle,
             modifier = Modifier
                 .weight(0.8f)
                 .fillMaxWidth(),
