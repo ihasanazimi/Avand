@@ -83,7 +83,7 @@ fun NewsScreen(
             ) {
 
                 Text(
-                    text = "• اخبار روز",
+                    text = "اخبار روز",
                     style = CustomTypography.titleLarge.copy(
                         color = MaterialTheme.colorScheme.secondary
                     ),
@@ -101,7 +101,8 @@ fun NewsScreen(
                 Row(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
-                        .align(Alignment.CenterStart).clickable { onRefresh() },
+                        .align(Alignment.CenterStart)
+                        .clickable { onRefresh() },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
@@ -116,7 +117,7 @@ fun NewsScreen(
 
 
                     Text(
-                        text = "اخرین اخبار",
+                        text = "بروزرسانی",
                         style = CustomTypography.labelSmall.copy(
                             color = MaterialTheme.colorScheme.secondary
                         ),
@@ -186,7 +187,6 @@ fun NewsScreen(
                 onRefresh()
             }
         }
-
 
     }
 }
@@ -311,7 +311,7 @@ private fun LoadingBox() {
 
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun NewsScreenPreview() {
     AvandTheme {

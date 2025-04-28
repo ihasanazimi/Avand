@@ -28,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,6 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -95,16 +97,19 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     val viewModel = hiltViewModel<HomeScreenVM>()
     val coroutineScope = rememberCoroutineScope()
 
-    // Short persian Date
+
+    var newsResponseState = viewModel.newsResponse.collectAsStateWithLifecycle()
+    var weatherResponseState = viewModel.weatherResponse.collectAsStateWithLifecycle()
+    var errorMessageState = viewModel.errorMessage.collectAsStateWithLifecycle("")
+
+
     val dateArray = PersianCalendar1.shamsiDate().split("/")
     val persianDate = "${dateArray[2].toInt()} " + PersianCalendar1().strMonth + " ${dateArray[0].toInt()}"
-
     val roozhDate = RoozhDateConverter()
     roozhDate.persianToGregorian(dateArray[0].toInt(), dateArray[1].toInt(), dateArray[2].toInt())
     val y = roozhDate.year
     val m = roozhDate.month
     val d = roozhDate.day
-
     var calendarEntityState by remember {
         mutableStateOf<CalendarEntity>(
             CalendarEntity(
@@ -116,75 +121,54 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
         )
     }
 
-    var newsResponseState by remember { mutableStateOf<ResponseState<List<Item>>?>(viewModel.newsResponse.value) }
-    var weatherResponseState by remember { mutableStateOf<ResponseState<WeatherEntity>?>(viewModel.weatherResponse.value) }
 
 
-
-    SideEffect {
+    LaunchedEffect(Unit) {
 
         viewModel.getCurrentWeatherFromLocal()
         viewModel.getNewsRss()
         viewModel.getEvents(context)
 
-        coroutineScope.launch {
-            viewModel.errorMessage.collect {
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-            }
+        if (errorMessageState.value.isNotEmpty()){
+            Toast.makeText(context, errorMessageState.value, Toast.LENGTH_SHORT).show()
         }
 
-        coroutineScope.launch {
-            viewModel.weatherResponse.collect { it ->
-                weatherResponseState = it
-            }
-        }
+        activity.locationAccessFinePermissionsResult.collect { result ->
+            Log.i(TAG, "HomeScreen: permission result is $result ")
 
-
-        coroutineScope.launch {
-            viewModel.newsResponse.collect { newsItems ->
-                newsResponseState = newsItems
-            }
-        }
-
-
-        coroutineScope.launch {
-            activity.locationAccessFinePermissionsResult.collect { result ->
-
-                Log.i(TAG, "HomeScreen: permission result is $result ")
-
-                if (result) {
-                    if (activity.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        getLastLocation(activity, viewModel)
-                    } else {
-                        activity.askPermission(
-                            permission = Manifest.permission.ACCESS_FINE_LOCATION,
-                            requestCode = 1001,
-                            onPermissionAlreadyGranted = {
-                                getLastLocation(activity, viewModel)
-                            },
-                            onShowRationale = {
-                                Toast.makeText(
-                                    context,
-                                    "برای دریافت موقعیت ممکانی شما نیاز به مجوز داریم",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            },
-                            onRequest = {
-                                getLastLocation(activity, viewModel)
-                            }
-                        )
-                    }
+            if (result) {
+                if (activity.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    getLastLocation(activity, viewModel)
                 } else {
-                    Toast.makeText(
-                        context,
-                        "اجازه دسترسی به سرویس مکان توسط شما صادر نشده است!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    activity.askPermission(
+                        permission = Manifest.permission.ACCESS_FINE_LOCATION,
+                        requestCode = 1001,
+                        onPermissionAlreadyGranted = {
+                            getLastLocation(activity, viewModel)
+                        },
+                        onShowRationale = {
+                            Toast.makeText(
+                                context,
+                                "برای دریافت موقعیت ممکانی شما نیاز به مجوز داریم",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        onRequest = {
+                            getLastLocation(activity, viewModel)
+                        }
+                    )
                 }
+            } else {
+                Toast.makeText(
+                    context,
+                    "اجازه دسترسی به سرویس مکان توسط شما صادر نشده است!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
-
     }
+
+
 
     AvandTheme {
         Surface(
@@ -198,7 +182,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                 item {
                     Widgets(
                         activity = activity,
-                        weatherData = weatherResponseState,
+                        weatherData = weatherResponseState.value,
                         calendarData = calendarEntityState,
                         onGetData = {
                             coroutineScope.launch {
@@ -211,7 +195,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     NewsScreen(
                         activity = activity,
                         navController = navController,
-                        newsData = newsResponseState
+                        newsData = newsResponseState.value
                     ) {
                         viewModel.getNewsRss()
                     }

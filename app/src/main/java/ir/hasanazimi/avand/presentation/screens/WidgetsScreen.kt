@@ -32,6 +32,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -72,188 +73,192 @@ fun Widgets(
 
 
     AvandTheme {
-        Row(
-            Modifier
-                .height(240.dp)
-        ) {
-            /**  big rectangle -> Whether */
-            Card(
-                modifier = Modifier
-                    .padding(end = 4.dp)
-                    .weight(1f)
-                    .fillMaxHeight(),
-                colors = CardDefaults.cardColors(
-                    containerColor = LightPrimary,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(24.dp)
-            ) {
-                Box {
-                    when (weatherData) {
-                        is ResponseState.Success -> SuccessState(
-                            weatherData = weatherData,
-                            onRefresh = onGetData
-                        )
-
-                        is ResponseState.Loading -> LoadingState()
-
-                        is ResponseState.Error -> ErrorState(
-                            context = activity,
-                            exception = weatherData.exception,
-                            onRefresh = onGetData
-                        )
-
-                        else -> {}
-                    }
-                }
-            }
-
-
-            /** small rectangles */
-            Column(
-                Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
+        Surface {
+            Row(
+                Modifier.height(240.dp).fillMaxHeight()
             ) {
 
-                /** dayOfWeek and persian and global Date */
+                /** WEATHER */
                 Card(
                     modifier = Modifier
-                        .padding(start = 4.dp, bottom = 4.dp)
+                        .padding(end = 4.dp)
                         .weight(1f)
-                        .fillMaxWidth(),
-                    shape = RoundedCornerShape(20.dp),
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+                        .fillMaxHeight(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = LightPrimary,
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(24.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(0.4f)
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = calendarData.dayOfWeek,
-                                modifier = Modifier,
-                                textAlign = TextAlign.Center,
-                                maxLines = 1,
-                                style = CustomTypography.titleLarge
+                    Box {
+                        when (weatherData) {
+                            is ResponseState.Success -> SuccessState(
+                                weatherData = weatherData,
+                                onRefresh = onGetData
                             )
+
+                            is ResponseState.Loading -> LoadingState()
+
+                            is ResponseState.Error -> ErrorState(
+                                context = activity,
+                                exception = weatherData.exception,
+                                onRefresh = onGetData
+                            )
+
+                            else -> {}
                         }
+                    }
+                }
 
+
+                /** SMALL Cards */
+                Column(
+                    Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
+                ) {
+
+                    /** dayOfWeek and persian and global Date */
+                    Card(
+                        modifier = Modifier
+                            .padding(start = 4.dp, bottom = 4.dp)
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(20.dp),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+                    ) {
                         Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(0.6f), verticalArrangement = Arrangement.Center
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center
                         ) {
 
-                            Text(
-                                text = calendarData.persianDate,
-                                modifier = Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                maxLines = 1,
-                                style = CustomTypography.bodyLarge
-                            )
-
-                            Spacer(
+                            Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(8.dp)
-                            )
-
-                            Text(
-                                text = calendarData.globalDate,
-                                modifier = Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                maxLines = 1,
-                                style = CustomTypography.bodyLarge
-                            )
-                        }
-
-                    }
-                }
-
-
-                /** Events */
-                Card(
-                    modifier = Modifier
-                        .padding(start = 4.dp, top = 4.dp)
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    shape = RoundedCornerShape(20.dp),
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-
-                        Box(
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
-                            contentAlignment = Alignment.CenterEnd
-                        ) {
-                            Text(
-                                "مناسبت های امروز :",
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                                textAlign = TextAlign.Start,
-                                maxLines = 1,
-                                style = CustomTypography.labelLarge
-                            )
-                        }
-
-                        Box(
-                            modifier = Modifier.weight(0.7f),
-                            contentAlignment = Alignment.Center
-                        ) {
-
-                            if (calendarData.events.isNotEmpty()) {
-                                LazyColumn(
+                                    .weight(0.4f)
+                                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = calendarData.dayOfWeek,
                                     modifier = Modifier,
-                                    verticalArrangement = Arrangement.Center
-                                ) {
-                                    items(calendarData.events) { event ->
-                                        EventItemView(eventOfDay = event)
-                                    }
-                                }
-                            } else {
-                                Box(
-                                    contentAlignment = Alignment.Center,
+                                    textAlign = TextAlign.Center,
+                                    maxLines = 1,
+                                    style = CustomTypography.titleLarge
+                                )
+                            }
+
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(0.6f), verticalArrangement = Arrangement.Center
+                            ) {
+
+                                Text(
+                                    text = calendarData.persianDate,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center,
+                                    maxLines = 1,
+                                    style = CustomTypography.bodyLarge
+                                )
+
+                                Spacer(
                                     modifier = Modifier
-                                        .fillMaxSize()
-                                ) {
-                                    Row(
-                                        modifier = Modifier.align(Alignment.Center),
-                                        verticalAlignment = Alignment.CenterVertically
+                                        .fillMaxWidth()
+                                        .height(8.dp)
+                                )
 
+                                Text(
+                                    text = calendarData.globalDate,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center,
+                                    maxLines = 1,
+                                    style = CustomTypography.bodyLarge
+                                )
+                            }
+
+                        }
+                    }
+
+
+                    /** Events */
+                    Card(
+                        modifier = Modifier
+                            .padding(start = 4.dp, top = 4.dp)
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(20.dp),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            verticalArrangement = Arrangement.Center
+                        ) {
+
+                            Box(
+                                modifier = Modifier
+                                    .weight(0.4f)
+                                    .fillMaxWidth()
+                                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
+                                contentAlignment = Alignment.CenterEnd
+                            ) {
+                                Text(
+                                    "مناسبت های امروز",
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                    textAlign = TextAlign.Start,
+                                    maxLines = 1,
+                                    style = CustomTypography.labelLarge
+                                )
+                            }
+
+                            Box(
+                                modifier = Modifier.weight(0.7f),
+                                contentAlignment = Alignment.Center
+                            ) {
+
+                                if (calendarData.events.isNotEmpty()) {
+                                    LazyColumn(
+                                        modifier = Modifier,
+                                        verticalArrangement = Arrangement.Center
                                     ) {
+                                        items(calendarData.events) { event ->
+                                            EventItemView(eventOfDay = event)
+                                        }
+                                    }
+                                } else {
+                                    Box(
+                                        contentAlignment = Alignment.Center,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                    ) {
+                                        Row(
+                                            modifier = Modifier.align(Alignment.Center),
+                                            verticalAlignment = Alignment.CenterVertically
 
-                                        Text(
-                                            text = "خبری نیست..",
-                                            modifier = Modifier.padding(horizontal = 8.dp)
-                                        )
+                                        ) {
 
-                                        Icon(
-                                            painter = painterResource(R.drawable.nothing),
-                                            contentDescription = "nothing",
-                                            modifier = Modifier
-                                                .size(18.dp),
-                                        )
+                                            Text(
+                                                text = "خبری نیست..",
+                                                style = CustomTypography.labelSmall,
+                                                modifier = Modifier.padding(horizontal = 8.dp)
+                                            )
 
+                                            Icon(
+                                                painter = painterResource(R.drawable.nothing),
+                                                contentDescription = "nothing",
+                                                modifier = Modifier
+                                                    .size(15.dp),
+                                            )
+
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+
             }
         }
     }
@@ -516,16 +521,14 @@ fun WidgetScreenPreview() {
     AvandTheme {
         Widgets(
             activity = MainActivity(),
-            weatherData = ResponseState.Error(Exception("تست")),
+            weatherData = ResponseState.Success(),
             calendarData = CalendarEntity(
                 dayOfWeek = "سه شنبه",
                 globalDate = "15 آوریل 2025",
                 persianDate = "26 فروردین 1404",
                 fakeEventOfDays
             ),
-            onGetData = {
-                // todo
-            }
+            onGetData = {}
         )
     }
 }

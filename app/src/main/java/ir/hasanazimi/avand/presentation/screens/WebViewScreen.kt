@@ -15,6 +15,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -130,7 +131,7 @@ fun WebViewScreen(
                     Column(
                         Modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)),
+                            .background(Color.Black.copy(alpha = 0.8f)).clickable{}.focusable(true),
                         verticalArrangement = Arrangement.Center,
                     ) {
 
@@ -146,14 +147,14 @@ fun WebViewScreen(
                                     .graphicsLayer {
                                         rotationZ = rotation
                                     },
-                                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSecondary)
+                                colorFilter = ColorFilter.tint(Color.White)
                             )
                         }
 
                         Text(
                             text = "کمی صبر کنید..",
                             textAlign = TextAlign.Center,
-                            style = CustomTypography.labelLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
+                            style = CustomTypography.labelLarge.copy(color = Color.White),
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
                                 .padding(vertical = 8.dp)

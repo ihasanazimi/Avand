@@ -17,9 +17,6 @@ val fakeEventOfDays: ArrayList<EventOfDayEntity> =
         EventOfDayEntity("روز بزرگداشت فردوسی", isHoliday = true),
         EventOfDayEntity("روز جوان", isHoliday = false),
         EventOfDayEntity("روز مهندس", isHoliday = false),
-        EventOfDayEntity("روز مهندس", isHoliday = false),
-        EventOfDayEntity("روز مهندس", isHoliday = false),
-        EventOfDayEntity("روز مهندس", isHoliday = false),
     )
 
 

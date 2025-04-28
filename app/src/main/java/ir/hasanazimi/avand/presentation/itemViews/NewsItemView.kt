@@ -40,120 +40,118 @@ fun NewsItemView(
     onShareNews: (newItemEntity: Item) -> Unit
 ) {
     AvandTheme {
-        Surface {
-            Column(
-                modifier = Modifier
-                    .padding(bottom = 8.dp, top = 8.dp)
-                    .fillMaxWidth()
-                    .border(
-                        2.dp,
-                        MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f),
-                        RoundedCornerShape(16.dp)
-                    )
-                    .clickable {
-                        onNewsClick.invoke(news)
-                    }
-            ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp)
-                ) {
-
-                    AsyncImage(
-                        model = news.enclosure?.url,
-                        contentDescription = news.title,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp),
-                        alignment = Alignment.Center,
-                        contentScale = ContentScale.Crop
-                    )
-
+        Column(
+            modifier = Modifier
+                .padding(bottom = 8.dp, top = 8.dp)
+                .fillMaxWidth()
+                .border(
+                    2.dp,
+                    MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f),
+                    RoundedCornerShape(16.dp)
+                )
+                .clickable {
+                    onNewsClick.invoke(news)
                 }
+        ) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp)
+            ) {
 
-                Column(
+                AsyncImage(
+                    model = news.enclosure?.url,
+                    contentDescription = news.title,
                     modifier = Modifier
                         .fillMaxWidth()
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
-                    ) {
-                        Text(
-                            text = news.title ?: "-_-",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 8.dp),
-                            style = CustomTypography.titleLarge.copy(
-                                lineHeight = TextUnit(
-                                    32f,
-                                    TextUnitType.Sp
-                                )
-                            )
-                        )
-                    }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
-                    ) {
-                        Text(
-                            text = news.description ?: "-_-",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp),
-                            style = CustomTypography.labelLarge.copy(
-                                lineHeight = TextUnit(
-                                    24f,
-                                    TextUnitType.Sp
-                                )
-                            )
-                        )
-                    }
-                }
+                        .height(200.dp),
+                    alignment = Alignment.Center,
+                    contentScale = ContentScale.Crop
+                )
 
+            }
 
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    Row(
+                    Text(
+                        text = news.title ?: "-_-",
                         modifier = Modifier
-                            .padding(16.dp)
-                            .align(Alignment.CenterStart)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Share,
-                            contentDescription = "share prices",
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .size(28.dp)
-                                .padding(5.dp)
-                                .clickable {
-                                    onShareNews.invoke(news)
-                                },
-                            tint = MaterialTheme.colorScheme.primary
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
+                        style = CustomTypography.titleLarge.copy(
+                            lineHeight = TextUnit(
+                                32f,
+                                TextUnitType.Sp
+                            )
                         )
-                    }
-
-
-                    Row(
-                        modifier = Modifier
-                            .padding(end = 8.dp, start = 8.dp)
-                            .align(Alignment.CenterEnd),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        Text(
-                            text = news.pubDate ?: "-_-",
-                            style = CustomTypography.labelSmall,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-                    }
-
+                    )
                 }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
+                ) {
+                    Text(
+                        text = news.description ?: "-_-",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
+                        style = CustomTypography.labelLarge.copy(
+                            lineHeight = TextUnit(
+                                24f,
+                                TextUnitType.Sp
+                            )
+                        )
+                    )
+                }
+            }
+
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.CenterStart)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "share prices",
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(28.dp)
+                            .padding(5.dp)
+                            .clickable {
+                                onShareNews.invoke(news)
+                            },
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+
+                Row(
+                    modifier = Modifier
+                        .padding(end = 8.dp, start = 8.dp)
+                        .align(Alignment.CenterEnd),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Text(
+                        text = news.pubDate ?: "-_-",
+                        style = CustomTypography.labelSmall,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                }
+
             }
         }
     }
