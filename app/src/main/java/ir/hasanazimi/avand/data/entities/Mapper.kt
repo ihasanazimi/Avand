@@ -10,6 +10,7 @@ import ir.hasanazimi.avand.data.entities.remote.weather.ConditionRemoteResponse
 import ir.hasanazimi.avand.data.entities.remote.weather.CurrentRemoteResponse
 import ir.hasanazimi.avand.data.entities.remote.weather.LocationRemoteResponse
 import ir.hasanazimi.avand.data.entities.remote.weather.WeatherRemoteResponse
+import java.util.Date
 
 fun LocationRemoteResponse.toLocationEntity() =  LocationEntity(
     name = this.name,
@@ -77,4 +78,15 @@ fun CurrentRemoteResponse.toCurrentEntity() = CurrentEntity(
 fun WeatherRemoteResponse.toWeatherEntity() = WeatherEntity(
     location = this.location.toLocationEntity(),
     current = this.current.toCurrentEntity()
+)
+
+
+data class NewsItem(
+    val title: String,
+    val link: String,
+    val description: String?,
+    val publishDate: Date?,
+    val source: String,
+    val category: String?,
+    val imageUrl: String?
 )

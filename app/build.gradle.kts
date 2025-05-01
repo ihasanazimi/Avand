@@ -103,4 +103,6 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-simplexml:2.9.0")
 
+    implementation("org.jsoup:jsoup:1.17.2")
+
 }

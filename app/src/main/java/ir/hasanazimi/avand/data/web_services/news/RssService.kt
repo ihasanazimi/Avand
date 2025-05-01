@@ -1,10 +1,17 @@
 package ir.hasanazimi.avand.data.web_services.news
 
-import ir.hasanazimi.avand.data.entities.remote.news.RssFeed
-import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Url
 
 interface RssService {
-    @GET("rss")
-    suspend fun getRssFeed(): Response<RssFeed>
+
+    @GET
+    suspend fun getEgtesadOnlineRssFeed(@Url url: String): ir.hasanazimi.avand.data.entities.remote.news.egtesad_online.RssFeed
+
+    @GET
+    suspend fun getKhabarOnlineRssFeed(@Url url: String): ir.hasanazimi.avand.data.entities.remote.news.khabar_online.RssFeed
+
+    @GET
+    suspend fun getZoomitRssFeed(@Url url: String): ir.hasanazimi.avand.data.entities.remote.news.zoomit.RssFeed
+
 }

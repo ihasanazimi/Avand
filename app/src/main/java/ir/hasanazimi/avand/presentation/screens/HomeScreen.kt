@@ -6,43 +6,20 @@ import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -54,18 +31,15 @@ import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
-import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.date_time.CalendarManager
 import ir.hasanazimi.avand.common.date_time.DateUtils
 import ir.hasanazimi.avand.common.date_time.DateUtils2
-import ir.hasanazimi.avand.common.date_time.Event
 import ir.hasanazimi.avand.common.date_time.PersianCalendar1
 import ir.hasanazimi.avand.common.date_time.RoozhDateConverter
 import ir.hasanazimi.avand.common.date_time.getEvents
 import ir.hasanazimi.avand.common.extensions.isLocationEnabled
 import ir.hasanazimi.avand.common.extensions.showToast
 import ir.hasanazimi.avand.common.extensions.turnOnGPS
-import ir.hasanazimi.avand.common.extensions.withNotNull
 import ir.hasanazimi.avand.common.more.LocationHelper
 import ir.hasanazimi.avand.common.security_and_permissions.askPermission
 import ir.hasanazimi.avand.common.security_and_permissions.isPermissionGranted
@@ -73,15 +47,15 @@ import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.data.entities.local.other.EventOfDayEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
-import ir.hasanazimi.avand.data.entities.remote.news.Item
-import ir.hasanazimi.avand.data.fakeEventOfDays
+import ir.hasanazimi.avand.data.entities.remote.news.NewsSources
+import ir.hasanazimi.avand.data.entities.remote.news.RssFeedResult
 import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
-import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import ir.hasanazimi.avand.use_cases.NewsRssUseCase
 import ir.hasanazimi.avand.use_cases.WeatherUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import okio.IOException
@@ -195,7 +169,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     NewsScreen(
                         activity = activity,
                         navController = navController,
-                        newsData = newsResponseState.value
+                        newsState = newsResponseState.value
                     ) {
                         viewModel.getNewsRss()
                     }
@@ -255,8 +229,11 @@ class HomeScreenVM @Inject constructor(
     val errorMessage = MutableSharedFlow<String>()
 
     var weatherResponse = MutableStateFlow<ResponseState<WeatherEntity>?>(null)
-    var newsResponse = MutableStateFlow<ResponseState<List<Item>>?>(null)
     var calendarResponse = MutableStateFlow<List<EventOfDayEntity>?>(null)
+
+
+    private val _newsResponse = MutableStateFlow<ResponseState<List<RssFeedResult?>>>(ResponseState.Loading)
+    val newsResponse = _newsResponse.asStateFlow()
 
     fun getCurrentWeatherFromRemote(q: String) {
         Log.i(TAG, "getCurrentWeatherFromRemote called")
@@ -295,19 +272,23 @@ class HomeScreenVM @Inject constructor(
 
     fun getNewsRss() {
         viewModelScope.launch {
-            newsRssUseCase.getNews().collect {
-                Log.i(TAG, "getNewsRss: ${it.data}")
-                when (it) {
+
+            val feeds = listOf(
+                NewsSources.EGTESAGE_ONLINE,
+                NewsSources.KHABAR_ONLINE,
+                NewsSources.ZOOMIT,
+            )
+
+            newsRssUseCase.getAllNews(feeds).collect { result ->
+                when (result) {
                     is ResponseState.Success -> {
-                        newsResponse.emit(ResponseState.Success(it.data?.toMutableStateList()))
+                        _newsResponse.emit(ResponseState.Success(result.data))
                     }
-
                     is ResponseState.Error -> {
-                        newsResponse.emit(ResponseState.Error(IOException(it.exception)))
+                        result.exception?.let { _newsResponse.emit(ResponseState.Error(it)) }
                     }
-
                     is ResponseState.Loading -> {
-                        newsResponse.emit(ResponseState.Loading)
+                        _newsResponse.emit(ResponseState.Loading)
                     }
                 }
             }

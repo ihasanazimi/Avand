@@ -59,6 +59,8 @@ fun HostScreen(activity: MainActivity, navController: NavHostController) {
 
     val viewModel = hiltViewModel<HostScreenVM>()
     var userNameState = viewModel.userName.collectAsStateWithLifecycle("کاربر بدون نام")
+    val maxUserNameCharacter = 20
+
     val hostNavController = rememberNavController()
 
     LaunchedEffect(Unit) {
@@ -69,7 +71,7 @@ fun HostScreen(activity: MainActivity, navController: NavHostController) {
         Scaffold(
             modifier = Modifier,
             bottomBar = { BottomNavigationBar(navController = hostNavController) },
-            topBar = { TopBar(userNameState.value) }
+            topBar = { TopBar(userNameState.value.take(maxUserNameCharacter)) }
         ) { innerPadding ->
             Content(
                 innerPadding = innerPadding,
@@ -156,6 +158,7 @@ fun TopBar(userName: String) {
                     Text(
                         text = userName,
                         style = CustomTypography.titleLarge,
+                        maxLines = 1,
                         modifier = Modifier.align(Alignment.End)
                     )
                 }

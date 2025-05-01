@@ -1,5 +1,6 @@
 package ir.hasanazimi.avand.presentation.itemViews
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,30 +15,33 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import ir.hasanazimi.avand.data.entities.remote.news.Item
+import coil.request.ImageRequest
+import ir.hasanazimi.avand.R
+import ir.hasanazimi.avand.data.entities.remote.NewsItemWrapper
+import ir.hasanazimi.avand.data.entities.remote.news.NewsItemUtils
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 @Composable
 fun NewsItemView(
-    news: Item,
-    onNewsClick: (newItemEntity: Item) -> Unit,
-    onShareNews: (newItemEntity: Item) -> Unit
+    news: NewsItemWrapper,
+    onNewsClick: (news: NewsItemWrapper) -> Unit,
+    onShareNews: (news: NewsItemWrapper) -> Unit
 ) {
     AvandTheme {
         Column(
@@ -60,15 +64,31 @@ fun NewsItemView(
             ) {
 
                 AsyncImage(
-                    model = news.enclosure?.url,
-                    contentDescription = news.title,
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(NewsItemUtils.getImageUrl(news.item) ?: "")
+                        .crossfade(true)
+                        .addHeader("User-Agent", "Mozilla/5.0 (Android; Mobile; rv:68.0)")
+                        .addHeader("Accept", "image/*")
+                        .listener(
+                            onStart = {
+                                Log.d("Coil", "Loading started for ${NewsItemUtils.getImageUrl(news.item) ?: ""}")
+                            },
+                            onError = { _, error ->
+                                Log.e("CoilError", "Failed to load ${NewsItemUtils.getImageUrl(news.item) ?: ""}: ${error.throwable.message}")
+                            },
+                            onSuccess = { _, _ ->
+                                Log.d("CoilSuccess", "Successfully loaded ${NewsItemUtils.getImageUrl(news.item) ?: ""}")
+                            }
+                        )
+                        .build(),
+                    contentDescription = NewsItemUtils.getTitle(news.item),
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp),
-                    alignment = Alignment.Center,
-                    contentScale = ContentScale.Crop
+                    placeholder = painterResource(R.drawable.loading),
+                    error = painterResource(R.drawable.baseline_error_outline_24)
                 )
-
             }
 
             Column(
@@ -81,15 +101,12 @@ fun NewsItemView(
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
                     Text(
-                        text = news.title ?: "-_-",
+                        text = NewsItemUtils.getTitle(news.item) ?: "بدون عنوان",
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 8.dp),
                         style = CustomTypography.titleLarge.copy(
-                            lineHeight = TextUnit(
-                                32f,
-                                TextUnitType.Sp
-                            )
+                            lineHeight = TextUnit(32f, TextUnitType.Sp)
                         )
                     )
                 }
@@ -99,20 +116,16 @@ fun NewsItemView(
                         .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                 ) {
                     Text(
-                        text = news.description ?: "-_-",
+                        text = NewsItemUtils.getDescription(news.item) ?: "-_-",
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp),
                         style = CustomTypography.labelLarge.copy(
-                            lineHeight = TextUnit(
-                                24f,
-                                TextUnitType.Sp
-                            )
+                            lineHeight = TextUnit(24f, TextUnitType.Sp)
                         )
                     )
                 }
             }
-
 
             Box(
                 modifier = Modifier
@@ -125,7 +138,7 @@ fun NewsItemView(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Share,
-                        contentDescription = "share prices",
+                        contentDescription = "اشتراک خبر",
                         modifier = Modifier
                             .clip(CircleShape)
                             .size(28.dp)
@@ -137,25 +150,26 @@ fun NewsItemView(
                     )
                 }
 
-
                 Row(
                     modifier = Modifier
                         .padding(end = 8.dp, start = 8.dp)
                         .align(Alignment.CenterEnd),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     Text(
-                        text = news.pubDate ?: "-_-",
+                        text = NewsItemUtils.getPublishDate(news.item) ?: "نامشخص",
                         style = CustomTypography.labelSmall,
                         modifier = Modifier.padding(horizontal = 8.dp)
                     )
                 }
-
             }
         }
     }
 }
+
+
+
+
 
 
 @Preview

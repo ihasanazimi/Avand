@@ -8,7 +8,7 @@ import ir.hasanazimi.avand.data.repository.NewsRssRepository
 import ir.hasanazimi.avand.data.repository.WeatherRepository
 import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.use_cases.NewsRssUseCase
-import ir.hasanazimi.avand.use_cases.NewsUseCaseImpl
+import ir.hasanazimi.avand.use_cases.NewsRssUseCaseImpl
 import ir.hasanazimi.avand.use_cases.WeatherUseCase
 import ir.hasanazimi.avand.use_cases.WeatherUseCaseImpl
 import javax.inject.Singleton
@@ -28,7 +28,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideNewsUseCase(newsRssRepository: NewsRssRepository , dataStoreManager: DataStoreManager) : NewsRssUseCase{
-        return NewsUseCaseImpl(newsRssRepository , dataStoreManager)
+        return NewsRssUseCaseImpl(newsRssRepository , dataStoreManager)
     }
 
 }

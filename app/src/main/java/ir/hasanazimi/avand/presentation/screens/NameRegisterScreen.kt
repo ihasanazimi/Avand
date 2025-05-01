@@ -53,6 +53,8 @@ fun NameRegisterScreen(navController: NavHostController) {
     val viewModel = hiltViewModel<NameRegisterScreenVM>()
     val scrollState = rememberScrollState()
     var userNameState by remember { mutableStateOf("") }
+    val maxUserNameCharacter = 20
+
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
@@ -130,9 +132,9 @@ fun NameRegisterScreen(navController: NavHostController) {
                             .padding(horizontal = 16.dp)
                             .align(Alignment.Start)
                             .fillMaxWidth(),
-                        value = userNameState,
+                        value = userNameState.take(maxUserNameCharacter),
                         onValueChange = { characters ->
-                            userNameState = characters
+                            userNameState = characters.take(maxUserNameCharacter)
                             if (userNameState.isEmpty()) {
                                 focusManager.clearFocus()
                             }

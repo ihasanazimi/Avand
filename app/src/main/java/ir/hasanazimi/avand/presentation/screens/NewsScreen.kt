@@ -1,6 +1,8 @@
 package ir.hasanazimi.avand.presentation.screens
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -10,7 +12,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -47,10 +48,11 @@ import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.extensions.showToast
-import ir.hasanazimi.avand.common.extensions.withNotNull
-import ir.hasanazimi.avand.common.more.IntentActionsHelper
 import ir.hasanazimi.avand.data.entities.ResponseState
-import ir.hasanazimi.avand.data.entities.remote.news.Item
+import ir.hasanazimi.avand.data.entities.remote.NewsItemWrapper
+import ir.hasanazimi.avand.data.entities.remote.news.NewsItemUtils
+import ir.hasanazimi.avand.data.entities.remote.news.NewsSources
+import ir.hasanazimi.avand.data.entities.remote.news.RssFeedResult
 import ir.hasanazimi.avand.presentation.dialogs.Wide70PercentHeightDialog
 import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.itemViews.NewsItemView
@@ -61,7 +63,7 @@ import ir.hasanazimi.avand.presentation.theme.CustomTypography
 fun NewsScreen(
     activity: MainActivity,
     navController: NavHostController,
-    newsData: ResponseState<List<Item>>?,
+    newsState: ResponseState<List<RssFeedResult?>>?,
     onRefresh: () -> Unit
 ) {
     var newsUrl by remember { mutableStateOf<String>("") }
@@ -69,78 +71,126 @@ fun NewsScreen(
     var newsHappenError by remember { mutableStateOf(false) }
 
     AvandTheme {
+        when (newsState) {
+            is ResponseState.Success -> {
 
-        Spacer(modifier = Modifier.padding(top = 16.dp))
+                val results = newsState.data
+                val newsItems = results?.flatMapIndexed { index, result ->
+                    when (result) {
+                        is RssFeedResult.EgtesadOnline -> result.feed.channel?.items?.map {
+                            NewsItemWrapper.EgtesadOnline(it, NewsSources.EGTESAGE_ONLINE)
+                        } ?: emptyList()
 
-        CustomSpacer()
+                        is RssFeedResult.KhabarOnline -> result.feed.channel?.items?.map {
+                            NewsItemWrapper.KhabarOnline(it, NewsSources.KHABAR_ONLINE)
+                        } ?: emptyList()
 
-        Column(modifier = Modifier.fillMaxWidth()) {
+                        is RssFeedResult.Zoomit -> result.feed.channel?.items?.map {
+                            NewsItemWrapper.Zoomit(it, NewsSources.ZOOMIT)
+                        } ?: emptyList()
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-            ) {
-
-                Text(
-                    text = "اخبار روز",
-                    style = CustomTypography.titleLarge.copy(
-                        color = MaterialTheme.colorScheme.secondary
-                    ),
-                    modifier = Modifier
-                        .padding(
-                            start = 8.dp,
-                            end = 8.dp,
-                            bottom = 8.dp,
-                            top = 8.dp
-                        )
-                        .align(Alignment.CenterEnd),
-                )
+                        null -> emptyList()
+                    }
+                } ?: emptyList()
 
 
-                Row(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .align(Alignment.CenterStart)
-                        .clickable { onRefresh() },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
 
-                    Icon(
-                        imageVector = Icons.Default.Refresh,
-                        contentDescription = "location",
+                Spacer(modifier = Modifier.padding(top = 16.dp))
+
+                CustomSpacer()
+
+                Column(modifier = Modifier.fillMaxWidth()) {
+
+                    Box(
                         modifier = Modifier
-                            .size(20.dp)
-                            .fillMaxWidth(),
-                        tint = MaterialTheme.colorScheme.secondary
-                    )
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+
+                        Text(
+                            text = "اخبار روز",
+                            style = CustomTypography.titleLarge.copy(
+                                color = MaterialTheme.colorScheme.secondary
+                            ),
+                            modifier = Modifier
+                                .padding(
+                                    start = 8.dp,
+                                    end = 8.dp,
+                                    bottom = 8.dp,
+                                    top = 8.dp
+                                )
+                                .align(Alignment.CenterEnd),
+                        )
 
 
-                    Text(
-                        text = "بروزرسانی",
-                        style = CustomTypography.labelSmall.copy(
-                            color = MaterialTheme.colorScheme.secondary
-                        ),
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                    )
+                        Row(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .align(Alignment.CenterStart)
+                                .clickable { onRefresh() },
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = "location",
+                                modifier = Modifier
+                                    .size(20.dp)
+                                    .fillMaxWidth(),
+                                tint = MaterialTheme.colorScheme.secondary
+                            )
+
+
+                            Text(
+                                text = "بروزرسانی",
+                                style = CustomTypography.labelSmall.copy(
+                                    color = MaterialTheme.colorScheme.secondary
+                                ),
+                                modifier = Modifier.padding(horizontal = 4.dp),
+                            )
+                        }
+
+                    }
                 }
 
-            }
-        }
-
-        when (newsData) {
-            is ResponseState.Success -> {
-                newsLoading = false
-                newsHappenError = false
-                newsData.data?.forEach { newsItem ->
+                newsItems.filter {
+                    NewsItemUtils.getLink(it.item) != null &&
+                    NewsItemUtils.getImageUrl(it.item) != null &&
+                    NewsItemUtils.getTitle(it.item) != null
+                }.forEach { item ->
+                    Log.i("TAG", "NewsScreen new item -> $item")
                     NewsItemView(
-                        newsItem,
-                        onNewsClick = { newsUrl = it.link ?: "" },
-                        onShareNews = {
-                            IntentActionsHelper(activity = activity).shareContent(
-                                "",
-                                it.link ?: ""
+                        news = item,
+                        onNewsClick = { item ->
+                            Log.d(
+                                "NewsScreen",
+                                "Clicked getTitle: ${NewsItemUtils.getTitle(item.item)}"
                             )
+                            Log.d(
+                                "NewsScreen",
+                                "Clicked getDescription: ${NewsItemUtils.getDescription(item.item)}"
+                            )
+                            Log.d(
+                                "NewsScreen",
+                                "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(item.item)}"
+                            )
+                            Log.d(
+                                "NewsScreen",
+                                "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(item.item)}"
+                            )
+                            Log.d(
+                                "NewsScreen",
+                                "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
+                            )
+                            newsUrl = NewsItemUtils.getLink(item.item) ?: ""
+                        },
+                        onShareNews = { item ->
+                            val shareIntent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
+                                type = "text/plain"
+                            }
+                            activity.startActivity(Intent.createChooser(shareIntent, "اشتراک خبر"))
                         }
                     )
                 }
@@ -162,7 +212,6 @@ fun NewsScreen(
             }
         }
 
-
         if (newsUrl.isNotEmpty()) {
             Wide70PercentHeightDialog(
                 onDismissRequest = { newsUrl = "" },
@@ -176,27 +225,25 @@ fun NewsScreen(
             )
         }
 
-
         if (newsLoading) {
             LoadingBox()
         }
 
-
         if (newsHappenError) {
-            ErrorStateOnNews(context = LocalContext.current, exception = null) {
+            ErrorStateOnNews(
+                context = LocalContext.current,
+                exception = (newsState as? ResponseState.Error)?.exception
+            ) {
                 onRefresh()
             }
         }
-
     }
 }
 
-
 @Composable
 fun ErrorStateOnNews(context: Context, exception: Exception?, onRefresh: () -> Unit = {}) {
-
-    exception.withNotNull {
-        showToast(context, message = it.message ?: "")
+    exception?.let {
+        showToast(context, message = it.message ?: "خطای ناشناخته")
     }
 
     Box(
@@ -204,16 +251,14 @@ fun ErrorStateOnNews(context: Context, exception: Exception?, onRefresh: () -> U
             .fillMaxSize()
             .background(Color.Transparent),
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Center)
         ) {
-
             Image(
                 painter = painterResource(R.drawable.baseline_error_outline_24),
-                contentDescription = "error state",
+                contentDescription = "خطا",
                 modifier = Modifier
                     .size(52.dp)
                     .align(Alignment.CenterHorizontally),
@@ -229,14 +274,11 @@ fun ErrorStateOnNews(context: Context, exception: Exception?, onRefresh: () -> U
                     .padding(vertical = 12.dp)
             )
 
-
             Card(
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .clickable {
-                        onRefresh.invoke()
-                    },
+                    .clickable { onRefresh() },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondary
                 )
@@ -253,7 +295,7 @@ fun ErrorStateOnNews(context: Context, exception: Exception?, onRefresh: () -> U
                     )
                     Icon(
                         imageVector = Icons.Default.Refresh,
-                        contentDescription = "refresh weather",
+                        contentDescription = "بروزرسانی",
                         modifier = Modifier
                             .padding(end = 8.dp)
                             .size(16.dp)
@@ -261,13 +303,11 @@ fun ErrorStateOnNews(context: Context, exception: Exception?, onRefresh: () -> U
                 }
             }
         }
-
     }
 }
 
 @Composable
-private fun LoadingBox() {
-
+fun LoadingBox() {
     val infiniteTransition = rememberInfiniteTransition(label = "rotation")
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -279,49 +319,42 @@ private fun LoadingBox() {
         label = "rotationAnim"
     )
 
-    Column(
-        Modifier
+    Box(
+        modifier = Modifier
             .fillMaxSize()
             .background(Color.Transparent),
-        verticalArrangement = Arrangement.Center,
+        contentAlignment = Alignment.Center
     ) {
-
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Image(
                 painter = painterResource(R.drawable.loading),
-                contentDescription = "loading image",
+                contentDescription = "در حال بارگذاری",
                 modifier = Modifier
                     .size(32.dp)
-                    .graphicsLayer {
-                        rotationZ = rotation
-                    },
+                    .graphicsLayer { rotationZ = rotation },
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary)
             )
+            Text(
+                text = "کمی صبر کنید...",
+                textAlign = TextAlign.Center,
+                style = CustomTypography.labelLarge,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
         }
-
-        Text(
-            text = "کمی صبر کنید..",
-            textAlign = TextAlign.Center,
-            style = CustomTypography.labelLarge,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(vertical = 8.dp)
-        )
     }
-
 }
+
 
 @Preview(showBackground = true)
 @Composable
-private fun NewsScreenPreview() {
+fun NewsScreenPreView() {
     AvandTheme {
         NewsScreen(
             activity = MainActivity(),
             navController = rememberNavController(),
-            newsData = ResponseState.Success(emptyList()),
-            onRefresh = {
-
-            },
-        )
+            newsState = null
+        ) { }
     }
 }

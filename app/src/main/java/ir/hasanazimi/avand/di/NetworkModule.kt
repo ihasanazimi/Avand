@@ -10,6 +10,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import org.simpleframework.xml.core.Persister
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
@@ -45,9 +46,9 @@ object NetworkModule {
         okHttpClient: OkHttpClient,
     ): Retrofit.Builder {
         return Retrofit.Builder()
-            .baseUrl("https://www.khabaronline.ir/")
+            .baseUrl("https://digiato.com/feed/")
             .client(okHttpClient)
-            .addConverterFactory(SimpleXmlConverterFactory.create())
+            .addConverterFactory(SimpleXmlConverterFactory.create(Persister()))
     }
 
 
