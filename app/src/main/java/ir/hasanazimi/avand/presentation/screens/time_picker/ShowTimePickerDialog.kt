@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.presentation.screens
+package ir.hasanazimi.avand.presentation.screens.time_picker
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme

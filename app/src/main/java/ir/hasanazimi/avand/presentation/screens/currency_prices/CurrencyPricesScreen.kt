@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.presentation.screens
+package ir.hasanazimi.avand.presentation.screens.currency_prices
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable

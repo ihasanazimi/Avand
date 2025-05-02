@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.presentation.screens
+package ir.hasanazimi.avand.presentation.screens.about_us
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

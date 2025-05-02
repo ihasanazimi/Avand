@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.presentation.screens
+package ir.hasanazimi.avand.presentation.screens.news
 
 import android.content.Context
 import android.content.Intent
@@ -29,6 +29,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,36 +44,50 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.extensions.showToast
 import ir.hasanazimi.avand.data.entities.ResponseState
-import ir.hasanazimi.avand.data.entities.remote.news.NewsItemWrapper
 import ir.hasanazimi.avand.data.entities.remote.news.NewsItemUtils
+import ir.hasanazimi.avand.data.entities.remote.news.NewsItemWrapper
 import ir.hasanazimi.avand.data.entities.remote.news.NewsSources
 import ir.hasanazimi.avand.data.entities.remote.news.RssFeedResult
-import ir.hasanazimi.avand.presentation.dialogs.Wide70PercentHeightDialog
 import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.itemViews.NewsItemView
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
-import java.text.SimpleDateFormat
-import java.util.Locale
+import ir.hasanazimi.avand.use_cases.NewsRssUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @Composable
 fun NewsScreen(
     activity: MainActivity,
     navController: NavHostController,
-    newsState: ResponseState<List<RssFeedResult?>>?,
     openWebView : (newsUrl : String) -> Unit,
     onRefresh: () -> Unit
 ) {
 
     val context = LocalContext.current
+    val viewModel = hiltViewModel<NewsScreenVM>()
     var showNewsLoading by remember { mutableStateOf(false) }
     var showNewsError by remember { mutableStateOf(false) }
+    var newsResponseState = viewModel.newsResponse.collectAsStateWithLifecycle()
+
+
+
+    LaunchedEffect(Unit) {
+        viewModel.getNewsRss()
+    }
 
     AvandTheme {
 
@@ -136,10 +151,10 @@ fun NewsScreen(
         }
 
 
-        when (newsState) {
+        when (newsResponseState.value) {
             is ResponseState.Success -> {
 
-                val results = newsState.data
+                val results = newsResponseState.value.data
                 val newsItems = results?.flatMapIndexed { index, result ->
                     when (result) {
                         is RssFeedResult.KhabarOnline -> result.feed.channel?.items?.map {
@@ -153,10 +168,9 @@ fun NewsScreen(
                     }
                 } ?: emptyList()
 
-                newsItems.filter {
-                    NewsItemUtils.getLink(it.item) != null &&
-                    NewsItemUtils.getTitle(it.item) != null
-                }.shuffled().forEach { item ->
+                newsItems.shuffled().filter {
+                    NewsItemUtils.getLink(it.item) != null && NewsItemUtils.getTitle(it.item) != null
+                }.forEach { item ->
                     Log.i("TAG", "NewsScreen new item -> $item")
                     NewsItemView(
                         news = item,
@@ -221,7 +235,7 @@ fun NewsScreen(
         if (showNewsError) {
             ErrorStateOnNews(
                 context = LocalContext.current,
-                exception = (newsState as? ResponseState.Error)?.exception
+                exception = (newsResponseState.value as? ResponseState.Error)?.exception
             ) {
                 onRefresh()
             }
@@ -336,6 +350,45 @@ fun LoadingBox() {
 }
 
 
+@HiltViewModel
+class NewsScreenVM @Inject constructor(
+    private val newsRssUseCase: NewsRssUseCase
+) : ViewModel(){
+
+
+    private val _newsResponse = MutableStateFlow<ResponseState<List<RssFeedResult?>>>(ResponseState.Loading)
+    val newsResponse = _newsResponse.asStateFlow()
+
+    fun getNewsRss() {
+        viewModelScope.launch {
+
+            val feeds = listOf(
+                NewsSources.KHABAR_ONLINE,
+                NewsSources.KHABAR_ONLINE_IT,
+                NewsSources.ZOOMIT,
+                NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI,
+            )
+
+            newsRssUseCase.getAllNews(feeds).collect { result ->
+                when (result) {
+                    is ResponseState.Success -> {
+                        _newsResponse.emit(ResponseState.Success(result.data))
+                    }
+                    is ResponseState.Error -> {
+                        result.exception?.let { _newsResponse.emit(ResponseState.Error(it)) }
+                    }
+                    is ResponseState.Loading -> {
+                        _newsResponse.emit(ResponseState.Loading)
+                    }
+                }
+            }
+        }
+    }
+
+
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun NewsScreenPreView() {
@@ -343,7 +396,6 @@ fun NewsScreenPreView() {
         NewsScreen(
             activity = MainActivity(),
             navController = rememberNavController(),
-            newsState = null,
             openWebView = {},
             onRefresh = {}
         )

@@ -8,16 +8,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.common.more.IntentActionsHelper
-import ir.hasanazimi.avand.presentation.screens.AboutUsScreen
-import ir.hasanazimi.avand.presentation.screens.CurrencyPricesScreen
-import ir.hasanazimi.avand.presentation.screens.HomeScreen
-import ir.hasanazimi.avand.presentation.screens.HostScreen
-import ir.hasanazimi.avand.presentation.screens.IntroScreen
-import ir.hasanazimi.avand.presentation.screens.NameRegisterScreen
-import ir.hasanazimi.avand.presentation.screens.NewsScreen
-import ir.hasanazimi.avand.presentation.screens.SchedulingScreen
-import ir.hasanazimi.avand.presentation.screens.SettingScreen
-import ir.hasanazimi.avand.presentation.screens.SplashScreen
+import ir.hasanazimi.avand.presentation.screens.about_us.AboutUsScreen
+import ir.hasanazimi.avand.presentation.screens.currency_prices.CurrencyPricesScreen
+import ir.hasanazimi.avand.presentation.screens.home.HomeScreen
+import ir.hasanazimi.avand.presentation.screens.host.HostScreen
+import ir.hasanazimi.avand.presentation.screens.intro.IntroScreen
+import ir.hasanazimi.avand.presentation.screens.name_register.NameRegisterScreen
+import ir.hasanazimi.avand.presentation.screens.scheduled_questions.SchedulingScreen
+import ir.hasanazimi.avand.presentation.screens.setting.SettingScreen
+import ir.hasanazimi.avand.presentation.screens.splash.SplashScreen
 
 
 val splashNavGraph = "splashGraph"

@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.presentation.screens
+package ir.hasanazimi.avand.presentation.screens.splash
 
 import android.util.Log
 import androidx.compose.foundation.Image

@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.presentation.screens
+package ir.hasanazimi.avand.presentation.screens.name_register
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

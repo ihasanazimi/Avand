@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package ir.hasanazimi.avand.presentation.screens
+package ir.hasanazimi.avand.presentation.screens.scheduled_questions
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -26,7 +26,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +48,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.navigation.Screens
+import ir.hasanazimi.avand.presentation.screens.time_picker.ShowTimePickerDialog
+import ir.hasanazimi.avand.presentation.screens.time_picker.TimePickerFlag
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -197,6 +198,7 @@ fun SchedulingScreen(
                                 bedTimeData = fullyTimeData.value
                                 viewModel.saveBedTime(bedTimeData)
                             }
+
                             TimePickerFlag.WakeUpTime -> {
                                 wakeUpTimeData = fullyTimeData.value
                                 viewModel.saveWakeUpTime(wakeUpTimeData)

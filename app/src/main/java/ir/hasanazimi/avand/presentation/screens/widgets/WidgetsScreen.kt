@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.presentation.screens
+package ir.hasanazimi.avand.presentation.screens.widgets
 
 import android.content.Context
 import androidx.compose.animation.core.LinearEasing

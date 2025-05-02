@@ -1,4 +1,4 @@
-package ir.hasanazimi.avand.presentation.screens
+package ir.hasanazimi.avand.presentation.screens.home
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -89,17 +89,16 @@ import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.data.entities.local.other.EventOfDayEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
-import ir.hasanazimi.avand.data.entities.remote.news.NewsSources
-import ir.hasanazimi.avand.data.entities.remote.news.RssFeedResult
 import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.dialogs.Wide70PercentHeightDialog
+import ir.hasanazimi.avand.presentation.screens.news.NewsScreen
+import ir.hasanazimi.avand.presentation.screens.widgets.Widgets
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import ir.hasanazimi.avand.use_cases.NewsRssUseCase
 import ir.hasanazimi.avand.use_cases.WeatherUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import okio.IOException
@@ -116,7 +115,6 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
 
 
-    var newsResponseState = viewModel.newsResponse.collectAsStateWithLifecycle()
     var weatherResponseState = viewModel.weatherResponse.collectAsStateWithLifecycle()
     var errorMessageState = viewModel.errorMessage.collectAsStateWithLifecycle("")
     var newsUrl by remember { mutableStateOf("") }
@@ -135,7 +133,6 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     LaunchedEffect(Unit) {
 
         viewModel.getCurrentWeatherFromLocal()
-        viewModel.getNewsRss()
         viewModel.getEvents(context)
 
         if (errorMessageState.value.isNotEmpty()){
@@ -192,7 +189,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     Widgets(
                         activity = activity,
                         weatherData = weatherResponseState.value,
-                        calendarData =  CalendarEntity(
+                        calendarData = CalendarEntity(
                             dayOfWeek = PersianCalendar1().strWeekDay,
                             globalDate = "${d.toInt()}  ${DateUtils.getGregorianMonthNameInPersian(m.toInt())}  ${y.toInt()}",
                             persianDate = persianDate,
@@ -209,12 +206,11 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     NewsScreen(
                         activity = activity,
                         navController = navController,
-                        newsState = newsResponseState.value,
                         openWebView = { url ->
                             newsUrl = url
                         },
                         onRefresh = {
-                            viewModel.getNewsRss()
+
                         }
                     )
                 }
@@ -454,10 +450,6 @@ class HomeScreenVM @Inject constructor(
     var weatherResponse = MutableStateFlow<ResponseState<WeatherEntity>?>(null)
     var calendarResponse = MutableStateFlow<List<EventOfDayEntity>?>(null)
 
-
-    private val _newsResponse = MutableStateFlow<ResponseState<List<RssFeedResult?>>>(ResponseState.Loading)
-    val newsResponse = _newsResponse.asStateFlow()
-
     fun getCurrentWeatherFromRemote(q: String) {
         Log.i(TAG, "getCurrentWeatherFromRemote called")
         viewModelScope.launch {
@@ -493,31 +485,7 @@ class HomeScreenVM @Inject constructor(
     }
 
 
-    fun getNewsRss() {
-        viewModelScope.launch {
 
-            val feeds = listOf(
-                NewsSources.KHABAR_ONLINE,
-                NewsSources.KHABAR_ONLINE_IT,
-                NewsSources.ZOOMIT,
-                NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI,
-            )
-
-            newsRssUseCase.getAllNews(feeds).collect { result ->
-                when (result) {
-                    is ResponseState.Success -> {
-                        _newsResponse.emit(ResponseState.Success(result.data))
-                    }
-                    is ResponseState.Error -> {
-                        result.exception?.let { _newsResponse.emit(ResponseState.Error(it)) }
-                    }
-                    is ResponseState.Loading -> {
-                        _newsResponse.emit(ResponseState.Loading)
-                    }
-                }
-            }
-        }
-    }
 
 
 
