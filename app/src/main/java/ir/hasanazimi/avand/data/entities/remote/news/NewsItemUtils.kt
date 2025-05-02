@@ -1,5 +1,6 @@
 package ir.hasanazimi.avand.data.entities.remote.news
 
+import android.util.Log
 import org.jsoup.Jsoup
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -31,11 +32,13 @@ object NewsItemUtils {
         else -> null
     }?.let { formatDate(it) }
 
-    fun getImageUrl(item: Any): String? = when (item) {
-        is KhabarOnlineItem -> item.enclosure?.url
-        is ZoomitItem -> item.enclosure?.url
-        else -> null
-    }.toString()
+    fun getImageUrl(item: Any): String = when (item) {
+        is KhabarOnlineItem -> item.enclosure?.url?:""
+        is ZoomitItem -> item.enclosure?.url?:""
+        else -> ""
+    }.toString().also {
+        Log.i("TAG", "getImageUrl: $it")
+    }
 
     private fun formatDate(dateStr: String): String? {
         return try {

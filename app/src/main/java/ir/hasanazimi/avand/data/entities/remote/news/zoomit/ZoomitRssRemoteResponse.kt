@@ -6,7 +6,6 @@ import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 
-// انتیتی‌های RSS
 @Root(name = "rss", strict = false)
 data class RssFeed(
     @field:Element(name = "channel")

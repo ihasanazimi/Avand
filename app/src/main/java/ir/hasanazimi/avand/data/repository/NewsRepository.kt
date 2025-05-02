@@ -24,6 +24,8 @@ class NewsRssRepositoryImpl @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) : NewsRssRepository {
 
+    val TAG = this::class.simpleName
+
     override suspend fun getNews(newsSources: NewsSources): Flow<ResponseState<RssFeedResult?>> = flow {
         emit(ResponseState.Loading)
         try {
@@ -49,10 +51,10 @@ class NewsRssRepositoryImpl @Inject constructor(
                     }
                 }.map { it.await() }
             }
-            Log.i("TAG", "getAllNews responseStateSuccess is -> : $results")
+            Log.i(TAG, "getAllNews responseStateSuccess is -> : $results")
             emit(ResponseState.Success(results))
         } catch (e: Exception) {
-            Log.e("TAG", "getAllNews: ${e.message}")
+            Log.e(TAG, "getAllNews: ${e.message}")
             emit(ResponseState.Error(e))
         }
     }
@@ -61,21 +63,19 @@ class NewsRssRepositoryImpl @Inject constructor(
 
 private suspend fun apiCall(rssService: RssService, newsSources: NewsSources): RssFeedResult? = when (newsSources) {
     NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI -> RssFeedResult.KhabarOnline(rssService.getKhabarOnlineRssFeed(newsSources.baseUrl)).also { it ->
-        Log.i("TAG", "apiCall KhabarOnline: $it")
+        Log.i("NewsRssRepositoryImpl", "apiCall: url -> ${newsSources.baseUrl}")
+        Log.i("NewsRssRepositoryImpl", "apiCall KhabarOnline 1: ${it.feed.channel?.items?.size}")
     }
     NewsSources.KHABAR_ONLINE_IT -> RssFeedResult.KhabarOnline(rssService.getKhabarOnlineRssFeed(newsSources.baseUrl)).also { it ->
-        Log.i("TAG", "apiCall KhabarOnline: $it")
+        Log.i("NewsRssRepositoryImpl", "apiCall: url -> ${newsSources.baseUrl}")
+        Log.i("NewsRssRepositoryImpl", "apiCall KhabarOnline 2: ${it.feed.channel?.items?.size}")
     }
     NewsSources.KHABAR_ONLINE -> RssFeedResult.KhabarOnline(rssService.getKhabarOnlineRssFeed(newsSources.baseUrl)).also {
-        Log.i("TAG", "apiCall KhabarOnline: $it")
+        Log.i("NewsRssRepositoryImpl", "apiCall: url -> ${newsSources.baseUrl}")
+        Log.i("NewsRssRepositoryImpl", "apiCall KhabarOnline 3: ${it.feed.channel?.items?.size}")
     }
     NewsSources.ZOOMIT -> RssFeedResult.Zoomit(rssService.getZoomitRssFeed(newsSources.baseUrl)).also {
-        Log.i("TAG", "apiCall getZoomitRssFeed: $it")
+        Log.i("NewsRssRepositoryImpl", "apiCall: url -> ${newsSources.baseUrl}")
+        Log.i("NewsRssRepositoryImpl", "apiCall getZoomitRssFeed: ${it.feed.channel?.items?.size}")
     }
 }
-
-/*
-fun <T> processGeneric(input: T): T {
-    println("Processing $input")
-    return input
-}*/

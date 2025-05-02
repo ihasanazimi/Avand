@@ -274,9 +274,9 @@ class HomeScreenVM @Inject constructor(
         viewModelScope.launch {
 
             val feeds = listOf(
-                NewsSources.ZOOMIT,
                 NewsSources.KHABAR_ONLINE,
                 NewsSources.KHABAR_ONLINE_IT,
+                NewsSources.ZOOMIT,
                 NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI,
             )
 

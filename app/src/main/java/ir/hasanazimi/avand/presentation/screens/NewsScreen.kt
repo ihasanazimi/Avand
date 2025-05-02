@@ -67,10 +67,71 @@ fun NewsScreen(
     onRefresh: () -> Unit
 ) {
     var newsUrl by remember { mutableStateOf<String>("") }
-    var newsLoading by remember { mutableStateOf(false) }
-    var newsHappenError by remember { mutableStateOf(false) }
+    var showNewsLoading by remember { mutableStateOf(false) }
+    var showNewsError by remember { mutableStateOf(false) }
 
     AvandTheme {
+
+
+        Spacer(modifier = Modifier.padding(top = 16.dp))
+
+        CustomSpacer()
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+
+                Text(
+                    text = "اخبار روز",
+                    style = CustomTypography.titleLarge.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    ),
+                    modifier = Modifier
+                        .padding(
+                            start = 8.dp,
+                            end = 8.dp,
+                            bottom = 8.dp,
+                            top = 8.dp
+                        )
+                        .align(Alignment.CenterEnd),
+                )
+
+
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .align(Alignment.CenterStart)
+                        .clickable { onRefresh() },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "location",
+                        modifier = Modifier
+                            .size(20.dp)
+                            .fillMaxWidth(),
+                        tint = MaterialTheme.colorScheme.secondary
+                    )
+
+
+                    Text(
+                        text = "بروزرسانی",
+                        style = CustomTypography.labelSmall.copy(
+                            color = MaterialTheme.colorScheme.secondary
+                        ),
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                    )
+                }
+
+            }
+        }
+
+
         when (newsState) {
             is ResponseState.Success -> {
 
@@ -88,69 +149,8 @@ fun NewsScreen(
                     }
                 } ?: emptyList()
 
-
-
-                Spacer(modifier = Modifier.padding(top = 16.dp))
-
-                CustomSpacer()
-
-                Column(modifier = Modifier.fillMaxWidth()) {
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp)
-                    ) {
-
-                        Text(
-                            text = "اخبار روز",
-                            style = CustomTypography.titleLarge.copy(
-                                color = MaterialTheme.colorScheme.secondary
-                            ),
-                            modifier = Modifier
-                                .padding(
-                                    start = 8.dp,
-                                    end = 8.dp,
-                                    bottom = 8.dp,
-                                    top = 8.dp
-                                )
-                                .align(Alignment.CenterEnd),
-                        )
-
-
-                        Row(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .align(Alignment.CenterStart)
-                                .clickable { onRefresh() },
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-
-                            Icon(
-                                imageVector = Icons.Default.Refresh,
-                                contentDescription = "location",
-                                modifier = Modifier
-                                    .size(20.dp)
-                                    .fillMaxWidth(),
-                                tint = MaterialTheme.colorScheme.secondary
-                            )
-
-
-                            Text(
-                                text = "بروزرسانی",
-                                style = CustomTypography.labelSmall.copy(
-                                    color = MaterialTheme.colorScheme.secondary
-                                ),
-                                modifier = Modifier.padding(horizontal = 4.dp),
-                            )
-                        }
-
-                    }
-                }
-
                 newsItems.filter {
                     NewsItemUtils.getLink(it.item) != null &&
-                    NewsItemUtils.getImageUrl(it.item) != null &&
                     NewsItemUtils.getTitle(it.item) != null
                 }.forEach { item ->
                     Log.i("TAG", "NewsScreen new item -> $item")
@@ -185,25 +185,28 @@ fun NewsScreen(
                                 putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
                                 type = "text/plain"
                             }
-                            activity.startActivity(Intent.createChooser(shareIntent, "اشتراک خبر"))
+                            activity.startActivity(Intent.createChooser(shareIntent, "اشتراک خبر از آوند "))
                         }
                     )
                 }
+
+                showNewsError = false
+                showNewsLoading = false
             }
 
             is ResponseState.Loading -> {
-                newsLoading = true
-                newsHappenError = false
+                showNewsLoading = true
+                showNewsError = false
             }
 
             is ResponseState.Error -> {
-                newsLoading = false
-                newsHappenError = true
+                showNewsLoading = false
+                showNewsError = true
             }
 
             else -> {
-                newsLoading = false
-                newsHappenError = false
+                showNewsLoading = false
+                showNewsError = false
             }
         }
 
@@ -220,11 +223,11 @@ fun NewsScreen(
             )
         }
 
-        if (newsLoading) {
+        if (showNewsLoading) {
             LoadingBox()
         }
 
-        if (newsHappenError) {
+        if (showNewsError) {
             ErrorStateOnNews(
                 context = LocalContext.current,
                 exception = (newsState as? ResponseState.Error)?.exception

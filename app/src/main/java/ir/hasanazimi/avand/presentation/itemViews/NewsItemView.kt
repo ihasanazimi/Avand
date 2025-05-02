@@ -67,8 +67,9 @@ fun NewsItemView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp),
-                    url = NewsItemUtils.getImageUrl(news.item) ?: ""
+                    url = NewsItemUtils.getImageUrl(news.item)
                 )
+
             }
 
             Column(
