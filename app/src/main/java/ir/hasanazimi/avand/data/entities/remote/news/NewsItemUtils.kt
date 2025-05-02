@@ -1,6 +1,7 @@
 package ir.hasanazimi.avand.data.entities.remote.news
 
 import android.util.Log
+import ir.hasanazimi.avand.common.date_time.DateUtils
 import org.jsoup.Jsoup
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -30,7 +31,9 @@ object NewsItemUtils {
         is KhabarOnlineItem -> item.pubDate
         is ZoomitItem -> item.pubDate
         else -> null
-    }?.let { formatDate(it) }
+    }?.let { DateUtils.formatTimeAgo(it) }.also {
+        Log.i("TAG", "getPublishDate: $it")
+    }
 
     fun getImageUrl(item: Any): String = when (item) {
         is KhabarOnlineItem -> item.enclosure?.url?:""

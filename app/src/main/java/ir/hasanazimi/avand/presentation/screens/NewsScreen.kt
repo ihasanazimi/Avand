@@ -49,7 +49,7 @@ import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.extensions.showToast
 import ir.hasanazimi.avand.data.entities.ResponseState
-import ir.hasanazimi.avand.data.entities.remote.NewsItemWrapper
+import ir.hasanazimi.avand.data.entities.remote.news.NewsItemWrapper
 import ir.hasanazimi.avand.data.entities.remote.news.NewsItemUtils
 import ir.hasanazimi.avand.data.entities.remote.news.NewsSources
 import ir.hasanazimi.avand.data.entities.remote.news.RssFeedResult
@@ -58,15 +58,19 @@ import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.itemViews.NewsItemView
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun NewsScreen(
     activity: MainActivity,
     navController: NavHostController,
     newsState: ResponseState<List<RssFeedResult?>>?,
+    openWebView : (newsUrl : String) -> Unit,
     onRefresh: () -> Unit
 ) {
-    var newsUrl by remember { mutableStateOf<String>("") }
+
+    val context = LocalContext.current
     var showNewsLoading by remember { mutableStateOf(false) }
     var showNewsError by remember { mutableStateOf(false) }
 
@@ -152,7 +156,7 @@ fun NewsScreen(
                 newsItems.filter {
                     NewsItemUtils.getLink(it.item) != null &&
                     NewsItemUtils.getTitle(it.item) != null
-                }.forEach { item ->
+                }.shuffled().forEach { item ->
                     Log.i("TAG", "NewsScreen new item -> $item")
                     NewsItemView(
                         news = item,
@@ -177,7 +181,7 @@ fun NewsScreen(
                                 "NewsScreen",
                                 "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
                             )
-                            newsUrl = NewsItemUtils.getLink(item.item) ?: ""
+                            openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
                         },
                         onShareNews = { item ->
                             val shareIntent = Intent().apply {
@@ -208,19 +212,6 @@ fun NewsScreen(
                 showNewsLoading = false
                 showNewsError = false
             }
-        }
-
-        if (newsUrl.isNotEmpty()) {
-            Wide70PercentHeightDialog(
-                onDismissRequest = { newsUrl = "" },
-                content = {
-                    WebViewScreen(
-                        url = newsUrl,
-                    ) {
-                        newsUrl = ""
-                    }
-                }
-            )
         }
 
         if (showNewsLoading) {
@@ -352,7 +343,9 @@ fun NewsScreenPreView() {
         NewsScreen(
             activity = MainActivity(),
             navController = rememberNavController(),
-            newsState = null
-        ) { }
+            newsState = null,
+            openWebView = {},
+            onRefresh = {}
+        )
     }
 }

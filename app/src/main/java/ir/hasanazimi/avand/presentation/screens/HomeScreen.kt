@@ -1,36 +1,78 @@
 package ir.hasanazimi.avand.presentation.screens
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Build
 import android.util.Log
+import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
+import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.date_time.CalendarManager
 import ir.hasanazimi.avand.common.date_time.DateUtils
 import ir.hasanazimi.avand.common.date_time.DateUtils2
@@ -50,7 +92,9 @@ import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
 import ir.hasanazimi.avand.data.entities.remote.news.NewsSources
 import ir.hasanazimi.avand.data.entities.remote.news.RssFeedResult
 import ir.hasanazimi.avand.db.DataStoreManager
+import ir.hasanazimi.avand.presentation.dialogs.Wide70PercentHeightDialog
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
+import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import ir.hasanazimi.avand.use_cases.NewsRssUseCase
 import ir.hasanazimi.avand.use_cases.WeatherUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -75,6 +119,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     var newsResponseState = viewModel.newsResponse.collectAsStateWithLifecycle()
     var weatherResponseState = viewModel.weatherResponse.collectAsStateWithLifecycle()
     var errorMessageState = viewModel.errorMessage.collectAsStateWithLifecycle("")
+    var newsUrl by remember { mutableStateOf("") }
 
 
     val dateArray = PersianCalendar1.shamsiDate().split("/")
@@ -84,16 +129,6 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     val y = roozhDate.year
     val m = roozhDate.month
     val d = roozhDate.day
-    var calendarEntityState by remember {
-        mutableStateOf<CalendarEntity>(
-            CalendarEntity(
-                dayOfWeek = PersianCalendar1().strWeekDay,
-                globalDate = "${d.toInt()}  ${DateUtils.getGregorianMonthNameInPersian(m.toInt())}  ${y.toInt()}",
-                persianDate = persianDate,
-                events = viewModel.calendarResponse.value ?: emptyList()
-            )
-        )
-    }
 
 
 
@@ -157,7 +192,12 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     Widgets(
                         activity = activity,
                         weatherData = weatherResponseState.value,
-                        calendarData = calendarEntityState,
+                        calendarData =  CalendarEntity(
+                            dayOfWeek = PersianCalendar1().strWeekDay,
+                            globalDate = "${d.toInt()}  ${DateUtils.getGregorianMonthNameInPersian(m.toInt())}  ${y.toInt()}",
+                            persianDate = persianDate,
+                            events = viewModel.calendarResponse.value ?: emptyList()
+                        ),
                         onGetData = {
                             coroutineScope.launch {
                                 activity.locationAccessFinePermissionsResult.emit(true)
@@ -169,15 +209,198 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     NewsScreen(
                         activity = activity,
                         navController = navController,
-                        newsState = newsResponseState.value
-                    ) {
-                        viewModel.getNewsRss()
+                        newsState = newsResponseState.value,
+                        openWebView = { url ->
+                            newsUrl = url
+                        },
+                        onRefresh = {
+                            viewModel.getNewsRss()
+                        }
+                    )
+                }
+            }
+        }
+
+
+
+        if (newsUrl.isNotEmpty()){
+            Wide70PercentHeightDialog(
+                onDismissRequest = { newsUrl = "" },
+                content = {
+                    WebViewScreen(url = newsUrl) {
+                        newsUrl = ""
                     }
+                }
+            )
+        }
+
+    }
+}
+
+
+
+@SuppressLint("SetJavaScriptEnabled")
+@Composable
+fun WebViewScreen(
+    url: String,
+    onBackPressed: (() -> Unit)? = null
+) {
+
+    if (url.isNotEmpty()) {
+
+        val context = LocalContext.current
+        val loading = remember { mutableStateOf(true) }
+
+        val webView = remember {
+            WebView(context).apply {
+
+                settings.javaScriptEnabled = true
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+
+                webViewClient = object : WebViewClient() {
+                    override fun onPageStarted(
+                        view: WebView?,
+                        url: String?,
+                        favicon: Bitmap?
+                    ) {
+                        loading.value = true
+                    }
+
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        loading.value = false
+                    }
+                }
+                loadUrl(url)
+            }
+        }
+        BackHandler(enabled = true) {
+            if (webView.canGoBack()) {
+                webView.goBack()
+            } else {
+                onBackPressed?.invoke()
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(WindowInsets.statusBars.asPaddingValues())
+        ) {
+
+            Box(modifier = Modifier.weight(0.9f)) {
+                AndroidView(factory = { webView }, modifier = Modifier.fillMaxSize())
+                if (loading.value) {
+                    val infiniteTransition = rememberInfiniteTransition(label = "rotation")
+                    val rotation by infiniteTransition.animateFloat(
+                        initialValue = 0f,
+                        targetValue = 360f,
+                        animationSpec = infiniteRepeatable(
+                            animation = tween(durationMillis = 1200, easing = LinearEasing),
+                            repeatMode = RepeatMode.Restart
+                        ),
+                        label = "rotationAnim"
+                    )
+
+                    Column(
+                        Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.8f)).clickable{}.focusable(true),
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.loading),
+                                contentDescription = "loading image",
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .graphicsLayer {
+                                        rotationZ = rotation
+                                    },
+                                colorFilter = ColorFilter.tint(Color.White)
+                            )
+                        }
+
+                        Text(
+                            text = "کمی صبر کنید..",
+                            textAlign = TextAlign.Center,
+                            style = CustomTypography.labelLarge.copy(color = Color.White),
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(vertical = 8.dp)
+                        )
+                    }
+                }
+            }
+
+
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(MaterialTheme.colorScheme.onSecondary)
+            )
+
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.08f)
+            ) {
+                Button(
+                    modifier = Modifier.fillMaxSize(),
+                    shape = RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp), onClick = {
+                        onBackPressed?.invoke()
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                ) {
+                    Text(
+                        modifier = Modifier,
+                        text = "بستن",
+                        style = CustomTypography.bodyLarge.copy(
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onSecondary
+                        ),
+                        maxLines = 1,
+                    )
                 }
             }
         }
     }
 }
+
+
+/*useDarkIcons = isSystemInDarkTheme()
+ SetStatusBarColor(defaultColor, useDarkIcons)
+
+ DisposableEffect(Unit) {
+     onDispose {
+         defaultColor = Color.Transparent
+         systemUiController.setStatusBarColor(defaultColor,useDarkIcons.not())
+     }
+ }*/
+
+@Composable
+fun SetStatusBarColor(color: Color, darkIcons: Boolean = true) {
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = color,
+            darkIcons = darkIcons
+        )
+    }
+}
+
+
+
+
+
 
 private fun getLastLocation(
     activity: MainActivity,
@@ -306,7 +529,6 @@ class HomeScreenVM @Inject constructor(
                 val obj = calendarManager.getDayInfo(
                     shamsiDate = PersianCalendar1.shamsiDate(),
                     gregorianDate = DateUtils2.getTodayDate().gregorianDate,
-                    hijriDate = "1406-10-01"
                 )
                 calendarResponse.emit(obj?.getEvents())
                 Log.i(TAG, "getEvents: $obj")
