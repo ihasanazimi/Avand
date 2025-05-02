@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.gson.Gson
 import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
-import ir.hasanazimi.avand.data.entities.toWeatherEntity
+import ir.hasanazimi.avand.data.entities.remote.weather.mapper.toWeatherEntity
 import ir.hasanazimi.avand.data.web_services.weather.WeatherWebServices
 import ir.hasanazimi.avand.db.DataStoreManager
 import kotlinx.coroutines.flow.Flow

@@ -33,18 +33,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.R
-import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.navigation.Screens
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 @Composable
@@ -157,23 +151,6 @@ fun NameRegisterScreen(navController: NavHostController) {
 
     }
 }
-
-
-
-@HiltViewModel
-class NameRegisterScreenVM @Inject constructor(
-    private val dataStoreManager: DataStoreManager
-) : ViewModel(){
-
-    fun nameRegistration(newName : String){
-        viewModelScope.launch {
-            dataStoreManager.saveUserName(newName)
-        }
-    }
-
-
-}
-
 
 @Preview(showBackground = true)
 @Composable

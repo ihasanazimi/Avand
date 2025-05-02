@@ -183,27 +183,6 @@ fun MyLottieAnimation(modifier: Modifier) {
     )
 }
 
-@HiltViewModel
-class HostScreenVM @Inject constructor(
-    private val dataStoreManager: DataStoreManager
-) : ViewModel() {
-
-    val TAG = "HostScreenVM"
-
-    val userName = MutableStateFlow<String>("")
-
-    fun getUserName() {
-        viewModelScope.launch {
-            dataStoreManager.userNameFlow.collect {
-                Log.i(TAG, "getUserName: $it")
-                userName.emit(it?:"")
-            }
-        }
-    }
-
-
-}
-
 
 @Preview(showBackground = true)
 @Composable

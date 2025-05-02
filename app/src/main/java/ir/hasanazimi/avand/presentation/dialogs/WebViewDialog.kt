@@ -15,7 +15,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 @Composable
-fun Wide70PercentHeightDialog(
+fun WebViewDialog(
     onDismissRequest: () -> Unit,
     content: @Composable () -> Unit
 ) {

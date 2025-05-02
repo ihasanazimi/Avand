@@ -68,18 +68,6 @@ fun SplashScreen(navController: NavHostController) {
     }
 }
 
-@HiltViewModel
-class SplashScreenVM @Inject constructor(
-    private val dataStoreManager: DataStoreManager
-): ViewModel(){
-
-    val TAG = "SplashScreenVM"
-
-    fun getIntroSkipped() = dataStoreManager.introSkipped.also {
-        Log.i(TAG, "getIntroSkipped: skipped is $it")
-    }
-
-}
 
 
 @Preview

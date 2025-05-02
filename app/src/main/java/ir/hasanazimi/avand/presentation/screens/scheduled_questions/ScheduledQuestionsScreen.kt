@@ -2,7 +2,6 @@
 
 package ir.hasanazimi.avand.presentation.screens.scheduled_questions
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,21 +39,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.R
-import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.navigation.Screens
 import ir.hasanazimi.avand.presentation.screens.time_picker.ShowTimePickerDialog
 import ir.hasanazimi.avand.presentation.screens.time_picker.TimePickerFlag
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 @Composable
@@ -62,12 +54,8 @@ fun SchedulingScreen(
     navController: NavHostController
 ) {
 
-
-    val context = LocalContext.current
     val viewModel = hiltViewModel<ScheduledQuestionsScreenVM>()
-    val focusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
-    val coroutineScope = rememberCoroutineScope()
 
     var showTimePicker by remember { mutableStateOf(false) }
     var timePickerFlag by remember { mutableStateOf<TimePickerFlag>(TimePickerFlag.BedTime) }
@@ -215,59 +203,7 @@ fun SchedulingScreen(
 }
 
 
-@HiltViewModel
-class ScheduledQuestionsScreenVM @Inject constructor(
-    private val dataStoreManager: DataStoreManager
-) : ViewModel(){
 
-    val TAG = "ScheduledQuestionsScreenVM"
-    val wakeUpTimeData = MutableStateFlow("")
-    val bedTimeData = MutableStateFlow("")
-
-
-    fun saveBedTime(bedTime : String){
-        viewModelScope.launch {
-            dataStoreManager.saveBedTime(bedTime).also {
-                Log.i(TAG, "saveBedTime: $bedTime")
-            }
-        }
-    }
-
-
-    fun saveWakeUpTime(wakeupTime : String){
-        viewModelScope.launch {
-            dataStoreManager.saveWakeTime(wakeupTime).also {
-                Log.i(TAG, "saveWakeUpTime: $wakeupTime")
-            }
-        }
-    }
-
-
-    fun saveIntroSkipped(skipped : Boolean) {
-        viewModelScope.launch {
-            dataStoreManager.saveIntroSkipped(skipped).also {
-                Log.i(TAG, "saveIntroSkipped: skipped is $skipped")
-            }
-        }
-    }
-
-    fun getWakeUpTime(){
-        viewModelScope.launch {
-            dataStoreManager.wakeTimeFlow.collect {
-                wakeUpTimeData.emit(it?:"")
-            }
-        }
-    }
-
-    fun getBedTime(){
-        viewModelScope.launch {
-            dataStoreManager.bedTimeFlow.collect {
-                bedTimeData.emit(it?:"")
-            }
-        }
-    }
-
-}
 
 
 

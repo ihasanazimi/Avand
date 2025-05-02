@@ -45,12 +45,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.extensions.showToast
@@ -63,18 +60,12 @@ import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.itemViews.NewsItemView
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
-import ir.hasanazimi.avand.use_cases.NewsRssUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @Composable
 fun NewsScreen(
     activity: MainActivity,
     navController: NavHostController,
     openWebView : (newsUrl : String) -> Unit,
-    onRefresh: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -124,7 +115,9 @@ fun NewsScreen(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .align(Alignment.CenterStart)
-                        .clickable { onRefresh() },
+                        .clickable {
+                            viewModel.getNewsRss()
+                        },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
@@ -237,7 +230,7 @@ fun NewsScreen(
                 context = LocalContext.current,
                 exception = (newsResponseState.value as? ResponseState.Error)?.exception
             ) {
-                onRefresh()
+                viewModel.getNewsRss()
             }
         }
     }
@@ -350,45 +343,6 @@ fun LoadingBox() {
 }
 
 
-@HiltViewModel
-class NewsScreenVM @Inject constructor(
-    private val newsRssUseCase: NewsRssUseCase
-) : ViewModel(){
-
-
-    private val _newsResponse = MutableStateFlow<ResponseState<List<RssFeedResult?>>>(ResponseState.Loading)
-    val newsResponse = _newsResponse.asStateFlow()
-
-    fun getNewsRss() {
-        viewModelScope.launch {
-
-            val feeds = listOf(
-                NewsSources.KHABAR_ONLINE,
-                NewsSources.KHABAR_ONLINE_IT,
-                NewsSources.ZOOMIT,
-                NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI,
-            )
-
-            newsRssUseCase.getAllNews(feeds).collect { result ->
-                when (result) {
-                    is ResponseState.Success -> {
-                        _newsResponse.emit(ResponseState.Success(result.data))
-                    }
-                    is ResponseState.Error -> {
-                        result.exception?.let { _newsResponse.emit(ResponseState.Error(it)) }
-                    }
-                    is ResponseState.Loading -> {
-                        _newsResponse.emit(ResponseState.Loading)
-                    }
-                }
-            }
-        }
-    }
-
-
-}
-
-
 @Preview(showBackground = true)
 @Composable
 fun NewsScreenPreView() {
@@ -397,7 +351,6 @@ fun NewsScreenPreView() {
             activity = MainActivity(),
             navController = rememberNavController(),
             openWebView = {},
-            onRefresh = {}
         )
     }
 }
