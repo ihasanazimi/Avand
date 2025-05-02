@@ -5,8 +5,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
-const val PERMISSION_REQUEST_CODE = 10010
-
+private val PERMISSION_REQUEST_CODE = 10010
 
 fun Activity.isPermissionGranted(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED

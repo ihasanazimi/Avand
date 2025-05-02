@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import ir.hasanazimi.avand.common.security_and_permissions.isPermissionGranted
+import ir.hasanazimi.avand.data.Const
 import ir.hasanazimi.avand.presentation.navigation.AppNavigator
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -47,7 +48,7 @@ class MainActivity : ComponentActivity() {
         Log.i(TAG, "onRequestPermissionsResult code: $requestCode")
         when (requestCode) {
 
-            1001 -> {
+            Const.LOCATION_PERMEATION_CODE -> {
                 lifecycleScope.launch {
                     if (permissions.isNotEmpty()){
                         locationAccessFinePermissionsResult.emit(isPermissionGranted(permissions[0].toString()))
@@ -56,13 +57,10 @@ class MainActivity : ComponentActivity() {
                 return
             }
 
-            1002 -> {
-                if (permissions.isNotEmpty()){
 
-                }
+            else -> {
+
             }
-
-            // Handle other permission request codes if needed
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults, deviceId)
     }
