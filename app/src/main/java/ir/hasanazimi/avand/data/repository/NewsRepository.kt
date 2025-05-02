@@ -60,8 +60,11 @@ class NewsRssRepositoryImpl @Inject constructor(
 
 
 private suspend fun apiCall(rssService: RssService, newsSources: NewsSources): RssFeedResult? = when (newsSources) {
-    NewsSources.EGTESAGE_ONLINE -> RssFeedResult.EgtesadOnline(rssService.getEgtesadOnlineRssFeed(newsSources.baseUrl)).also { it ->
-        Log.i("TAG", "apiCall EgtesadOnline: $it")
+    NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI -> RssFeedResult.KhabarOnline(rssService.getKhabarOnlineRssFeed(newsSources.baseUrl)).also { it ->
+        Log.i("TAG", "apiCall KhabarOnline: $it")
+    }
+    NewsSources.KHABAR_ONLINE_IT -> RssFeedResult.KhabarOnline(rssService.getKhabarOnlineRssFeed(newsSources.baseUrl)).also { it ->
+        Log.i("TAG", "apiCall KhabarOnline: $it")
     }
     NewsSources.KHABAR_ONLINE -> RssFeedResult.KhabarOnline(rssService.getKhabarOnlineRssFeed(newsSources.baseUrl)).also {
         Log.i("TAG", "apiCall KhabarOnline: $it")

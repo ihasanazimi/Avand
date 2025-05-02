@@ -274,9 +274,10 @@ class HomeScreenVM @Inject constructor(
         viewModelScope.launch {
 
             val feeds = listOf(
-                NewsSources.EGTESAGE_ONLINE,
-                NewsSources.KHABAR_ONLINE,
                 NewsSources.ZOOMIT,
+                NewsSources.KHABAR_ONLINE,
+                NewsSources.KHABAR_ONLINE_IT,
+                NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI,
             )
 
             newsRssUseCase.getAllNews(feeds).collect { result ->

@@ -6,9 +6,6 @@ import retrofit2.http.Url
 interface RssService {
 
     @GET
-    suspend fun getEgtesadOnlineRssFeed(@Url url: String): ir.hasanazimi.avand.data.entities.remote.news.egtesad_online.RssFeed
-
-    @GET
     suspend fun getKhabarOnlineRssFeed(@Url url: String): ir.hasanazimi.avand.data.entities.remote.news.khabar_online.RssFeed
 
     @GET

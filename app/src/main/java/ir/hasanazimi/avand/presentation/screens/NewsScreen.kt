@@ -77,10 +77,6 @@ fun NewsScreen(
                 val results = newsState.data
                 val newsItems = results?.flatMapIndexed { index, result ->
                     when (result) {
-                        is RssFeedResult.EgtesadOnline -> result.feed.channel?.items?.map {
-                            NewsItemWrapper.EgtesadOnline(it, NewsSources.EGTESAGE_ONLINE)
-                        } ?: emptyList()
-
                         is RssFeedResult.KhabarOnline -> result.feed.channel?.items?.map {
                             NewsItemWrapper.KhabarOnline(it, NewsSources.KHABAR_ONLINE)
                         } ?: emptyList()
@@ -88,7 +84,6 @@ fun NewsScreen(
                         is RssFeedResult.Zoomit -> result.feed.channel?.items?.map {
                             NewsItemWrapper.Zoomit(it, NewsSources.ZOOMIT)
                         } ?: emptyList()
-
                         null -> emptyList()
                     }
                 } ?: emptyList()

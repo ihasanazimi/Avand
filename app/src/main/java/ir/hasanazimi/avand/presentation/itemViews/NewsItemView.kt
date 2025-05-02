@@ -63,31 +63,11 @@ fun NewsItemView(
                 shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp)
             ) {
 
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(NewsItemUtils.getImageUrl(news.item) ?: "")
-                        .crossfade(true)
-                        .addHeader("User-Agent", "Mozilla/5.0 (Android; Mobile; rv:68.0)")
-                        .addHeader("Accept", "image/*")
-                        .listener(
-                            onStart = {
-                                Log.d("Coil", "Loading started for ${NewsItemUtils.getImageUrl(news.item) ?: ""}")
-                            },
-                            onError = { _, error ->
-                                Log.e("CoilError", "Failed to load ${NewsItemUtils.getImageUrl(news.item) ?: ""}: ${error.throwable.message}")
-                            },
-                            onSuccess = { _, _ ->
-                                Log.d("CoilSuccess", "Successfully loaded ${NewsItemUtils.getImageUrl(news.item) ?: ""}")
-                            }
-                        )
-                        .build(),
-                    contentDescription = NewsItemUtils.getTitle(news.item),
-                    contentScale = ContentScale.Crop,
+                ImageLoading(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp),
-                    placeholder = painterResource(R.drawable.loading),
-                    error = painterResource(R.drawable.baseline_error_outline_24)
+                    url = NewsItemUtils.getImageUrl(news.item) ?: ""
                 )
             }
 
@@ -166,10 +146,6 @@ fun NewsItemView(
         }
     }
 }
-
-
-
-
 
 
 @Preview
