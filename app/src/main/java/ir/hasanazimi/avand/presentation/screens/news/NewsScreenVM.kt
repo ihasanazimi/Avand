@@ -1,14 +1,17 @@
 package ir.hasanazimi.avand.presentation.screens.news
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.hasanazimi.avand.common.extensions.withNotNull
 import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.remote.news.NewsSources
 import ir.hasanazimi.avand.data.entities.remote.news.RssFeedResult
 import ir.hasanazimi.avand.use_cases.NewsRssUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,6 +21,7 @@ class NewsScreenVM @Inject constructor(
     private val newsRssUseCase: NewsRssUseCase
 ) : ViewModel(){
 
+    val TAG = this::class.simpleName
 
     private val _newsResponse = MutableStateFlow<ResponseState<List<RssFeedResult?>>>(ResponseState.Loading)
     val newsResponse = _newsResponse.asStateFlow()
@@ -32,7 +36,7 @@ class NewsScreenVM @Inject constructor(
                 NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI,
             )
 
-            newsRssUseCase.getAllNews(feeds).collect { result ->
+            newsRssUseCase.getAllNews(feeds).collectLatest { result ->
                 when (result) {
                     is ResponseState.Success -> {
                         _newsResponse.emit(ResponseState.Success(result.data))
@@ -46,6 +50,12 @@ class NewsScreenVM @Inject constructor(
                 }
             }
         }
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.i(TAG, "onCleared: ")
     }
 
 

@@ -66,7 +66,7 @@ import kotlin.math.roundToInt
 @Composable
 fun Widgets(
     activity: MainActivity,
-    weatherData: ResponseState<WeatherEntity>? = null,
+    weatherData: ResponseState<WeatherEntity>,
     calendarData: CalendarEntity,
     onGetData: () -> Unit = {}
 ) {

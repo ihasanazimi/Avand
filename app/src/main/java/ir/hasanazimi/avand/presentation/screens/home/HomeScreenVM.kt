@@ -12,6 +12,7 @@ import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.common.date_time.CalendarManager
 import ir.hasanazimi.avand.common.date_time.DateUtils2
 import ir.hasanazimi.avand.common.date_time.PersianCalendar1
+import ir.hasanazimi.avand.common.date_time.RoozhDateConverter
 import ir.hasanazimi.avand.common.date_time.getEvents
 import ir.hasanazimi.avand.common.extensions.isLocationEnabled
 import ir.hasanazimi.avand.common.extensions.showToast
@@ -41,9 +42,13 @@ class HomeScreenVM @Inject constructor(
     val TAG = "HomeScreenVM"
 
     val errorMessage = MutableSharedFlow<String>()
-
     var weatherResponse = MutableStateFlow<ResponseState<WeatherEntity>?>(null)
     var calendarResponse = MutableStateFlow<List<EventOfDayEntity>?>(null)
+    var tempOfCalendar = MutableStateFlow<Pair<String, Triple<Int, Int, Int>>?>(null)
+
+    init {
+        prepareDates()
+    }
 
     fun getCurrentWeatherFromRemote(q: String) {
         Log.i(TAG, "getCurrentWeatherFromRemote called")
@@ -58,7 +63,7 @@ class HomeScreenVM @Inject constructor(
     fun getCurrentWeatherFromLocal(q: String = "Tehran") {
         Log.i(TAG, "getCurrentWeatherFromLocal called")
         viewModelScope.launch {
-            dataStoreManager.automaticWeatherDataFlow.collect { cash ->
+            dataStoreManager.automaticWeatherDataFlow.collectLatest { cash ->
                 /** IF cache was empty then get data from remote */
                 if (cash == null) {
                     getCurrentWeatherFromRemote(q)
@@ -140,6 +145,26 @@ class HomeScreenVM @Inject constructor(
         }
     }
 
+
+
+    fun prepareDates(){
+        viewModelScope.launch {
+            val dateArray = PersianCalendar1.shamsiDate().split("/")
+            val persianDate = "${dateArray[2].toInt()} " + PersianCalendar1().strMonth + " ${dateArray[0].toInt()}"
+            val roozhDate = RoozhDateConverter()
+            roozhDate.persianToGregorian(dateArray[0].toInt(), dateArray[1].toInt(), dateArray[2].toInt())
+            val y = roozhDate.year
+            val m = roozhDate.month
+            val d = roozhDate.day
+            tempOfCalendar.emit(Pair(persianDate, Triple(y,m,d)))
+        }
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.i(TAG, "onCleared: ")
+    }
 
 
 }

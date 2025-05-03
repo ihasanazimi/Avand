@@ -1,17 +1,15 @@
 package ir.hasanazimi.avand.presentation.screens.home
 
 import android.Manifest
-import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,19 +26,17 @@ import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.common.date_time.DateUtils
 import ir.hasanazimi.avand.common.date_time.PersianCalendar1
-import ir.hasanazimi.avand.common.date_time.RoozhDateConverter
+import ir.hasanazimi.avand.common.extensions.withNotNull
 import ir.hasanazimi.avand.common.security_and_permissions.askPermission
 import ir.hasanazimi.avand.common.security_and_permissions.isPermissionGranted
 import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.presentation.dialogs.WebViewDialog
 import ir.hasanazimi.avand.presentation.screens.news.NewsScreen
+import ir.hasanazimi.avand.presentation.screens.web_view.WebViewScreen
 import ir.hasanazimi.avand.presentation.screens.widgets.Widgets
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
-import ir.hasanazimi.avand.presentation.screens.web_view.WebViewScreen
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(activity: MainActivity, navController: NavHostController) {
 
@@ -49,19 +45,11 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     val viewModel = hiltViewModel<HomeScreenVM>()
     val coroutineScope = rememberCoroutineScope()
 
-
     var weatherResponseState = viewModel.weatherResponse.collectAsStateWithLifecycle()
     var errorMessageState = viewModel.errorMessage.collectAsStateWithLifecycle("")
+    var tempOfCalendar = viewModel.tempOfCalendar.collectAsStateWithLifecycle()
     var newsUrl by remember { mutableStateOf("") }
 
-
-    val dateArray = PersianCalendar1.shamsiDate().split("/")
-    val persianDate = "${dateArray[2].toInt()} " + PersianCalendar1().strMonth + " ${dateArray[0].toInt()}"
-    val roozhDate = RoozhDateConverter()
-    roozhDate.persianToGregorian(dateArray[0].toInt(), dateArray[1].toInt(), dateArray[2].toInt())
-    val y = roozhDate.year
-    val m = roozhDate.month
-    val d = roozhDate.day
 
 
 
@@ -94,10 +82,23 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     )
                 }
             } else {
-               viewModel.errorMessage.tryEmit("اجازه دسترسی به سرویس مکان توسط شما صادر نشده است!")
+                viewModel.errorMessage.tryEmit("اجازه دسترسی به سرویس مکان توسط شما صادر نشده است!")
             }
         }
     }
+
+
+
+
+    if (newsUrl.isNotEmpty()){
+        WebViewDialog(
+            onDismissRequest = { newsUrl = "" },
+            content = {
+                WebViewScreen(url = newsUrl) { newsUrl = "" }
+            }
+        )
+    }
+
 
 
 
@@ -108,23 +109,27 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     .fillMaxSize()
                     .padding(horizontal = 8.dp)
             ) {
+
                 item {
-                    Widgets(
-                        activity = activity,
-                        weatherData = weatherResponseState.value,
-                        calendarData = CalendarEntity(
-                            dayOfWeek = PersianCalendar1().strWeekDay,
-                            globalDate = "${d.toInt()}  ${DateUtils.getGregorianMonthNameInPersian(m.toInt())}  ${y.toInt()}",
-                            persianDate = persianDate,
-                            events = viewModel.calendarResponse.value ?: emptyList()
-                        ),
-                        onGetData = {
-                            coroutineScope.launch {
-                                activity.locationAccessFinePermissionsResult.emit(true)
+                    weatherResponseState.value.withNotNull { weatherData ->
+                        Widgets(
+                            activity = activity,
+                            weatherData = weatherData,
+                            calendarData = CalendarEntity(
+                                dayOfWeek = PersianCalendar1().strWeekDay,
+                                globalDate = "${tempOfCalendar.value?.second?.first?:0.toInt()}  ${DateUtils.getGregorianMonthNameInPersian(tempOfCalendar.value?.second?.second?.toInt()?:0)}  ${tempOfCalendar.value?.second?.third?:0.toInt()}",
+                                persianDate = tempOfCalendar.value?.first?:"",
+                                events = viewModel.calendarResponse.value ?: emptyList()
+                            ),
+                            onGetData = {
+                                coroutineScope.launch {
+                                    activity.locationAccessFinePermissionsResult.emit(true)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
+
                 item {
                     NewsScreen(
                         activity = activity,
@@ -134,23 +139,16 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                         }
                     )
                 }
+
+
             }
         }
-
-        if (newsUrl.isNotEmpty()){
-            WebViewDialog(
-                onDismissRequest = { newsUrl = "" },
-                content = {
-                    WebViewScreen(url = newsUrl) { newsUrl = "" }
-                }
-            )
-        }
-
     }
+
+
 }
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {

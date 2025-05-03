@@ -161,7 +161,7 @@ fun NewsScreen(
                     }
                 } ?: emptyList()
 
-                newsItems.shuffled().filter {
+                newsItems.filter {
                     NewsItemUtils.getLink(it.item) != null && NewsItemUtils.getTitle(it.item) != null
                 }.forEach { item ->
                     Log.i("TAG", "NewsScreen new item -> $item")
