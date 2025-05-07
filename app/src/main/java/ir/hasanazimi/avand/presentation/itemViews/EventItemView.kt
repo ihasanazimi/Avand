@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -48,7 +49,7 @@ fun EventItemView(eventOfDay: EventOfDayEntity) {
                 .size(16.dp)
                 .weight(0.2f)
                 .fillMaxWidth(),
-            tint = if (eventOfDay.isHoliday) RedColor else TransparentlyBlack
+            tint = if (eventOfDay.isHoliday) RedColor else MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)
         )
     }
 }
