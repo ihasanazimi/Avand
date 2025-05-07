@@ -360,7 +360,7 @@ private fun SuccessState(
         )
 
         Text(
-            text = "uv : ${currentWeather?.uv?.roundToInt() ?: ""}" + "\n" + WeatherCondition.getUVSentences(
+            text = WeatherCondition.getUVSentences(
                 currentWeather?.uv?.roundToInt() ?: 0,
                 currentWeather?.isDay == 1
             ) + "!",
@@ -381,7 +381,7 @@ private fun SuccessState(
         )
 
         Text(
-            text = WeatherCondition.getSentences(
+            text = WeatherCondition.generateSuggestion(
                 currentWeather?.feelslikeC?.roundToInt() ?: 0,
                 currentWeather?.isDay == 1
             ),
