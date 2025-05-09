@@ -8,7 +8,7 @@ import org.simpleframework.xml.Root
 @Root(name = "rss", strict = false)
 data class RssFeed(
     @field:Element(name = "channel")
-    var channel: Channel? = null
+    var channel: Channel = Channel(items = emptyList())
 )
 
 @Root(name = "channel", strict = false)
