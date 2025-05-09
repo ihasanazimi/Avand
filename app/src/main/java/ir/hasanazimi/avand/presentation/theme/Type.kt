@@ -13,33 +13,33 @@ import ir.hasanazimi.avand.R
 // Set of Material typography styles to start with
 
 
-val vazirFont = FontFamily(
+val yekan = FontFamily(
     Font(R.font.yekan, FontWeight.Normal),
 )
 
 
 val CustomTypography = Typography(
     titleLarge = TextStyle(
-        fontFamily = vazirFont,
-        fontSize = 22.sp,
+        fontFamily = yekan,
+        fontSize = 20.sp,
         textDirection = TextDirection.Rtl,
-        textAlign = TextAlign.Justify
+        textAlign = TextAlign.Start
     ),
     bodyLarge = TextStyle(
-        fontFamily = vazirFont,
-        fontSize = 18.sp,
-        textDirection = TextDirection.Rtl,
-        textAlign = TextAlign.Justify
-    ),
-    labelLarge = TextStyle(
-        fontFamily = vazirFont,
+        fontFamily = yekan,
         fontSize = 16.sp,
         textDirection = TextDirection.Rtl,
         textAlign = TextAlign.Justify
     ),
-    labelSmall = TextStyle(
-        fontFamily = vazirFont,
+    labelLarge = TextStyle(
+        fontFamily = yekan,
         fontSize = 14.sp,
+        textDirection = TextDirection.Rtl,
+        textAlign = TextAlign.Justify
+    ),
+    labelSmall = TextStyle(
+        fontFamily = yekan,
+        fontSize = 12.sp,
         textDirection = TextDirection.Rtl,
         textAlign = TextAlign.Justify
     ),

@@ -1,5 +1,6 @@
 package ir.hasanazimi.avand.presentation.screens.host
 
+import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
@@ -18,15 +19,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -36,20 +39,15 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
-import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.R
-import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.navigation.BottomNavigationBar
 import ir.hasanazimi.avand.presentation.navigation.Screens
-import ir.hasanazimi.avand.presentation.screens.setting.SettingScreen
 import ir.hasanazimi.avand.presentation.screens.currency_prices.CurrencyPricesScreen
 import ir.hasanazimi.avand.presentation.screens.home.HomeScreen
+import ir.hasanazimi.avand.presentation.screens.setting.SettingScreen
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @Composable
 fun HostScreen(activity: MainActivity, navController: NavHostController) {
@@ -57,6 +55,7 @@ fun HostScreen(activity: MainActivity, navController: NavHostController) {
     val viewModel = hiltViewModel<HostScreenVM>()
     var userNameState = viewModel.userName.collectAsStateWithLifecycle("کاربر بدون نام")
     val maxUserNameCharacter = 20
+    val lastDestination by remember { mutableStateOf(viewModel.lastDestination.value) }
 
     val hostNavController = rememberNavController()
 
@@ -67,10 +66,11 @@ fun HostScreen(activity: MainActivity, navController: NavHostController) {
     AvandTheme {
         Scaffold(
             modifier = Modifier,
-            bottomBar = { BottomNavigationBar(navController = hostNavController) },
+            bottomBar = { BottomNavigationBar(navController = hostNavController , lastDestination) },
             topBar = { TopBar(userNameState.value.take(maxUserNameCharacter)) }
         ) { innerPadding ->
             Content(
+                viewModel = viewModel,
                 innerPadding = innerPadding,
                 hostNavController = hostNavController,
                 mainNavController = navController,
@@ -82,6 +82,7 @@ fun HostScreen(activity: MainActivity, navController: NavHostController) {
 
 @Composable
 private fun Content(
+    viewModel : HostScreenVM,
     innerPadding: PaddingValues,
     hostNavController: NavHostController,
     mainNavController: NavHostController,
@@ -97,6 +98,19 @@ private fun Content(
             hostNavController.popBackStack(Screens.Home.routeId, inclusive = true)
         }
     }
+
+
+    hostNavController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener{
+        override fun onDestinationChanged(
+            controller: NavController,
+            destination: NavDestination,
+            arguments: Bundle?
+        ) {
+            Log.i(TAG, "onDestinationChanged: ${destination.route}")
+            viewModel.lastDestination.value = destination.route?: Screens.Home.routeId
+        }
+    })
+
 
     Box(modifier = Modifier.fillMaxSize()) {
         NavHost(

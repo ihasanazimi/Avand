@@ -155,7 +155,7 @@ class HomeScreenVM @Inject constructor(
             val y = roozhDate.year
             val m = roozhDate.month
             val d = roozhDate.day
-            tempOfCalendar.emit(Pair(persianDate, Triple(y,m,d)))
+            tempOfCalendar.emit(Pair(persianDate, Triple(d,m,y)))
         }
     }
 

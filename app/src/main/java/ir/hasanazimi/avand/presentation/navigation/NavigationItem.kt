@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
@@ -59,9 +60,9 @@ val navigationItems = listOf(
 
 
 @Composable
-fun BottomNavigationBar(navController: NavController) {
+fun BottomNavigationBar(navController: NavController , destination: String = Screens.Home.routeId) {
 
-    var currentRoute by remember { mutableStateOf<String?>(Screens.Home.routeId) }
+    var currentRoute by remember { mutableStateOf<String?>(destination) }
 
     NavigationBar(
         modifier = Modifier
