@@ -35,7 +35,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeScreenVM @Inject constructor(
     private val weatherUseCase: WeatherUseCase,
-    private val newsRssUseCase: NewsRssUseCase,
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 

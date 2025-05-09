@@ -26,26 +26,34 @@ class NewsScreenVM @Inject constructor(
     private val _newsResponse = MutableStateFlow<ResponseState<List<RssFeedResult?>>>(ResponseState.Loading)
     val newsResponse = _newsResponse.asStateFlow()
 
-    fun getNewsRss() {
+    private var cachedNews: List<RssFeedResult>? = null
+
+    fun getNewsRss(forceUpdate : Boolean = false) {
+        Log.i(TAG, "getNewsRss: ")
         viewModelScope.launch {
 
-            val feeds = listOf(
-                NewsSources.KHABAR_ONLINE,
-                NewsSources.KHABAR_ONLINE_IT,
-                NewsSources.ZOOMIT,
-                NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI,
-            )
+            if (cachedNews != null && forceUpdate.not()){
+                _newsResponse.emit(ResponseState.Success(cachedNews))
+            }else{
+                val feeds = listOf(
+                    NewsSources.KHABAR_ONLINE,
+                    NewsSources.KHABAR_ONLINE_IT,
+                    NewsSources.ZOOMIT,
+                    NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI,
+                )
 
-            newsRssUseCase.getAllNews(feeds).collectLatest { result ->
-                when (result) {
-                    is ResponseState.Success -> {
-                        _newsResponse.emit(ResponseState.Success(result.data))
-                    }
-                    is ResponseState.Error -> {
-                        result.exception?.let { _newsResponse.emit(ResponseState.Error(it)) }
-                    }
-                    is ResponseState.Loading -> {
-                        _newsResponse.emit(ResponseState.Loading)
+                newsRssUseCase.getAllNews(feeds).collectLatest { result ->
+                    when (result) {
+                        is ResponseState.Success -> {
+                            cachedNews = result.data as List<RssFeedResult>?
+                            _newsResponse.emit(ResponseState.Success(result.data))
+                        }
+                        is ResponseState.Error -> {
+                            result.exception?.let { _newsResponse.emit(ResponseState.Error(it)) }
+                        }
+                        is ResponseState.Loading -> {
+                            _newsResponse.emit(ResponseState.Loading)
+                        }
                     }
                 }
             }

@@ -116,7 +116,7 @@ fun NewsScreen(
                         .padding(horizontal = 16.dp)
                         .align(Alignment.CenterStart)
                         .clickable {
-                            viewModel.getNewsRss()
+                            viewModel.getNewsRss(true)
                         },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -230,7 +230,7 @@ fun NewsScreen(
                 context = LocalContext.current,
                 exception = (newsResponseState.value as? ResponseState.Error)?.exception
             ) {
-                viewModel.getNewsRss()
+                viewModel.getNewsRss(true)
             }
         }
     }
