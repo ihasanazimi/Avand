@@ -13,15 +13,10 @@ import kotlin.math.floor
 // مدل‌های داده (بدون تغییر)
 data class Event(
     @SerializedName("day") val day: Int? = null,
-    @SerializedName("gregorianDate") val gregorianDate: String? = null,
     @SerializedName("event") val event: String,
     @SerializedName("isOfficialHoliday") val isOfficialHoliday: Boolean,
     @SerializedName("type") val type: String,
     @SerializedName("description") val description: String,
-    @SerializedName("equivalentShamsiDate") val equivalentShamsiDate: String? = null,
-    @SerializedName("equivalentGregorianDate") val equivalentGregorianDate: String? = null,
-    @SerializedName("equivalentHijriDate") val equivalentHijriDate: String? = null,
-    @SerializedName("note") val note: String? = null
 )
 
 data class ShamsiMonth(
@@ -31,11 +26,7 @@ data class ShamsiMonth(
 )
 
 data class CalendarData(
-    @SerializedName("yearShamsi") val yearShamsi: Int,
-    @SerializedName("yearHijri") val yearHijri: Int,
-    @SerializedName("yearGregorian") val yearGregorian: Int,
     @SerializedName("monthsShamsi") val monthsShamsi: List<ShamsiMonth>,
-    @SerializedName("gregorianEvents") val gregorianEvents: List<Event>
 )
 
 data class CalendarInfo(
@@ -44,13 +35,11 @@ data class CalendarInfo(
     val events: List<Event>
 )
 
-// کلاس اصلی برای مدیریت تقویم
 class CalendarManager(private val context: Context) {
 
     private var calendarData: CalendarData? = null
     private val gson = Gson()
 
-    // خواندن و پارس فایل JSON از assets
     fun loadCalendarData(fileName: String = ""): Boolean {
         return try {
             val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
@@ -94,21 +83,12 @@ class CalendarManager(private val context: Context) {
 
     private fun validateDateFormat(shamsiDate: String, gregorianDate: String, hijriDate: String) {
         val shamsiRegex = Regex("""\d{4}/\d{2}/\d{2}""")
-        val gregorianRegex = Regex("""\d{4}-\d{2}-\d{2}""")
-        val hijriRegex = Regex("""\d{4}-\d{2}-\d{2}""")
 
         if (!shamsiDate.matches(shamsiRegex)) {
             throw IllegalArgumentException("Invalid Shamsi date format. Expected: YYYY/MM/DD")
         }
-        if (!gregorianDate.matches(gregorianRegex)) {
-            throw IllegalArgumentException("Invalid Gregorian date format. Expected: YYYY-MM-DD")
-        }
-        if (!hijriDate.matches(hijriRegex)) {
-            throw IllegalArgumentException("Invalid Hijri date format. Expected: YYYY-MM-DD")
-        }
     }
 
-    // استخراج مناسبت‌های شمسی
     private fun getShamsiEvents(shamsiDate: String): List<Event> {
         val events = mutableListOf<Event>()
         val (year, month, day) = shamsiDate.split("/").map { it.toInt() }
@@ -122,34 +102,6 @@ class CalendarManager(private val context: Context) {
                 }
             }
         }
-        return events
-    }
-
-    // استخراج مناسبت‌های میلادی
-    private fun getGregorianEvents(gregorianDate: String): List<Event> {
-        return calendarData?.gregorianEvents?.filter { it.gregorianDate == gregorianDate } ?: emptyList()
-    }
-
-    // استخراج مناسبت‌های قمری (از معادل‌های قمری در رویدادها)
-    private fun getHijriEvents(hijriDate: String, existingEvents: List<Event>): List<Event> {
-        val events = mutableListOf<Event>()
-
-        // بررسی رویدادهای شمسی که معادل قمری دارند
-        calendarData?.monthsShamsi?.forEach { month ->
-            month.events.forEach { event ->
-                if (event.equivalentHijriDate == hijriDate && existingEvents.none { it.event == event.event }) {
-                    events.add(event)
-                }
-            }
-        }
-
-        // بررسی رویدادهای میلادی که معادل قمری دارند
-        calendarData?.gregorianEvents?.forEach { event ->
-            if (event.equivalentHijriDate == hijriDate && existingEvents.none { it.event == event.event }) {
-                events.add(event)
-            }
-        }
-
         return events
     }
 }
