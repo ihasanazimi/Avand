@@ -16,7 +16,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
@@ -60,9 +59,9 @@ val navigationItems = listOf(
 
 
 @Composable
-fun BottomNavigationBar(navController: NavController , destination: String = Screens.Home.routeId) {
+fun BottomNavigationBar(navController: NavController, destination: State<String>) {
 
-    var currentRoute by remember { mutableStateOf<String?>(destination) }
+    var currentRoute by remember { mutableStateOf<String?>(destination.value) }
 
     NavigationBar(
         modifier = Modifier
@@ -79,14 +78,14 @@ fun BottomNavigationBar(navController: NavController , destination: String = Scr
                     Log.i("BottomBar", "BottomNavigationBar: ${currentRoute == item.screenRoute.routeId} ")
                 },
                 onClick = {
-                    navController.navigate(item.screenRoute.routeId) {
-                        popUpTo(Screens.Home.routeId) {
-                            saveState = true
+                    if (currentRoute != item.screenRoute.routeId){
+                        navController.navigate(item.screenRoute.routeId) {
+                            popUpTo(Screens.Home.routeId) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                        currentRoute = navController.currentBackStackEntry?.destination?.route
                     }
-                    currentRoute = navController.currentBackStackEntry?.destination?.route
                 },
                 icon = {
                     Icon(
@@ -117,6 +116,6 @@ fun BottomNavigationBar(navController: NavController , destination: String = Scr
 fun BottomNavigationBarPreview() {
     AvandTheme {
         val navController = rememberNavController()
-        BottomNavigationBar(navController = navController)
+        BottomNavigationBar(navController = navController , remember { mutableStateOf(Screens.Home.routeId) })
     }
 }
