@@ -30,13 +30,13 @@ fun EventItemView(eventOfDay: EventOfDayEntity) {
         modifier = Modifier
             .background(Color.Transparent)
             .fillMaxWidth()
-            .padding(vertical = 2.dp),
+            .padding(vertical = 2.dp, horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = eventOfDay.eventTitle,
             modifier = Modifier
-                .weight(0.8f)
+                .weight(0.9f)
                 .fillMaxWidth(),
             fontSize = 12.sp,
             style = CustomTypography.labelLarge
@@ -47,9 +47,11 @@ fun EventItemView(eventOfDay: EventOfDayEntity) {
             modifier = Modifier
                 .padding(horizontal = 4.dp)
                 .size(16.dp)
-                .weight(0.2f)
+                .weight(0.1f)
                 .fillMaxWidth(),
-            tint = if (eventOfDay.isHoliday) RedColor else MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)
+            tint = if (eventOfDay.isHoliday) RedColor else MaterialTheme.colorScheme.onBackground.copy(
+                alpha = 0.5f
+            )
         )
     }
 }
@@ -57,7 +59,7 @@ fun EventItemView(eventOfDay: EventOfDayEntity) {
 
 @Preview(showBackground = true)
 @Composable
-fun OccasionItemViewPreview(){
+fun OccasionItemViewPreview() {
     AvandTheme {
         EventItemView(eventOfDay = EventOfDayEntity("روز بزرگداشت فردوسی", isHoliday = true))
     }

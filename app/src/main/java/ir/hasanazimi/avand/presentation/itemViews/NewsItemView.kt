@@ -1,5 +1,6 @@
 package ir.hasanazimi.avand.presentation.itemViews
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ir.hasanazimi.avand.data.entities.remote.news.NewsItemWrapper
 import ir.hasanazimi.avand.data.entities.remote.news.NewsItemUtils
 import ir.hasanazimi.avand.data.entities.remote.news.NewsSources
@@ -45,34 +47,51 @@ fun NewsItemView(
     AvandTheme {
         Card(
             modifier = Modifier
-                .padding(bottom = 8.dp, top = 8.dp)
+                .padding(vertical = 4.dp)
                 .fillMaxWidth()
                 .border(
                     2.dp,
                     MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f),
-                    RoundedCornerShape(16.dp)
+                    RoundedCornerShape(24.dp)
                 )
-                .clickable { onNewsClick.invoke(news) }, shape = RoundedCornerShape(16.dp)
+                .clickable { onNewsClick.invoke(news) }, shape = RoundedCornerShape(24.dp)
         ) {
-            Column {
+            Column(
+                modifier = Modifier.padding(
+                    start = 20.dp,
+                    end = 20.dp,
+                    top = 26.dp,
+                    bottom = 24.dp
+                )
+            ) {
 
                 Card(
-                    shape = RoundedCornerShape(
-                        topEnd = 12.dp,
-                        topStart = 12.dp,
-                        bottomStart = 4.dp,
-                        bottomEnd = 4.dp
-                    ),
+                    shape = RoundedCornerShape(24.dp),
                     modifier = Modifier
-                        .padding(start = 10.dp, end = 12.dp, top = 12.dp)
+                        .padding(bottom = 8.dp)
                         .fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(2.dp, 2.dp, 2.dp, 2.dp, 2.dp, 0.dp)
+                    elevation = CardDefaults.cardElevation(1.dp, 1.dp, 1.dp, 1.dp, 1.dp, 1.dp)
                 ) {
                     ImageLoading(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp),
                         url = NewsItemUtils.getImageUrl(news.item)
+                    )
+                }
+
+
+                Box {
+                    Text(
+                        text = NewsItemUtils.getCategory(news.item) ?: "-_-",
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth(),
+                        style = CustomTypography.labelSmall.copy(
+                            lineHeight = TextUnit(24f, TextUnitType.Sp),
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
+                        ),
+                        maxLines = 1
                     )
                 }
 
@@ -83,13 +102,12 @@ fun NewsItemView(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .padding(vertical = 8.dp)
                     ) {
                         Text(
                             text = NewsItemUtils.getTitle(news.item) ?: "بدون عنوان",
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 8.dp),
+                                .fillMaxWidth(),
                             style = CustomTypography.titleLarge.copy(
                                 lineHeight = TextUnit(32f, TextUnitType.Sp)
                             )
@@ -98,13 +116,12 @@ fun NewsItemView(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
                         Text(
                             text = NewsItemUtils.getDescription(news.item) ?: "-_-",
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp),
+                                .padding(vertical = 8.dp)
+                                .fillMaxWidth(),
                             style = CustomTypography.labelLarge.copy(
                                 lineHeight = TextUnit(24f, TextUnitType.Sp)
                             )
@@ -118,7 +135,6 @@ fun NewsItemView(
                 ) {
                     Row(
                         modifier = Modifier
-                            .padding(16.dp)
                             .align(Alignment.CenterStart)
                     ) {
                         Icon(
@@ -126,8 +142,12 @@ fun NewsItemView(
                             contentDescription = "اشتراک خبر",
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .size(28.dp)
-                                .padding(5.dp)
+                                .size(32.dp)
+                                .background(
+                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                                    CircleShape
+                                )
+                                .padding(end = 6.dp, start = 2.dp, top = 2.dp, bottom = 2.dp)
                                 .clickable {
                                     onShareNews.invoke(news)
                                 },
@@ -137,14 +157,12 @@ fun NewsItemView(
 
                     Row(
                         modifier = Modifier
-                            .padding(end = 8.dp, start = 8.dp)
                             .align(Alignment.CenterEnd),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = NewsItemUtils.getPublishDate(news.item) ?: "نامشخص",
-                            style = CustomTypography.labelSmall,
-                            modifier = Modifier.padding(horizontal = 8.dp)
+                            style = CustomTypography.labelSmall.copy(color = MaterialTheme.colorScheme.primary),
                         )
                     }
                 }

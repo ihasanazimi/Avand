@@ -204,7 +204,7 @@ fun Widgets(
                                 contentAlignment = Alignment.CenterEnd
                             ) {
                                 Text(
-                                    "مناسبت های امروز",
+                                    "مناسبت (شمسی)",
                                     modifier = Modifier.padding(horizontal = 16.dp),
                                     textAlign = TextAlign.Start,
                                     maxLines = 1,

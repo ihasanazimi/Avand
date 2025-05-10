@@ -40,8 +40,6 @@ data class CalendarData(
 
 data class CalendarInfo(
     val shamsiDate: String,
-    val gregorianDate: String,
-    val hijriDate: String,
     val isOfficialHoliday: Boolean,
     val events: List<Event>
 )
@@ -68,106 +66,23 @@ class CalendarManager(private val context: Context) {
     }
 
 
-
-
-    fun getTodayHijriDate(): String {
-        val today = Calendar.getInstance()
-        val year = today.get(Calendar.YEAR)
-        val month = today.get(Calendar.MONTH) + 1 // Calendar.MONTH is 0-based
-        val day = today.get(Calendar.DAY_OF_MONTH)
-
-        val jd = gregorianToJD(year, month, day)
-        val hijri = jdToHijri(jd)
-
-        return String.format("%04d-%02d-%02d", hijri[0], hijri[1], hijri[2])
-    }
-
-    private fun gregorianToJD(year: Int, month: Int, day: Int): Double {
-        val y = if (month > 2) year else year - 1
-        val m = if (month > 2) month else month + 12
-        val a = floor(y / 100.0)
-        val b = 2 - a + floor(a / 4.0)
-        return floor(365.25 * (y + 4716)) +
-                floor(30.6001 * (m + 1)) +
-                day + b - 1524.5
-    }
-
-    private fun jdToHijri(jd: Double): IntArray {
-        val jdAdjusted = floor(jd) + 0.5
-        val daysSinceEpoch = jdAdjusted - 1948439.5
-        val hijriYear = floor((30 * daysSinceEpoch + 10646) / 10631).toInt()
-        val startOfYear = hijriToJD(hijriYear, 1, 1)
-        var dayOfYear = (jdAdjusted - startOfYear).toInt()
-
-        var hijriMonth = 1
-        while (hijriMonth <= 12 && dayOfYear >= hijriMonthLength(hijriYear, hijriMonth)) {
-            dayOfYear -= hijriMonthLength(hijriYear, hijriMonth)
-            hijriMonth++
-        }
-
-        val hijriDay = dayOfYear + 1
-        return intArrayOf(hijriYear, hijriMonth, hijriDay)
-    }
-
-    private fun hijriToJD(year: Int, month: Int, day: Int): Double {
-        return day +
-                ceil(29.5 * (month - 1)) +
-                (year - 1) * 354 +
-                floor((3 + 11 * year) / 30.0) +
-                1948439.5 - 1
-    }
-
-    private fun hijriMonthLength(year: Int, month: Int): Int {
-        return if ((month % 2 == 1) || (month == 12 && isHijriLeapYear(year))) 30 else 29
-    }
-
-    private fun isHijriLeapYear(year: Int): Boolean {
-        return ((11 * year + 14) % 30) < 11
-    }
-
-
     /**
      دریافت اطلاعات روز با ورودی تاریخ‌ها
      * 1404/06/12
-     * 2025-09-01
-     * 1447-03-10
      */
-    fun getDayInfo(shamsiDate: String, gregorianDate: String): CalendarInfo? {
+    fun getDayInfo(shamsiDate: String): CalendarInfo? {
         if (calendarData == null) {
             throw IllegalStateException("Calendar data not loaded. Call loadCalendarData() first.")
         }
-
         try {
-            val hijriDate = getTodayHijriDate()
-            // اعتبارسنجی فرمت تاریخ‌ها
-            validateDateFormat(shamsiDate, gregorianDate, hijriDate)
-
-            // استخراج اطلاعات
             val events = mutableListOf<Event>()
             var isHoliday = false
-
-            // دریافت مناسبت‌های شمسی
             val shamsiEvents = getShamsiEvents(shamsiDate)
             events.addAll(shamsiEvents)
             isHoliday = isHoliday || shamsiEvents.any { it.isOfficialHoliday }
-
-            // دریافت مناسبت‌های میلادی
-            val gregorianEvents = getGregorianEvents(gregorianDate)
-            events.addAll(gregorianEvents)
-            isHoliday = isHoliday || gregorianEvents.any { it.isOfficialHoliday }
-
-            // دریافت مناسبت‌های قمری (از معادل‌های قمری در رویدادهای شمسی و میلادی)
-            val hijriEvents = getHijriEvents(hijriDate, events)
-            events.addAll(hijriEvents)
-            isHoliday = isHoliday || hijriEvents.any { it.isOfficialHoliday }
-
-            // حذف رویدادهای تکراری (بر اساس نام رویداد)
             val uniqueEvents = events.distinctBy { it.event }
-
             return CalendarInfo(
                 shamsiDate = shamsiDate,
-                gregorianDate = gregorianDate,
-                hijriDate = hijriDate,
                 isOfficialHoliday = isHoliday,
                 events = uniqueEvents
             )
@@ -177,7 +92,6 @@ class CalendarManager(private val context: Context) {
         }
     }
 
-    // اعتبارسنجی فرمت تاریخ‌ها
     private fun validateDateFormat(shamsiDate: String, gregorianDate: String, hijriDate: String) {
         val shamsiRegex = Regex("""\d{4}/\d{2}/\d{2}""")
         val gregorianRegex = Regex("""\d{4}-\d{2}-\d{2}""")

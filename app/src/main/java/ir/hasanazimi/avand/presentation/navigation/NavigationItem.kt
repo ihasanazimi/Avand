@@ -66,7 +66,7 @@ fun BottomNavigationBar(navController: NavController , destination: String = Scr
 
     NavigationBar(
         modifier = Modifier
-            .padding(4.dp)
+            .padding(start = 8.dp , end = 8.dp , bottom = 10.dp , top = 8.dp)
             .clip(RoundedCornerShape(24.dp))
             .border(
                 BorderStroke(2.dp, MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)),

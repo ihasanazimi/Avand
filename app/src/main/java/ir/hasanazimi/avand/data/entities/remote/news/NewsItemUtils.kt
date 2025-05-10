@@ -43,16 +43,15 @@ object NewsItemUtils {
         Log.i("TAG", "getImageUrl: $it")
     }
 
-    private fun formatDate(dateStr: String): String? {
-        return try {
-            val inputFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH)
-            val outputFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("fa"))
-            val date = inputFormat.parse(dateStr)
-            date?.let { outputFormat.format(it) }
-        } catch (e: Exception) {
-            null
-        }
+
+
+    fun getCategory(item: Any) = when(item){
+        is KhabarOnlineItem -> "# دسته بندی > " + (item.category?.domain.toString()?:"")
+        is ZoomitItem -> "# دسته بندی > " + item.categories?.first().toString()?:""
+        else -> ""
     }
+
+
 }
 
 

@@ -93,10 +93,7 @@ class HomeScreenVM @Inject constructor(
             val calendarManager = CalendarManager(context)
             calendarManager.loadCalendarData("taghvim.json")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val obj = calendarManager.getDayInfo(
-                    shamsiDate = PersianCalendar1.shamsiDate(),
-                    gregorianDate = DateUtils2.getTodayDate().gregorianDate,
-                )
+                val obj = calendarManager.getDayInfo(PersianCalendar1.shamsiDate())
                 calendarResponse.emit(obj?.getEvents())
                 Log.i(TAG, "getEvents: $obj")
             }

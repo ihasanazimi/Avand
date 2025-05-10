@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -113,8 +114,10 @@ fun NewsScreen(
 
                 Row(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp)
+                        .height(32.dp)
                         .align(Alignment.CenterStart)
+                        .background(MaterialTheme.colorScheme.primary.copy(0.2f),RoundedCornerShape(16.dp))
+                        .padding(horizontal = 8.dp)
                         .clickable {
                             viewModel.getNewsRss(true)
                         },
@@ -127,14 +130,14 @@ fun NewsScreen(
                         modifier = Modifier
                             .size(20.dp)
                             .fillMaxWidth(),
-                        tint = MaterialTheme.colorScheme.secondary
+                        tint = MaterialTheme.colorScheme.primary
                     )
 
 
                     Text(
                         text = "بروزرسانی",
                         style = CustomTypography.labelSmall.copy(
-                            color = MaterialTheme.colorScheme.secondary
+                            color = MaterialTheme.colorScheme.primary
                         ),
                         modifier = Modifier.padding(horizontal = 4.dp),
                     )
