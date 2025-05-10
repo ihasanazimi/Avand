@@ -8,6 +8,7 @@ import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.navigation.Screens
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class HostScreenVM @Inject constructor(
     val TAG = "HostScreenVM"
 
     val userName = MutableStateFlow<String>("")
-    var lastDestination = MutableStateFlow(Screens.Home.routeId) /** home is default */
+    var lastDestination = MutableStateFlow(Screens.Home.routeId)
 
     fun getUserName() {
         viewModelScope.launch {

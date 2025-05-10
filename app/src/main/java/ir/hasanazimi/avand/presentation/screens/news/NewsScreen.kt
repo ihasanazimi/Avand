@@ -37,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
@@ -61,6 +62,7 @@ import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.itemViews.NewsItemView
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
+import okio.IOException
 
 @Composable
 fun NewsScreen(
@@ -71,8 +73,8 @@ fun NewsScreen(
 
     val context = LocalContext.current
     val viewModel = hiltViewModel<NewsScreenVM>()
-    var showNewsLoading by remember { mutableStateOf(false) }
-    var showNewsError by remember { mutableStateOf(false) }
+    var showNewsLoading by remember { mutableStateOf(true) }
+    var showNewsError by remember { mutableStateOf(true) }
     var newsResponseState = viewModel.newsResponse.collectAsStateWithLifecycle()
 
 
@@ -112,48 +114,55 @@ fun NewsScreen(
                 )
 
 
-                Row(
-                    modifier = Modifier
-                        .height(32.dp)
-                        .align(Alignment.CenterStart)
-                        .background(MaterialTheme.colorScheme.primary.copy(0.2f),RoundedCornerShape(16.dp))
-                        .padding(horizontal = 8.dp)
-                        .clickable {
-                            viewModel.getNewsRss(true)
-                        },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Icon(
-                        imageVector = Icons.Default.Refresh,
-                        contentDescription = "location",
+                if (showNewsLoading.not()){
+                    Row(
                         modifier = Modifier
-                            .size(20.dp)
-                            .fillMaxWidth(),
-                        tint = MaterialTheme.colorScheme.primary
-                    )
+                            .height(32.dp)
+                            .align(Alignment.CenterStart)
+                            .background(
+                                MaterialTheme.colorScheme.primary.copy(0.2f),
+                                RoundedCornerShape(16.dp)
+                            )
+                            .padding(horizontal = 8.dp)
+                            .clickable {
+                                viewModel.getNewsRss(true)
+                            },
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = "Refresh",
+                            modifier = Modifier
+                                .size(20.dp)
+                                .fillMaxWidth(),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
 
 
-                    Text(
-                        text = "بروزرسانی",
-                        style = CustomTypography.labelSmall.copy(
-                            color = MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                    )
+                        Text(
+                            text = "بروزرسانی",
+                            style = CustomTypography.labelSmall.copy(
+                                color = MaterialTheme.colorScheme.primary
+                            ),
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                        )
+                    }
                 }
 
             }
         }
 
+        showNewsError = newsResponseState.value is ResponseState.Error
+        showNewsLoading = newsResponseState.value is ResponseState.Loading
 
         when (newsResponseState.value) {
-            is ResponseState.Success -> {
 
+            is ResponseState.Success -> {
                 val results = newsResponseState.value.data
                 val newsItems = results?.flatMapIndexed { index, result ->
                     when (result) {
-                        is RssFeedResult.KhabarOnline -> result.feed.channel?.items?.map {
+                        is RssFeedResult.KhabarOnline -> result.feed.channel.items?.map {
                             NewsItemWrapper.KhabarOnline(it, NewsSources.KHABAR_ONLINE)
                         } ?: emptyList()
 
@@ -203,29 +212,10 @@ fun NewsScreen(
                         }
                     )
                 }
-
-                showNewsError = false
-                showNewsLoading = false
             }
 
-            is ResponseState.Loading -> {
-                showNewsLoading = true
-                showNewsError = false
-            }
+            else -> {}
 
-            is ResponseState.Error -> {
-                showNewsLoading = false
-                showNewsError = true
-            }
-
-            else -> {
-                showNewsLoading = false
-                showNewsError = false
-            }
-        }
-
-        if (showNewsLoading) {
-            LoadingBox()
         }
 
         if (showNewsError) {
@@ -236,11 +226,17 @@ fun NewsScreen(
                 viewModel.getNewsRss(true)
             }
         }
+
+        if (showNewsLoading) LoadingBox()
+
     }
 }
 
 @Composable
 fun ErrorStateOnNews(context: Context, exception: Exception?, onRefresh: () -> Unit = {}) {
+
+    Log.i("ErrorStateOnNews", "ErrorStateOnNews: ")
+
     exception?.let {
         showToast(context, message = it.message ?: "خطای ناشناخته")
     }

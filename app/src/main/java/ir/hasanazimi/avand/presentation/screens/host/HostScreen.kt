@@ -17,7 +17,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,15 +53,20 @@ import ir.hasanazimi.avand.presentation.theme.CustomTypography
 @Composable
 fun HostScreen(activity: MainActivity, navController: NavHostController) {
 
+    val TAG = "HostScreen"
     val viewModel = hiltViewModel<HostScreenVM>()
     var userNameState = viewModel.userName.collectAsStateWithLifecycle("کاربر بدون نام")
     val maxUserNameCharacter = 20
-    val lastDestination = viewModel.lastDestination.collectAsStateWithLifecycle(Screens.Home.routeId)
+    val lastDestination = viewModel.lastDestination.collectAsState(Screens.Home.routeId)
 
     val hostNavController = rememberNavController()
 
     LaunchedEffect(Unit) {
         viewModel.getUserName()
+    }
+
+    SideEffect{
+        Log.i(TAG, "lastDestination $lastDestination:")
     }
 
     AvandTheme {
@@ -98,16 +106,19 @@ private fun Content(
     }
 
 
-    hostNavController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener{
-        override fun onDestinationChanged(
-            controller: NavController,
-            destination: NavDestination,
-            arguments: Bundle?
-        ) {
-            Log.i(TAG, "onDestinationChanged: ${destination.route}")
-            viewModel.lastDestination.value = destination.route?: Screens.Home.routeId
+    LaunchedEffect(hostNavController) {
+        val obj : NavController.OnDestinationChangedListener = object : NavController.OnDestinationChangedListener{
+            override fun onDestinationChanged(
+                controller: NavController,
+                destination: NavDestination,
+                arguments: Bundle?
+            ) {
+                Log.i(TAG, "onDestinationChanged: ${destination.route}")
+                viewModel.lastDestination.value = destination.route?: Screens.Home.routeId
+            }
         }
-    })
+        hostNavController.addOnDestinationChangedListener(obj)
+    }
 
 
     Box(modifier = Modifier.fillMaxSize()) {

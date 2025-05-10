@@ -61,7 +61,7 @@ val navigationItems = listOf(
 @Composable
 fun BottomNavigationBar(navController: NavController, destination: State<String>) {
 
-    var currentRoute by remember { mutableStateOf<String?>(destination.value) }
+    var currentRoute  = destination.value
 
     NavigationBar(
         modifier = Modifier
@@ -84,7 +84,7 @@ fun BottomNavigationBar(navController: NavController, destination: State<String>
                             launchSingleTop = true
                             restoreState = true
                         }
-                        currentRoute = navController.currentBackStackEntry?.destination?.route
+                        currentRoute = navController.currentBackStackEntry?.destination?.route.toString()
                     }
                 },
                 icon = {
