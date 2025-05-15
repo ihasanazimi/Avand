@@ -87,10 +87,9 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
     }
 
 
-    UserProfileBottomSheet(lastUserName = userNameState.value, isOpen = profileModalOpenState) {
-        viewModel.saveAndNotifyUserName(userNameState.value).also {
-            profileModalOpenState = false
-        }
+    UserProfileBottomSheet(lastUserName = userNameState.value, isOpen = profileModalOpenState) { newName ->
+        viewModel.saveAndNotifyUserName(newName)
+        profileModalOpenState = false
     }
 
 
