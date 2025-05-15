@@ -67,9 +67,9 @@ fun UserProfileBottomSheet(
                             .fillMaxWidth()
                             .padding(16.dp),
                         singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(),
-                        value = temp,
-                        onValueChange = { temp = it },
+                        maxLines = 2,
+                        value = temp.take(25),
+                        onValueChange = { temp = it.take(25) },
                         label = {
                             Text(
                                 text = "چی صدات کنیم؟",

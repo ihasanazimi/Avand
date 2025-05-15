@@ -56,7 +56,6 @@ fun HostScreen(activity: MainActivity, navController: NavHostController) {
     val TAG = "HostScreen"
     val viewModel = hiltViewModel<HostScreenVM>()
     var userNameState = viewModel.userName.collectAsStateWithLifecycle("کاربر بدون نام")
-    val maxUserNameCharacter = 20
     val lastDestination = viewModel.lastDestination.collectAsState(Screens.Home.routeId)
 
     val hostNavController = rememberNavController()
@@ -73,7 +72,7 @@ fun HostScreen(activity: MainActivity, navController: NavHostController) {
         Scaffold(
             modifier = Modifier,
             bottomBar = { BottomNavigationBar(navController = hostNavController , lastDestination) },
-            topBar = { TopBar(userNameState.value.take(maxUserNameCharacter)) }
+            topBar = { TopBar(userNameState.value) }
         ) { innerPadding ->
             Content(
                 viewModel = viewModel,
@@ -178,7 +177,7 @@ fun TopBar(userName: String) {
                     Text(
                         text = userName,
                         style = CustomTypography.titleLarge,
-                        maxLines = 1,
+                        maxLines = 2,
                         modifier = Modifier.align(Alignment.End)
                     )
                 }
