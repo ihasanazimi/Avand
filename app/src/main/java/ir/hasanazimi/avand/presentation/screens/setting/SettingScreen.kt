@@ -1,9 +1,7 @@
 package ir.hasanazimi.avand.presentation.screens.setting
 
-import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,25 +10,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -39,32 +36,20 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.common.extensions.withNotNull
-import ir.hasanazimi.avand.common.file.AssetHelper
-import ir.hasanazimi.avand.data.entities.local.other.CityEntity
-import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
-import ir.hasanazimi.avand.db.DataStoreManager
 import ir.hasanazimi.avand.presentation.bottom_sheets.CitiesModalBottomSheet
 import ir.hasanazimi.avand.presentation.bottom_sheets.UserProfileBottomSheet
+import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.itemViews.SettingItemView
 import ir.hasanazimi.avand.presentation.itemViews.settingItems
 import ir.hasanazimi.avand.presentation.navigation.Screens
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import ir.hasanazimi.avand.presentation.theme.RedColor
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
-import okio.IOException
-import javax.inject.Inject
 
 
 @Composable
@@ -73,167 +58,209 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
     val viewModel = hiltViewModel<SettingScreenVM>()
 
     var citiesModalOpenState by remember { mutableStateOf(false) }
-    var userProfileModalOpenState by remember { mutableStateOf(false) }
+    var profileModalOpenState by remember { mutableStateOf(false) }
 
     var userNameState = viewModel.userName.collectAsStateWithLifecycle()
     var defaultCityState = viewModel.defaultCity.collectAsStateWithLifecycle()
+    var notificationCheckedToggle by remember { mutableStateOf(false) }
 
+    SettingContent(
+        navController = navController,
+        defaultCityState = defaultCityState.value?.cityName ?: "",
+        notificationChecked = notificationCheckedToggle,
+        citiesModalOpenCallBack = { citiesModalOpenState = it },
+        profileModalOpenCallBack = { profileModalOpenState = it },
+        notificationCheckedToggle = { notificationCheckedToggle = it }
+    )
 
-    LaunchedEffect(Unit) {
-        viewModel.getDefaultCity()
-        viewModel.getUserName()
+    CitiesModalBottomSheet(
+        isOpen = citiesModalOpenState,
+        selectedCity = defaultCityState.value,
+        citiesSnapshotList = viewModel.prepareCities(),
+        onDismiss = { city ->
+            viewModel.saveAndNotifyDefaultCity(city)
+            citiesModalOpenState = false
+        }
+    ) { city ->
+        citiesModalOpenState = false
+        city.withNotNull { it -> viewModel.saveAndNotifyDefaultCity(it) }
     }
 
+
+    UserProfileBottomSheet(lastUserName = userNameState.value, isOpen = profileModalOpenState) {
+        viewModel.saveAndNotifyUserName(userNameState.value).also {
+            profileModalOpenState = false
+        }
+    }
+
+
+}
+
+
+@Composable
+private fun SettingContent(
+    navController: NavController,
+    defaultCityState: String?,
+    notificationChecked: Boolean,
+    citiesModalOpenCallBack: (open: Boolean) -> Unit,
+    profileModalOpenCallBack: (open: Boolean) -> Unit,
+    notificationCheckedToggle: (open: Boolean) -> Unit
+
+) {
     AvandTheme {
 
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 16.dp)
+        ) {
 
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp)
-                    .padding(start = 14.dp, end = 14.dp, bottom = 8.dp, top = 8.dp)
             ) {
 
                 Card(
+                    shape = RoundedCornerShape(12.dp),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
                     modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 4.dp),
-                    shape = RoundedCornerShape(14.dp),
-                    border = BorderStroke(
-                        1.dp,
-                        MaterialTheme.colorScheme.primary
-                    )
+                        .padding(horizontal = 14.dp)
+                        .height(62.dp),
+                    onClick = {
+                        citiesModalOpenCallBack.invoke(true)
+                    }
                 ) {
-                    Column(
+                    Box(
                         modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxHeight()
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.Center
+                            .padding(horizontal = 8.dp)
+                            .fillMaxSize(),
                     ) {
 
-                        var notificationCheckedToggle by remember { mutableStateOf(true) }
-
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.align(Alignment.CenterEnd),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
 
-                            Column(
-                                Modifier.weight(0.6f),
-                                verticalArrangement = Arrangement.Center
-                            ) {
+                            Column {
                                 Text(
-                                    text = "اعلانها فعال باشن؟",
-                                    modifier = Modifier.fillMaxWidth(),
-                                    style = CustomTypography.labelSmall.copy(
-                                        textAlign = TextAlign.Start,
-                                    ),
+                                    modifier = Modifier.align(Alignment.End),
+                                    text = "نوتیفیکیشن",
+                                    style = CustomTypography.bodyLarge.copy(textAlign = TextAlign.Start),
                                     lineHeight = TextUnit(20f, TextUnitType.Sp),
                                     maxLines = 1
                                 )
                                 Text(
-                                    text = if (notificationCheckedToggle) "بله" else "خیر",
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 8.dp),
-                                    style = CustomTypography.labelSmall.copy(
-                                        textAlign = TextAlign.Start,
-                                    ),
-                                    color = if (notificationCheckedToggle) MaterialTheme.colorScheme.primary else RedColor,
+                                    text = "اعلان های اپلیکیشن فعال باشه؟",
+                                    style = CustomTypography.labelSmall.copy(textAlign = TextAlign.Start),
                                     lineHeight = TextUnit(20f, TextUnitType.Sp),
                                     maxLines = 1
                                 )
                             }
 
+                            Icon(
+                                imageVector = Icons.Default.Notifications,
+                                contentDescription = "Notifications",
+                                modifier = Modifier
+                                    .padding(start = 8.dp)
+                                    .size(22.dp),
+                                tint = MaterialTheme.colorScheme.secondary
+                            )
+                        }
+
+                        Row(modifier = Modifier.fillMaxHeight()) {
+
+                            Text(
+                                text = if (notificationChecked) "بله" else "خیر",
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(start = 16.dp),
+                                style = CustomTypography.labelSmall.copy(
+                                    textAlign = TextAlign.Start,
+                                ),
+                                color = if (notificationChecked) MaterialTheme.colorScheme.primary else RedColor,
+                                maxLines = 1
+                            )
 
                             Checkbox(
-                                checked = notificationCheckedToggle,
-                                onCheckedChange = { notificationCheckedToggle = it }
+                                modifier = Modifier.align(Alignment.CenterVertically),
+                                checked = notificationChecked,
+                                onCheckedChange = { notificationCheckedToggle.invoke(it) }
                             )
                         }
 
                     }
                 }
 
-
-
                 Card(
-                    shape = RoundedCornerShape(14.dp),
-                    border = BorderStroke(
-                        1.dp,
-                        MaterialTheme.colorScheme.primary
-                    ),
+                    shape = RoundedCornerShape(12.dp),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
                     modifier = Modifier
-                        .padding(start = 4.dp)
-                        .weight(1f)
-                        .padding(start = 4.dp),
+                        .padding(vertical = 8.dp, horizontal = 14.dp)
+                        .height(62.dp),
                     onClick = {
-                        citiesModalOpenState = true
+                        citiesModalOpenCallBack.invoke(true)
                     }
                 ) {
-                    Column(
+                    Box(
                         modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxHeight()
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.Center
+                            .padding(horizontal = 8.dp)
+                            .fillMaxSize(),
                     ) {
 
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.align(Alignment.CenterEnd),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
 
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(0.6f)
-                            ) {
-
-                                Text(
-                                    text = "لوکیشن انتخابی",
-                                    modifier = Modifier.fillMaxWidth(),
-                                    style = CustomTypography.labelSmall.copy(
-                                        textAlign = TextAlign.Start,
-                                    ),
-                                    lineHeight = TextUnit(20f, TextUnitType.Sp),
-                                    maxLines = 1
-                                )
-
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = defaultCityState.value?.cityName ?: "",
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(vertical = 8.dp),
-                                        color = MaterialTheme.colorScheme.primary,
-                                        maxLines = 1
-                                    )
-                                }
-
-
-                            }
-
+                            Text(
+                                text = "شهر محل سکونت",
+                                style = CustomTypography.bodyLarge.copy(textAlign = TextAlign.Start),
+                                lineHeight = TextUnit(20f, TextUnitType.Sp),
+                                maxLines = 1
+                            )
 
                             Icon(
                                 imageVector = Icons.Default.LocationOn,
                                 contentDescription = "location",
-                                modifier = Modifier.weight(0.2f)
+                                modifier = Modifier
+                                    .padding(start = 8.dp)
+                                    .size(22.dp),
+                                tint = MaterialTheme.colorScheme.secondary
+                            )
+                        }
+
+                        Row(modifier = Modifier.align(Alignment.CenterStart)) {
+
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowLeft,
+                                contentDescription = "account",
+                                modifier = Modifier
+                                    .size(24.dp),
+                                tint = MaterialTheme.colorScheme.secondary
                             )
 
+                            Text(
+                                text = defaultCityState ?: "",
+                                modifier = Modifier.padding(start = 8.dp),
+                                style = CustomTypography.bodyLarge.copy(
+                                    textAlign = TextAlign.Start,
+                                    color = MaterialTheme.colorScheme.primary
+                                ),
+                                lineHeight = TextUnit(20f, TextUnitType.Sp),
+                                maxLines = 1
+                            )
                         }
 
                     }
                 }
 
             }
+
+
+            CustomSpacer(Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 16.dp))
+
 
             Box(
                 modifier = Modifier
@@ -246,9 +273,7 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
                             when (type) {
 
                                 Screens.Setting -> {
-                                    viewModel.getUserName().also {
-                                        userProfileModalOpenState = true
-                                    }
+                                    profileModalOpenCallBack.invoke(true)
                                 }
 
                                 Screens.AboutUs -> {
@@ -267,29 +292,6 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
 
         }
     }
-
-
-    CitiesModalBottomSheet(
-        isOpen = citiesModalOpenState,
-        selectedCity = defaultCityState.value,
-        citiesSnapshotList = viewModel.prepareCities(),
-        onDismiss = { city ->
-            viewModel.saveAndNotifyDefaultCity(city)
-            citiesModalOpenState = false
-        }
-    ) { city ->
-        citiesModalOpenState = false
-        city.withNotNull { it -> viewModel.saveAndNotifyDefaultCity(it) }
-    }
-
-
-    UserProfileBottomSheet(lastUserName = userNameState.value, isOpen = userProfileModalOpenState) {
-        viewModel.saveAndNotifyUserName(userNameState.value).also {
-            userProfileModalOpenState = false
-        }
-    }
-
-
 }
 
 
@@ -297,9 +299,19 @@ fun SettingScreen(activity: MainActivity, navController: NavController) {
 @Composable
 fun SettingScreenPreview() {
     AvandTheme {
-        SettingScreen(
-            activity = MainActivity(),
-            navController = rememberNavController()
+        SettingContent(
+            navController = rememberNavController(),
+            defaultCityState = "تهران",
+            notificationChecked = false,
+            citiesModalOpenCallBack = {
+
+            },
+            profileModalOpenCallBack = {
+
+            },
+            notificationCheckedToggle = {
+
+            }
         )
     }
 }

@@ -31,6 +31,12 @@ class SettingScreenVM @Inject constructor(
     val defaultCity = MutableStateFlow<CityEntity?>(null)
     var snapShotCities = mutableStateListOf<CityEntity>()
 
+
+    init {
+        getDefaultCity()
+        getUserName()
+    }
+
     fun saveAndNotifyUserName(newName: String) {
         viewModelScope.launch {
             dataStoreManager.saveUserName(newName)

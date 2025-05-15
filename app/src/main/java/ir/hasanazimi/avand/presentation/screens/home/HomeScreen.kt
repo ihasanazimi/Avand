@@ -68,7 +68,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                     onShowRationale = {
                         viewModel.errorMessage.tryEmit("برای دریافت موقعیت ممکانی شما نیاز به مجوز داریم")
                     },
-                    onRequest = { viewModel.getLastLocation(activity, viewModel) }
+                    onRequest = { viewModel.prepareWeatherData(activity) }
                 )
             }
         }

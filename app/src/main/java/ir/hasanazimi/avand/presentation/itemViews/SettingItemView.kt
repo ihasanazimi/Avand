@@ -79,11 +79,11 @@ fun SettingItemView(
 
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowLeft,
-                        contentDescription = "account",
+                        contentDescription = "KeyboardArrowLeft",
                         modifier = Modifier
                             .padding(start = 8.dp)
                             .size(24.dp),
-                        tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
+                        tint = MaterialTheme.colorScheme.secondary
                     )
 
                     Row(
@@ -107,7 +107,7 @@ fun SettingItemView(
                             modifier = Modifier
                                 .padding(start = 8.dp)
                                 .size(24.dp),
-                            tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
+                            tint = MaterialTheme.colorScheme.secondary
                         )
                     }
                 }
