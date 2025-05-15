@@ -17,6 +17,7 @@ import ir.hasanazimi.avand.data.Const
 import ir.hasanazimi.avand.presentation.navigation.AppNavigator
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 
@@ -24,7 +25,8 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     val TAG = "MainActivity"
-    val locationAccessFinePermissionsResult = MutableSharedFlow<Boolean>()
+    private val _locationAccessFinePermissionsResult = MutableSharedFlow<Boolean>()
+    val locationAccessFinePermissionsResult = _locationAccessFinePermissionsResult.asSharedFlow()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,19 +53,27 @@ class MainActivity : ComponentActivity() {
             Const.LOCATION_PERMEATION_CODE -> {
                 lifecycleScope.launch {
                     if (permissions.isNotEmpty()){
-                        locationAccessFinePermissionsResult.emit(isPermissionGranted(permissions[0].toString()))
+                        _locationAccessFinePermissionsResult.emit(isPermissionGranted(permissions[0].toString()))
                     }
                 }
                 return
             }
 
 
-            else -> {
-
-            }
+            else -> {}
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults, deviceId)
     }
+
+
+    fun locationAccessFinePermissionsResult(){
+        Log.i(TAG, "locationAccessFinePermissionsResult: ")
+        lifecycleScope.launch {
+            val checkIt = true
+            _locationAccessFinePermissionsResult.emit(checkIt)
+        }
+    }
+
 }
 
 

@@ -64,14 +64,12 @@ import ir.hasanazimi.avand.presentation.theme.TransparentlyWhite
 import kotlin.math.roundToInt
 
 @Composable
-fun Widgets(
+fun WidgetsScreen(
     activity: MainActivity,
     weatherData: ResponseState<WeatherEntity>,
     calendarData: CalendarEntity,
     onGetData: () -> Unit = {}
 ) {
-
-
     AvandTheme {
         Surface {
             Row(
@@ -519,7 +517,7 @@ fun LoadingState() {
 @Composable
 fun WidgetScreenPreview() {
     AvandTheme {
-        Widgets(
+        WidgetsScreen(
             activity = MainActivity(),
             weatherData = ResponseState.Success(),
             calendarData = CalendarEntity(

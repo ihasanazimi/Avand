@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +32,7 @@ import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.presentation.dialogs.WebViewDialog
 import ir.hasanazimi.avand.presentation.screens.news.NewsScreen
 import ir.hasanazimi.avand.presentation.screens.web_view.WebViewScreen
-import ir.hasanazimi.avand.presentation.screens.widgets.Widgets
+import ir.hasanazimi.avand.presentation.screens.widgets.WidgetsScreen
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import kotlinx.coroutines.launch
 
@@ -48,53 +47,47 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     var weatherResponseState = viewModel.weatherResponse.collectAsStateWithLifecycle()
     var errorMessageState = viewModel.errorMessage.collectAsStateWithLifecycle("")
     var tempOfCalendar = viewModel.tempOfCalendar.collectAsStateWithLifecycle()
-    var newsUrl by remember { mutableStateOf("") }
+    var urlFromNewsScreen by remember { mutableStateOf("") }
 
 
 
 
     LaunchedEffect(Unit) {
 
-        viewModel.getCurrentWeatherFromLocal()
-        viewModel.getEvents(context)
+        activity.locationAccessFinePermissionsResult.collect {
+            Log.i(TAG, "HomeScreen: permission result is ${activity.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)} ")
+            if (activity.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                viewModel.prepareWeatherData(activity)
+            } else {
+                activity.askPermission(
+                    permission = Manifest.permission.ACCESS_FINE_LOCATION,
+                    requestCode = 1001,
+                    onPermissionAlreadyGranted = {
+                        viewModel.getLastLocation(activity, viewModel)
+                    },
+                    onShowRationale = {
+                        viewModel.errorMessage.tryEmit("برای دریافت موقعیت ممکانی شما نیاز به مجوز داریم")
+                    },
+                    onRequest = { viewModel.getLastLocation(activity, viewModel) }
+                )
+            }
+        }
+
 
         if (errorMessageState.value.isNotEmpty()){
             Toast.makeText(context, errorMessageState.value, Toast.LENGTH_SHORT).show()
         }
 
-        activity.locationAccessFinePermissionsResult.collect { result ->
-            Log.i(TAG, "HomeScreen: permission result is $result ")
-
-            if (result) {
-                if (activity.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    viewModel.getLastLocation(activity, viewModel)
-                } else {
-                    activity.askPermission(
-                        permission = Manifest.permission.ACCESS_FINE_LOCATION,
-                        requestCode = 1001,
-                        onPermissionAlreadyGranted = {
-                            viewModel.getLastLocation(activity, viewModel)
-                        },
-                        onShowRationale = {
-                            viewModel.errorMessage.tryEmit("برای دریافت موقعیت ممکانی شما نیاز به مجوز داریم")
-                        },
-                        onRequest = { viewModel.getLastLocation(activity, viewModel) }
-                    )
-                }
-            } else {
-                viewModel.errorMessage.tryEmit("اجازه دسترسی به سرویس مکان توسط شما صادر نشده است!")
-            }
-        }
     }
 
 
 
 
-    if (newsUrl.isNotEmpty()){
+    if (urlFromNewsScreen.isNotEmpty()){
         WebViewDialog(
-            onDismissRequest = { newsUrl = "" },
+            onDismissRequest = { urlFromNewsScreen = "" },
             content = {
-                WebViewScreen(url = newsUrl) { newsUrl = "" }
+                WebViewScreen(newsUrl = urlFromNewsScreen) { urlFromNewsScreen = "" }
             }
         )
     }
@@ -112,7 +105,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
 
                 item {
                     weatherResponseState.value.withNotNull { weatherData ->
-                        Widgets(
+                        WidgetsScreen(
                             activity = activity,
                             weatherData = weatherData,
                             calendarData = CalendarEntity(
@@ -122,9 +115,7 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                                 events = viewModel.calendarResponse.value ?: emptyList()
                             ),
                             onGetData = {
-                                coroutineScope.launch {
-                                    activity.locationAccessFinePermissionsResult.emit(true)
-                                }
+                                viewModel.prepareWeatherData(activity)
                             }
                         )
                     }
@@ -135,11 +126,10 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
                         activity = activity,
                         navController = navController,
                         openWebView = { url ->
-                            newsUrl = url
+                            urlFromNewsScreen = url
                         }
                     )
                 }
-
 
             }
         }

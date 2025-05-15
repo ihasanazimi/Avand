@@ -7,10 +7,10 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.common.date_time.CalendarManager
-import ir.hasanazimi.avand.common.date_time.DateUtils2
 import ir.hasanazimi.avand.common.date_time.PersianCalendar1
 import ir.hasanazimi.avand.common.date_time.RoozhDateConverter
 import ir.hasanazimi.avand.common.date_time.getEvents
@@ -19,14 +19,16 @@ import ir.hasanazimi.avand.common.extensions.showToast
 import ir.hasanazimi.avand.common.extensions.turnOnGPS
 import ir.hasanazimi.avand.common.more.LocationHelper
 import ir.hasanazimi.avand.data.entities.ResponseState
+import ir.hasanazimi.avand.data.entities.local.other.CityEntity
 import ir.hasanazimi.avand.data.entities.local.other.EventOfDayEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
 import ir.hasanazimi.avand.db.DataStoreManager
-import ir.hasanazimi.avand.use_cases.NewsRssUseCase
 import ir.hasanazimi.avand.use_cases.WeatherUseCase
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import okio.IOException
 import javax.inject.Inject
@@ -35,7 +37,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeScreenVM @Inject constructor(
     private val weatherUseCase: WeatherUseCase,
-    private val dataStoreManager: DataStoreManager
+    private val dataStoreManager: DataStoreManager,
+    private val context: Context
 ) : ViewModel() {
 
     val TAG = "HomeScreenVM"
@@ -47,12 +50,14 @@ class HomeScreenVM @Inject constructor(
 
     init {
         prepareDates()
+        getEvents(context)
+        getCurrentWeatherFromLocal()
     }
 
-    fun getCurrentWeatherFromRemote(q: String) {
+    fun getCurrentWeatherFromRemote(cityNameOrLatLng: String) {
         Log.i(TAG, "getCurrentWeatherFromRemote called")
         viewModelScope.launch {
-            weatherUseCase.getCurrentWeather(q).collectLatest { result ->
+            weatherUseCase.getCurrentWeather(cityNameOrLatLng).collectLatest { result ->
                 Log.i(TAG, "getCurrentWeatherFromRemote: $result ")
                 weatherResponse.emit(result)
             }
@@ -84,11 +89,41 @@ class HomeScreenVM @Inject constructor(
     }
 
 
+    fun prepareWeatherData(activity: MainActivity){
+        Log.i(TAG, "prepareWeatherData: ")
+        viewModelScope.launch {
+            val manual = true
+           if (manual){
+               getDefaultCity().collect { city ->
+                   if (city != null){
+                       getCurrentWeatherFromRemote(city.location)
+                   }else{
+                       activity.locationAccessFinePermissionsResult()
+                   }
+               }
+           }else{
+               activity.locationAccessFinePermissionsResult()
+           }
+        }
+    }
+
+    private fun getDefaultCity(): Flow<CityEntity?> = flow {
+        dataStoreManager.defaultCity.collect { cityJson ->
+            try {
+                Log.i(TAG, "getDefaultCity: ")
+                val type = object : TypeToken<CityEntity>() {}.type
+                val city = Gson().fromJson<CityEntity>(cityJson, type)
+                emit(city)
+                Log.i(TAG, "getDefaultCity: $city")
+            } catch (e: IOException) {
+                emit(null)
+                Log.d(TAG, "getDefaultCity: ${e.message}")
+            }
+        }
+    }
 
 
-
-
-    fun getEvents(context: Context){
+    private fun getEvents(context: Context){
         viewModelScope.launch {
             val calendarManager = CalendarManager(context)
             calendarManager.loadCalendarData("taghvim.json")

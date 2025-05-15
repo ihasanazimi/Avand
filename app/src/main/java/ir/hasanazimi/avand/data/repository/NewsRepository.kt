@@ -43,10 +43,27 @@ class NewsRssRepositoryImpl @Inject constructor(
             emit(ResponseState.Loading)
             try {
                 val results = coroutineScope {
-                    sources.map { source -> async { apiCall(rssService, source) } }.map { it.await() }
+                    sources.map { source ->
+                        async {
+                            try {
+                                apiCall(rssService, source)
+                            } catch (e: Exception) {
+                                Log.e(TAG, "apiCall failed for ${source.baseUrl}: ${e.message}")
+                                null
+                            }
+                        }
+                    }.map { it.await() }
                 }
-                Log.i(TAG, "getAllNews responseStateSuccess is -> : $results")
-                emit(ResponseState.Success(results))
+
+                val successfulResults = results.filterNotNull()
+
+                if (successfulResults.isNotEmpty()) {
+                    Log.i(TAG, "getAllNews responseStateSuccess is -> : $successfulResults")
+                    emit(ResponseState.Success(successfulResults))
+                } else {
+                    Log.e(TAG, "All API calls failed")
+                    emit(ResponseState.Error(Exception("All news sources failed to load")))
+                }
             } catch (e: Exception) {
                 Log.e(TAG, "getAllNews: ${e.message}")
                 emit(ResponseState.Error(e))
@@ -54,9 +71,8 @@ class NewsRssRepositoryImpl @Inject constructor(
         }
 }
 
-
-private suspend fun apiCall(rssService: RssService, newsSources: NewsSources): RssFeedResult = try {
-    when (newsSources) {
+private suspend fun apiCall(rssService: RssService, newsSources: NewsSources): RssFeedResult {
+    return when (newsSources) {
         NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI -> RssFeedResult.KhabarOnline(
             rssService.getKhabarOnlineRssFeed(newsSources.baseUrl)
         ).also {
@@ -96,23 +112,5 @@ private suspend fun apiCall(rssService: RssService, newsSources: NewsSources): R
                 "apiCall getZoomitRssFeed: ${it.feed.channel?.items?.size}"
             )
         }
-    }
-} catch (e: Exception) {
-    Log.e("NewsRssRepositoryImpl", "apiCall failed for ${newsSources.baseUrl}: ${e.message}")
-    // در صورت خطا، یک آبجکت خالی برمی‌گردانیم
-    when (newsSources) {
-        NewsSources.KHABAR_ONLINE_SIYASI_EGTESAGI,
-        NewsSources.KHABAR_ONLINE_IT,
-        NewsSources.KHABAR_ONLINE -> RssFeedResult.KhabarOnline(
-            RssFeed(channel = Channel(items = emptyList())) // فرض بر این است که Channel و items وجود دارند
-        )
-
-        NewsSources.ZOOMIT -> RssFeedResult.Zoomit(
-            ir.hasanazimi.avand.data.entities.remote.news.zoomit.RssFeed(
-                channel = ir.hasanazimi.avand.data.entities.remote.news.zoomit.Channel(
-                    items = emptyList()
-                )
-            ) // فرض بر این است که Channel و items وجود دارند
-        )
     }
 }

@@ -55,11 +55,11 @@ import ir.hasanazimi.avand.presentation.theme.CustomTypography
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebViewScreen(
-    url: String,
+    newsUrl: String,
     onBackPressed: (() -> Unit)? = null
 ) {
 
-    if (url.isNotEmpty()) {
+    if (newsUrl.isNotEmpty()) {
 
         val context = LocalContext.current
         val loading = remember { mutableStateOf(true) }
@@ -86,7 +86,7 @@ fun WebViewScreen(
                         loading.value = false
                     }
                 }
-                loadUrl(url)
+                loadUrl(newsUrl)
             }
         }
         BackHandler(enabled = true) {
