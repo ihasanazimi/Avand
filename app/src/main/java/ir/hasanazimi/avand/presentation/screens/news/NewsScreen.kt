@@ -1,6 +1,5 @@
 package ir.hasanazimi.avand.presentation.screens.news
 
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.compose.animation.core.LinearEasing
@@ -15,8 +14,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,18 +28,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,10 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.R
-import ir.hasanazimi.avand.common.extensions.showToast
 import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.remote.news.NewsItemUtils
 import ir.hasanazimi.avand.data.entities.remote.news.NewsItemWrapper
@@ -62,40 +54,45 @@ import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.itemViews.NewsItemView
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
-import okio.IOException
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 @Composable
 fun NewsScreen(
     activity: MainActivity,
     navController: NavHostController,
-    openWebView : (newsUrl : String) -> Unit,
+    openWebView: (newsUrl: String) -> Unit,
 ) {
 
-    val context = LocalContext.current
     val viewModel = hiltViewModel<NewsScreenVM>()
-    var showNewsLoading by remember { mutableStateOf(true) }
-    var showNewsError by remember { mutableStateOf(true) }
-    var newsResponseState = viewModel.newsResponse.collectAsStateWithLifecycle()
+    var news = viewModel.newsResponse.collectAsStateWithLifecycle()
+
+    NewsContent(
+        viewModel = viewModel,
+        activity = activity,
+        news = news,
+        openWebView = openWebView
+    )
+}
 
 
-
-    LaunchedEffect(Unit) {
-        viewModel.getNewsRss()
-    }
-
+@Composable
+private fun NewsContent(
+    viewModel: NewsScreenVM?,
+    activity: MainActivity,
+    news: State<ResponseState<List<RssFeedResult?>>>,
+    openWebView: (String) -> Unit
+) {
     AvandTheme {
-
-
-        Spacer(modifier = Modifier.padding(top = 16.dp))
-
-        CustomSpacer()
 
         Column(modifier = Modifier.fillMaxWidth()) {
 
+            CustomSpacer(modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp))
+
             Box(
                 modifier = Modifier
+                    .height(32.dp)
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp)
+                    .padding(horizontal = 8.dp)
             ) {
 
                 Text(
@@ -104,29 +101,24 @@ fun NewsScreen(
                         color = MaterialTheme.colorScheme.secondary
                     ),
                     modifier = Modifier
-                        .padding(
-                            start = 8.dp,
-                            end = 8.dp,
-                            bottom = 8.dp,
-                            top = 8.dp
-                        )
+                        .padding(end = 8.dp)
                         .align(Alignment.CenterEnd),
                 )
 
+                if ((news.value is ResponseState.Loading).not()) {
 
-                if (showNewsLoading.not()){
                     Row(
                         modifier = Modifier
-                            .height(32.dp)
+                            .fillMaxHeight()
                             .align(Alignment.CenterStart)
                             .background(
-                                MaterialTheme.colorScheme.primary.copy(0.2f),
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
                                 RoundedCornerShape(16.dp)
                             )
-                            .padding(horizontal = 8.dp)
                             .clickable {
-                                viewModel.getNewsRss(true)
-                            },
+                                viewModel?.getNewsRss(true)
+                            }
+                            .padding(horizontal = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
@@ -135,7 +127,8 @@ fun NewsScreen(
                             contentDescription = "Refresh",
                             modifier = Modifier
                                 .size(20.dp)
-                                .fillMaxWidth(),
+                                .fillMaxWidth()
+                                .padding(start = 4.dp),
                             tint = MaterialTheme.colorScheme.primary
                         )
 
@@ -149,17 +142,26 @@ fun NewsScreen(
                         )
                     }
                 }
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+
+                if (news.value is ResponseState.Error) {
+                    ErrorMode(onRefresh = { viewModel?.getNewsRss(true) })
+                }
+
+                if (news.value is ResponseState.Loading) {
+                    LoadingMode(modifier = Modifier.fillMaxWidth())
+                }
 
             }
-        }
 
-        showNewsError = newsResponseState.value is ResponseState.Error
-        showNewsLoading = newsResponseState.value is ResponseState.Loading
-
-        when (newsResponseState.value) {
-
-            is ResponseState.Success -> {
-                val results = newsResponseState.value.data
+            if (news.value is ResponseState.Success) {
+                val results = news.value.data
                 val newsItems = results?.flatMapIndexed { index, result ->
                     when (result) {
                         is RssFeedResult.KhabarOnline -> result.feed.channel.items?.map {
@@ -169,6 +171,7 @@ fun NewsScreen(
                         is RssFeedResult.Zoomit -> result.feed.channel?.items?.map {
                             NewsItemWrapper.Zoomit(it, NewsSources.ZOOMIT)
                         } ?: emptyList()
+
                         null -> emptyList()
                     }
                 } ?: emptyList()
@@ -208,42 +211,30 @@ fun NewsScreen(
                                 putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
                                 type = "text/plain"
                             }
-                            activity.startActivity(Intent.createChooser(shareIntent, "اشتراک خبر از آوند "))
+                            activity.startActivity(
+                                Intent.createChooser(
+                                    shareIntent,
+                                    "اشتراک خبر از آوند "
+                                )
+                            )
                         }
                     )
                 }
             }
 
-            else -> {}
-
         }
-
-        if (showNewsError) {
-            ErrorStateOnNews(
-                context = LocalContext.current,
-                exception = (newsResponseState.value as? ResponseState.Error)?.exception
-            ) {
-                viewModel.getNewsRss(true)
-            }
-        }
-
-        if (showNewsLoading) LoadingBox()
 
     }
 }
 
 @Composable
-fun ErrorStateOnNews(context: Context, exception: Exception?, onRefresh: () -> Unit = {}) {
+private fun ErrorMode(onRefresh: () -> Unit = {}) {
 
     Log.i("ErrorStateOnNews", "ErrorStateOnNews: ")
 
-    exception?.let {
-        showToast(context, message = it.message ?: "خطای ناشناخته")
-    }
-
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .background(Color.Transparent),
     ) {
         Column(
@@ -302,7 +293,7 @@ fun ErrorStateOnNews(context: Context, exception: Exception?, onRefresh: () -> U
 }
 
 @Composable
-fun LoadingBox() {
+private fun LoadingMode(modifier: Modifier) {
     val infiniteTransition = rememberInfiniteTransition(label = "rotation")
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -315,8 +306,7 @@ fun LoadingBox() {
     )
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
             .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {
@@ -346,9 +336,11 @@ fun LoadingBox() {
 @Composable
 fun NewsScreenPreView() {
     AvandTheme {
-        NewsScreen(
+        val state = MutableSharedFlow<ResponseState.Success<List<RssFeedResult>>>()
+        NewsContent(
+            viewModel = null,
             activity = MainActivity(),
-            navController = rememberNavController(),
+            news = state.collectAsState(ResponseState.Error(Exception())),
             openWebView = {},
         )
     }

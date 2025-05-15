@@ -103,7 +103,7 @@ private fun SettingContent(
     notificationChecked: Boolean,
     citiesModalOpenCallBack: (open: Boolean) -> Unit,
     profileModalOpenCallBack: (open: Boolean) -> Unit,
-    notificationCheckedToggle: (open: Boolean) -> Unit
+    notificationCheckedToggle: (checked : Boolean) -> Unit
 
 ) {
     AvandTheme {
@@ -238,7 +238,7 @@ private fun SettingContent(
                             )
 
                             Text(
-                                text = defaultCityState ?: "",
+                                text = defaultCityState ?: "انتخاب",
                                 modifier = Modifier.padding(start = 8.dp),
                                 style = CustomTypography.bodyLarge.copy(
                                     textAlign = TextAlign.Start,
@@ -299,7 +299,7 @@ fun SettingScreenPreview() {
     AvandTheme {
         SettingContent(
             navController = rememberNavController(),
-            defaultCityState = "تهران",
+            defaultCityState = "انتخاب",
             notificationChecked = false,
             citiesModalOpenCallBack = {
 

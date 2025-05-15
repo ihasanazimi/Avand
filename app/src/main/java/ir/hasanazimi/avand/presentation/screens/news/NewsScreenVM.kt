@@ -28,6 +28,10 @@ class NewsScreenVM @Inject constructor(
 
     private var cachedNews: List<RssFeedResult>? = null
 
+    init {
+        getNewsRss()
+    }
+
     fun getNewsRss(forceUpdate : Boolean = false) {
         Log.i(TAG, "getNewsRss: ")
         viewModelScope.launch {

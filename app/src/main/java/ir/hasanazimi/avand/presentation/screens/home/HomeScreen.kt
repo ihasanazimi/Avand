@@ -42,14 +42,11 @@ fun HomeScreen(activity: MainActivity, navController: NavHostController) {
     val TAG = "HomeScreen"
     val context = LocalContext.current
     val viewModel = hiltViewModel<HomeScreenVM>()
-    val coroutineScope = rememberCoroutineScope()
 
     var weatherResponseState = viewModel.weatherResponse.collectAsStateWithLifecycle()
     var errorMessageState = viewModel.errorMessage.collectAsStateWithLifecycle("")
     var tempOfCalendar = viewModel.tempOfCalendar.collectAsStateWithLifecycle()
     var urlFromNewsScreen by remember { mutableStateOf("") }
-
-
 
 
     LaunchedEffect(Unit) {
