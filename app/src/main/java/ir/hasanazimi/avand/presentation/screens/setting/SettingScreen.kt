@@ -169,22 +169,21 @@ private fun SettingContent(
 
                         Row(modifier = Modifier.fillMaxHeight()) {
 
+                            Checkbox(
+                                modifier = Modifier.align(Alignment.CenterVertically),
+                                checked = notificationChecked,
+                                onCheckedChange = { notificationCheckedToggle.invoke(it) }
+                            )
+
                             Text(
-                                text = if (notificationChecked) "بله" else "خیر",
+                                text = if (notificationChecked) "فعاله" else "غیر فعاله",
                                 modifier = Modifier
-                                    .align(Alignment.CenterVertically)
-                                    .padding(start = 16.dp),
+                                    .align(Alignment.CenterVertically),
                                 style = CustomTypography.labelSmall.copy(
                                     textAlign = TextAlign.Start,
                                 ),
                                 color = if (notificationChecked) MaterialTheme.colorScheme.primary else RedColor,
                                 maxLines = 1
-                            )
-
-                            Checkbox(
-                                modifier = Modifier.align(Alignment.CenterVertically),
-                                checked = notificationChecked,
-                                onCheckedChange = { notificationCheckedToggle.invoke(it) }
                             )
                         }
 
