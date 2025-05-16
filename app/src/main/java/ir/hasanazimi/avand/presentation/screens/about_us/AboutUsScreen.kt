@@ -139,15 +139,13 @@ fun AboutUsScreen(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     Text(
-                        "سلام! من حسن عظیمی هستم، توسعه\u200Cدهنده\u200Cی اندروید." +
+                        "سلام!\n" +
+                                "من حسن عظیمی\u200Cام، یه توسعه\u200Cدهنده\u200Cی اندروید که چند سالی هست تو دنیای برنامه\u200Cنویسی موبایل فعالیت می\u200Cکنم. تو این مدت روی اپلیکیشن\u200Cهای مختلفی کار کردم، از پروژه\u200Cهای سازمانی گرفته تا خدمات شهری و پلتفرم\u200Cهای مالی.\n" +
                                 "\n" +
-                                "چند سالی است که در حوزه\u200Cی برنامه\u200Cنویسی موبایل فعالیت می\u200Cکنم و با تمرکز بر ایجاد اپلیکیشن\u200Cهایی کاربرمحور، تجربه\u200Cهای متنوعی در پروژه\u200Cهای مختلف کسب کرده\u200Cام. همکاری با تیم\u200Cها و شرکت\u200Cهای بزرگ در توسعه\u200Cی اپلیکیشن\u200Cهای سازمانی، خدمات شهری و پلتفرم\u200Cهای مالی، دیدگاه من را نسبت به طراحی و توسعه\u200Cی نرم\u200Cافزار عمیق\u200Cتر کرده است.\u200B\n" +
+                                "همیشه سعی کردم اپ\u200Cهایی بسازم که فقط یه ابزار نباشن، بلکه یه تجربه\u200Cی خوب و راحت برای کاربرها باشن. یادگیری برام تموم\u200Cشدنی نیست و همیشه دنبال بهتر شدنم.\n" +
                                 "\n" +
-                                "همواره در تلاش هستم تا با یادگیری مستمر، اپلیکیشن\u200Cهایی بسازم که فراتر از یک ابزار، تجربه\u200Cای مثبت و کاربردی برای کاربران فراهم کنند.\u200B\n" +
-                                "\n" +
-                                "از اعتماد شما به من و اپلیکیشنم سپاسگزارم.\u200B\n" +
-                                "\n" +
-                                "با احترام،\n" +
+                                "مرسی که بهم و اپلیکیشنم اعتماد کردید :)\n" +
+                                "با آرزوی بهترین\u200Cها،\n" +
                                 "حسن عظیمی",
                         style = CustomTypography.labelSmall,
                         lineHeight = TextUnit(
@@ -166,15 +164,11 @@ fun AboutUsScreen(
                                 .fillMaxWidth()
                                 .height(56.dp),
                             onClick = onMessageClick,
-                            shape = RoundedCornerShape(12.dp),
-                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+                            shape = RoundedCornerShape(12.dp)
                         ) {
                             Text(
                                 "ارتباط با توسعه دهنده",
-                                style = CustomTypography.bodyLarge.copy(
-                                    MaterialTheme.colorScheme.primary
-                                )
+                                style = CustomTypography.bodyLarge
                             )
                         }
 
