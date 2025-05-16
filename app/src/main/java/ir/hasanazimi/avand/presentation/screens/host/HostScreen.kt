@@ -60,22 +60,38 @@ fun HostScreen(activity: MainActivity, navController: NavHostController) {
 
     val hostNavController = rememberNavController()
 
-    LaunchedEffect(Unit) {
-        viewModel.getUserName()
-    }
-
-    SideEffect{
-        Log.i(TAG, "lastDestination $lastDestination:")
-    }
-
     AvandTheme {
         Scaffold(
             modifier = Modifier,
             bottomBar = { BottomNavigationBar(navController = hostNavController , lastDestination) },
             topBar = { TopBar(userNameState.value) }
         ) { innerPadding ->
-            Content(
-                viewModel = viewModel,
+
+            BackHandler(/*enabled = hostNavController.currentBackStackEntry?.destination?.route != Screens.Home.routeId*/) {
+                if (hostNavController.currentBackStackEntry?.destination?.route == Screens.Home.routeId) {
+                    activity.finish()
+                } else {
+                    hostNavController.popBackStack(Screens.Home.routeId, inclusive = true)
+                }
+            }
+
+
+            LaunchedEffect(hostNavController) {
+                val obj : NavController.OnDestinationChangedListener = object : NavController.OnDestinationChangedListener{
+                    override fun onDestinationChanged(
+                        controller: NavController,
+                        destination: NavDestination,
+                        arguments: Bundle?
+                    ) {
+                        Log.i(TAG, "onDestinationChanged: ${destination.route}")
+                        viewModel.lastDestination.value = destination.route?: Screens.Home.routeId
+                    }
+                }
+                hostNavController.addOnDestinationChangedListener(obj)
+            }
+
+
+            HostScreenContent(
                 innerPadding = innerPadding,
                 hostNavController = hostNavController,
                 mainNavController = navController,
@@ -86,56 +102,31 @@ fun HostScreen(activity: MainActivity, navController: NavHostController) {
 }
 
 @Composable
-private fun Content(
-    viewModel : HostScreenVM,
+private fun HostScreenContent(
+    activity: MainActivity,
     innerPadding: PaddingValues,
     hostNavController: NavHostController,
-    mainNavController: NavHostController,
-    activity: MainActivity
+    mainNavController: NavHostController
 ) {
-    val TAG = "ContentTag"
 
-    BackHandler(/*enabled = hostNavController.currentBackStackEntry?.destination?.route != Screens.Home.routeId*/)
-    {
-        if (hostNavController.currentBackStackEntry?.destination?.route == Screens.Home.routeId) {
-            activity.finish()
-        } else {
-            hostNavController.popBackStack(Screens.Home.routeId, inclusive = true)
-        }
-    }
-
-
-    LaunchedEffect(hostNavController) {
-        val obj : NavController.OnDestinationChangedListener = object : NavController.OnDestinationChangedListener{
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
+    Surface {
+        Box(modifier = Modifier.fillMaxSize()) {
+            NavHost(
+                navController = hostNavController,
+                startDestination = Screens.Home.routeId,
+                modifier = Modifier.padding(innerPadding)
             ) {
-                Log.i(TAG, "onDestinationChanged: ${destination.route}")
-                viewModel.lastDestination.value = destination.route?: Screens.Home.routeId
-            }
-        }
-        hostNavController.addOnDestinationChangedListener(obj)
-    }
+                composable(route = Screens.Home.routeId) {
+                    HomeScreen(activity = activity, navController = mainNavController)
+                }
 
+                composable(route = Screens.CurrencyPrices.routeId) {
+                    CurrencyPricesScreen(activity = activity, navController = mainNavController)
+                }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        NavHost(
-            navController = hostNavController,
-            startDestination = Screens.Home.routeId,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable(route = Screens.Home.routeId) {
-                HomeScreen(activity = activity, navController = mainNavController)
-            }
-
-            composable(route = Screens.CurrencyPrices.routeId) {
-                CurrencyPricesScreen(activity = activity, navController = mainNavController)
-            }
-
-            composable(route = Screens.Setting.routeId) {
-                SettingScreen(activity = activity, navController = mainNavController)
+                composable(route = Screens.Setting.routeId) {
+                    SettingScreen(activity = activity, navController = mainNavController)
+                }
             }
         }
     }
@@ -210,6 +201,14 @@ fun MyLottieAnimation(modifier: Modifier) {
 @Composable
 fun HostScreenPreview() {
     AvandTheme {
-        HostScreen(activity = MainActivity(), navController = rememberNavController())
+        val activity = MainActivity()
+        val hostNavController = rememberNavController()
+        val mainNavController = rememberNavController()
+        HostScreenContent(
+            activity = activity,
+            innerPadding = PaddingValues(16.dp),
+            hostNavController = hostNavController,
+            mainNavController = mainNavController,
+        )
     }
 }

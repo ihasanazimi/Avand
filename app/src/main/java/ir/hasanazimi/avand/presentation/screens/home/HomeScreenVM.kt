@@ -43,7 +43,6 @@ class HomeScreenVM @Inject constructor(
 
     val TAG = "HomeScreenVM"
 
-    val errorMessage = MutableSharedFlow<String>()
     var weatherResponse = MutableStateFlow<ResponseState<WeatherEntity>?>(null)
     var calendarResponse = MutableStateFlow<List<EventOfDayEntity>?>(null)
     var tempOfCalendar = MutableStateFlow<Pair<String, Triple<Int, Int, Int>>?>(null)

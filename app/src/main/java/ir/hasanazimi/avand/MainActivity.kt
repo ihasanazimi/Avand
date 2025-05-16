@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
@@ -33,8 +34,24 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AvandTheme {
-                val navHostController = rememberNavController()
-                GoodFillingApplication(navHostController = navHostController, activity = this)
+                val mainNavHostController = rememberNavController()
+                AvandApp(
+                    navHostController = mainNavHostController,
+                    activity = this@MainActivity
+                )
+            }
+        }
+    }
+
+
+    @Composable
+    fun AvandApp(navHostController: NavHostController, activity: MainActivity) {
+        AvandTheme {
+            Surface {
+                AppNavigator(
+                    navController = navHostController,
+                    activity = activity
+                )
             }
         }
     }
@@ -46,10 +63,8 @@ class MainActivity : ComponentActivity() {
         grantResults: IntArray,
         deviceId: Int
     ) {
-        Log.i(TAG, "onRequestPermissionsResult: data: ${Gson().toJson(permissions)}")
-        Log.i(TAG, "onRequestPermissionsResult code: $requestCode")
+        Log.i(TAG, "onRequestPermissionsResult \nrequestCode: $requestCode\npermissions: ${Gson().toJson(permissions)}")
         when (requestCode) {
-
             Const.LOCATION_PERMEATION_CODE -> {
                 lifecycleScope.launch {
                     if (permissions.isNotEmpty()){
@@ -58,8 +73,6 @@ class MainActivity : ComponentActivity() {
                 }
                 return
             }
-
-
             else -> {}
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults, deviceId)
@@ -77,22 +90,16 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@Composable
-fun GoodFillingApplication(navHostController: NavHostController, activity: MainActivity) {
-    AvandTheme {
-        AppNavigator(
-            navController = navHostController,
-            activity = activity
-        )
-    }
-}
-
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     AvandTheme {
         val navHostController = rememberNavController()
-        GoodFillingApplication(navHostController, MainActivity())
+        val activity = MainActivity()
+        activity.AvandApp(
+            navHostController,
+            activity
+        )
     }
 }

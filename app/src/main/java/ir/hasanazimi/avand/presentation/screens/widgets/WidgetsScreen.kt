@@ -68,13 +68,11 @@ fun WidgetsScreen(
     activity: MainActivity,
     weatherData: ResponseState<WeatherEntity>,
     calendarData: CalendarEntity,
-    onGetData: () -> Unit = {}
+    onPrepareWeatherData: () -> Unit = {}
 ) {
     AvandTheme {
         Surface {
-            Row(
-                Modifier.height(240.dp).fillMaxHeight()
-            ) {
+            Row(Modifier.height(240.dp)) {
 
                 /** WEATHER */
                 Card(
@@ -92,7 +90,7 @@ fun WidgetsScreen(
                         when (weatherData) {
                             is ResponseState.Success -> SuccessState(
                                 weatherData = weatherData,
-                                onRefresh = onGetData
+                                onRefresh = onPrepareWeatherData
                             )
 
                             is ResponseState.Loading -> LoadingState()
@@ -100,7 +98,7 @@ fun WidgetsScreen(
                             is ResponseState.Error -> ErrorState(
                                 context = activity,
                                 exception = weatherData.exception,
-                                onRefresh = onGetData
+                                onRefresh = onPrepareWeatherData
                             )
 
                             else -> {}
@@ -526,7 +524,7 @@ fun WidgetScreenPreview() {
                 persianDate = "26 فروردین 1404",
                 fakeEventOfDays
             ),
-            onGetData = {}
+            onPrepareWeatherData = {}
         )
     }
 }

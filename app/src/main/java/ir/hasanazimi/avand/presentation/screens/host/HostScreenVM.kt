@@ -22,6 +22,11 @@ class HostScreenVM @Inject constructor(
     val userName = MutableStateFlow<String>("")
     var lastDestination = MutableStateFlow(Screens.Home.routeId)
 
+
+    init {
+        getUserName()
+    }
+
     fun getUserName() {
         viewModelScope.launch {
             dataStoreManager.userNameFlow.collect {

@@ -66,12 +66,14 @@ fun NewsScreen(
     val viewModel = hiltViewModel<NewsScreenVM>()
     var news = viewModel.newsResponse.collectAsStateWithLifecycle()
 
-    NewsContent(
-        viewModel = viewModel,
-        activity = activity,
-        news = news,
-        openWebView = openWebView
-    )
+    AvandTheme {
+        NewsContent(
+            viewModel = viewModel,
+            activity = activity,
+            news = news,
+            openWebView = openWebView
+        )
+    }
 }
 
 
@@ -82,146 +84,142 @@ private fun NewsContent(
     news: State<ResponseState<List<RssFeedResult?>>>,
     openWebView: (String) -> Unit
 ) {
-    AvandTheme {
+    Column(modifier = Modifier.fillMaxWidth()) {
 
-        Column(modifier = Modifier.fillMaxWidth()) {
+        CustomSpacer(modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp))
 
-            CustomSpacer(modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp))
+        Box(
+            modifier = Modifier
+                .height(32.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+        ) {
 
-            Box(
+            Text(
+                text = "اخبار روز",
+                style = CustomTypography.titleLarge.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier
-                    .height(32.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-            ) {
-
-                Text(
-                    text = "اخبار روز",
-                    style = CustomTypography.titleLarge.copy(
-                        color = MaterialTheme.colorScheme.secondary
-                    ),
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .align(Alignment.CenterEnd),
-                )
-
-                if ((news.value is ResponseState.Loading).not()) {
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .align(Alignment.CenterStart)
-                            .background(
-                                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                                RoundedCornerShape(16.dp)
-                            )
-                            .clickable {
-                                viewModel?.getNewsRss(true)
-                            }
-                            .padding(horizontal = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        Icon(
-                            imageVector = Icons.Default.Refresh,
-                            contentDescription = "Refresh",
-                            modifier = Modifier
-                                .size(20.dp)
-                                .fillMaxWidth()
-                                .padding(start = 4.dp),
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-
-
-                        Text(
-                            text = "بروزرسانی",
-                            style = CustomTypography.labelSmall.copy(
-                                color = MaterialTheme.colorScheme.primary
-                            ),
-                            modifier = Modifier.padding(horizontal = 4.dp),
-                        )
-                    }
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-            ) {
-
-                if (news.value is ResponseState.Error) {
-                    ErrorMode(onRefresh = { viewModel?.getNewsRss(true) })
-                }
-
-                if (news.value is ResponseState.Loading) {
-                    LoadingMode(modifier = Modifier.fillMaxWidth())
-                }
-
-            }
+                    .padding(end = 8.dp)
+                    .align(Alignment.CenterEnd),
+            )
 
             if (news.value is ResponseState.Success) {
-                val results = news.value.data
-                val newsItems = results?.flatMapIndexed { index, result ->
-                    when (result) {
-                        is RssFeedResult.KhabarOnline -> result.feed.channel.items?.map {
-                            NewsItemWrapper.KhabarOnline(it, NewsSources.KHABAR_ONLINE)
-                        } ?: emptyList()
 
-                        is RssFeedResult.Zoomit -> result.feed.channel?.items?.map {
-                            NewsItemWrapper.Zoomit(it, NewsSources.ZOOMIT)
-                        } ?: emptyList()
-
-                        null -> emptyList()
-                    }
-                } ?: emptyList()
-
-                newsItems.filter {
-                    NewsItemUtils.getLink(it.item) != null && NewsItemUtils.getTitle(it.item) != null
-                }.forEach { item ->
-                    Log.i("TAG", "NewsScreen new item -> $item")
-                    NewsItemView(
-                        news = item,
-                        onNewsClick = { item ->
-                            Log.d(
-                                "NewsScreen",
-                                "Clicked getTitle: ${NewsItemUtils.getTitle(item.item)}"
-                            )
-                            Log.d(
-                                "NewsScreen",
-                                "Clicked getDescription: ${NewsItemUtils.getDescription(item.item)}"
-                            )
-                            Log.d(
-                                "NewsScreen",
-                                "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(item.item)}"
-                            )
-                            Log.d(
-                                "NewsScreen",
-                                "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(item.item)}"
-                            )
-                            Log.d(
-                                "NewsScreen",
-                                "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
-                            )
-                            openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
-                        },
-                        onShareNews = { item ->
-                            val shareIntent = Intent().apply {
-                                action = Intent.ACTION_SEND
-                                putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
-                                type = "text/plain"
-                            }
-                            activity.startActivity(
-                                Intent.createChooser(
-                                    shareIntent,
-                                    "اشتراک خبر از آوند "
-                                )
-                            )
+                Row(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .align(Alignment.CenterStart)
+                        .background(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                            RoundedCornerShape(16.dp)
+                        )
+                        .clickable {
+                            viewModel?.getNewsRss(true)
                         }
+                        .padding(horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "Refresh",
+                        modifier = Modifier
+                            .size(20.dp)
+                            .fillMaxWidth()
+                            .padding(start = 4.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+
+
+                    Text(
+                        text = "بروزرسانی",
+                        style = CustomTypography.labelSmall.copy(
+                            color = MaterialTheme.colorScheme.primary
+                        ),
+                        modifier = Modifier.padding(horizontal = 4.dp),
                     )
                 }
             }
+        }
 
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+
+            if (news.value is ResponseState.Error) {
+                ErrorMode(onRefresh = { viewModel?.getNewsRss(true) })
+            }
+
+            if (news.value is ResponseState.Loading) {
+                LoadingMode(modifier = Modifier.fillMaxWidth())
+            }
+
+        }
+
+        if (news.value is ResponseState.Success) {
+            val results = news.value.data
+            val newsItems = results?.flatMapIndexed { index, result ->
+                when (result) {
+                    is RssFeedResult.KhabarOnline -> result.feed.channel.items?.map {
+                        NewsItemWrapper.KhabarOnline(it, NewsSources.KHABAR_ONLINE)
+                    } ?: emptyList()
+
+                    is RssFeedResult.Zoomit -> result.feed.channel?.items?.map {
+                        NewsItemWrapper.Zoomit(it, NewsSources.ZOOMIT)
+                    } ?: emptyList()
+
+                    null -> emptyList()
+                }
+            } ?: emptyList()
+
+            newsItems.filter {
+                NewsItemUtils.getLink(it.item) != null && NewsItemUtils.getTitle(it.item) != null
+            }.forEach { item ->
+                Log.i("TAG", "NewsScreen new item -> $item")
+                NewsItemView(
+                    news = item,
+                    onNewsClick = { item ->
+                        Log.d(
+                            "NewsScreen",
+                            "Clicked getTitle: ${NewsItemUtils.getTitle(item.item)}"
+                        )
+                        Log.d(
+                            "NewsScreen",
+                            "Clicked getDescription: ${NewsItemUtils.getDescription(item.item)}"
+                        )
+                        Log.d(
+                            "NewsScreen",
+                            "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(item.item)}"
+                        )
+                        Log.d(
+                            "NewsScreen",
+                            "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(item.item)}"
+                        )
+                        Log.d(
+                            "NewsScreen",
+                            "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
+                        )
+                        openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
+                    },
+                    onShareNews = { item ->
+                        val shareIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
+                            type = "text/plain"
+                        }
+                        activity.startActivity(
+                            Intent.createChooser(
+                                shareIntent,
+                                "اشتراک خبر از آوند "
+                            )
+                        )
+                    }
+                )
+            }
         }
 
     }
