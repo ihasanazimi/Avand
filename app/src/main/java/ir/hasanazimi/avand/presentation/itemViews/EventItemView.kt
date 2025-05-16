@@ -46,7 +46,7 @@ fun EventItemView(eventOfDay: EventOfDayEntity) {
         )
         Icon(
             imageVector = Icons.Default.Star,
-            contentDescription = "location",
+            contentDescription = "Star",
             modifier = Modifier
                 .padding(horizontal = 4.dp)
                 .size(16.dp)
