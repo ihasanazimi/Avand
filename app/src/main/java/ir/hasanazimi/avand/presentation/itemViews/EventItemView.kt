@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import ir.hasanazimi.avand.data.entities.local.other.EventOfDayEntity
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
@@ -28,7 +30,6 @@ import ir.hasanazimi.avand.presentation.theme.TransparentlyBlack
 fun EventItemView(eventOfDay: EventOfDayEntity) {
     Row(
         modifier = Modifier
-            .background(Color.Transparent)
             .fillMaxWidth()
             .padding(vertical = 2.dp, horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -36,10 +37,12 @@ fun EventItemView(eventOfDay: EventOfDayEntity) {
         Text(
             text = eventOfDay.eventTitle,
             modifier = Modifier
+                .padding(start = 12.dp)
                 .weight(0.9f)
                 .fillMaxWidth(),
             fontSize = 12.sp,
-            style = CustomTypography.labelLarge
+            style = CustomTypography.labelLarge,
+            maxLines = 3
         )
         Icon(
             imageVector = Icons.Default.Star,
@@ -61,6 +64,8 @@ fun EventItemView(eventOfDay: EventOfDayEntity) {
 @Composable
 fun OccasionItemViewPreview() {
     AvandTheme {
-        EventItemView(eventOfDay = EventOfDayEntity("روز بزرگداشت فردوسی", isHoliday = true))
+        Surface {
+            EventItemView(eventOfDay = EventOfDayEntity("روز بزرگداشت فردوسی", isHoliday = true))
+        }
     }
 }

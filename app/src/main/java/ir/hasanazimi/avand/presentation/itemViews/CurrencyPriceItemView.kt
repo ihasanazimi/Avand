@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -122,16 +123,18 @@ fun CustomSpacer(modifier: Modifier = Modifier) {
 @Composable
 fun CurrencyPriceItemViewPreview() {
     AvandTheme {
-        CurrencyPriceItemView(
-            CurrencyPriceEntity(
-                currencyName = "بیت کوین",
-                currencyFlagId = R.drawable.bitcoin,
-                currencyPrice = "103,250",
-                currencyChangePercent = "3.1" + " % ",
-                currencyChangePercentColor = GreenColor,
-                currencyUnitType = CurrencyType.Toman
-            ),
-            modifier = Modifier
-        )
+        Surface {
+            CurrencyPriceItemView(
+                CurrencyPriceEntity(
+                    currencyName = "بیت کوین",
+                    currencyFlagId = R.drawable.bitcoin,
+                    currencyPrice = "103,250",
+                    currencyChangePercent = "3.1" + " % ",
+                    currencyChangePercentColor = GreenColor,
+                    currencyUnitType = CurrencyType.Toman
+                ),
+                modifier = Modifier
+            )
+        }
     }
 }
