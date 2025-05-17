@@ -126,7 +126,7 @@ private fun SettingContent(
                         .padding(horizontal = 14.dp)
                         .height(62.dp),
                     onClick = {
-                        citiesModalOpenCallBack.invoke(true)
+                        notificationCheckedToggle.invoke(true)
                     }
                 ) {
                     Box(
