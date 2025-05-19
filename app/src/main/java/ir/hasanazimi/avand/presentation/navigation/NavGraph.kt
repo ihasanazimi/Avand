@@ -14,6 +14,8 @@ import ir.hasanazimi.avand.presentation.screens.home.HomeScreen
 import ir.hasanazimi.avand.presentation.screens.host.HostScreen
 import ir.hasanazimi.avand.presentation.screens.intro.IntroScreen
 import ir.hasanazimi.avand.presentation.screens.name_register.NameRegisterScreen
+import ir.hasanazimi.avand.presentation.screens.news.AllNewsScreen
+import ir.hasanazimi.avand.presentation.screens.news.NewsScreen
 import ir.hasanazimi.avand.presentation.screens.scheduled_questions.SchedulingScreen
 import ir.hasanazimi.avand.presentation.screens.setting.SettingScreen
 import ir.hasanazimi.avand.presentation.screens.splash.SplashScreen
@@ -61,20 +63,14 @@ fun NavGraphBuilder.splashGraph(navController: NavHostController, activity: Main
             )
         }
 
-      /*  composable(
-            route = Screens.WebView.route + "/{url}",
-            arguments = listOf(
-                navArgument("url") {
-                    type = NavType.StringType
-                }
+        composable(Screens.AllNews.routeId) {
+            AllNewsScreen(
+                navController = navController ,
+                activity = activity
             )
-        ) { backStackEntry ->
-            val encodedUrl = backStackEntry.arguments?.getString("url").orEmpty()
-            val url = Uri.decode(encodedUrl)
-            WebViewScreen(url = url, ) {
-                navController.popBackStack()
-            }
-        }*/
+        }
+
+
     }
 }
 

@@ -15,12 +15,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,9 +33,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -60,6 +70,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 fun NewsScreen(
     activity: MainActivity,
     navController: NavHostController,
+    showMoreBtn: Boolean = false,
+    showMoreNewsCallBack : () -> Unit ,
     openWebView: (newsUrl: String) -> Unit,
 ) {
 
@@ -70,6 +82,8 @@ fun NewsScreen(
         NewsContent(
             viewModel = viewModel,
             activity = activity,
+            showMoreBtn = showMoreBtn,
+            showMoreNewsCallBack = showMoreNewsCallBack,
             news = news,
             openWebView = openWebView
         )
@@ -81,9 +95,15 @@ fun NewsScreen(
 private fun NewsContent(
     viewModel: NewsScreenVM?,
     activity: MainActivity,
+    showMoreBtn: Boolean = false,
+    showMoreNewsCallBack : () -> Unit ,
     news: State<ResponseState<List<RssFeedResult?>>>,
     openWebView: (String) -> Unit
 ) {
+
+    var masterList by remember { mutableStateOf<List<NewsItemWrapper>>(arrayListOf())}
+    var displayedList by remember { mutableStateOf<List<NewsItemWrapper>>(arrayListOf()) }
+
     Column(modifier = Modifier.fillMaxWidth()) {
 
         CustomSpacer(modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp))
@@ -176,54 +196,179 @@ private fun NewsContent(
                 }
             } ?: emptyList()
 
-            newsItems.filter {
-                NewsItemUtils.getLink(it.item) != null && NewsItemUtils.getTitle(it.item) != null
-            }.forEach { item ->
-                Log.i("TAG", "NewsScreen new item -> $item")
-                NewsItemView(
-                    news = item,
-                    onNewsClick = { item ->
-                        Log.d(
-                            "NewsScreen",
-                            "Clicked getTitle: ${NewsItemUtils.getTitle(item.item)}"
-                        )
-                        Log.d(
-                            "NewsScreen",
-                            "Clicked getDescription: ${NewsItemUtils.getDescription(item.item)}"
-                        )
-                        Log.d(
-                            "NewsScreen",
-                            "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(item.item)}"
-                        )
-                        Log.d(
-                            "NewsScreen",
-                            "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(item.item)}"
-                        )
-                        Log.d(
-                            "NewsScreen",
-                            "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
-                        )
-                        openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
-                    },
-                    onShareNews = { item ->
-                        val shareIntent = Intent().apply {
-                            action = Intent.ACTION_SEND
-                            putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
-                            type = "text/plain"
-                        }
-                        activity.startActivity(
-                            Intent.createChooser(
-                                shareIntent,
-                                "اشتراک خبر از آوند "
+            masterList = newsItems.filter { NewsItemUtils.getLink(it.item) != null && NewsItemUtils.getTitle(it.item) != null }
+            masterList.shuffled().forEachIndexed { index , item ->
+                if (showMoreBtn){
+                    Log.i("TAG", "NewsScreen new item -> $item")
+                    if (index > 10) return@forEachIndexed
+                    NewsItemView(
+                        news = item,
+                        onNewsClick = { item ->
+                            Log.d(
+                                "NewsScreen",
+                                "Clicked getTitle: ${NewsItemUtils.getTitle(item.item)}"
                             )
+                            Log.d(
+                                "NewsScreen",
+                                "Clicked getDescription: ${NewsItemUtils.getDescription(item.item)}"
+                            )
+                            Log.d(
+                                "NewsScreen",
+                                "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(item.item)}"
+                            )
+                            Log.d(
+                                "NewsScreen",
+                                "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(item.item)}"
+                            )
+                            Log.d(
+                                "NewsScreen",
+                                "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
+                            )
+                            openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
+                        },
+                        onShareNews = { item ->
+                            val shareIntent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
+                                type = "text/plain"
+                            }
+                            activity.startActivity(
+                                Intent.createChooser(
+                                    shareIntent,
+                                    "اشتراک خبر از آوند "
+                                )
+                            )
+                        }
+                    )
+                }else{
+                    displayedList = masterList.take(5)
+                    PaginatedList(
+                        allVisibleItems = displayedList,
+                        pageSize = 5,
+                        activity = activity,
+                        openWebView = openWebView,
+                    ) {
+                        displayedList = masterList.take(displayedList.size + 5)
+                    }
+                }
+            }
+
+
+            if (showMoreBtn) {
+
+                Card(
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .align(Alignment.CenterHorizontally)
+                        .clickable {
+                            showMoreNewsCallBack.invoke()
+                        },
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondary
+                    )
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowLeft,
+                            contentDescription = "مشاهده بیشتر",
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .size(16.dp)
+                        )
+
+                        Text(
+                            text = "مشاهده بیشتر",
+                            textAlign = TextAlign.Center,
+                            style = CustomTypography.labelSmall,
+                            modifier = Modifier
+                                .padding(start = 4.dp, bottom = 8.dp, top = 8.dp, end = 16.dp)
                         )
                     }
-                )
+                }
             }
+
         }
 
     }
 }
+
+
+
+@Composable
+fun PaginatedList(
+    allVisibleItems: List<NewsItemWrapper>,
+    pageSize: Int = 5,
+    activity: MainActivity,
+    openWebView: (String) -> Unit,
+    onLoadMore: () -> Unit
+) {
+    var visibleItems by remember { mutableStateOf(allVisibleItems.take(pageSize)) }
+    val listState = rememberLazyListState()
+
+    // Load more when near the bottom
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
+            .collect { lastVisibleIndex ->
+                if (lastVisibleIndex == visibleItems.lastIndex && visibleItems.size < allVisibleItems.size) {
+                    onLoadMore()
+                }
+            }
+    }
+
+    LazyColumn(state = listState , modifier = Modifier.fillMaxSize()) {
+        items(visibleItems) { item ->
+            NewsItemView(
+                news = item,
+                onNewsClick = { item ->
+                    Log.d(
+                        "NewsScreen",
+                        "Clicked getTitle: ${NewsItemUtils.getTitle(item.item)}"
+                    )
+                    Log.d(
+                        "NewsScreen",
+                        "Clicked getDescription: ${NewsItemUtils.getDescription(item.item)}"
+                    )
+                    Log.d(
+                        "NewsScreen",
+                        "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(item.item)}"
+                    )
+                    Log.d(
+                        "NewsScreen",
+                        "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(item.item)}"
+                    )
+                    Log.d(
+                        "NewsScreen",
+                        "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
+                    )
+                    openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
+                },
+                onShareNews = { item ->
+                    val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
+                        type = "text/plain"
+                    }
+                    activity.startActivity(
+                        Intent.createChooser(
+                            shareIntent,
+                            "اشتراک خبر از آوند "
+                        )
+                    )
+                }
+            )
+        }
+    }
+
+    // Update visibleItems when allItems change
+    LaunchedEffect(allVisibleItems) {
+        visibleItems = allVisibleItems.take(visibleItems.size + pageSize)
+    }
+}
+
+
 
 @Composable
 private fun ErrorMode(onRefresh: () -> Unit = {}) {
@@ -339,6 +484,8 @@ fun NewsScreenPreView() {
             viewModel = null,
             activity = MainActivity(),
             news = state.collectAsState(ResponseState.Error(Exception())),
+            showMoreBtn = false,
+            showMoreNewsCallBack = {},
             openWebView = {},
         )
     }

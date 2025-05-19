@@ -11,6 +11,7 @@ sealed class Screens(val routeId: String) {
     object Setting : Screens("setting")
     object AboutUs : Screens("aboutUs")
     object News : Screens("news")
+    object AllNews : Screens("AllNewsScreen")
     object WebView : Screens("WebView")
 
 }

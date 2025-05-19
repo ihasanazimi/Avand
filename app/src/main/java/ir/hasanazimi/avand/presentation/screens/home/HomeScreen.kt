@@ -33,6 +33,7 @@ import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
 import ir.hasanazimi.avand.presentation.dialogs.WebViewDialog
+import ir.hasanazimi.avand.presentation.navigation.Screens
 import ir.hasanazimi.avand.presentation.screens.news.NewsScreen
 import ir.hasanazimi.avand.presentation.screens.web_view.WebViewScreen
 import ir.hasanazimi.avand.presentation.screens.widgets.WidgetsScreen
@@ -142,6 +143,10 @@ private fun HomeScreenContent(
                     NewsScreen(
                         activity = activity,
                         navController = navController,
+                        showMoreBtn = true ,
+                        showMoreNewsCallBack = {
+                            navController.navigate(Screens.AllNews.routeId)
+                        },
                         openWebView = { url -> urlFromNewsScreenCallBack.invoke(url) }
                     )
                 }
