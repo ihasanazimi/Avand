@@ -33,6 +33,7 @@ import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.local.calander.CalendarEntity
 import ir.hasanazimi.avand.data.entities.local.weather.WeatherEntity
 import ir.hasanazimi.avand.presentation.dialogs.WebViewDialog
+import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.navigation.Screens
 import ir.hasanazimi.avand.presentation.screens.news.NewsScreen
 import ir.hasanazimi.avand.presentation.screens.web_view.WebViewScreen
@@ -140,6 +141,9 @@ private fun HomeScreenContent(
                     }
                 }
                 item {
+
+                    CustomSpacer(modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp))
+                    
                     NewsScreen(
                         activity = activity,
                         navController = navController,

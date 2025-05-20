@@ -14,6 +14,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -106,7 +107,7 @@ private fun NewsContent(
 
     Column(modifier = Modifier.fillMaxWidth()) {
 
-        CustomSpacer(modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp))
+        Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
         Box(
             modifier = Modifier

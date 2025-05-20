@@ -47,7 +47,7 @@ fun NewsItemView(
     AvandTheme {
         Card(
             modifier = Modifier
-                .padding(vertical = 4.dp)
+                .padding(vertical = 8.dp)
                 .fillMaxWidth()
                 .border(
                     2.dp,

@@ -1,5 +1,6 @@
 package ir.hasanazimi.avand.presentation.screens.news
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -25,7 +26,7 @@ fun AllNewsScreen(navController : NavHostController , activity : MainActivity) {
 
     AvandTheme {
 
-        Surface(modifier = Modifier.padding(top = 32.dp)) {
+        Surface(modifier = Modifier.padding(top = 32.dp , start = 8.dp , end = 8.dp).fillMaxSize()) {
             NewsScreen(
                 navController = navController,
                 activity = activity ,
