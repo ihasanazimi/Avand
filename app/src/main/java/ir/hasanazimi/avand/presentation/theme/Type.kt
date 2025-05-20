@@ -39,7 +39,7 @@ val CustomTypography = Typography(
     ),
     labelSmall = TextStyle(
         fontFamily = yekan,
-        fontSize = 12.sp,
+        fontSize = 13.sp,
         textDirection = TextDirection.Rtl,
         textAlign = TextAlign.Justify
     ),

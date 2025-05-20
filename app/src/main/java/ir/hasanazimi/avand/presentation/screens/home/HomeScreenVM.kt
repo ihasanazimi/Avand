@@ -180,7 +180,7 @@ class HomeScreenVM @Inject constructor(
     fun prepareDates(){
         viewModelScope.launch {
             val dateArray = PersianCalendar1.shamsiDate().split("/")
-            val persianDate = "${dateArray[2].toInt()} " + PersianCalendar1().strMonth + " ${dateArray[0].toInt()}"
+            val persianDate = " ${dateArray[2].toInt()} " + PersianCalendar1().strMonth + " ${dateArray[0].toInt()} "
             val roozhDate = RoozhDateConverter()
             roozhDate.persianToGregorian(dateArray[0].toInt(), dateArray[1].toInt(), dateArray[2].toInt())
             val y = roozhDate.year

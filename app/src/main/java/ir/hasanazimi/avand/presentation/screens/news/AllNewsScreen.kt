@@ -26,7 +26,7 @@ fun AllNewsScreen(navController : NavHostController , activity : MainActivity) {
 
     AvandTheme {
 
-        Surface(modifier = Modifier.padding(top = 32.dp , start = 8.dp , end = 8.dp).fillMaxSize()) {
+        Surface(modifier = Modifier.padding(top = 54.dp , start = 8.dp , end = 8.dp , bottom = 16.dp).fillMaxSize()) {
             NewsScreen(
                 navController = navController,
                 activity = activity ,

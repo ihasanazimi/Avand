@@ -72,7 +72,7 @@ fun WidgetsScreen(
 ) {
     AvandTheme {
         Surface {
-            Row(Modifier.height(240.dp)) {
+            Row(Modifier.height(220.dp)) {
 
                 /** WEATHER */
                 Card(
@@ -147,15 +147,15 @@ fun WidgetsScreen(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .weight(0.6f), verticalArrangement = Arrangement.Center
+                                    .weight(0.6f).padding(horizontal = 16.dp), verticalArrangement = Arrangement.Center
                             ) {
 
                                 Text(
                                     text = calendarData.persianDate,
                                     modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Center,
+                                    textAlign = TextAlign.Start,
                                     maxLines = 1,
-                                    style = CustomTypography.bodyLarge
+                                    style = CustomTypography.labelSmall
                                 )
 
                                 Spacer(
@@ -167,9 +167,9 @@ fun WidgetsScreen(
                                 Text(
                                     text = calendarData.globalDate,
                                     modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Center,
+                                    textAlign = TextAlign.Start,
                                     maxLines = 1,
-                                    style = CustomTypography.bodyLarge
+                                    style = CustomTypography.labelSmall
                                 )
                             }
 
@@ -321,25 +321,6 @@ private fun SuccessState(
             )
         }
 
-        /*AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(
-                    painterResource(
-                        WeatherCondition.fromCode(
-                            weatherData?.current?.condition?.code ?: WeatherCondition.Unknown.code
-                        ).iconResId
-                    )
-                )
-                .crossfade(true)
-                .build(),
-            contentDescription = "Loaded image",
-            modifier = Modifier
-                .size(120.dp)
-                .fillMaxWidth()
-                .weight(0.7f)
-                .clip(RoundedCornerShape(12.dp))
-        )*/
-
         Image(
             painter = painterResource(
                 WeatherCondition.fromCode(
@@ -355,6 +336,7 @@ private fun SuccessState(
                 .padding(vertical = 4.dp)
         )
 
+/*
         Text(
             text = WeatherCondition.getUVSentences(
                 currentWeather?.uv?.roundToInt() ?: 0,
@@ -367,6 +349,7 @@ private fun SuccessState(
             style = CustomTypography.labelSmall,
             maxLines = 2
         )
+*/
 
         Spacer(
             Modifier

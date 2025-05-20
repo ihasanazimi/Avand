@@ -107,8 +107,6 @@ private fun NewsContent(
 
     Column(modifier = Modifier.fillMaxWidth()) {
 
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
-
         Box(
             modifier = Modifier
                 .height(32.dp)
