@@ -16,10 +16,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,6 +34,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -62,8 +66,10 @@ import ir.hasanazimi.avand.data.entities.remote.news.RssFeedResult
 import ir.hasanazimi.avand.presentation.itemViews.NewsItemView
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 
 @Composable
 fun NewsScreen(
@@ -87,6 +93,7 @@ fun NewsScreen(
             openWebView = openWebView,
         )
     }
+
 }
 
 
@@ -103,208 +110,205 @@ private fun NewsContent(
     var masterList by remember { mutableStateOf<List<NewsItemWrapper>>(arrayListOf())}
     var showPaginationLoading by remember { mutableStateOf<Boolean>(false) }
 
-    Column(modifier = Modifier.fillMaxWidth()) {
 
-        Box(
-            modifier = Modifier
-                .height(32.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp)
-        ) {
+    Box{
 
-            Text(
-                text = "اخبار روز",
-                style = CustomTypography.titleLarge.copy(
-                    color = MaterialTheme.colorScheme.secondary
-                ),
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+
+            Box(
                 modifier = Modifier
-                    .padding(end = 8.dp)
-                    .align(Alignment.CenterEnd),
-            )
-
-            if (news.value is ResponseState.Success && showPaginationLoading.not()) {
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .align(Alignment.CenterStart)
-                        .background(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                            RoundedCornerShape(16.dp)
-                        )
-                        .clickable {
-                            viewModel?.getNewsRss(true)
-                        }
-                        .padding(horizontal = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Icon(
-                        imageVector = Icons.Default.Refresh,
-                        contentDescription = "Refresh",
-                        modifier = Modifier
-                            .size(20.dp)
-                            .fillMaxWidth()
-                            .padding(start = 4.dp),
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-
-
-                    Text(
-                        text = "بروزرسانی",
-                        style = CustomTypography.labelSmall.copy(
-                            color = MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                    )
-                }
-            }
-        }
-
-
-        if (showPaginationLoading){
-            Spacer(
-                Modifier
-                    .padding(top = 16.dp)
-                    .background(
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                        shape = RoundedCornerShape(8.dp)
-                    )
+                    .height(32.dp)
                     .fillMaxWidth()
-                    .height(1.dp)
-            )
-        }
+                    .padding(horizontal = 8.dp)
+            ) {
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        ) {
-
-            if (news.value is ResponseState.Error) {
-                ErrorMode(onRefresh = { viewModel?.getNewsRss(true) })
-            }
-
-            if (news.value is ResponseState.Loading || showPaginationLoading) {
-                LoadingMode(modifier = Modifier.fillMaxWidth())
-            }
-
-        }
-
-
-        if (news.value is ResponseState.Success) {
-            val results = news.value.data
-            val newsItems = results?.flatMapIndexed { index, result ->
-                when (result) {
-                    is RssFeedResult.KhabarOnline -> result.feed.channel.items?.map {
-                        NewsItemWrapper.KhabarOnline(it, NewsSources.KHABAR_ONLINE)
-                    } ?: emptyList()
-
-                    is RssFeedResult.Zoomit -> result.feed.channel?.items?.map {
-                        NewsItemWrapper.Zoomit(it, NewsSources.ZOOMIT)
-                    } ?: emptyList()
-
-                    null -> emptyList()
-                }
-            } ?: emptyList()
-
-            masterList = newsItems
-            masterList.forEachIndexed { index , item ->
-                if (showMoreBtn){
-                    Log.i("TAG", "NewsScreen new item -> $item")
-                    if (index > 10) return@forEachIndexed
-                    NewsItemView(
-                        news = item,
-                        onNewsClick = { item ->
-                            Log.d(
-                                "NewsScreen",
-                                "Clicked getTitle: ${NewsItemUtils.getTitle(item.item)}"
-                            )
-                            Log.d(
-                                "NewsScreen",
-                                "Clicked getDescription: ${NewsItemUtils.getDescription(item.item)}"
-                            )
-                            Log.d(
-                                "NewsScreen",
-                                "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(item.item)}"
-                            )
-                            Log.d(
-                                "NewsScreen",
-                                "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(item.item)}"
-                            )
-                            Log.d(
-                                "NewsScreen",
-                                "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
-                            )
-                            openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
-                        },
-                        onShareNews = { item ->
-                            val shareIntent = Intent().apply {
-                                action = Intent.ACTION_SEND
-                                putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
-                                type = "text/plain"
-                            }
-                            activity.startActivity(
-                                Intent.createChooser(
-                                    shareIntent,
-                                    "اشتراک خبر از آوند "
-                                )
-                            )
-                        }
-                    )
-                }else{
-                    PaginatedNewsList(
-                        originalList = masterList,
-                        activity = activity,
-                        openWebView = openWebView,
-                        showPaginationLoading = {
-                            showPaginationLoading  = it
-                        }
-                    )
-                }
-            }
-
-
-            if (showMoreBtn) {
-
-                Card(
-                    shape = RoundedCornerShape(16.dp),
+                Text(
+                    text = "اخبار روز",
+                    style = CustomTypography.titleLarge.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    ),
                     modifier = Modifier
-                        .padding(vertical = 16.dp)
-                        .align(Alignment.CenterHorizontally)
-                        .clickable {
-                            showMoreNewsCallBack.invoke()
-                        },
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.secondary
-                    )
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.KeyboardArrowLeft,
-                            contentDescription = "مشاهده بیشتر",
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .size(16.dp)
-                        )
+                        .padding(end = 8.dp)
+                        .align(Alignment.CenterEnd),
+                )
 
-                        Text(
-                            text = "مشاهده بیشتر",
-                            textAlign = TextAlign.Center,
-                            style = CustomTypography.labelSmall,
+                if (news.value is ResponseState.Success) {
+
+                    if (showPaginationLoading){
+                        LoadingMode(Modifier)
+                    }else{
+                        Row(
                             modifier = Modifier
-                                .padding(start = 4.dp, bottom = 8.dp, top = 8.dp, end = 16.dp)
+                                .fillMaxHeight()
+                                .align(Alignment.CenterStart)
+                                .background(
+                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                    RoundedCornerShape(16.dp)
+                                )
+                                .clickable {
+                                    viewModel?.getNewsRss(true)
+                                }
+                                .padding(horizontal = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = "Refresh",
+                                modifier = Modifier
+                                    .size(20.dp)
+                                    .fillMaxWidth()
+                                    .padding(start = 4.dp),
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+
+
+                            Text(
+                                text = "بروزرسانی",
+                                style = CustomTypography.labelSmall.copy(
+                                    color = MaterialTheme.colorScheme.primary
+                                ),
+                                modifier = Modifier.padding(horizontal = 4.dp),
+                            )
+
+                        }
+                    }
+
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+
+                if (news.value is ResponseState.Error) {
+                    ErrorMode(onRefresh = { viewModel?.getNewsRss(true) })
+                }
+
+                if (news.value is ResponseState.Loading) {
+                    LoadingMode(modifier = Modifier.fillMaxWidth())
+                }
+
+            }
+
+
+            if (news.value is ResponseState.Success) {
+                val results = news.value.data
+                val newsItems = results?.flatMapIndexed { index, result ->
+                    when (result) {
+                        is RssFeedResult.KhabarOnline -> result.feed.channel.items?.map {
+                            NewsItemWrapper.KhabarOnline(it, NewsSources.KHABAR_ONLINE)
+                        } ?: emptyList()
+
+                        is RssFeedResult.Zoomit -> result.feed.channel?.items?.map {
+                            NewsItemWrapper.Zoomit(it, NewsSources.ZOOMIT)
+                        } ?: emptyList()
+
+                        null -> emptyList()
+                    }
+                } ?: emptyList()
+
+                masterList = newsItems
+                masterList.forEachIndexed { index , item ->
+                    if (showMoreBtn){
+                        Log.i("TAG", "NewsScreen new item -> $item")
+                        if (index > 10) return@forEachIndexed
+                        NewsItemView(
+                            news = item,
+                            onNewsClick = { item ->
+                                Log.d(
+                                    "NewsScreen",
+                                    "Clicked getTitle: ${NewsItemUtils.getTitle(item.item)}"
+                                )
+                                Log.d(
+                                    "NewsScreen",
+                                    "Clicked getDescription: ${NewsItemUtils.getDescription(item.item)}"
+                                )
+                                Log.d(
+                                    "NewsScreen",
+                                    "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(item.item)}"
+                                )
+                                Log.d(
+                                    "NewsScreen",
+                                    "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(item.item)}"
+                                )
+                                Log.d(
+                                    "NewsScreen",
+                                    "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
+                                )
+                                openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
+                            },
+                            onShareNews = { item ->
+                                val shareIntent = Intent().apply {
+                                    action = Intent.ACTION_SEND
+                                    putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
+                                    type = "text/plain"
+                                }
+                                activity.startActivity(
+                                    Intent.createChooser(
+                                        shareIntent,
+                                        "اشتراک خبر از آوند "
+                                    )
+                                )
+                            }
+                        )
+                    }else{
+                        PaginatedNewsList(
+                            originalList = masterList,
+                            activity = activity,
+                            openWebView = openWebView,
+                            showPaginationLoading = {
+                                showPaginationLoading  = it
+                            }
                         )
                     }
                 }
+
+
+                if (showMoreBtn) {
+
+                    Card(
+                        shape = RoundedCornerShape(16.dp),
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .clickable {
+                                showMoreNewsCallBack.invoke()
+                            },
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.secondary
+                        )
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowLeft,
+                                contentDescription = "مشاهده بیشتر",
+                                modifier = Modifier
+                                    .padding(start = 8.dp)
+                                    .size(16.dp)
+                            )
+
+                            Text(
+                                text = "مشاهده بیشتر",
+                                textAlign = TextAlign.Center,
+                                style = CustomTypography.labelSmall,
+                                modifier = Modifier
+                                    .padding(start = 4.dp, bottom = 8.dp, top = 8.dp, end = 16.dp)
+                            )
+                        }
+                    }
+                }
             }
+
+
+
+
         }
-
-
-
-
     }
 }
 
@@ -338,6 +342,42 @@ fun PaginatedNewsList(
                 delay(1000)
                 showPaginationLoading.invoke(false)
             }
+        }
+    }
+
+    // رندر لیست
+    LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
+        items(displayedList) { item ->
+            NewsItemView(
+                news = item,
+                onNewsClick = { newsItem ->
+                    Log.d("NewsScreen", "Clicked getTitle: ${NewsItemUtils.getTitle(newsItem.item)}")
+                    Log.d("NewsScreen", "Clicked getDescription: ${NewsItemUtils.getDescription(newsItem.item)}")
+                    Log.d("NewsScreen", "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(newsItem.item)}")
+                    Log.d("NewsScreen", "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(newsItem.item)}")
+                    Log.d("NewsScreen", "Clicked getLink: ${NewsItemUtils.getLink(newsItem.item)}")
+                    openWebView.invoke(NewsItemUtils.getLink(newsItem.item) ?: "")
+                },
+                onShareNews = { newsItem ->
+                    val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(newsItem.item))
+                        type = "text/plain"
+                    }
+                    activity.startActivity(
+                        Intent.createChooser(
+                            shareIntent,
+                            "اشتراک خبر از آوند"
+                        )
+                    )
+                }
+            )
+        }
+    }
+
+    DisposableEffect(coroutineScope) {
+        onDispose {
+            coroutineScope.cancel()
         }
     }
 
@@ -411,6 +451,7 @@ private fun ErrorMode(onRefresh: () -> Unit = {}) {
 
 @Composable
 private fun LoadingMode(modifier: Modifier) {
+
     val infiniteTransition = rememberInfiniteTransition(label = "rotation")
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f,
