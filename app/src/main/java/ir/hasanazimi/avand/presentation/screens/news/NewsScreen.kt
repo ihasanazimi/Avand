@@ -132,6 +132,45 @@ private fun NewsContent(
                         .padding(end = 8.dp)
                         .align(Alignment.CenterEnd),
                 )
+
+                if (news.value is ResponseState.Success) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .align(Alignment.CenterStart)
+                            .background(
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                RoundedCornerShape(16.dp)
+                            )
+                            .clickable {
+                                viewModel?.getNewsRss(true)
+                            }
+                            .padding(horizontal = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = "Refresh",
+                            modifier = Modifier
+                                .size(20.dp)
+                                .fillMaxWidth()
+                                .padding(start = 4.dp),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+
+
+                        Text(
+                            text = "بروزرسانی",
+                            style = CustomTypography.labelSmall.copy(
+                                color = MaterialTheme.colorScheme.primary
+                            ),
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                        )
+
+                    }
+                }
+
             }
 
             Box(

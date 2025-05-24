@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
@@ -122,6 +123,8 @@ fun NewsItemView(
                             modifier = Modifier
                                 .padding(vertical = 8.dp)
                                 .fillMaxWidth(),
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis,
                             style = CustomTypography.labelLarge.copy(
                                 lineHeight = TextUnit(24f, TextUnitType.Sp)
                             )

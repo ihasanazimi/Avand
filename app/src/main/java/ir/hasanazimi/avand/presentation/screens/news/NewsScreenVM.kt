@@ -9,6 +9,7 @@ import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.remote.news.NewsSources
 import ir.hasanazimi.avand.data.entities.remote.news.RssFeedResult
 import ir.hasanazimi.avand.use_cases.NewsRssUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -49,6 +50,7 @@ class NewsScreenVM @Inject constructor(
                 newsRssUseCase.getAllNews(feeds).collectLatest { result ->
                     when (result) {
                         is ResponseState.Success -> {
+                            delay(1000)
                             cachedNews = result.data as List<RssFeedResult>?
                             _newsResponse.emit(ResponseState.Success(result.data))
                         }

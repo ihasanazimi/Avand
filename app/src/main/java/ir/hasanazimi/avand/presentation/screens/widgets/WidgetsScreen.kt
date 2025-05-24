@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
@@ -147,16 +148,33 @@ fun WidgetsScreen(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .weight(0.6f).padding(horizontal = 16.dp), verticalArrangement = Arrangement.Center
+                                    .weight(0.6f)
+                                    .padding(horizontal = 16.dp),
+                                verticalArrangement = Arrangement.Center
                             ) {
 
-                                Text(
-                                    text = calendarData.persianDate,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Start,
-                                    maxLines = 1,
-                                    style = CustomTypography.labelSmall
-                                )
+                                Row {
+
+                                    Text(
+                                        text = calendarData.persianDate,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(end = 8.dp)
+                                            .weight(0.7f),
+                                        textAlign = TextAlign.Start,
+                                        maxLines = 1,
+                                        style = CustomTypography.labelSmall
+                                    )
+
+                                    Icon(
+                                        imageVector = Icons.Default.DateRange,
+                                        "calendar",
+                                        modifier = Modifier
+                                            .weight(0.1f)
+                                            .size(20.dp)
+                                            .align(Alignment.CenterVertically)
+                                    )
+                                }
 
                                 Spacer(
                                     modifier = Modifier
@@ -164,13 +182,30 @@ fun WidgetsScreen(
                                         .height(8.dp)
                                 )
 
-                                Text(
-                                    text = calendarData.globalDate,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Start,
-                                    maxLines = 1,
-                                    style = CustomTypography.labelSmall
-                                )
+
+                                Row {
+
+                                    Text(
+                                        text = calendarData.globalDate,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .weight(0.7f)
+                                            .padding(end = 8.dp),
+                                        textAlign = TextAlign.Start,
+                                        maxLines = 1,
+                                        style = CustomTypography.labelSmall
+                                    )
+
+                                    Icon(
+                                        imageVector = Icons.Default.DateRange,
+                                        "calendar",
+                                        modifier = Modifier
+                                            .weight(0.1f)
+                                            .size(20.dp)
+                                            .align(Alignment.CenterVertically)
+                                    )
+                                }
+
                             }
 
                         }
@@ -336,20 +371,20 @@ private fun SuccessState(
                 .padding(vertical = 4.dp)
         )
 
-/*
-        Text(
-            text = WeatherCondition.getUVSentences(
-                currentWeather?.uv?.roundToInt() ?: 0,
-                currentWeather?.isDay == 1
-            ) + "!",
-            Modifier
-                .fillMaxWidth(),
-            textAlign = TextAlign.Right,
-            lineHeight = TextUnit(16f, TextUnitType.Sp),
-            style = CustomTypography.labelSmall,
-            maxLines = 2
-        )
-*/
+        /*
+                Text(
+                    text = WeatherCondition.getUVSentences(
+                        currentWeather?.uv?.roundToInt() ?: 0,
+                        currentWeather?.isDay == 1
+                    ) + "!",
+                    Modifier
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Right,
+                    lineHeight = TextUnit(16f, TextUnitType.Sp),
+                    style = CustomTypography.labelSmall,
+                    maxLines = 2
+                )
+        */
 
         Spacer(
             Modifier

@@ -62,7 +62,7 @@ fun FullScreenLoading(show: Boolean = false) {
                 .background(Color.Black.copy(alpha = 0.7f))
         ) {
             Card(
-                modifier = Modifier.height(54.dp),
+                modifier = Modifier.height(48.dp),
                 shape = RoundedCornerShape(24.dp),
                 colors = CardDefaults.cardColors(Color.White)
             ) {
@@ -91,9 +91,9 @@ fun FullScreenLoading(show: Boolean = false) {
 
                     Box(
                         modifier = Modifier.padding(
-                            end = 16.dp,
-                            bottom = 16.dp,
-                            top = 16.dp,
+                            end = 12.dp,
+                            bottom = 4.dp,
+                            top = 4.dp,
                             start = 8.dp
                         ),
                         contentAlignment = Alignment.Center
@@ -102,7 +102,7 @@ fun FullScreenLoading(show: Boolean = false) {
                             painter = painterResource(R.drawable.loading),
                             contentDescription = "loading image",
                             modifier = Modifier
-                                .size(32.dp)
+                                .size(24.dp)
                                 .graphicsLayer {
                                     rotationZ = rotation
                                 },
