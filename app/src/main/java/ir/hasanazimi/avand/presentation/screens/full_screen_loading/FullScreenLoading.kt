@@ -55,54 +55,65 @@ fun FullScreenLoading(show: Boolean = false) {
             label = "rotationAnim"
         )
 
-        AvandTheme {
-            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                Card(
-                    modifier = Modifier.height(100.dp),
-                    shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondary)
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.7f))
+        ) {
+            Card(
+                modifier = Modifier.height(54.dp),
+                shape = RoundedCornerShape(24.dp),
+                colors = CardDefaults.cardColors(Color.White)
+            ) {
+                Row(
+                    Modifier
+                        .clickable {}
+                        .focusable(true),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Row(
-                        Modifier
-                            .background(Color.Transparent)
-                            .clickable {}
-                            .focusable(true),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
+
+                    Box(
+                        contentAlignment = Alignment.CenterEnd,
+                        modifier = Modifier.fillMaxHeight()
                     ) {
-
-                       Box(contentAlignment = Alignment.Center , modifier = Modifier.fillMaxHeight()){
-                           Text(
-                               text = "کمی صبر کنید..",
-                               textAlign = TextAlign.Center,
-                               style = CustomTypography.labelLarge.copy(color = MaterialTheme.colorScheme.onSecondary),
-                               modifier = Modifier
-                                   .padding(start = 16.dp, end = 16.dp)
-                                   .padding(vertical = 8.dp)
-                           )
-                       }
-
-
-                        Box(
-                            modifier = Modifier.padding(16.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painter = painterResource(R.drawable.loading),
-                                contentDescription = "loading image",
-                                modifier = Modifier
-                                    .size(32.dp)
-                                    .graphicsLayer {
-                                        rotationZ = rotation
-                                    },
-                                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSecondary)
-                            )
-                        }
-
+                        Text(
+                            text = "کمی صبر کنید..",
+                            textAlign = TextAlign.End,
+                            style = CustomTypography.labelLarge.copy(color = MaterialTheme.colorScheme.secondary),
+                            modifier = Modifier
+                                .padding(start = 16.dp)
+                                .padding(vertical = 8.dp)
+                        )
                     }
+
+
+                    Box(
+                        modifier = Modifier.padding(
+                            end = 16.dp,
+                            bottom = 16.dp,
+                            top = 16.dp,
+                            start = 8.dp
+                        ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.loading),
+                            contentDescription = "loading image",
+                            modifier = Modifier
+                                .size(32.dp)
+                                .graphicsLayer {
+                                    rotationZ = rotation
+                                },
+                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary)
+                        )
+                    }
+
                 }
             }
         }
+
     }
 }
 

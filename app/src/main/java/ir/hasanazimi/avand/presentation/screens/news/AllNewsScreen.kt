@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.presentation.dialogs.WebViewDialog
+import ir.hasanazimi.avand.presentation.screens.full_screen_loading.FullScreenLoading
 import ir.hasanazimi.avand.presentation.screens.web_view.WebViewScreen
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 
@@ -23,16 +24,21 @@ import ir.hasanazimi.avand.presentation.theme.AvandTheme
 fun AllNewsScreen(navController : NavHostController , activity : MainActivity) {
 
     var urlFromNewsScreen by remember { mutableStateOf("") }
+    var showPaginationLoading by remember { mutableStateOf<Boolean>(false) }
 
     AvandTheme {
 
         Surface(modifier = Modifier.padding(top = 54.dp , start = 8.dp , end = 8.dp , bottom = 16.dp).fillMaxSize()) {
+
             NewsScreen(
                 navController = navController,
                 activity = activity ,
                 showMoreBtn = false ,
-                showMoreNewsCallBack = {} ,
-                openWebView = {
+                onMoreNews = {} ,
+                showPaginationLoading = { show ->
+                    showPaginationLoading = show
+                },
+                onOpenWebView = {
                     urlFromNewsScreen = it
                 }
             )
@@ -46,6 +52,9 @@ fun AllNewsScreen(navController : NavHostController , activity : MainActivity) {
                 )
             }
         }
+
+        FullScreenLoading(showPaginationLoading)
+
     }
 
 }
@@ -62,7 +71,8 @@ private fun AllNewsScreenPreview() {
         navController = navController,
         activity = activity ,
         showMoreBtn = false ,
-        showMoreNewsCallBack = {} ,
-        openWebView = {}
+        onMoreNews = {} ,
+        showPaginationLoading = {},
+        onOpenWebView = {}
     )
 }

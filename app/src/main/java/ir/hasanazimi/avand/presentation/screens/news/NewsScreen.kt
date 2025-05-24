@@ -14,7 +14,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -69,28 +68,32 @@ import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.launch
 
 @Composable
 fun NewsScreen(
     activity: MainActivity,
     navController: NavHostController,
     showMoreBtn: Boolean = false,
-    showMoreNewsCallBack : () -> Unit ,
-    openWebView: (newsUrl: String) -> Unit,
+    onMoreNews : () -> Unit,
+    showPaginationLoading: (Boolean) -> Unit,
+    onOpenWebView: (newsUrl: String) -> Unit,
 ) {
 
     val viewModel = hiltViewModel<NewsScreenVM>()
     var news = viewModel.newsResponse.collectAsStateWithLifecycle()
+
 
     AvandTheme {
         NewsContent(
             viewModel = viewModel,
             activity = activity,
             showMoreBtn = showMoreBtn,
-            showMoreNewsCallBack = showMoreNewsCallBack,
+            onMoreNews = onMoreNews,
             news = news,
-            openWebView = openWebView,
+            showPaginationLoading = {
+                showPaginationLoading.invoke(it)
+            },
+            onOpenWebView = onOpenWebView,
         )
     }
 
@@ -102,18 +105,15 @@ private fun NewsContent(
     viewModel: NewsScreenVM?,
     activity: MainActivity,
     showMoreBtn: Boolean = false,
-    showMoreNewsCallBack : () -> Unit ,
+    onMoreNews : () -> Unit,
     news: State<ResponseState<List<RssFeedResult?>>>,
-    openWebView: (String) -> Unit,
+    showPaginationLoading: (Boolean) -> Unit,
+    onOpenWebView: (String) -> Unit,
 ) {
 
     var masterList by remember { mutableStateOf<List<NewsItemWrapper>>(arrayListOf())}
-    var showPaginationLoading by remember { mutableStateOf<Boolean>(false) }
-
 
     Box{
-
-
         Column(modifier = Modifier.fillMaxWidth()) {
 
             Box(
@@ -132,50 +132,6 @@ private fun NewsContent(
                         .padding(end = 8.dp)
                         .align(Alignment.CenterEnd),
                 )
-
-                if (news.value is ResponseState.Success) {
-
-                    if (showPaginationLoading){
-                        LoadingMode(Modifier)
-                    }else{
-                        Row(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .align(Alignment.CenterStart)
-                                .background(
-                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                                    RoundedCornerShape(16.dp)
-                                )
-                                .clickable {
-                                    viewModel?.getNewsRss(true)
-                                }
-                                .padding(horizontal = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-
-                            Icon(
-                                imageVector = Icons.Default.Refresh,
-                                contentDescription = "Refresh",
-                                modifier = Modifier
-                                    .size(20.dp)
-                                    .fillMaxWidth()
-                                    .padding(start = 4.dp),
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-
-
-                            Text(
-                                text = "بروزرسانی",
-                                style = CustomTypography.labelSmall.copy(
-                                    color = MaterialTheme.colorScheme.primary
-                                ),
-                                modifier = Modifier.padding(horizontal = 4.dp),
-                            )
-
-                        }
-                    }
-
-                }
             }
 
             Box(
@@ -224,7 +180,7 @@ private fun NewsContent(
                                 Log.d("NewsScreen", "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(newsItem.item)}")
                                 Log.d("NewsScreen", "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(newsItem.item)}")
                                 Log.d("NewsScreen", "Clicked getLink: ${NewsItemUtils.getLink(newsItem.item)}")
-                                openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
+                                onOpenWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
                             },
                             onShareNews = { item ->
                                 val shareIntent = Intent().apply {
@@ -241,12 +197,13 @@ private fun NewsContent(
                             }
                         )
                     }else{
+
                         PaginatedNewsList(
                             originalList = masterList,
                             activity = activity,
-                            openWebView = openWebView,
+                            openWebView = onOpenWebView,
                             showPaginationLoading = {
-                                showPaginationLoading  = it
+                                showPaginationLoading.invoke(it)
                             }
                         )
                     }
@@ -261,7 +218,7 @@ private fun NewsContent(
                             .padding(vertical = 16.dp)
                             .align(Alignment.CenterHorizontally)
                             .clickable {
-                                showMoreNewsCallBack.invoke()
+                                onMoreNews.invoke()
                             },
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.secondary
@@ -289,14 +246,40 @@ private fun NewsContent(
                     }
                 }
             }
-
-
-
-
         }
+        LaunchedEffect(Unit) { }
     }
 }
 
+@Composable
+private fun PaginationLoading() {
+    val infiniteTransition = rememberInfiniteTransition(label = "rotation")
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1200, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "rotationAnim"
+    )
+
+    Box(
+        modifier = Modifier
+            .background(Color.Transparent),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(R.drawable.loading),
+            contentDescription = "در حال بارگذاری",
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .size(32.dp)
+                .graphicsLayer { rotationZ = rotation },
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
+        )
+    }
+}
 
 
 @Composable
@@ -486,8 +469,11 @@ fun NewsScreenPreView() {
             activity = MainActivity(),
             news = state.collectAsState(ResponseState.Error(Exception())),
             showMoreBtn = false,
-            showMoreNewsCallBack = {},
-            openWebView = {},
+            onMoreNews = {},
+            showPaginationLoading = {
+
+            },
+            onOpenWebView = {},
         )
     }
 }

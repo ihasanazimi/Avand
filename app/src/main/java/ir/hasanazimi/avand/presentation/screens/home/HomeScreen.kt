@@ -148,10 +148,11 @@ private fun HomeScreenContent(
                         activity = activity,
                         navController = navController,
                         showMoreBtn = true ,
-                        showMoreNewsCallBack = {
+                        onMoreNews = {
                             navController.navigate(Screens.AllNews.routeId)
                         },
-                        openWebView = { url -> urlFromNewsScreenCallBack.invoke(url) }
+                        showPaginationLoading = {},
+                        onOpenWebView = { url -> urlFromNewsScreenCallBack.invoke(url) }
                     )
                 }
 
