@@ -61,10 +61,10 @@ import ir.hasanazimi.avand.data.entities.remote.news.NewsItemUtils
 import ir.hasanazimi.avand.data.entities.remote.news.NewsItemWrapper
 import ir.hasanazimi.avand.data.entities.remote.news.NewsSources
 import ir.hasanazimi.avand.data.entities.remote.news.RssFeedResult
-import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.itemViews.NewsItemView
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 @Composable
@@ -86,7 +86,7 @@ fun NewsScreen(
             showMoreBtn = showMoreBtn,
             showMoreNewsCallBack = showMoreNewsCallBack,
             news = news,
-            openWebView = openWebView
+            openWebView = openWebView,
         )
     }
 }
@@ -99,11 +99,12 @@ private fun NewsContent(
     showMoreBtn: Boolean = false,
     showMoreNewsCallBack : () -> Unit ,
     news: State<ResponseState<List<RssFeedResult?>>>,
-    openWebView: (String) -> Unit
+    openWebView: (String) -> Unit,
 ) {
 
     var masterList by remember { mutableStateOf<List<NewsItemWrapper>>(arrayListOf())}
     var displayedList by remember { mutableStateOf<List<NewsItemWrapper>>(arrayListOf()) }
+    var showFullScreenLoading by remember { mutableStateOf<Boolean>(false) }
 
     Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -124,7 +125,7 @@ private fun NewsContent(
                     .align(Alignment.CenterEnd),
             )
 
-            if (news.value is ResponseState.Success) {
+            if (news.value is ResponseState.Success && showFullScreenLoading.not()) {
 
                 Row(
                     modifier = Modifier
@@ -163,6 +164,20 @@ private fun NewsContent(
             }
         }
 
+
+        if (showFullScreenLoading){
+            Spacer(
+                Modifier
+                    .padding(top = 16.dp)
+                    .background(
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .fillMaxWidth()
+                    .height(1.dp)
+            )
+        }
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -173,11 +188,12 @@ private fun NewsContent(
                 ErrorMode(onRefresh = { viewModel?.getNewsRss(true) })
             }
 
-            if (news.value is ResponseState.Loading) {
+            if (news.value is ResponseState.Loading || showFullScreenLoading) {
                 LoadingMode(modifier = Modifier.fillMaxWidth())
             }
 
         }
+
 
         if (news.value is ResponseState.Success) {
             val results = news.value.data
@@ -196,7 +212,7 @@ private fun NewsContent(
             } ?: emptyList()
 
             masterList = newsItems.filter { NewsItemUtils.getLink(it.item) != null && NewsItemUtils.getTitle(it.item) != null }
-            masterList.shuffled().forEachIndexed { index , item ->
+            masterList.forEachIndexed { index , item ->
                 if (showMoreBtn){
                     Log.i("TAG", "NewsScreen new item -> $item")
                     if (index > 10) return@forEachIndexed
@@ -240,15 +256,14 @@ private fun NewsContent(
                         }
                     )
                 }else{
-                    displayedList = masterList.take(5)
-                    PaginatedList(
-                        allVisibleItems = displayedList,
-                        pageSize = 5,
+                    PaginatedNewsList(
+                        originalList = masterList,
                         activity = activity,
                         openWebView = openWebView,
-                    ) {
-                        displayedList = masterList.take(displayedList.size + 5)
-                    }
+                        showPaginationLoading = {
+                            showFullScreenLoading  = it
+                        }
+                    )
                 }
             }
 
@@ -288,8 +303,10 @@ private fun NewsContent(
                     }
                 }
             }
-
         }
+
+
+
 
     }
 }
@@ -297,76 +314,65 @@ private fun NewsContent(
 
 
 @Composable
-fun PaginatedList(
-    allVisibleItems: List<NewsItemWrapper>,
-    pageSize: Int = 5,
+fun PaginatedNewsList(
+    originalList: List<NewsItemWrapper>,
     activity: MainActivity,
     openWebView: (String) -> Unit,
-    onLoadMore: () -> Unit
+    showPaginationLoading : (show : Boolean) -> Unit
 ) {
-    var visibleItems by remember { mutableStateOf(allVisibleItems.take(pageSize)) }
+    val pageSize = 10 // تعداد آیتم‌های هر صفحه
+    var displayedList by remember { mutableStateOf(originalList.take(pageSize)) }
     val listState = rememberLazyListState()
 
-    // Load more when near the bottom
+    // بررسی اسکرول به انتهای لیست برای بارگذاری بیشتر
     LaunchedEffect(listState) {
-        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
-            .collect { lastVisibleIndex ->
-                if (lastVisibleIndex == visibleItems.lastIndex && visibleItems.size < allVisibleItems.size) {
-                    onLoadMore()
-                }
+        snapshotFlow {
+            val layoutInfo = listState.layoutInfo
+            val totalItemsCount = layoutInfo.totalItemsCount
+            val lastVisibleItemIndex = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
+            lastVisibleItemIndex >= totalItemsCount - 1 && totalItemsCount < originalList.size
+        }.collect { shouldLoadMore ->
+            if (shouldLoadMore) {
+                // اضافه کردن آیتم‌های جدید به displayedList
+                showPaginationLoading.invoke(true)
+                delay(1000)
+                displayedList = originalList.take(displayedList.size + pageSize)
+                delay(1000)
+                showPaginationLoading.invoke(false)
             }
+        }
     }
 
-    LazyColumn(state = listState , modifier = Modifier.fillMaxSize()) {
-        items(visibleItems) { item ->
+    // رندر لیست
+    LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
+        items(displayedList) { item ->
             NewsItemView(
                 news = item,
-                onNewsClick = { item ->
-                    Log.d(
-                        "NewsScreen",
-                        "Clicked getTitle: ${NewsItemUtils.getTitle(item.item)}"
-                    )
-                    Log.d(
-                        "NewsScreen",
-                        "Clicked getDescription: ${NewsItemUtils.getDescription(item.item)}"
-                    )
-                    Log.d(
-                        "NewsScreen",
-                        "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(item.item)}"
-                    )
-                    Log.d(
-                        "NewsScreen",
-                        "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(item.item)}"
-                    )
-                    Log.d(
-                        "NewsScreen",
-                        "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
-                    )
-                    openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
+                onNewsClick = { newsItem ->
+                    Log.d("NewsScreen", "Clicked getTitle: ${NewsItemUtils.getTitle(newsItem.item)}")
+                    Log.d("NewsScreen", "Clicked getDescription: ${NewsItemUtils.getDescription(newsItem.item)}")
+                    Log.d("NewsScreen", "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(newsItem.item)}")
+                    Log.d("NewsScreen", "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(newsItem.item)}")
+                    Log.d("NewsScreen", "Clicked getLink: ${NewsItemUtils.getLink(newsItem.item)}")
+                    openWebView.invoke(NewsItemUtils.getLink(newsItem.item) ?: "")
                 },
-                onShareNews = { item ->
+                onShareNews = { newsItem ->
                     val shareIntent = Intent().apply {
                         action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(item.item))
+                        putExtra(Intent.EXTRA_TEXT, NewsItemUtils.getLink(newsItem.item))
                         type = "text/plain"
                     }
                     activity.startActivity(
                         Intent.createChooser(
                             shareIntent,
-                            "اشتراک خبر از آوند "
+                            "اشتراک خبر از آوند"
                         )
                     )
                 }
             )
         }
     }
-
-    // Update visibleItems when allItems change
-    LaunchedEffect(allVisibleItems) {
-        visibleItems = allVisibleItems.take(visibleItems.size + pageSize)
-    }
 }
-
 
 
 @Composable
@@ -459,6 +465,7 @@ private fun LoadingMode(modifier: Modifier) {
                 painter = painterResource(R.drawable.loading),
                 contentDescription = "در حال بارگذاری",
                 modifier = Modifier
+                    .padding(top = 8.dp)
                     .size(32.dp)
                     .graphicsLayer { rotationZ = rotation },
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary)

@@ -35,6 +35,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,22 +64,15 @@ fun WebViewScreen(
 
         val context = LocalContext.current
         val loading = remember { mutableStateOf(true) }
-
         val webView = remember {
             WebView(context).apply {
-
                 settings.javaScriptEnabled = true
                 layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
-
                 webViewClient = object : WebViewClient() {
-                    override fun onPageStarted(
-                        view: WebView?,
-                        url: String?,
-                        favicon: Bitmap?
-                    ) {
+                    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                         loading.value = true
                     }
 
@@ -86,9 +80,14 @@ fun WebViewScreen(
                         loading.value = false
                     }
                 }
-                loadUrl(newsUrl)
             }
         }
+
+        LaunchedEffect(newsUrl) {
+            webView.loadUrl(newsUrl)
+        }
+
+
         BackHandler(enabled = true) {
             if (webView.canGoBack()) {
                 webView.goBack()
