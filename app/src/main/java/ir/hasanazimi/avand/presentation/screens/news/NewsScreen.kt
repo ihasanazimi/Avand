@@ -218,27 +218,12 @@ private fun NewsContent(
                         if (index > 10) return@forEachIndexed
                         NewsItemView(
                             news = item,
-                            onNewsClick = { item ->
-                                Log.d(
-                                    "NewsScreen",
-                                    "Clicked getTitle: ${NewsItemUtils.getTitle(item.item)}"
-                                )
-                                Log.d(
-                                    "NewsScreen",
-                                    "Clicked getDescription: ${NewsItemUtils.getDescription(item.item)}"
-                                )
-                                Log.d(
-                                    "NewsScreen",
-                                    "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(item.item)}"
-                                )
-                                Log.d(
-                                    "NewsScreen",
-                                    "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(item.item)}"
-                                )
-                                Log.d(
-                                    "NewsScreen",
-                                    "Clicked getLink: ${NewsItemUtils.getLink(item.item)}"
-                                )
+                            onNewsClick = { newsItem ->
+                                Log.d("NewsScreen", "Clicked getTitle: ${NewsItemUtils.getTitle(newsItem.item)}")
+                                Log.d("NewsScreen", "Clicked getDescription: ${NewsItemUtils.getDescription(newsItem.item)}")
+                                Log.d("NewsScreen", "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(newsItem.item)}")
+                                Log.d("NewsScreen", "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(newsItem.item)}")
+                                Log.d("NewsScreen", "Clicked getLink: ${NewsItemUtils.getLink(newsItem.item)}")
                                 openWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
                             },
                             onShareNews = { item ->
