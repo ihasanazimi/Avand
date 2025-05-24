@@ -118,7 +118,7 @@ fun WidgetsScreen(
                     /** dayOfWeek and persian and global Date */
                     Card(
                         modifier = Modifier
-                            .padding(start = 4.dp, bottom = 4.dp)
+                            .padding(start = 4.dp, bottom = 6.dp)
                             .weight(1f)
                             .fillMaxWidth(),
                         shape = RoundedCornerShape(20.dp),
@@ -160,7 +160,7 @@ fun WidgetsScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(end = 8.dp)
-                                            .weight(0.7f),
+                                            .weight(0.5f),
                                         textAlign = TextAlign.Start,
                                         maxLines = 1,
                                         style = CustomTypography.labelSmall
@@ -171,8 +171,10 @@ fun WidgetsScreen(
                                         "calendar",
                                         modifier = Modifier
                                             .weight(0.1f)
-                                            .size(20.dp)
+                                            .size(16.dp)
                                             .align(Alignment.CenterVertically)
+                                        ,
+                                        tint = MaterialTheme.colorScheme.secondary
                                     )
                                 }
 
@@ -189,7 +191,7 @@ fun WidgetsScreen(
                                         text = calendarData.globalDate,
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .weight(0.7f)
+                                            .weight(0.5f)
                                             .padding(end = 8.dp),
                                         textAlign = TextAlign.Start,
                                         maxLines = 1,
@@ -201,8 +203,9 @@ fun WidgetsScreen(
                                         "calendar",
                                         modifier = Modifier
                                             .weight(0.1f)
-                                            .size(20.dp)
-                                            .align(Alignment.CenterVertically)
+                                            .size(16.dp)
+                                            .align(Alignment.CenterVertically),
+                                        tint = MaterialTheme.colorScheme.secondary
                                     )
                                 }
 
