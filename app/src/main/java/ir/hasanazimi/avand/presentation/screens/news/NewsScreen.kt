@@ -1,6 +1,7 @@
 package ir.hasanazimi.avand.presentation.screens.news
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -499,6 +500,7 @@ private fun LoadingMode(modifier: Modifier) {
 
 
 @Preview(showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun NewsScreenPreView() {
     AvandTheme {
