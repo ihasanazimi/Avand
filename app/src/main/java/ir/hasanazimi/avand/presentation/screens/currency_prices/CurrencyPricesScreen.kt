@@ -1,5 +1,7 @@
 package ir.hasanazimi.avand.presentation.screens.currency_prices
 
+import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,15 +22,25 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.MainActivity
+import ir.hasanazimi.avand.common.extensions.showToast
+import ir.hasanazimi.avand.data.entities.ResponseState
+import ir.hasanazimi.avand.data.entities.remote.currencies.CurrenciesRemoteResponse
 import ir.hasanazimi.avand.data.fakeBitPriceList
 import ir.hasanazimi.avand.data.fakeCurrencyPriceList
 import ir.hasanazimi.avand.data.fakeGoldPriceList
@@ -40,9 +52,41 @@ import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
 @Composable
 fun CurrencyPricesScreen(activity: MainActivity , navController: NavHostController) {
+
+    val TAG = "CurrencyPricesScreen"
+    val context = LocalContext.current
+    val viewModel = hiltViewModel<CurrencyPricesScreenVM>()
+    var currencies by remember { mutableStateOf<CurrenciesRemoteResponse?>(null) }
+
     AvandTheme {
         Surface {
-            Column(modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp , bottom = 8.dp)) {
+
+            LaunchedEffect(Unit) {
+                /*viewModel.getCurrencies()*/
+
+                viewModel.currencies.collect { result ->
+                    when(result){
+
+                        is ResponseState.Success -> {
+                            Log.i(TAG, "CurrencyPricesScreen: ${result.data}")
+                            currencies = result.data
+                        }
+
+                        is ResponseState.Loading -> {
+
+                        }
+
+                        is ResponseState.Error -> {
+                            showToast(context,"خطای نامشخص")
+                        }
+                    }
+                }
+            }
+
+
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)) {
 
                 Row(
                     Modifier
@@ -125,7 +169,8 @@ fun CurrencyPricesScreen(activity: MainActivity , navController: NavHostControll
     }
 }
 
-@Preview(showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun CurrencyPricesScreenPreview() {
     AvandTheme {

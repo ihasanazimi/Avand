@@ -5,15 +5,18 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.InstanceCreator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ir.hasanazimi.avand.data.entities.remote.currencies.Rates
 import okhttp3.OkHttpClient
 import org.simpleframework.xml.core.Persister
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
+import java.lang.reflect.Type
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -42,13 +45,27 @@ object NetworkModule {
     @Provides
     @Singleton
     @Named("rss")
-    fun provideGoogleNewsApiRetrofit(
+    fun provideRssApiRetrofit(
         okHttpClient: OkHttpClient,
     ): Retrofit.Builder {
         return Retrofit.Builder()
             .baseUrl("https://digiato.com/feed/")
             .client(okHttpClient)
             .addConverterFactory(SimpleXmlConverterFactory.create(Persister()))
+    }
+
+
+    @Provides
+    @Singleton
+    @Named("currencies")
+    fun provideCurrenciesApiRetrofit(
+        okHttpClient: OkHttpClient,
+        gson: Gson,
+    ): Retrofit.Builder {
+        return Retrofit.Builder()
+            .baseUrl("https://api.unirateapi.com/api/")
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(gson))
     }
 
 

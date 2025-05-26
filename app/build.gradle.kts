@@ -22,6 +22,14 @@ android {
 
     buildTypes {
         release {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        debug {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -100,6 +108,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.0")
 
 
+    /*implementation("com.squareup.retrofit2:retrofit:3.0.0")*/
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-simplexml:2.9.0")
 

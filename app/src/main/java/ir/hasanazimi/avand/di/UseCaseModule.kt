@@ -4,9 +4,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ir.hasanazimi.avand.data.repository.CurrenciesRepository
 import ir.hasanazimi.avand.data.repository.NewsRssRepository
 import ir.hasanazimi.avand.data.repository.WeatherRepository
 import ir.hasanazimi.avand.db.DataStoreManager
+import ir.hasanazimi.avand.use_cases.CurrenciesUseCase
+import ir.hasanazimi.avand.use_cases.CurrenciesUseCaseImpl
 import ir.hasanazimi.avand.use_cases.NewsRssUseCase
 import ir.hasanazimi.avand.use_cases.NewsRssUseCaseImpl
 import ir.hasanazimi.avand.use_cases.WeatherUseCase
@@ -29,6 +32,13 @@ object UseCaseModule {
     @Singleton
     fun provideNewsUseCase(newsRssRepository: NewsRssRepository , dataStoreManager: DataStoreManager) : NewsRssUseCase{
         return NewsRssUseCaseImpl(newsRssRepository , dataStoreManager)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideCurrenciesUseCase(currenciesRepository: CurrenciesRepository) : CurrenciesUseCase{
+        return CurrenciesUseCaseImpl(currenciesRepository)
     }
 
 }

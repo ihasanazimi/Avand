@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ir.hasanazimi.avand.data.web_services.currencies.CurrenciesWebService
 import ir.hasanazimi.avand.data.web_services.news.RssService
 import ir.hasanazimi.avand.data.web_services.weather.WeatherWebServices
 import retrofit2.Retrofit
@@ -28,6 +29,14 @@ object WebServiceModule {
     @Provides
     fun provideNewsWebServices(@Named("rss")retrofit: Retrofit.Builder) : RssService {
         return retrofit.build().create(RssService::class.java)
+    }
+
+
+
+    @Singleton
+    @Provides
+    fun provideCurrenciesWebServices(@Named("currencies")retrofit: Retrofit.Builder) : CurrenciesWebService {
+        return retrofit.build().create(CurrenciesWebService::class.java)
     }
 
 
