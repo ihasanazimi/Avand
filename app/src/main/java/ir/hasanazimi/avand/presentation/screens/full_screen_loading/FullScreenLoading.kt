@@ -58,6 +58,8 @@ fun FullScreenLoading(show: Boolean = false) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
+                .clickable{}
+                .focusable()
                 .fillMaxSize()
                 .background(Color.Black.copy(alpha = 0.7f))
         ) {
@@ -81,7 +83,7 @@ fun FullScreenLoading(show: Boolean = false) {
                         Text(
                             text = "کمی صبر کنید..",
                             textAlign = TextAlign.End,
-                            style = CustomTypography.labelLarge.copy(color = MaterialTheme.colorScheme.secondary),
+                            style = CustomTypography.labelLarge.copy(color = Color.Black),
                             modifier = Modifier
                                 .padding(start = 16.dp)
                                 .padding(vertical = 8.dp)
@@ -106,7 +108,7 @@ fun FullScreenLoading(show: Boolean = false) {
                                 .graphicsLayer {
                                     rotationZ = rotation
                                 },
-                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary)
+                            colorFilter = ColorFilter.tint(Color.Black)
                         )
                     }
 

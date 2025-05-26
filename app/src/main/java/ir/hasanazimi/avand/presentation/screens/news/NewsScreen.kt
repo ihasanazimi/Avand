@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
@@ -56,6 +57,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.data.entities.ResponseState
@@ -75,7 +77,7 @@ fun NewsScreen(
     activity: MainActivity,
     navController: NavHostController,
     showMoreBtn: Boolean = false,
-    onMoreNews : () -> Unit,
+    onMoreNews: () -> Unit,
     showPaginationLoading: (Boolean) -> Unit,
     onOpenWebView: (newsUrl: String) -> Unit,
 ) {
@@ -88,6 +90,7 @@ fun NewsScreen(
         NewsContent(
             viewModel = viewModel,
             activity = activity,
+            navController = navController,
             showMoreBtn = showMoreBtn,
             onMoreNews = onMoreNews,
             news = news,
@@ -105,16 +108,17 @@ fun NewsScreen(
 private fun NewsContent(
     viewModel: NewsScreenVM?,
     activity: MainActivity,
+    navController: NavHostController,
     showMoreBtn: Boolean = false,
-    onMoreNews : () -> Unit,
+    onMoreNews: () -> Unit,
     news: State<ResponseState<List<RssFeedResult?>>>,
     showPaginationLoading: (Boolean) -> Unit,
     onOpenWebView: (String) -> Unit,
 ) {
 
-    var masterList by remember { mutableStateOf<List<NewsItemWrapper>>(arrayListOf())}
+    var masterList by remember { mutableStateOf<List<NewsItemWrapper>>(arrayListOf()) }
 
-    Box{
+    Box {
         Column(modifier = Modifier.fillMaxWidth()) {
 
             Box(
@@ -124,15 +128,28 @@ private fun NewsContent(
                     .padding(horizontal = 8.dp)
             ) {
 
-                Text(
-                    text = "اخبار روز",
-                    style = CustomTypography.titleLarge.copy(
-                        color = MaterialTheme.colorScheme.secondary
-                    ),
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .align(Alignment.CenterEnd),
-                )
+
+                Row(
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Text(
+                        text = "اخبار روز",
+                        style = CustomTypography.titleLarge.copy(
+                            color = MaterialTheme.colorScheme.secondary
+                        ),
+                        modifier = Modifier
+                            .padding(end = 8.dp),
+                    )
+
+                    if (showMoreBtn.not()){
+                        Icon(imageVector = Icons.Default.ArrowForward, "back btn" , modifier = Modifier.clickable{
+                            navController.navigateUp()
+                        })
+                    }
+
+                }
 
                 if (news.value is ResponseState.Success) {
                     Row(
@@ -208,18 +225,33 @@ private fun NewsContent(
                 } ?: emptyList()
 
                 masterList = newsItems
-                masterList.forEachIndexed { index , item ->
-                    if (showMoreBtn){
+                masterList.forEachIndexed { index, item ->
+                    if (showMoreBtn) {
                         Log.i("TAG", "NewsScreen new item -> $item")
                         if (index > 10) return@forEachIndexed
                         NewsItemView(
                             news = item,
                             onNewsClick = { newsItem ->
-                                Log.d("NewsScreen", "Clicked getTitle: ${NewsItemUtils.getTitle(newsItem.item)}")
-                                Log.d("NewsScreen", "Clicked getDescription: ${NewsItemUtils.getDescription(newsItem.item)}")
-                                Log.d("NewsScreen", "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(newsItem.item)}")
-                                Log.d("NewsScreen", "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(newsItem.item)}")
-                                Log.d("NewsScreen", "Clicked getLink: ${NewsItemUtils.getLink(newsItem.item)}")
+                                Log.d(
+                                    "NewsScreen",
+                                    "Clicked getTitle: ${NewsItemUtils.getTitle(newsItem.item)}"
+                                )
+                                Log.d(
+                                    "NewsScreen",
+                                    "Clicked getDescription: ${NewsItemUtils.getDescription(newsItem.item)}"
+                                )
+                                Log.d(
+                                    "NewsScreen",
+                                    "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(newsItem.item)}"
+                                )
+                                Log.d(
+                                    "NewsScreen",
+                                    "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(newsItem.item)}"
+                                )
+                                Log.d(
+                                    "NewsScreen",
+                                    "Clicked getLink: ${NewsItemUtils.getLink(newsItem.item)}"
+                                )
                                 onOpenWebView.invoke(NewsItemUtils.getLink(item.item) ?: "")
                             },
                             onShareNews = { item ->
@@ -236,7 +268,7 @@ private fun NewsContent(
                                 )
                             }
                         )
-                    }else{
+                    } else {
 
                         PaginatedNewsList(
                             originalList = masterList,
@@ -327,7 +359,7 @@ fun PaginatedNewsList(
     originalList: List<NewsItemWrapper>,
     activity: MainActivity,
     openWebView: (String) -> Unit,
-    showPaginationLoading : (show : Boolean) -> Unit
+    showPaginationLoading: (show: Boolean) -> Unit
 ) {
     val pageSize = 10 // تعداد آیتم‌های هر صفحه
     var displayedList by remember { mutableStateOf(originalList.take(pageSize)) }
@@ -359,10 +391,22 @@ fun PaginatedNewsList(
             NewsItemView(
                 news = item,
                 onNewsClick = { newsItem ->
-                    Log.d("NewsScreen", "Clicked getTitle: ${NewsItemUtils.getTitle(newsItem.item)}")
-                    Log.d("NewsScreen", "Clicked getDescription: ${NewsItemUtils.getDescription(newsItem.item)}")
-                    Log.d("NewsScreen", "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(newsItem.item)}")
-                    Log.d("NewsScreen", "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(newsItem.item)}")
+                    Log.d(
+                        "NewsScreen",
+                        "Clicked getTitle: ${NewsItemUtils.getTitle(newsItem.item)}"
+                    )
+                    Log.d(
+                        "NewsScreen",
+                        "Clicked getDescription: ${NewsItemUtils.getDescription(newsItem.item)}"
+                    )
+                    Log.d(
+                        "NewsScreen",
+                        "Clicked getPublishDate: ${NewsItemUtils.getPublishDate(newsItem.item)}"
+                    )
+                    Log.d(
+                        "NewsScreen",
+                        "Clicked getImageUrl: ${NewsItemUtils.getImageUrl(newsItem.item)}"
+                    )
                     Log.d("NewsScreen", "Clicked getLink: ${NewsItemUtils.getLink(newsItem.item)}")
                     openWebView.invoke(NewsItemUtils.getLink(newsItem.item) ?: "")
                 },
@@ -505,16 +549,20 @@ private fun LoadingMode(modifier: Modifier) {
 fun NewsScreenPreView() {
     AvandTheme {
         val state = MutableSharedFlow<ResponseState.Success<List<RssFeedResult>>>()
+        val navController = rememberNavController()
         NewsContent(
             viewModel = null,
             activity = MainActivity(),
             news = state.collectAsState(ResponseState.Error(Exception())),
+            navController = navController,
             showMoreBtn = false,
             onMoreNews = {},
             showPaginationLoading = {
 
             },
-            onOpenWebView = {},
+            onOpenWebView = {
+
+            },
         )
     }
 }

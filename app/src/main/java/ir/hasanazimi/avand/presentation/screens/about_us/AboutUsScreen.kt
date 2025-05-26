@@ -70,7 +70,7 @@ fun AboutUsScreen(
                 text = "درباره توسعه دهنده",
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp,
-                style = CustomTypography.titleLarge,
+                style = CustomTypography.bodyLarge,
                 color = Color.White,
             )
 
@@ -156,32 +156,29 @@ fun AboutUsScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(56.dp),
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
+                        onClick = onMessageClick,
+                        shape = RoundedCornerShape(12.dp)
                     ) {
-                        Button(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(56.dp),
-                            onClick = onMessageClick,
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Text(
-                                "ارتباط با توسعه دهنده",
-                                style = CustomTypography.bodyLarge
-                            )
-                        }
-
-                        TextButton(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = {
-                                navHostController.popBackStack()
-                            },
-                        ) {
-                            Text("بازگشت", color = MaterialTheme.colorScheme.primary)
-                        }
+                        Text(
+                            "ارتباط با توسعه دهنده",
+                            style = CustomTypography.bodyLarge.copy(color = MaterialTheme.colorScheme.primary)
+                        )
                     }
                 }
+            }
+
+            TextButton(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                onClick = {
+                    navHostController.popBackStack()
+                },
+            ) {
+                Text("بازگشت", color = MaterialTheme.colorScheme.onSecondary)
             }
         }
     }
