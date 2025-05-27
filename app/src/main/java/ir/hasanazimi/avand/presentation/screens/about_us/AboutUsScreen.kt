@@ -155,20 +155,21 @@ fun AboutUsScreen(
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
+                }
 
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        colors = ButtonDefaults.buttonColors(),
-                        onClick = onMessageClick,
-                        shape = RoundedCornerShape(12.dp)
-                    ) {
-                        Text(
-                            "ارتباط با توسعه دهنده",
-                            style = CustomTypography.bodyLarge.copy(color = MaterialTheme.colorScheme.onPrimary)
-                        )
-                    }
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 8.dp)
+                        .height(56.dp),
+                    colors = ButtonDefaults.buttonColors(),
+                    onClick = onMessageClick,
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(
+                        "ارتباط با توسعه دهنده",
+                        style = CustomTypography.bodyLarge.copy(color = MaterialTheme.colorScheme.onPrimary)
+                    )
                 }
             }
 
