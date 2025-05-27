@@ -160,13 +160,13 @@ fun AboutUsScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
+                        colors = ButtonDefaults.buttonColors(),
                         onClick = onMessageClick,
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         Text(
                             "ارتباط با توسعه دهنده",
-                            style = CustomTypography.bodyLarge.copy(color = MaterialTheme.colorScheme.primary)
+                            style = CustomTypography.bodyLarge.copy(color = MaterialTheme.colorScheme.onPrimary)
                         )
                     }
                 }
@@ -178,7 +178,7 @@ fun AboutUsScreen(
                     navHostController.popBackStack()
                 },
             ) {
-                Text("بازگشت", color = MaterialTheme.colorScheme.onSecondary)
+                Text("بـازگـشـت", color = Color.White)
             }
         }
     }
