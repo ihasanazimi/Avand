@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -40,12 +42,11 @@ import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.common.extensions.showToast
 import ir.hasanazimi.avand.data.entities.ResponseState
-import ir.hasanazimi.avand.data.entities.remote.currencies.CurrenciesRemoteResponse
-import ir.hasanazimi.avand.data.fakeBitPriceList
-import ir.hasanazimi.avand.data.fakeCurrencyPriceList
-import ir.hasanazimi.avand.data.fakeGoldPriceList
+import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyEntity
+import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyEnum
 import ir.hasanazimi.avand.presentation.itemViews.CurrencyPriceItemView
 import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
+import ir.hasanazimi.avand.presentation.screens.full_screen_loading.FullScreenLoading
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 
@@ -56,27 +57,30 @@ fun CurrencyPricesScreen(activity: MainActivity , navController: NavHostControll
     val TAG = "CurrencyPricesScreen"
     val context = LocalContext.current
     val viewModel = hiltViewModel<CurrencyPricesScreenVM>()
-    var currencies by remember { mutableStateOf<CurrenciesRemoteResponse?>(null) }
+    var currencies by remember { mutableStateOf<List<CurrencyEnum>?>(null) }
+    var showLoading by remember { mutableStateOf(false) }
 
     AvandTheme {
         Surface {
 
             LaunchedEffect(Unit) {
-                /*viewModel.getCurrencies()*/
+                viewModel.getCurrencies()
 
                 viewModel.currencies.collect { result ->
                     when(result){
-
                         is ResponseState.Success -> {
                             Log.i(TAG, "CurrencyPricesScreen: ${result.data}")
                             currencies = result.data
+                            showLoading = false
+
                         }
 
                         is ResponseState.Loading -> {
-
+                            showLoading = true
                         }
 
                         is ResponseState.Error -> {
+                            showLoading = false
                             showToast(context,"خطای نامشخص")
                         }
                     }
@@ -84,86 +88,98 @@ fun CurrencyPricesScreen(activity: MainActivity , navController: NavHostControll
             }
 
 
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)) {
+            FullScreenLoading(showLoading)
 
-                Row(
-                    Modifier
-                        .align(Alignment.End)
-                        .padding(horizontal = 16.dp, vertical = 12.dp)
-                        .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+
+            if (currencies?.isNotEmpty() == true){
+                SuccessScreenOfCurrencies(currencies?:emptyList())
+            }
+        }
+    }
+}
+
+@Composable
+private fun SuccessScreenOfCurrencies(list: List<CurrencyEnum>) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
+    ) {
+
+        Row(
+            Modifier
+                .align(Alignment.End)
+                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+        ) {
+
+
+            Row {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "refresh prices",
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .clip(CircleShape)
+                        .size(28.dp)
+                        .padding(2.dp)
+                        .clickable {
+                            // todo
+                        },
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Icon(
+                    imageVector = Icons.Default.Share,
+                    contentDescription = "share prices",
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(28.dp)
+                        .padding(5.dp)
+                        .clickable {
+                            // todo
+                        },
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            Text(
+                text = "لیست قیمت ها :",
+                style = CustomTypography.bodyLarge,
+                modifier = Modifier.weight(1f)
+            )
+
+        }
+
+
+        Card(
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        ) {
+            LazyColumn(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
+
+                items(list){ item ->
+                    CurrencyPriceItemView(obj = item, modifier = Modifier)
+                }
+
+                /*CustomSpacer()
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(32.dp),
+                    contentAlignment = Alignment.Center,
                 ) {
-
-
-                    Row {
-                        Icon(
-                            imageVector = Icons.Default.Refresh,
-                            contentDescription = "refresh prices",
-                            modifier = Modifier
-                                .padding(end = 8.dp)
-                                .clip(CircleShape)
-                                .size(28.dp)
-                                .padding(2.dp)
-                                .clickable {
-                                    // todo
-                                },
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Share,
-                            contentDescription = "share prices",
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .size(28.dp)
-                                .padding(5.dp)
-                                .clickable {
-                                    // todo
-                                },
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-
                     Text(
-                        text = "لیست قیمت ها :",
-                        style = CustomTypography.bodyLarge,
-                        modifier = Modifier.weight(1f)
+                        text = "مشاهده بیشتر",
+                        style = CustomTypography.labelSmall.copy(
+                            color = MaterialTheme.colorScheme.primary
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.Center),
+                        textAlign = TextAlign.Center,
                     )
-
-                }
-
-
-                Card(
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-                ) {
-                    Column(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
-                        (fakeBitPriceList + fakeGoldPriceList + fakeCurrencyPriceList).forEach { item ->
-                            CurrencyPriceItemView(obj = item, modifier = Modifier)
-                        }
-
-
-                        CustomSpacer()
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(32.dp),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Text(
-                                text = "مشاهده بیشتر",
-                                style = CustomTypography.labelSmall.copy(
-                                    color = MaterialTheme.colorScheme.primary
-                                ),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .align(Alignment.Center),
-                                textAlign = TextAlign.Center,
-                            )
-                        }
-                    }
-                }
+                }*/
             }
         }
     }

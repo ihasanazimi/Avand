@@ -25,13 +25,15 @@ import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.extensions.getAmountFormatBySeparator
 import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyType
 import ir.hasanazimi.avand.data.entities.local.other.CurrencyPriceEntity
+import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyEntity
+import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyEnum
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
 import ir.hasanazimi.avand.presentation.theme.GreenColor
 
 
 @Composable
-fun CurrencyPriceItemView(obj: CurrencyPriceEntity, modifier: Modifier = Modifier) {
+fun CurrencyPriceItemView(obj: CurrencyEnum, modifier: Modifier = Modifier) {
 
     AvandTheme {
         Row(
@@ -43,7 +45,7 @@ fun CurrencyPriceItemView(obj: CurrencyPriceEntity, modifier: Modifier = Modifie
 
             Box(contentAlignment = Alignment.CenterStart, modifier = modifier.weight(1.4f)) {
                 Text(
-                    text = obj.currencyPrice.getAmountFormatBySeparator() + " " + obj.currencyUnitType.unitType,
+                    text = String.format("%.2f", obj.price) + " " + obj?.currencyType?.unitType,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     style = CustomTypography.labelLarge,
@@ -59,9 +61,8 @@ fun CurrencyPriceItemView(obj: CurrencyPriceEntity, modifier: Modifier = Modifie
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = obj.currencyChangePercent + " % ",
+                    text = "${obj?.code}",
                     modifier = modifier.align(Alignment.CenterStart),
-                    color = obj.currencyChangePercentColor,
                     maxLines = 1,
                     style = CustomTypography.labelSmall,
                     textAlign = TextAlign.Center
@@ -71,7 +72,7 @@ fun CurrencyPriceItemView(obj: CurrencyPriceEntity, modifier: Modifier = Modifie
             Row(modifier = modifier.weight(1f), horizontalArrangement = Arrangement.End) {
 
                 Text(
-                    text = obj.currencyName,
+                    text = obj?.displayNameFa?:"",
                     style = CustomTypography.labelLarge,
                     maxLines = 1,
                     modifier = modifier
@@ -80,8 +81,8 @@ fun CurrencyPriceItemView(obj: CurrencyPriceEntity, modifier: Modifier = Modifie
 
 
                 Image(
-                    painter = painterResource(id = obj.currencyFlagId),
-                    contentDescription = obj.currencyName,
+                    painter = painterResource(id = obj?.icon?:R.drawable.england),
+                    contentDescription = obj?.code,
                     modifier = modifier
                         .size(28.dp)
                         .padding(4.dp)
@@ -91,15 +92,15 @@ fun CurrencyPriceItemView(obj: CurrencyPriceEntity, modifier: Modifier = Modifie
 
         }
 
-        when (obj.currencyName) {
-            "تتر" -> {
-                CustomSpacer()
-            }
-
-            "سکه امامی" -> {
-                CustomSpacer()
-            }
-        }
+//        when (obj.currencyName) {
+//            "تتر" -> {
+//                CustomSpacer()
+//            }
+//
+//            "سکه امامی" -> {
+//                CustomSpacer()
+//            }
+//        }
     }
 }
 
@@ -124,7 +125,7 @@ fun CustomSpacer(modifier: Modifier = Modifier) {
 fun CurrencyPriceItemViewPreview() {
     AvandTheme {
         Surface {
-            CurrencyPriceItemView(
+            /*CurrencyPriceItemView(
                 CurrencyPriceEntity(
                     currencyName = "بیت کوین",
                     currencyFlagId = R.drawable.bitcoin,
@@ -134,7 +135,7 @@ fun CurrencyPriceItemViewPreview() {
                     currencyUnitType = CurrencyType.Toman
                 ),
                 modifier = Modifier
-            )
+            )*/
         }
     }
 }

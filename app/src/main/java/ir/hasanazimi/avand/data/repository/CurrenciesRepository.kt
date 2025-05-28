@@ -3,6 +3,8 @@ package ir.hasanazimi.avand.data.repository
 import android.util.Log
 import ir.hasanazimi.avand.data.entities.ResponseState
 import ir.hasanazimi.avand.data.entities.remote.currencies.CurrenciesRemoteResponse
+import ir.hasanazimi.avand.data.entities.remote.currencies.toCurrencyEntities
+import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyEntity
 import ir.hasanazimi.avand.data.web_services.currencies.CurrenciesWebService
 import ir.hasanazimi.avand.db.DataStoreManager
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +14,7 @@ import javax.inject.Inject
 
 interface CurrenciesRepository {
 
-    suspend fun getCurrencies() : Flow<ResponseState<CurrenciesRemoteResponse>>
+    suspend fun getCurrencies() : Flow<ResponseState<List<CurrencyEntity>>>
 
 }
 
@@ -27,12 +29,13 @@ class CurrenciesRepositoryImpl @Inject constructor(
 
     val TAG = this::class.simpleName
 
-    override suspend fun getCurrencies(): Flow<ResponseState<CurrenciesRemoteResponse>> = flow {
+    override suspend fun getCurrencies(): Flow<ResponseState<List<CurrencyEntity>>> = flow {
         try {
             emit(ResponseState.Loading)
             val response = currenciesWenService.getCurrenciesPrices()
             if (response.isSuccessful){
-                emit(ResponseState.Success(response.body()))
+                val data = response.body()?.toCurrencyEntities()
+                emit(ResponseState.Success(data))
             }else{
                 emit(ResponseState.Error(IOException()))
             }

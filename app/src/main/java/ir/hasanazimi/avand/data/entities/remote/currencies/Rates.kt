@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class Rates(
-    @SerializedName("USD") val usd: Int,      // دلار آمریکا
+    @SerializedName("USD") val usd: Double,      // دلار آمریکا
     @SerializedName("CAD") val cad: Double,   // دلار کانادا
     @SerializedName("GBP") val gbp: Double,   // پوند انگلستان
     @SerializedName("EUR") val eur: Double,   // یورو
@@ -20,7 +20,6 @@ data class Rates(
     @SerializedName("SEK") val sek: Double,   // کرون سوئد
     @SerializedName("NOK") val nok: Double,   // کرون نروژ
     @SerializedName("MXN") val mxn: Double,   // پزو مکزیک
-    @SerializedName("ZAR") val zar: Double,   // راند آفریقای جنوبی
     @SerializedName("TRY") val theTry: Double,   // لیر ترکیه
     @SerializedName("RUB") val rub: Double,   // روبل روسیه
     @SerializedName("NZD") val nzd: Double,   // دلار نیوزیلند
@@ -35,5 +34,4 @@ data class Rates(
     @SerializedName("QAR") val qar: Double,   // ریال قطر
     @SerializedName("BHD") val bhd: Double,   // دینار بحرین
     @SerializedName("JOD") val jod: Double,   // دینار اردن
-    @SerializedName("ILS") val ils: Double    // شِکِل اسرائیل
 )
