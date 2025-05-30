@@ -17,6 +17,7 @@ import android.widget.ScrollView
 import android.widget.Toast
 import com.google.gson.Gson
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
 import java.util.regex.Pattern
 import kotlin.reflect.KClass

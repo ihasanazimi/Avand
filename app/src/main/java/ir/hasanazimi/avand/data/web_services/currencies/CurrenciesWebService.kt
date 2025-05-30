@@ -10,7 +10,7 @@ interface CurrenciesWebService {
     @GET("rates")
     suspend fun getCurrenciesPrices(
         @Query("api_key") apiKey : String = "hLM4s9pu5VIHpxTdCHk8Kz8VIF2DRXFCWvomE5kSlwpD2goJLrYW8iK7MGhLsZAX",
-        @Query("from") from : String = "USD"
+        @Query("from") from : String = "IRR"
     ) : Response<CurrenciesRemoteResponse>
 
 }

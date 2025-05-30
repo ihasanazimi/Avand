@@ -6,14 +6,8 @@ import ir.hasanazimi.avand.R
 sealed class CurrencyType(val unitType : String) {
     object Toman : CurrencyType(" تومان ")
     object Rial : CurrencyType(" ریال ")
-    object Dollar : CurrencyType(" $ ")
+    object Dollar : CurrencyType(" ریال ")
 }
-
-
-data class CurrencyEntity(
-    val value: Double,
-    val enumName: String,
-)
 
 sealed class CurrencyEnum(
     val code: String,

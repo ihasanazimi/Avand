@@ -5,33 +5,62 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class Rates(
-    @SerializedName("USD") val usd: Double,      // دلار آمریکا
-    @SerializedName("CAD") val cad: Double,   // دلار کانادا
-    @SerializedName("GBP") val gbp: Double,   // پوند انگلستان
-    @SerializedName("EUR") val eur: Double,   // یورو
-    @SerializedName("JPY") val jpy: Double,   // ین ژاپن
-    @SerializedName("CHF") val chf: Double,   // فرانک سوئیس
-    @SerializedName("AUD") val aud: Double,   // دلار استرالیا
-    @SerializedName("CNY") val cny: Double,   // یوان چین
-    @SerializedName("INR") val inr: Double,   // روپیه هند
-    @SerializedName("HKD") val hkd: Double,   // دلار هنگ‌کنگ
-    @SerializedName("KRW") val krw: Double,   // وون کره جنوبی
-    @SerializedName("SGD") val sgd: Double,   // دلار سنگاپور
-    @SerializedName("SEK") val sek: Double,   // کرون سوئد
-    @SerializedName("NOK") val nok: Double,   // کرون نروژ
-    @SerializedName("MXN") val mxn: Double,   // پزو مکزیک
-    @SerializedName("TRY") val theTry: Double,   // لیر ترکیه
-    @SerializedName("RUB") val rub: Double,   // روبل روسیه
-    @SerializedName("NZD") val nzd: Double,   // دلار نیوزیلند
-    @SerializedName("TWD") val twd: Double,   // دلار تایوان
-    @SerializedName("THB") val thb: Double,   // بات تایلند
-    @SerializedName("MYR") val myr: Double,   // رینگیت مالزی
-    @SerializedName("IDR") val idr: Double,   // روپیه اندونزی
-    @SerializedName("PHP") val php: Double,   // پزو فیلیپین
-    @SerializedName("SAR") val sar: Double,   // ریال عربستان
-    @SerializedName("AED") val aed: Double,   // درهم امارات
-    @SerializedName("KWD") val kwd: Double,   // دینار کویت
-    @SerializedName("QAR") val qar: Double,   // ریال قطر
-    @SerializedName("BHD") val bhd: Double,   // دینار بحرین
-    @SerializedName("JOD") val jod: Double,   // دینار اردن
+    @SerializedName("USD") val usd: Double,
+    val usdEnumKey: String = "USD",
+    @SerializedName("CAD") val cad: Double,
+    val cadEnumKey: String = "CAD",
+    @SerializedName("GBP") val gbp: Double,
+    val gbpEnumKey: String = "GBP",
+    @SerializedName("EUR") val eur: Double,
+    val eurEnumKey: String = "EUR",
+    @SerializedName("JPY") val jpy: Double,
+    val jpyEnumKey: String = "JPY",
+    @SerializedName("CHF") val chf: Double,
+    val chfEnumKey: String = "CHF",
+    @SerializedName("AUD") val aud: Double,
+    val audEnumKey: String = "AUD",
+    @SerializedName("CNY") val cny: Double,
+    val cnyEnumKey: String = "CNY",
+    @SerializedName("INR") val inr: Double,
+    val inrEnumKey: String = "INR",
+    @SerializedName("HKD") val hkd: Double,
+    val hkdEnumKey: String = "HKD",
+    @SerializedName("KRW") val krw: Double,
+    val krwEnumKey: String = "KRW",
+    @SerializedName("SGD") val sgd: Double,
+    val sgdEnumKey: String = "SGD",
+    @SerializedName("SEK") val sek: Double,
+    val sekEnumKey: String = "SEK",
+    @SerializedName("NOK") val nok: Double,
+    val nokEnumKey: String = "NOK",
+    @SerializedName("MXN") val mxn: Double,
+    val mxnEnumKey: String = "MXN",
+    @SerializedName("TRY") val theTry: Double,
+    val tryEnumKey: String = "TRY",
+    @SerializedName("RUB") val rub: Double,
+    val rubEnumKey: String = "RUB",
+    @SerializedName("NZD") val nzd: Double,
+    val nzdEnumKey: String = "NZD",
+    @SerializedName("TWD") val twd: Double,
+    val twdEnumKey: String = "TWD",
+    @SerializedName("THB") val thb: Double,
+    val thbEnumKey: String = "THB",
+    @SerializedName("MYR") val myr: Double,
+    val myrEnumKey: String = "MYR",
+    @SerializedName("IDR") val idr: Double,
+    val idrEnumKey: String = "IDR",
+    @SerializedName("PHP") val php: Double,
+    val phpEnumKey: String = "PHP",
+    @SerializedName("SAR") val sar: Double,
+    val sarEnumKey: String = "SAR",
+    @SerializedName("AED") val aed: Double,
+    val aedEnumKey: String = "AED",
+    @SerializedName("KWD") val kwd: Double,
+    val kwdEnumKey: String = "KWD",
+    @SerializedName("QAR") val qar: Double,
+    val qarEnumKey: String = "QAR",
+    @SerializedName("BHD") val bhd: Double,
+    val bhdEnumKey: String = "BHD",
+    @SerializedName("JOD") val jod: Double,
+    val jodEnumKey: String = "JOD"
 )

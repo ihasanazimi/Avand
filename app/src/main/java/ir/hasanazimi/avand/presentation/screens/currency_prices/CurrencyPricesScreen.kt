@@ -4,11 +4,9 @@ import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,11 +38,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ir.hasanazimi.avand.MainActivity
 import ir.hasanazimi.avand.common.extensions.showToast
+import ir.hasanazimi.avand.common.extensions.withNotNull
 import ir.hasanazimi.avand.data.entities.ResponseState
-import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyEntity
-import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyEnum
+import ir.hasanazimi.avand.data.entities.local.currenciees.CurrencyEntity
 import ir.hasanazimi.avand.presentation.itemViews.CurrencyPriceItemView
-import ir.hasanazimi.avand.presentation.itemViews.CustomSpacer
 import ir.hasanazimi.avand.presentation.screens.full_screen_loading.FullScreenLoading
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
@@ -57,7 +53,7 @@ fun CurrencyPricesScreen(activity: MainActivity , navController: NavHostControll
     val TAG = "CurrencyPricesScreen"
     val context = LocalContext.current
     val viewModel = hiltViewModel<CurrencyPricesScreenVM>()
-    var currencies by remember { mutableStateOf<List<CurrencyEnum>?>(null) }
+    var currencies by remember { mutableStateOf<List<CurrencyEntity>?>(null) }
     var showLoading by remember { mutableStateOf(false) }
 
     AvandTheme {
@@ -90,99 +86,104 @@ fun CurrencyPricesScreen(activity: MainActivity , navController: NavHostControll
 
             FullScreenLoading(showLoading)
 
-
             if (currencies?.isNotEmpty() == true){
-                SuccessScreenOfCurrencies(currencies?:emptyList())
+                SuccessScreenOfCurrencies(currencies)
             }
         }
     }
 }
 
 @Composable
-private fun SuccessScreenOfCurrencies(list: List<CurrencyEnum>) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
-    ) {
+private fun SuccessScreenOfCurrencies(listOfCurrencies : List<CurrencyEntity>?) {
 
-        Row(
-            Modifier
-                .align(Alignment.End)
-                .padding(horizontal = 16.dp, vertical = 12.dp)
-                .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+    listOfCurrencies.withNotNull { list ->
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
         ) {
 
-
-            Row {
-                Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = "refresh prices",
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .clip(CircleShape)
-                        .size(28.dp)
-                        .padding(2.dp)
-                        .clickable {
-                            // todo
-                        },
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = "share prices",
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .size(28.dp)
-                        .padding(5.dp)
-                        .clickable {
-                            // todo
-                        },
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-
-            Text(
-                text = "لیست قیمت ها :",
-                style = CustomTypography.bodyLarge,
-                modifier = Modifier.weight(1f)
-            )
-
-        }
+            Row(
+                Modifier
+                    .align(Alignment.End)
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+            ) {
 
 
-        Card(
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
-            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-        ) {
-            LazyColumn(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
-
-                items(list){ item ->
-                    CurrencyPriceItemView(obj = item, modifier = Modifier)
+                Row {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "refresh prices",
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .clip(CircleShape)
+                            .size(28.dp)
+                            .padding(2.dp)
+                            .clickable {
+                                // todo
+                            },
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "share prices",
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(28.dp)
+                            .padding(5.dp)
+                            .clickable {
+                                // todo
+                            },
+                        tint = MaterialTheme.colorScheme.primary
+                    )
                 }
 
-                /*CustomSpacer()
+                Text(
+                    text = "لیست قیمت ها :",
+                    style = CustomTypography.bodyLarge,
+                    modifier = Modifier.weight(1f)
+                )
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(32.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = "مشاهده بیشتر",
-                        style = CustomTypography.labelSmall.copy(
-                            color = MaterialTheme.colorScheme.primary
-                        ),
+            }
+
+
+            Card(
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+            ) {
+                LazyColumn(Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
+
+                    items(list){ item ->
+                        CurrencyPriceItemView(obj = item, modifier = Modifier)
+                    }
+
+                    /*CustomSpacer()
+
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .align(Alignment.Center),
-                        textAlign = TextAlign.Center,
-                    )
-                }*/
+                            .height(32.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = "مشاهده بیشتر",
+                            style = CustomTypography.labelSmall.copy(
+                                color = MaterialTheme.colorScheme.primary
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.Center),
+                            textAlign = TextAlign.Center,
+                        )
+                    }*/
+                }
             }
         }
+
     }
+
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)

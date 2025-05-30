@@ -23,17 +23,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.hasanazimi.avand.R
 import ir.hasanazimi.avand.common.extensions.getAmountFormatBySeparator
-import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyType
-import ir.hasanazimi.avand.data.entities.local.other.CurrencyPriceEntity
-import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyEntity
+import ir.hasanazimi.avand.data.entities.local.currenciees.CurrencyEntity
 import ir.hasanazimi.avand.data.entities.sealed_enums.CurrencyEnum
 import ir.hasanazimi.avand.presentation.theme.AvandTheme
 import ir.hasanazimi.avand.presentation.theme.CustomTypography
-import ir.hasanazimi.avand.presentation.theme.GreenColor
+import kotlin.math.roundToInt
 
 
 @Composable
-fun CurrencyPriceItemView(obj: CurrencyEnum, modifier: Modifier = Modifier) {
+fun CurrencyPriceItemView(obj: CurrencyEntity, modifier: Modifier = Modifier) {
+
+    val foundItem = CurrencyEnum.fromCode(obj.enumName)
 
     AvandTheme {
         Row(
@@ -44,8 +44,11 @@ fun CurrencyPriceItemView(obj: CurrencyEnum, modifier: Modifier = Modifier) {
         ) {
 
             Box(contentAlignment = Alignment.CenterStart, modifier = modifier.weight(1.4f)) {
+                var p = obj.value
+                /*p = p / 0.0000012195*/
+                val newP = String.format("%.6f", p)
                 Text(
-                    text = String.format("%.2f", obj.price) + " " + obj?.currencyType?.unitType,
+                    text = newP.toString().getAmountFormatBySeparator() + " " + foundItem?.currencyType?.unitType,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     style = CustomTypography.labelLarge,
@@ -61,7 +64,7 @@ fun CurrencyPriceItemView(obj: CurrencyEnum, modifier: Modifier = Modifier) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "${obj?.code}",
+                    text = "${foundItem?.code}",
                     modifier = modifier.align(Alignment.CenterStart),
                     maxLines = 1,
                     style = CustomTypography.labelSmall,
@@ -72,7 +75,7 @@ fun CurrencyPriceItemView(obj: CurrencyEnum, modifier: Modifier = Modifier) {
             Row(modifier = modifier.weight(1f), horizontalArrangement = Arrangement.End) {
 
                 Text(
-                    text = obj?.displayNameFa?:"",
+                    text = foundItem?.displayNameFa?:"",
                     style = CustomTypography.labelLarge,
                     maxLines = 1,
                     modifier = modifier
@@ -81,8 +84,8 @@ fun CurrencyPriceItemView(obj: CurrencyEnum, modifier: Modifier = Modifier) {
 
 
                 Image(
-                    painter = painterResource(id = obj?.icon?:R.drawable.england),
-                    contentDescription = obj?.code,
+                    painter = painterResource(id = foundItem?.icon?:R.drawable.england),
+                    contentDescription = foundItem?.code,
                     modifier = modifier
                         .size(28.dp)
                         .padding(4.dp)
